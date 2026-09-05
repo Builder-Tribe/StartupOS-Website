@@ -83,19 +83,6 @@ async function handleRequest(req, res) {
       await writeIdeas(ideas);
       return json(res, 201, record);
     }
-    if (req.method === "GET" && url.pathname.startsWith("/ideas/resume-builder")) {
-      const resumeDir = join(root, "Ideas", "Resume Builder");
-      let subPath = url.pathname.replace(/^\/ideas\/resume-builder\/?/, "");
-      if (!subPath || subPath === "/") subPath = "index.html";
-      const targetFile = normalize(join(resumeDir, subPath));
-      if (targetFile.startsWith(resumeDir)) {
-        try {
-          const content = await readFile(targetFile);
-          res.writeHead(200, { "content-type": types[extname(targetFile)] || "application/octet-stream" });
-          return res.end(content);
-        } catch {}
-      }
-    }
     if (req.method === "GET") {
       const distDir = join(root, "dist");
       let file = url.pathname === "/" ? join(distDir, "index.html") : normalize(join(distDir, url.pathname));

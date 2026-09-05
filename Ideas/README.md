@@ -12,7 +12,6 @@ This directory contains the full documentation suites, PRDs, technical architect
 | **BusinessPay** | `Ideas/BusinessPay/` | FinTech & B2B Payments | Full Codebase, SmartCollect AI Docs & DB Schemas |
 | **DupeScout (Duke Scout)** | `Ideas/DupeScout/` | AI E-Commerce & Consumer SaaS | 6-Volume Master PRD & AI Architecture Design |
 | **Trippy (Tripe)** | `Ideas/Trippy/` | AI Travel & Social Matchmaking | Full Codebase, SoloTravel PRD & Design System |
-| **Resume Builder** | `Ideas/Resume Builder/` | AI Career & ATS Optimization | Standalone AI ATS Resume Studio App |
 
 ## Document Structure Guidelines
 
