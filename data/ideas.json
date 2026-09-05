@@ -1,0 +1,51 @@
+[
+  {
+    "id": "0a93c10a-1c8e-4ee3-9d00-29b7395e04e5",
+    "idea": "Create a social media app for travellers",
+    "audience": "Travellers",
+    "budget": "10000",
+    "problem": "Finding people to travel with",
+    "alternatives": "Group Travel pages from instagram",
+    "advantage": "One stop sollution like Instagram where people can match make on the basis of vive and travel with",
+    "name": "Create A Social Media App",
+    "score": 75,
+    "verdict": "Promising — validate before scaling",
+    "scoreBreakdown": [
+      {
+        "label": "Problem clarity",
+        "score": 16,
+        "reason": "You named a concrete pain worth testing."
+      },
+      {
+        "label": "Customer focus",
+        "score": 16,
+        "reason": "The first customer is defined as Travellers."
+      },
+      {
+        "label": "Differentiation",
+        "score": 15,
+        "reason": "You identified a starting point for differentiation."
+      },
+      {
+        "label": "Market awareness",
+        "score": 14,
+        "reason": "You recognize the alternatives people already use."
+      },
+      {
+        "label": "Build feasibility",
+        "score": 14,
+        "reason": "A test budget (10000) creates a practical constraint."
+      }
+    ],
+    "summary": "Create a social media app for travellers is aimed at Travellers. Its key assumption is that finding people to travel with.",
+    "nextSteps": [
+      "Interview five Travellers and ask how they solve this problem today.",
+      "Test the smallest useful promise: One stop sollution like Instagram where people can match make on the basis of vive and travel with.",
+      "Set a validation boundary of 10000 before building more.",
+      "Turn repeated customer language into a narrow MVP workflow."
+    ],
+    "buildPrompt": "Build a full-stack MVP for: Create a social media app for travellers\n\nFirst customer: Travellers\nProblem: Finding people to travel with\nExisting alternatives: Group Travel pages from instagram\nDifferentiator: One stop sollution like Instagram where people can match make on the basis of vive and travel with\nTest budget: 10000\n\nUse a persistent database, authenticated workspaces, server-side validation, responsive UI, and clear empty/error states. Do not create a front-end-only mockup.",
+    "createdAt": "2026-09-05T11:18:01.601Z",
+    "updatedAt": "2026-09-05T11:18:01.601Z"
+  }
+]
