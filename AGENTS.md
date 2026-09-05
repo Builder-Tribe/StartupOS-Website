@@ -1,7 +1,7 @@
 # AGENTS.md — How to work in this repository
 
 > **Read this first.** This file is the constitution of the StartupOS repository. It applies to every
-> engineer and every AI coding assistant (AntiGravity, Replit Agent, Claude Code, Codex, Cursor, Windsurf, Copilot,
+> engineer and every AI coding assistant (AntiGravity, Emergent, Replit Agent, Claude Code, Codex, Cursor, Windsurf, Copilot,
 > or anything that comes later). If a tool only reads one file, it should be this one.
 
 ---
@@ -54,6 +54,12 @@ Every AI tool and environment has a designated role, configuration protocol, and
 - **Configuration & Rules:** Reads `AGENTS.md`, `.agents/rules/*.md`, `GEMINI.md`, and global rules in `~/.gemini/config/rules/`.
 - **Artifacts & Planning Workflow:** Uses Implementation Plans (`implementation_plan.md`), Walkthroughs (`walkthrough.md`), interactive visual HTML previews, and subagent invocation (`invoke_subagent`).
 - **Verification Protocol:** Conducts automated linting/type-checks (`npx tsc --noEmit`), test suite execution, and verifies live web servers on `http://localhost:8081`.
+
+### 🚀 For Emergent (Autonomous Full-Stack App & Agent Generation)
+- **Role:** Autonomous end-to-end feature generation, automated integration workflows, and rapid UI/backend scaffolding.
+- **Configuration & Rules:** Reads `AGENTS.md` constitution, `VOLUME1`–`VOLUME6` PRDs, and `docs/api.md`.
+- **Verification Protocol:** Conducts automated full-stack sanity checks, API endpoint response assertions, and verifies React UI component rendering.
+- **Scoping Protocol:** Must strictly respect server-side security boundaries (scrypt passwords, multi-realm JWT, scope-isolation) and reuse existing components from `docs/frontend.md` rather than generating duplicate helpers.
 
 ### ⚡ For Replit (Cloud Prototyping & Live Web Hosting)
 - **Role:** Instant cloud workspace execution, live webview previews, team demo sharing, and public deployment.
