@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DupeScout Side Panel</title>
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+  <div class="panel-container">
+    <!-- Header -->
+    <header class="panel-header">
+      <div class="header-left">
+        <div class="logo">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            <circle cx="11" cy="11" r="3" fill="#f43f5e"></circle>
+          </svg>
+        </div>
+        <div>
+          <h2>DupeScout Visual Engine</h2>
+          <p class="subtitle">Side-by-Side Visual & Price Analysis</p>
+        </div>
+      </div>
+      <button id="btn-refresh" class="icon-btn" title="Refresh Analysis">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="23 4 23 10 17 10"></polyline>
+          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Reference Product Banner -->
+    <section id="reference-banner" class="reference-banner">
+      <div class="ref-label">ORIGINAL PRODUCT DETECTED</div>
+      <div class="ref-content">
+        <img id="ref-image" src="" alt="Original Product" class="ref-img" />
+        <div class="ref-details">
+          <h3 id="ref-title">Selected Product</h3>
+          <span id="ref-price" class="ref-price">₹0</span>
+          <span id="ref-store" class="ref-store">Original Seller</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter Tabs -->
+    <nav class="filter-tabs">
+      <button class="tab-btn active" data-tier="all">All Dupes</button>
+      <button class="tab-btn" data-tier="smart_value">Smart Value (🔥 High Match)</button>
+      <button class="tab-btn" data-tier="similar">Similar Style</button>
+    </nav>
+
+    <!-- Main Comparison Section -->
+    <main id="comparison-list" class="comparison-list">
+      <!-- Loading view -->
+      <div id="panel-loading" class="panel-state">
+        <div class="spinner"></div>
+        <p>Analyzing visual feature vectors via CLIP & pgvector...</p>
+      </div>
+
+      <!-- Results view injected dynamically -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="panel-footer">
+      <span class="trust-note">🔒 Honest similarity scores. No sponsored manipulation.</span>
+    </footer>
+  </div>
+
+  <script src="sidepanel.js"></script>
+</body>
+</html>

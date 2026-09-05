@@ -1,32 +1,22 @@
-# StartupOS — Product Concept & Idea Inventory
+# StartupOS — Product & Idea Documentation Inventory
 
-## Purpose
+## Overview
 
-StartupOS is a structured idea-development and incubator workspace. It helps founders capture product concepts, score market viability, generate AI-agent-ready documentation (PRDs, architecture specs, build plans), and manage idea assets under a unified umbrella.
+This directory contains the full documentation suites, PRDs, technical architecture designs, and codebase assets for products managed within **StartupOS**.
 
-## Operating Model
+## Project Inventory
 
-- This `StartupOS` repository is the umbrella workspace for startup concepts and AI build engines.
-- Each distinct product idea gets a dedicated workspace directory.
-- Each workspace contains its own research, PRD, technical architecture, build plan, and codebase artifacts.
-- Documentation and prompts are structured for AI builders such as **Antigravity**, **Claude Code**, **Cursor**, **Replit**, or human engineering teams.
+| Product Name | Directory | Category | Status |
+|---|---|---|---|
+| **CollabKaro (Let's Collab)** | `Ideas/CollabKaro/` | Creator Economy & Marketplace | PRD, Market Research & Architecture Specs Complete |
+| **BusinessPay** | `Ideas/BusinessPay/` | FinTech & B2B Payments | Full Codebase, SmartCollect AI Docs & DB Schemas |
+| **DupeScout (Duke Scout)** | `Ideas/DupeScout/` | AI E-Commerce & Consumer SaaS | 6-Volume Master PRD & AI Architecture Design |
+| **Trippy (Tripe)** | `Ideas/Trippy/` | AI Travel & Social Matchmaking | Full Codebase, SoloTravel PRD & Design System |
+| **Resume Builder** | `Ideas/Resume Builder/` | AI Career & ATS Optimization | Standalone AI ATS Resume Studio App |
 
-## Current Idea Inventory
+## Document Structure Guidelines
 
-| Product / Idea | Location | Status |
-|---|---|---|
-| **CollabKaro (Let's Collab)** | `Ideas/CollabKaro/` | Full-stack PRD, market research, and technical architecture specs complete |
-| **Resume Builder** | `Ideas/Resume Builder/` | Production AI ATS Resume Studio codebase complete (`index.html`, `script.js`, `styles.css`) |
-| **AI Builder Academy (LMS)** | `src/components/LMSHub.jsx` | Full 3-System AI LMS suite complete (Learner Portal, Creator Studio, Admin Console) |
-| **DupeScout (Duke Scout)** | My Projects Studio | 6-Volume PRD & AI Architecture documentation integrated |
-| **Trippy (Tripe)** | My Projects Studio | Solo Travel PRD & Itinerary Matcher specs integrated |
-| **BusinessPay** | My Projects Studio | B2B Payment Operations & Escrow Infrastructure specs integrated |
-| **StartupOS Platform** | Root Workspace | Umbrella AI Incubator Studio with Viability Scoring, PRDs & LMS |
-
-## Standard Documentation Structure for Each Product Idea
-
-1. `README.md` — Overview and document index.
-2. `01-master-prd.md` — Complete product requirements document.
-3. `02-competitor-research.md` — Researched market and competitive matrix.
-4. `03-technical-architecture.md` — Backend, data schema, security, and integrations.
-5. `04-build-plan.md` — Staged AI-builder execution steps and test plan.
+1. `01-master-prd.md` — Product Requirements Document (Problem, Solution, Persona, Specs).
+2. `02-competitor-research.md` — Market Analysis & Competitive Landscape.
+3. `03-technical-architecture.md` — Database Schema, API Contracts, Vector Search & AI Integrations.
+4. `04-build-plan.md` — Staged AI Build Instructions for Antigravity, Claude Code, and Cursor.

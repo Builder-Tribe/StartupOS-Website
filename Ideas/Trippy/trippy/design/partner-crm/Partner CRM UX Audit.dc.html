@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Hanken+Grotesque:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root{--t50:#e6f5f3;--t100:#cceae6;--t500:#0e9f8f;--t600:#0b7a6c;--t700:#085f54;--c50:#fff3ee;--c100:#ffe4d6;--c500:#f2683c;--c600:#c2410c;--i50:#eef0ff;--i500:#6366f1;--ink:#14202a;--muted:#5d6b76;--faint:#8795a0;--line:#e6ebee;--ls:#eef1f3;--lss:#f4f6f8;--bg:#fbfcfd;--red50:#fee2e2;--red600:#dc2626;--amber50:#fffbeb;--amber600:#d97706;--green50:#dcfce7;--green600:#16a34a;--fh:'Bricolage Grotesque',-apple-system,sans-serif;--fb:'Hanken Grotesque',-apple-system,sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--fb);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5;}
+h1,h2,h3{font-family:var(--fh);letter-spacing:-.02em;}
+.page{max-width:1120px;margin:0 auto;padding:0 40px 120px;}
+@media(max-width:640px){.page{padding:0 18px 80px;}}
+.cover{background:linear-gradient(150deg,#f2683c 0%,#c2410c 45%,#14202a 100%);padding:72px 40px 64px;overflow:hidden;position:relative;}
+@media(max-width:640px){.cover{padding:48px 18px 48px;}}
+.cover-blob{position:absolute;border-radius:50%;pointer-events:none;}
+.section{margin-top:72px;}
+.ey{font:800 11px var(--fb);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:8px;}
+.sh{font-family:var(--fh);font-weight:700;font-size:clamp(22px,3vw,30px);color:var(--ink);margin-bottom:6px;}
+.sdesc{font-size:15px;color:var(--muted);line-height:1.6;margin-bottom:28px;max-width:680px;}
+.p0{display:inline-flex;align-items:center;gap:4px;font:700 11px var(--fb);padding:3px 9px;border-radius:99px;background:var(--red50);color:var(--red600);}
+.p1{display:inline-flex;align-items:center;gap:4px;font:700 11px var(--fb);padding:3px 9px;border-radius:99px;background:var(--amber50);color:var(--amber600);}
+.p2{display:inline-flex;align-items:center;gap:4px;font:700 11px var(--fb);padding:3px 9px;border-radius:99px;background:var(--ls);color:var(--muted);}
+.ok{display:inline-flex;align-items:center;gap:4px;font:700 11px var(--fb);padding:3px 9px;border-radius:99px;background:var(--green50);color:var(--green600);}
+.tbl{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:13px;}
+.tbl th{text-align:left;padding:10px 14px;font:700 11px var(--fb);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);background:var(--bg);border-bottom:1px solid var(--line);}
+.tbl td{padding:11px 14px;border-bottom:1px solid var(--ls);vertical-align:top;line-height:1.55;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl strong{color:var(--ink);}
+.fcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:16px;}
+.fcard-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;}
+.fcard-num{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font:700 16px var(--fh);flex-shrink:0;}
+.fcard-title{font:700 17px var(--fh);color:var(--ink);margin-bottom:4px;}
+.fcard-body{font-size:14px;color:var(--muted);line-height:1.6;}
+.fcard-fix{background:var(--t50);border-left:3px solid var(--t500);border-radius:6px;padding:10px 14px;margin-top:12px;font-size:13.5px;color:var(--t700);line-height:1.55;}
+.job{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:20px;}
+.job-head{padding:18px 20px;border-bottom:1px solid var(--ls);display:flex;align-items:center;gap:10px;}
+.job-num{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font:700 14px var(--fh);flex-shrink:0;}
+.job-title{font:700 16px var(--fh);color:var(--ink);}
+.job-body{padding:18px 20px;display:flex;flex-direction:column;gap:14px;}
+.job-row{display:grid;grid-template-columns:140px 1fr;gap:12px;}
+@media(max-width:640px){.job-row{grid-template-columns:1fr;gap:6px;}}
+.job-label{font:700 11px var(--fb);letter-spacing:.07em;text-transform:uppercase;color:var(--faint);padding-top:2px;}
+.job-val{font-size:13.5px;color:var(--muted);line-height:1.6;}
+.job-val strong{color:var(--ink);}
+/* wizard steps */
+.wstep{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:10px;}
+.wstep-head{display:grid;grid-template-columns:40px 1fr 120px 160px;gap:12px;padding:14px 16px;border-bottom:1px solid var(--ls);background:var(--lss);font-size:12.5px;}
+.wstep-head-label{font:700 10px var(--fb);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);}
+.wstep-body{display:grid;grid-template-columns:40px 1fr 120px 160px;gap:12px;padding:12px 16px;}
+.ws-num{width:28px;height:28px;border-radius:50%;background:var(--t500);color:#fff;display:flex;align-items:center;justify-content:center;font:700 12px var(--fh);flex-shrink:0;}
+.ws-content{font-size:13px;color:var(--muted);line-height:1.55;}
+.ws-content strong{color:var(--ink);display:block;margin-bottom:3px;}
+.ws-feedback{font-size:12.5px;color:var(--muted);line-height:1.5;}
+.ws-save{font-size:12.5px;color:var(--muted);line-height:1.5;}
+/* lifecycle */
+.lc-row{display:grid;grid-template-columns:110px 130px 1fr 1fr 1fr;gap:0;padding:12px 14px;border-bottom:1px solid var(--ls);font-size:13px;}
+.lc-row:last-child{border-bottom:none;}
+.lc-head{background:var(--lss);font:700 10px var(--fb);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);}
+/* dashboard layout */
+.dash-section{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:16px;}
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+@media(max-width:640px){.dash-grid{grid-template-columns:1fr;}}
+.dash-kpi{background:var(--lss);border-radius:10px;padding:14px 16px;}
+.dash-kpi-val{font-family:var(--fh);font-weight:700;font-size:28px;color:var(--ink);margin-bottom:2px;}
+.dash-kpi-label{font:600 11.5px var(--fb);color:var(--faint);}
+.dash-kpi-why{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.4;}
+/* cl */
+.cl-group{margin-bottom:24px;}
+.cl-group-title{font:700 13px var(--fb);letter-spacing:.06em;text-transform:uppercase;color:var(--t600);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.cl-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--ls);}
+.cl-item:last-child{border-bottom:none;}
+.cl-num{font:700 11px var(--fb);color:var(--faint);min-width:20px;}
+.cl-text{font-size:13.5px;color:var(--muted);line-height:1.5;}
+.cl-text strong{color:var(--ink);}
+.cl-box{width:18px;height:18px;border:1.5px solid var(--line);border-radius:4px;flex-shrink:0;margin-top:2px;}
+/* inv */
+.inv-area{margin-bottom:16px;}
+.inv-title{font:700 13px var(--fh);color:var(--ink);margin-bottom:6px;display:flex;align-items:center;gap:7px;}
+.inv-items{display:flex;flex-direction:column;gap:3px;padding-left:18px;}
+.inv-item{font-size:13.5px;color:var(--muted);display:flex;align-items:flex-start;gap:8px;}
+.inv-item::before{content:"›";color:var(--t500);font-weight:700;flex-shrink:0;}
+.inv-state{font-size:11.5px;color:var(--faint);margin-left:4px;}
+.inv-miss{color:var(--red600);}
+</style>
+</helmet>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-blob" style="top:-50px;right:-50px;width:280px;height:280px;background:radial-gradient(circle,rgba(242,104,60,.35),transparent 70%);"></div>
+  <div class="cover-blob" style="bottom:-60px;left:5%;width:220px;height:220px;background:radial-gradient(circle,rgba(14,159,143,.2),transparent 70%);"></div>
+  <div style="max-width:1040px;margin:0 auto;position:relative;z-index:1;">
+    <div style="font:800 11px var(--fb);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:14px;">Partner CRM · UX Audit &amp; Revamp Brief · v1.0 · July 2026</div>
+    <h1 style="font-family:var(--fh);font-weight:800;font-size:clamp(30px,5vw,52px);color:#fff;line-height:1.0;letter-spacing:-.03em;margin-bottom:16px;max-width:700px;">Partner CRM audit — the trip builder is killing first-publish rates.</h1>
+    <p style="font-size:17px;color:rgba(255,255,255,.65);max-width:600px;line-height:1.6;margin-bottom:28px;">Grounded in PartnerApp.tsx, TripEditor.tsx, Dashboard.tsx, PartnerLogin.tsx. The single biggest drop-off point: a new partner hits a 30+ field form with no guidance, no progress, and no reason to keep going.</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <span class="p0">4 P0 — blocks partner activation</span>
+      <span class="p1">8 P1 — degrades confidence</span>
+      <span class="p2">5 P2 — polish</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ─── 1. SCREEN INVENTORY ────────────────────────────── -->
+<div class="section">
+  <div class="ey">01 — Screen inventory</div>
+  <h2 class="sh">Every screen, state &amp; modal</h2>
+  <p class="sdesc">Grounded in <code style="font-size:12px;background:var(--ls);padding:1px 5px;border-radius:3px;">PartnerApp.tsx</code> route map. 6 live routes, ~20 states. Notable: no settings route, no team management route, no analytics route.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+    <div>
+      <div class="inv-area">
+        <div class="inv-title"><i class="ph-bold ph-lock-key" style="font-size:14px;color:var(--c500);"></i>Auth</div>
+        <div class="inv-items">
+          <div class="inv-item">Login / signup toggle <span class="inv-state">(sign-in | sign-up | error | busy)</span></div>
+          <div class="inv-item inv-miss">First-run onboarding wizard — missing entirely</div>
+          <div class="inv-item inv-miss">Forgot password — missing</div>
+        </div>
+      </div>
+      <div class="inv-area">
+        <div class="inv-title"><i class="ph-bold ph-squares-four" style="font-size:14px;color:var(--t500);"></i>Dashboard</div>
+        <div class="inv-items">
+          <div class="inv-item">Trips list <span class="inv-state">(5 KPI tiles | trip table | empty state | loading)</span></div>
+          <div class="inv-item inv-miss">Action-required queue — missing</div>
+          <div class="inv-item inv-miss">Booking click counts inline — missing</div>
+        </div>
+      </div>
+      <div class="inv-area">
+        <div class="inv-title"><i class="ph-bold ph-map-trifold" style="font-size:14px;color:var(--t500);"></i>Trip editor</div>
+        <div class="inv-items">
+          <div class="inv-item">Basic info section</div>
+          <div class="inv-item">Pricing section</div>
+          <div class="inv-item">Payment link section</div>
+          <div class="inv-item">Itinerary builder (add/edit/delete/reorder days)</div>
+          <div class="inv-item">Publish validation errors banner</div>
+          <div class="inv-item">Sticky action bar (save | preview | publish/unpublish)</div>
+          <div class="inv-item inv-miss">Section nav + completion progress — missing</div>
+          <div class="inv-item inv-miss">Guided first-trip mode — missing</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="inv-area">
+        <div class="inv-title"><i class="ph-bold ph-eye" style="font-size:14px;color:var(--i500);"></i>Preview</div>
+        <div class="inv-items">
+          <div class="inv-item">Preview-as-consumer <span class="inv-state">(trip detail view with "preview" ribbon)</span></div>
+          <div class="inv-item inv-miss">Side-by-side live comparison — missing</div>
+        </div>
+      </div>
+      <div class="inv-area">
+        <div class="inv-title" style="color:var(--red600);"><i class="ph-bold ph-x-circle" style="font-size:14px;"></i>Missing screens (P0/P1)</div>
+        <div class="inv-items">
+          <div class="inv-item inv-miss">Partner onboarding wizard (first login)</div>
+          <div class="inv-item inv-miss">Org profile / settings screen</div>
+          <div class="inv-item inv-miss">Team member management</div>
+          <div class="inv-item inv-miss">Analytics per trip (click-through rates)</div>
+          <div class="inv-item inv-miss">Forgot password / reset</div>
+          <div class="inv-item inv-miss">"Coming soon: direct booking" Phase 2 teaser</div>
+          <div class="inv-item" style="color:var(--amber600);">Trip duplication ("copy from last trip")</div>
+          <div class="inv-item" style="color:var(--amber600);">Bulk status actions (archive multiple)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 2. AUDIT TABLE ──────────────────────────────────── -->
+<div class="section">
+  <div class="ey">02 — Audit table</div>
+  <h2 class="sh">Per-screen findings</h2>
+  <div style="overflow-x:auto;">
+    <table class="tbl" style="min-width:900px;">
+      <thead><tr>
+        <th style="min-width:140px;">Screen</th>
+        <th style="min-width:200px;">What works</th>
+        <th style="min-width:260px;">What's broken or missing</th>
+        <th style="min-width:90px;">Severity</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Login / signup</strong></td>
+          <td>Toggle between sign-in and create account. Org name collected upfront. Disable button on missing fields. Error message shown.</td>
+          <td><strong>No value prop</strong> — the auth screen says nothing about why a partner should list on Trippy. No "12,000+ solo travellers waiting for your trips." No forgot password. No password strength indicator on signup.</td>
+          <td><span class="p1">P1</span></td>
+        </tr>
+        <tr>
+          <td><strong>Post-signup (first login)</strong></td>
+          <td>—</td>
+          <td><strong>Lands on empty dashboard with no guidance.</strong> PartnerApp.tsx routes `/partner` → Dashboard regardless of whether this is first login. A brand-new partner with 0 trips sees a blank table and a "Create Trip" button — no welcome, no "here's what to do first," no onboarding wizard. <strong>This is the primary activation failure point.</strong></td>
+          <td><span class="p0">P0</span></td>
+        </tr>
+        <tr>
+          <td><strong>Dashboard</strong></td>
+          <td>5 KPI tiles (total/draft/live/upcoming/completed). Trip table with status labels and per-status actions. Empty state with CTA. Toasts for publish success.</td>
+          <td>No urgency hierarchy — all trips are equal in the table regardless of whether they need action. No booking click counts visible without opening each trip. KPI tile for "Draft" doesn't tell the partner what's needed to move a draft to live. "Updated at" column is uninformative without context.</td>
+          <td><span class="p1">P1</span></td>
+        </tr>
+        <tr>
+          <td><strong>Trip editor — general</strong></td>
+          <td>Autosave (700ms debounce) with save indicator ('saving'/'saved'). Publish validation errors shown as a list. Sticky action bar. Separate API calls for itinerary vs form (correct architecture).</td>
+          <td><strong>Single long-scroll form with 30+ fields and no section navigation.</strong> A new partner has no idea where to start, how far they've come, or what's left. No completion percentage. No "minimum viable publish" guidance (what's the least you need to go live?). No "section done" checkmarks. Section order is not optimized for first-time flow (basic info → itinerary → pricing → payment would make more sense than the current mix).</td>
+          <td><span class="p0">P0</span></td>
+        </tr>
+        <tr>
+          <td><strong>Trip editor — media</strong></td>
+          <td>Cover image URL input shows a preview thumbnail once a URL is entered. Gallery URLs supported.</td>
+          <td>No visual feedback until URL is typed and saved. No guidance on image dimensions or aspect ratio. No "drag to reorder gallery" affordance. No placeholder showing what the cover will look like on the consumer card.</td>
+          <td><span class="p1">P1</span></td>
+        </tr>
+        <tr>
+          <td><strong>Trip editor — payment link</strong></td>
+          <td>Validates https:// format. Error shown inline. Publish blocked without it.</td>
+          <td><strong>Minimal guidance on what to enter.</strong> Many partners have never used Razorpay or Instamojo. No examples, no "what is this?" explainer, no link to create one. Partners who have a Google Form or WhatsApp link will try to enter those and get confused by the https-only validation.</td>
+          <td><span class="p0">P0</span></td>
+        </tr>
+        <tr>
+          <td><strong>Trip editor — itinerary</strong></td>
+          <td>Add/edit/delete/reorder days via up/down arrows. Optimistic local update + debounced API. Each day has title, description, location, activities, accommodation, meals.</td>
+          <td>Up/down arrows are confusing on tablet (small tap targets). No day duplication ("copy day 2 to day 3"). Meals and activities are comma-separated text inputs — fragile UX (partner types "breakfast lunch dinner" vs "Breakfast, Lunch, Dinner" — inconsistent on consumer side). No "preview how this day looks to travellers" in context.</td>
+          <td><span class="p1">P1</span></td>
+        </tr>
+        <tr>
+          <td><strong>Preview-as-consumer</strong></td>
+          <td>Dedicated route `/partner/trips/:id/preview` renders the Trip Detail view with a "preview ribbon."</td>
+          <td>No "open in new tab" — preview replaces the editor in the same tab (back navigation needed to return). No side-by-side view. The preview ribbon ("You're previewing this trip as a traveller") doesn't explain how to exit back to editing.</td>
+          <td><span class="p1">P1</span></td>
+        </tr>
+        <tr>
+          <td><strong>Navigation / app shell</strong></td>
+          <td>Org name shown in topbar (multi-tenant boundary visible). "Consumer site ↗" link. Log out button.</td>
+          <td><strong>No sidebar navigation</strong> — only a topbar with minimal links. No way to get to org settings, team management, or analytics from the current nav. All navigation is between Dashboard ↔ TripEditor only. Partner has no sense of the full portal.</td>
+          <td><span class="p0">P0</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ─── 3. CRITICAL FIXES ──────────────────────────────── -->
+<div class="section">
+  <div class="ey">03 — Critical fixes</div>
+  <h2 class="sh">Top 5 P0 issues — detailed fix spec</h2>
+
+  <div class="fcard">
+    <div class="fcard-head">
+      <div class="fcard-num" style="background:var(--red50);color:var(--red600);">1</div>
+      <div><div class="fcard-title">Add first-run onboarding wizard — partners must not land on a blank dashboard</div><span class="p0">P0</span><span style="font:500 12px var(--fb);color:var(--faint);margin-left:8px;">PartnerApp.tsx · post-signup routing · missing screen</span></div>
+    </div>
+    <div class="fcard-body">After signup, a new partner has just one job: publish their first trip. Instead, they land on a blank dashboard with a single "Create Trip" button. There is no welcome, no guidance, no progress indicator, and no answer to "what do I do first?" This is the primary abandonment point. Partners who have only ever used WhatsApp + Google Forms need a completely guided first-trip experience.</div>
+    <div class="fcard-fix"><strong>Fix:</strong> Detect first login via <code style="font-size:12px;">admin.firstLogin === true</code> or <code style="font-size:12px;">org.trips === 0</code>. Route to an onboarding wizard (see Section 5) instead of the blank dashboard. Wizard: Welcome → Trip basics → Pricing → Payment → Publish. Each step is completable in under 2 minutes. Step 1 creates a draft trip immediately so progress is never lost. A "Continue setup" banner persists on the dashboard until the first trip is published.</div>
+  </div>
+
+  <div class="fcard">
+    <div class="fcard-head">
+      <div class="fcard-num" style="background:var(--red50);color:var(--red600);">2</div>
+      <div><div class="fcard-title">Add section navigation + completion progress to the trip editor</div><span class="p0">P0</span><span style="font:500 12px var(--fb);color:var(--faint);margin-left:8px;">TripEditor.tsx · single-scroll form · missing navigation</span></div>
+    </div>
+    <div class="fcard-body">The trip editor is currently a single unbroken scroll of 30+ fields across 4 implicit sections (Basic Info, Pricing, Payment, Itinerary). There is no way to jump between sections, no indication of what's complete vs missing, and no "minimum viable trip" guidance. A partner who fills in the title, destination, and dates has no idea they still need 20 more things before publishing. This single issue is responsible for the majority of trip-builder abandonment.</div>
+    <div class="fcard-fix"><strong>Fix:</strong> Add a left sidebar to the trip editor (as designed in Screen 2a of the Partner CRM + Admin Redesign file) showing 6 sections as a checklist: Basic info → Itinerary → Pricing → Inclusions → Payment link → Media. Each section shows ✓ / ✕ / active state. A completion percentage bar shows overall progress. The sticky action bar shows "X of 6 sections complete" + "Publish" button (disabled until all required sections are done). This transforms the editor from a form-dump into a guided workflow.</div>
+  </div>
+
+  <div class="fcard">
+    <div class="fcard-head">
+      <div class="fcard-num" style="background:var(--red50);color:var(--red600);">3</div>
+      <div><div class="fcard-title">Payment link field needs full guidance — it's the #1 publish blocker</div><span class="p0">P0</span><span style="font:500 12px var(--fb);color:var(--faint);margin-left:8px;">TripEditor.tsx · payment link section · missing guidance</span></div>
+    </div>
+    <div class="fcard-body">The payment link is required for publishing, but many partners don't have one. The current UX is: one input field, one validation error if https:// is missing. A partner who uses Google Forms, WhatsApp Business, or manual bank transfers doesn't know what to enter here. They will either enter an invalid URL, enter nothing and be blocked from publishing, or abandon the trip entirely.</div>
+    <div class="fcard-fix"><strong>Fix:</strong> Expand the payment link section into a guidance card: (1) "What is this?" explainer: "Paste the link where travellers pay you — Razorpay, Instamojo, your website, or any https:// page." (2) Quick-start buttons: [Razorpay] [Instamojo] [My website] — each opens a helper tooltip with how to get the link. (3) Accept pattern: show a green ✓ + "Looks good" when a valid https link is entered. (4) If no payment system: "No online payment yet? <u>Create a free Razorpay link in 5 minutes →</u>" (external link). (5) Keep the hard requirement — trip can't go live without it — but make reaching that requirement possible for non-technical partners.</div>
+  </div>
+
+  <div class="fcard">
+    <div class="fcard-head">
+      <div class="fcard-num" style="background:var(--red50);color:var(--red600);">4</div>
+      <div><div class="fcard-title">Add sidebar navigation — the portal needs a clear information architecture</div><span class="p0">P0</span><span style="font:500 12px var(--fb);color:var(--faint);margin-left:8px;">PartnerApp.tsx · crm-topbar · no sidebar</span></div>
+    </div>
+    <div class="fcard-body">The current portal has two destinations: Dashboard and TripEditor. The topbar shows org name + "Consumer site ↗" + admin name + log out. There is no way to access org settings, team management, or analytics. As the portal grows (Phase 2: Razorpay, analytics, SaaS tiers), bolting features onto a topbar will break. The partner has no mental model of what the portal contains.</div>
+    <div class="fcard-fix"><strong>Fix:</strong> Add a persistent left sidebar (220px, white, border-right) with sections: My trips · Analytics (coming soon, greyed) · Organisation · Team · Payment links. The org name + emoji are shown at the top of the sidebar (the multi-tenant identity anchor — always visible). "Trippy Partner Portal" sub-label below. Phase 2 features shown as greyed "Coming soon" items — not hidden, but clearly not clickable. This sets the expectation for what the portal will become while keeping Phase 1 clean.</div>
+  </div>
+
+  <div class="fcard">
+    <div class="fcard-head">
+      <div class="fcard-num" style="background:var(--red50);color:var(--red600);">5</div>
+      <div><div class="fcard-title">Preview must open in a new tab and clearly explain how to return to editing</div><span class="p0">P0</span><span style="font:500 12px var(--fb);color:var(--faint);margin-left:8px;">Preview.tsx · `/partner/trips/:id/preview` route</span></div>
+    </div>
+    <div class="fcard-body">Currently, clicking "Preview" in the trip editor navigates to the preview route in the same tab. The partner must use the browser's back button to return to editing — no in-preview CTA for this. On mobile/tablet, this is particularly disorienting. The preview ribbon says nothing about how to return.</div>
+    <div class="fcard-fix"><strong>Fix:</strong> Change Preview link to <code style="font-size:12px;">target="_blank"</code> — open in a new tab. This means the partner keeps the editor open and can switch between the consumer view and the editing view naturally. Update the preview ribbon to: "🔍 You're seeing this trip as a traveller would. <strong>Close this tab</strong> to return to editing." Also add a persistent "Edit this trip" button in the top-right of the preview. The partner should never be stranded.</div>
+  </div>
+</div>
+
+<!-- ─── 4. REVAMP BRIEFS ───────────────────────────────── -->
+<div class="section">
+  <div class="ey">04 — Revamp briefs</div>
+  <h2 class="sh">5 core partner jobs</h2>
+
+  <div class="job">
+    <div class="job-head"><div class="job-num" style="background:var(--t50);color:var(--t600);">1</div><div class="job-title">Sign up &amp; org setup</div></div>
+    <div class="job-body">
+      <div class="job-row"><div class="job-label">Happy path</div><div class="job-val">Land on /partner/login → read value prop ("Reach 12,000+ solo travellers — list your trips free") → click "Create account" → enter org name + name + email + password → create account → land in onboarding wizard (not blank dashboard).</div></div>
+      <div class="job-row"><div class="job-label">Edge cases</div><div class="job-val"><strong>Email already registered:</strong> "An account with this email exists — sign in instead?" with switch-to-login CTA. <strong>Org name blank:</strong> "What's your community called?" inline nudge. <strong>Weak password:</strong> Show strength indicator + "At least 8 characters, include a number."</div></div>
+      <div class="job-row"><div class="job-label">Key components</div><div class="job-val">PartnerLoginCard · ValuePropRow · OrgNameInput · PasswordStrengthBar · WelcomeModal (post-signup)</div></div>
+      <div class="job-row"><div class="job-label">Improvements</div><div class="job-val">Add a 3-bullet value prop above the form: "✓ 12,000+ solo travellers searching your destination · ✓ Zero commission · ✓ No payment integration — use your existing link." Add a "See how it works" link (opens a 30-second demo modal). Forgot password flow.</div></div>
+    </div>
+  </div>
+
+  <div class="job">
+    <div class="job-head"><div class="job-num" style="background:var(--c50);color:var(--c600);">2</div><div class="job-title">Dashboard — daily ops home base</div></div>
+    <div class="job-body">
+      <div class="job-row"><div class="job-label">Happy path</div><div class="job-val">Log in → see dashboard → immediately see what needs action (drafts needing completion, upcoming trips in 30 days) → tap into the trip needing attention → fix it → publish or prepare.</div></div>
+      <div class="job-row"><div class="job-label">Edge cases</div><div class="job-val"><strong>First login (no trips):</strong> Onboarding wizard (not blank dashboard). <strong>All trips live, nothing to do:</strong> Show "Your trips are all set 🎉" + "Create a new trip for the next season." <strong>Trip expiring soon (start date &lt;7 days):</strong> Highlight in amber with "Upcoming in 5 days."</div></div>
+      <div class="job-row"><div class="job-label">Key components</div><div class="job-val">ActionRequired card · KPITileRow · TripTable (sortable) · TripHealthIndicator · BookingClicksBar · UpcomingAlert</div></div>
+      <div class="job-row"><div class="job-label">Improvements</div><div class="job-val">Surface "drafts needing action" first (above the full table). Show booking click count inline in the trip table. Add a "Continue setup →" sticky banner if first trip isn't published yet.</div></div>
+    </div>
+  </div>
+
+  <div class="job">
+    <div class="job-head"><div class="job-num" style="background:var(--t50);color:var(--t600);">3</div><div class="job-title">Trip builder — the most critical flow</div></div>
+    <div class="job-body">
+      <div class="job-row"><div class="job-label">Happy path</div><div class="job-val">Click "Create trip" → wizard step 1: trip name + destination + dates (autosave creates draft) → step 2: itinerary (add days one by one) → step 3: pricing + inclusions → step 4: payment link (guided) → step 5: cover photo → review checklist → click "Go live" → confirm → published → success screen with consumer-facing URL to share.</div></div>
+      <div class="job-row"><div class="job-label">Edge cases</div><div class="job-val"><strong>Partner leaves mid-build:</strong> Draft is saved automatically. Dashboard shows "Continue your Spiti trip →" banner. <strong>Validation fails on publish:</strong> Errors shown as checklist items with direct jump links — not a wall of red text. <strong>No payment link:</strong> Guided creation flow, not a hard block with no escape. <strong>Trip dates in the past:</strong> Inline warning "These dates have passed — is this trip still upcoming?"</div></div>
+      <div class="job-row"><div class="job-label">Key components</div><div class="job-val">SectionNav · CompletionBar · FieldWithHelpText · ItineraryDayCard · PaymentLinkGuide · PublishChecklist · PublishSuccessScreen</div></div>
+      <div class="job-row"><div class="job-label">Improvements</div><div class="job-val"><strong>Section navigation sidebar</strong> with completion checkmarks. <strong>Minimum viable publish</strong> guidance: "You need at least: title, destination, dates, price, and payment link to go live." <strong>Trip duplication</strong>: "Copy from a previous trip" to avoid re-entering recurring info. <strong>Preview always accessible</strong> from any step via "Preview" button (new tab).</div></div>
+    </div>
+  </div>
+
+  <div class="job">
+    <div class="job-head"><div class="job-num" style="background:var(--i50);color:var(--i500);">4</div><div class="job-title">Trip lifecycle management</div></div>
+    <div class="job-body">
+      <div class="job-row"><div class="job-label">Happy path</div><div class="job-val">Draft → validate (auto on publish attempt) → live → upcoming (when start date &lt;30 days) → completed (after end date) → optional: archived.</div></div>
+      <div class="job-row"><div class="job-label">Edge cases</div><div class="job-val"><strong>Publish fails validation:</strong> Each error links directly to the field that needs fixing. <strong>Unpublish a live trip:</strong> Confirm dialog: "Unpublishing removes this trip from Trippy search. Travellers who've already clicked Book Now won't be affected." <strong>Trip completed automatically:</strong> System moves to completed after end date — email notification to partner. <strong>Admin suspends trip:</strong> Partner sees a "This trip is suspended — contact Trippy support" banner on the editor.</td></div>
+      <div class="job-row"><div class="job-label">Key components</div><div class="job-val">StatusBadge (7 states) · TransitionButton (state-aware) · ConfirmUnpublishModal · SuspendedBanner · CompletedBanner</div></div>
+      <div class="job-row"><div class="job-label">Improvements</div><div class="job-val">Make status transitions explicit with a visible "lifecycle flow" tooltip: "Draft → Live → Upcoming → Completed." Partners often don't understand why their trip shows as "upcoming" when they expect it to be "live."</div></div>
+    </div>
+  </div>
+
+  <div class="job">
+    <div class="job-head"><div class="job-num" style="background:var(--t50);color:var(--t600);">5</div><div class="job-title">Booking click tracking &amp; analytics</div></div>
+    <div class="job-body">
+      <div class="job-row"><div class="job-label">Happy path</div><div class="job-val">Partner opens dashboard → sees booking click count per trip inline in the table → clicks a trip to see day-by-day click trend → understands "Spiti Valley Circuit gets 15 clicks/day."</div></div>
+      <div class="job-row"><div class="job-label">Edge cases</div><div class="job-val"><strong>0 clicks on a live trip:</strong> "No clicks yet — your trip has been live for 3 days. Tips for more visibility →" (Phase 1 placeholder). <strong>Very high clicks but no bookings (Phase 2):</strong> "High interest — consider adding a direct booking option." (Phase 2 teaser).</div></div>
+      <div class="job-row"><div class="job-label">Key components</div><div class="job-val">BookingClickCount (inline in table) · ClickTrendMini (sparkline in trip detail) · PhaseTeaser ("Coming soon: conversion analytics")</div></div>
+      <div class="job-row"><div class="job-label">Improvements</div><div class="job-val">Phase 1: Show click count inline in the dashboard trip table — no separate analytics tab needed. Phase 2 teaser: A greyed "Analytics" nav item with "Coming soon — see conversion rates, lead sources, booking funnel." Never show empty analytics UI — only the teaser.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 5. ONBOARDING WIZARD ────────────────────────────── -->
+<div class="section">
+  <div class="ey">05 — Onboarding wizard</div>
+  <h2 class="sh">Partner activation journey — sign up → first published trip</h2>
+  <p class="sdesc">5 milestone steps. Time-to-first-publish goal: under 10 minutes for a motivated partner. Draft created at step 1 — progress never lost after that.</p>
+
+  <div style="background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;">
+    <div style="display:grid;grid-template-columns:40px 1fr 140px 180px 180px;gap:0;background:var(--lss);border-bottom:1px solid var(--line);">
+      <div style="padding:10px 14px;font:700 10px var(--fb);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);">#</div>
+      <div style="padding:10px 14px;font:700 10px var(--fb);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);">Partner sees / Partner does</div>
+      <div style="padding:10px 14px;font:700 10px var(--fb);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);">System feedback</div>
+      <div style="padding:10px 14px;font:700 10px var(--fb);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);">Autosave / exit</div>
+      <div style="padding:10px 14px;font:700 10px var(--fb);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);">Time target</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:40px 1fr 140px 180px 180px;gap:0;padding:16px 14px;border-bottom:1px solid var(--ls);align-items:flex-start;">
+      <div style="width:28px;height:28px;border-radius:50%;background:var(--t500);color:#fff;display:flex;align-items:center;justify-content:center;font:700 12px var(--fh);">1</div>
+      <div><strong style="display:block;font:700 14px var(--fh);color:var(--ink);margin-bottom:4px;">Welcome — tell us about your first trip</strong><div style="font-size:13px;color:var(--muted);">Full-screen welcome: "Let's publish your first trip in 5 minutes." Partner enters: trip name, destination (dropdown), start + end dates, departure city. One page, 5 fields. CTA: "Save &amp; continue →"</div></div>
+      <div style="font-size:12.5px;color:var(--muted);">Draft trip created instantly via POST /trips. Save indicator: "Draft saved."</div>
+      <div style="font-size:12.5px;color:var(--muted);">Draft auto-saved. "Continue setup" banner appears on dashboard if they exit now.</div>
+      <div style="font-size:12.5px;color:var(--t600);font-weight:600;">~90 seconds</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:40px 1fr 140px 180px 180px;gap:0;padding:16px 14px;border-bottom:1px solid var(--ls);align-items:flex-start;">
+      <div style="width:28px;height:28px;border-radius:50%;background:var(--t500);color:#fff;display:flex;align-items:center;justify-content:center;font:700 12px var(--fh);">2</div>
+      <div><strong style="display:block;font:700 14px var(--fh);color:var(--ink);margin-bottom:4px;">Build the day-by-day itinerary</strong><div style="font-size:13px;color:var(--muted);">Itinerary builder: "Add your trip day by day." Partner adds Day 1, Day 2, etc. Each day: title + one-line description + location. Helper: "You can add more detail later — just get the days in now." Skip option: "I'll add the itinerary later."</div></div>
+      <div style="font-size:12.5px;color:var(--muted);">Each day saved on blur. "Day 1 saved ✓" toast.</div>
+      <div style="font-size:12.5px;color:var(--muted);">Can skip and continue. Days are optional for draft but required for publish.</div>
+      <div style="font-size:12.5px;color:var(--t600);font-weight:600;">~3 minutes</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:40px 1fr 140px 180px 180px;gap:0;padding:16px 14px;border-bottom:1px solid var(--ls);align-items:flex-start;">
+      <div style="width:28px;height:28px;border-radius:50%;background:var(--t500);color:#fff;display:flex;align-items:center;justify-content:center;font:700 12px var(--fh);">3</div>
+      <div><strong style="display:block;font:700 14px var(--fh);color:var(--ink);margin-bottom:4px;">Set your price &amp; what's included</strong><div style="font-size:13px;color:var(--muted);">Pricing: price per person (₹), original price (optional for discount badge), what's included (bulleted list), what's not. Helper text per field: "e.g. ₹18,500 per person, including accommodation and all meals."</div></div>
+      <div style="font-size:12.5px;color:var(--muted);">Price autosaved. Discount badge preview shown if original &gt; price.</div>
+      <div style="font-size:12.5px;color:var(--muted);">Draft saved at every change. Can exit and return.</div>
+      <div style="font-size:12.5px;color:var(--t600);font-weight:600;">~2 minutes</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:40px 1fr 140px 180px 180px;gap:0;padding:16px 14px;border-bottom:1px solid var(--ls);align-items:flex-start;">
+      <div style="width:28px;height:28px;border-radius:50%;background:var(--c500);color:#fff;display:flex;align-items:center;justify-content:center;font:700 12px var(--fh);">4</div>
+      <div><strong style="display:block;font:700 14px var(--fh);color:var(--ink);margin-bottom:4px;">Add your payment link</strong><div style="font-size:13px;color:var(--muted);">Full payment link guidance card (see Critical Fix #3). Partner pastes their Razorpay/Instamojo/website URL. If no link: "Help me create a free Razorpay link →" (guided 3-step). This step is highlighted as "Required to go live."</div></div>
+      <div style="font-size:12.5px;color:var(--muted);">Green ✓ "Valid payment link" when https:// URL entered. Red ✗ with helpful message if invalid.</div>
+      <div style="font-size:12.5px;color:var(--muted);">Can save draft without it. Cannot publish without it.</div>
+      <div style="font-size:12.5px;color:var(--t600);font-weight:600;">~1 minute</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:40px 1fr 140px 180px 180px;gap:0;padding:16px 14px;align-items:flex-start;">
+      <div style="width:28px;height:28px;border-radius:50%;background:var(--green600);color:#fff;display:flex;align-items:center;justify-content:center;font:700 12px var(--fh);"><i class="ph-bold ph-rocket-launch" style="font-size:12px;"></i></div>
+      <div><strong style="display:block;font:700 14px var(--fh);color:var(--ink);margin-bottom:4px;">Review &amp; go live</strong><div style="font-size:13px;color:var(--muted);">Pre-publish checklist: all required fields shown as ✓ / ✕. "Preview as traveller" button (new tab). Confirmation: "Once live, travellers can find and book your trip." CTA: "Go live →". On success: full-screen celebration + shareable consumer-facing link.</div></div>
+      <div style="font-size:12.5px;color:var(--muted);">If any required field missing: jump link to fix it. On publish success: "🎉 Your trip is live! Share this link: trippy.in/trip/[slug]"</div>
+      <div style="font-size:12.5px;color:var(--muted);">Can abort and return to draft. All changes saved.</div>
+      <div style="font-size:12.5px;color:var(--green600);font-weight:600;">~1 minute</div>
+    </div>
+  </div>
+
+  <div style="margin-top:14px;background:var(--t50);border-left:3px solid var(--t500);border-radius:6px;padding:12px 16px;font-size:13.5px;color:var(--t700);line-height:1.55;">
+    <strong>Drop-off prevention:</strong> At every step, a "Save &amp; finish later" button appears. On exit, a "Continue your Spiti Valley trip" banner persists on the dashboard. Partners should never feel like they have to finish in one sitting — but they should always know how far they got and what's left.
+  </div>
+</div>
+
+<!-- ─── 6. DASHBOARD DESIGN ───────────────────────────── -->
+<div class="section">
+  <div class="ey">06 — Dashboard design</div>
+  <h2 class="sh">What the partner sees on every login</h2>
+  <p class="sdesc">Information hierarchy: what needs action (drafts, upcoming) comes first. What is informational (completed, all-time stats) comes last. The partner should never have to hunt for what to do next.</p>
+
+  <div class="dash-section">
+    <div style="font:700 13px var(--fh);color:var(--ink);margin-bottom:16px;">Layout recommendation — top to bottom</div>
+    <div style="display:flex;flex-direction:column;gap:14px;font-size:14px;color:var(--muted);line-height:1.6;">
+      <div><strong style="color:var(--ink);">Zone 1 — Urgency (always first):</strong> If drafts exist → "1 trip needs attention before it can go live" card with direct edit link. If upcoming trips in &lt;7 days → "Spiti Valley Circuit leaves in 4 days" amber banner. If first-login → onboarding wizard. These are conditional — disappear when resolved.</div>
+      <div><strong style="color:var(--ink);">Zone 2 — 4 KPI metrics (actionable):</strong> Total trips · Live now · Book Now clicks (30d) · Upcoming trips. "Completed" and "Draft" counts are secondary and moved to a filters strip above the table — not KPI tiles. The 4 KPI tiles chosen are all forward-looking or actionable, not historical.</div>
+      <div><strong style="color:var(--ink);">Zone 3 — Trip table (sorted by urgency):</strong> Default sort: upcoming trips first, then live, then draft (needing action), then completed. Each row shows: trip name · destination · dates · status badge · booking clicks bar · actions. Trip rows glow amber if start date &lt;7 days. Rows with missing payment link show a ⚠ icon.</div>
+      <div><strong style="color:var(--ink);">Zone 4 — Phase 2 teaser (bottom, unobtrusive):</strong> A single quiet card: "Coming soon: direct booking + conversion analytics." Never shows as an empty locked UI — just a small teaser card at the bottom.</div>
+    </div>
+  </div>
+
+  <div class="dash-grid" style="margin-top:0;">
+    <div class="dash-section" style="margin-bottom:0;">
+      <div style="font:700 12px var(--fb);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:16px;">The 4 recommended KPI metrics and why</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="dash-kpi">
+          <div class="dash-kpi-val">3</div>
+          <div class="dash-kpi-label">Live trips</div>
+          <div class="dash-kpi-why">The partner's primary output. Not "total trips" — that inflates with drafts. "Live" is what matters.</div>
+        </div>
+        <div class="dash-kpi">
+          <div class="dash-kpi-val" style="color:var(--c600);">148</div>
+          <div class="dash-kpi-label">Book Now clicks (30d)</div>
+          <div class="dash-kpi-why">The clearest proxy for revenue interest. Partners need to know their trips are working. No other metric is as motivating.</div>
+        </div>
+        <div class="dash-kpi">
+          <div class="dash-kpi-val" style="color:var(--i500);">1</div>
+          <div class="dash-kpi-label">Upcoming departures</div>
+          <div class="dash-kpi-why">Creates urgency. A trip leaving in 6 days needs final prep. This number should drive weekly ops behaviour.</div>
+        </div>
+        <div class="dash-kpi">
+          <div class="dash-kpi-val" style="color:var(--amber600);">1</div>
+          <div class="dash-kpi-label">Drafts needing action</div>
+          <div class="dash-kpi-why">Makes incomplete drafts visible. "Draft" implies "not earning." This metric creates internal pressure to finish and publish.</div>
+        </div>
+      </div>
+    </div>
+    <div class="dash-section" style="margin-bottom:0;">
+      <div style="font:700 12px var(--fb);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:16px;">Trip table column priority</div>
+      <div style="display:flex;flex-direction:column;gap:8px;font-size:13.5px;color:var(--muted);">
+        <div style="display:flex;align-items:center;gap:8px;"><span style="width:20px;height:20px;border-radius:5px;background:var(--t500);color:#fff;display:flex;align-items:center;justify-content:center;font:700 10px var(--fh);flex-shrink:0;">1</span>Trip name (link to editor)</div>
+        <div style="display:flex;align-items:center;gap:8px;"><span style="width:20px;height:20px;border-radius:5px;background:var(--t500);color:#fff;display:flex;align-items:center;justify-content:center;font:700 10px var(--fh);flex-shrink:0;">2</span>Dates + destination</div>
+        <div style="display:flex;align-items:center;gap:8px;"><span style="width:20px;height:20px;border-radius:5px;background:var(--t500);color:#fff;display:flex;align-items:center;justify-content:center;font:700 10px var(--fh);flex-shrink:0;">3</span>Status badge (colour-coded)</div>
+        <div style="display:flex;align-items:center;gap:8px;"><span style="width:20px;height:20px;border-radius:5px;background:var(--c500);color:#fff;display:flex;align-items:center;justify-content:center;font:700 10px var(--fh);flex-shrink:0;">4</span>Booking clicks (mini bar chart)</div>
+        <div style="display:flex;align-items:center;gap:8px;"><span style="width:20px;height:20px;border-radius:5px;background:var(--faint);color:#fff;display:flex;align-items:center;justify-content:center;font:700 10px var(--fh);flex-shrink:0;">5</span>Actions (Edit · Preview · Publish/Unpublish · Delete)</div>
+        <div style="margin-top:6px;font-size:12.5px;background:var(--ls);border-radius:8px;padding:8px 10px;"><strong style="color:var(--ink);">Remove:</strong> "Updated at" column. Not actionable — replaced by the ⚠ indicator on rows needing attention.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 7. TRIP BUILDER FLOW ──────────────────────────── -->
+<div class="section">
+  <div class="ey">07 — Trip builder flow</div>
+  <h2 class="sh">Step-by-step: fields, validation, autosave, help text</h2>
+  <div style="overflow-x:auto;">
+    <table class="tbl" style="min-width:1000px;">
+      <thead><tr>
+        <th style="min-width:130px;">Step</th>
+        <th style="min-width:200px;">Fields shown</th>
+        <th style="min-width:180px;">Validation rules</th>
+        <th style="min-width:130px;">Autosave behavior</th>
+        <th style="min-width:180px;">Help text needed</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>1. Basic info</strong><br><span style="font-size:11px;color:var(--faint);">Required to create draft</span></td>
+          <td>Trip name · Short description · Long description · Destination (dropdown) · Start date · End date · Duration (auto-calculated) · Departure city · Category (dropdown) · Difficulty · Max group size · Min age · Tags</td>
+          <td>Name required (non-empty). Dates: end &gt; start. Duration auto-fills from dates. Category from fixed list. Max group size &gt; 0.</td>
+          <td>Autosave on each field blur. Draft created on first save. Save indicator always visible in header.</td>
+          <td>Name: "e.g. Spiti Valley Circuit — 9 Days" · Destination: "Where the trip goes, not where travellers join from" · Short desc: "One line that appears on the trip card — make it count" · Departure city: "Where travellers meet you to start the trip"</td>
+        </tr>
+        <tr>
+          <td><strong>2. Itinerary</strong><br><span style="font-size:11px;color:var(--faint);">Required for publish</span></td>
+          <td>Add day button · Per day: Day number (auto) · Day title · Location · Description · Activities (comma-separated or pill chips) · Accommodation · Meals · Reorder (up/down) · Delete day</td>
+          <td>At least 1 day required for publish. Day title required if day exists. Activities: trim whitespace from comma-separated input. No empty activities.</td>
+          <td>Each day saved individually on blur (PATCH /itinerary/:dayId). Reorder triggers immediate PUT /itinerary-reorder. Toast: "Day 2 saved ✓"</td>
+          <td>Activities: "e.g. acclimatisation walk, local market visit" · Accommodation: "e.g. Homestay in Kaza — leave blank if not fixed" · Meals: "e.g. Breakfast, Dinner — leave blank for free days"</td>
+        </tr>
+        <tr>
+          <td><strong>3. Pricing</strong><br><span style="font-size:11px;color:var(--faint);">Required for publish</span></td>
+          <td>Price per person (₹) · Original price (optional) · Pricing notes · Inclusions list · Exclusions list</td>
+          <td>Price required, numeric, &gt;0. Original price: if set, must be &gt; price (otherwise no discount badge shown). Pricing notes: optional free text. Inclusions: at least 1 item recommended (soft warning).</td>
+          <td>Autosave on blur. Live preview: if original &gt; price, discount badge shown: "16% off." Inclusions/exclusions: autosave each line on blur.</td>
+          <td>Price: "Per person, all-inclusive — what a traveller pays to join your trip" · Original: "The price before any discount — creates a 'X% off' badge on your card" · Inclusions: "What's covered: accommodation, meals, transport, guide, permits, etc." · Exclusions: "What the traveller pays separately: flights, personal expenses, travel insurance"</td>
+        </tr>
+        <tr>
+          <td><strong>4. Payment link</strong><br><span style="font-size:11px;color:var(--faint);">Required for publish</span></td>
+          <td>External payment URL · Guidance card (what is this?) · Quick-start buttons (Razorpay, Instamojo, own website) · Valid URL indicator</td>
+          <td>Required for publish. Must start with https://. Google Forms / WhatsApp links shown a specific error: "This looks like a form/chat link — please use a payment page where travellers can pay." Max 500 chars.</td>
+          <td>Autosave on blur. Real-time validation: green ✓ "Valid link" / red ✗ "Needs to be a secure https:// link."</td>
+          <td>"Where travellers pay you to book your trip. This is your Razorpay payment link, Instamojo link, or any page on your website with a payment button." · "Don't have one yet? → Create a free Razorpay link in 5 minutes (opens external guide)" · Never: "External payment URL (https)"</td>
+        </tr>
+        <tr>
+          <td><strong>5. Media</strong><br><span style="font-size:11px;color:var(--faint);">Recommended for publish</span></td>
+          <td>Cover image URL · Cover preview thumbnail · Gallery image URLs (up to 6) · Gallery thumbnails</td>
+          <td>Cover: valid URL, https. Recommended ratio: 16:9 (soft hint). Gallery: each URL individually validated. No duplicate URLs.</td>
+          <td>Autosave on blur. Thumbnail rendered immediately on valid URL entry. Cover preview shows how card will look on consumer app.</td>
+          <td>"Paste a direct image URL (https://...). The best cover photos show the destination — mountains, beaches, or your group in action." · "Recommended size: 1200×675 pixels (16:9)" · "Google Photos, Dropbox, or any image hosting service works."</td>
+        </tr>
+        <tr>
+          <td><strong>6. Review &amp; publish</strong><br><span style="font-size:11px;color:var(--faint);">Pre-flight checklist</span></td>
+          <td>Completion checklist (all 5 required items) · Preview-as-consumer button · Publish button (disabled until all ✓) · Error explanations with jump links</td>
+          <td>Server-side validation on publish: checks all required fields exist and are valid. Returns human-readable error array: "Your trip is missing a payment link" not "Validation error 422."</td>
+          <td>No autosave on this step — explicit user action required. "Publish" flushes all pending saves before submitting.</td>
+          <td>"Before going live, check that your trip looks right. Preview it as a traveller would see it." · Each error: specific fix instruction + direct link to the field — never a generic error.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ─── 8. TRIP LIFECYCLE STATES ─────────────────────── -->
+<div class="section">
+  <div class="ey">08 — Trip lifecycle states</div>
+  <h2 class="sh">Visual treatment + available actions per state</h2>
+  <div style="background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;">
+    <div class="lc-row lc-head"><div>State</div><div>Visual treatment</div><div>Available actions</div><div>Transition trigger</div><div>Partner-facing label</div></div>
+    <div class="lc-row">
+      <td><span style="font:700 11px var(--fb);padding:3px 10px;border-radius:99px;background:var(--lss);color:var(--faint);">Draft</span></td>
+      <div style="font-size:13px;color:var(--muted);">Greyed row in table (opacity 0.8). ⚠ icon if missing required fields. "Draft" badge.</div>
+      <div style="font-size:13px;color:var(--muted);">Edit · Preview · Publish (if complete) · Delete</div>
+      <div style="font-size:13px;color:var(--muted);">Created automatically on first save. Partner must explicitly publish.</div>
+      <div style="font-size:13px;color:var(--ink);">"Draft — not visible to travellers"</div>
+    </div>
+    <div class="lc-row">
+      <td><span style="font:700 11px var(--fb);padding:3px 10px;border-radius:99px;background:var(--green50);color:var(--green600);">Live</span></td>
+      <div style="font-size:13px;color:var(--muted);">Full opacity. Green badge. Booking click count shown. Trip appears in consumer search results.</div>
+      <div style="font-size:13px;color:var(--muted);">Edit · Preview · View on Trippy ↗ · Unpublish</div>
+      <div style="font-size:13px;color:var(--muted);">Partner clicks "Go live" + server validates + publish succeeds.</div>
+      <div style="font-size:13px;color:var(--ink);">"Live — visible to travellers"</div>
+    </div>
+    <div class="lc-row">
+      <td><span style="font:700 11px var(--fb);padding:3px 10px;border-radius:99px;background:var(--i50);color:var(--i500);">Upcoming</span></td>
+      <div style="font-size:13px;color:var(--muted);">Indigo badge. Amber glow on row if start date &lt;7 days. Countdown: "Leaves in 4 days."</div>
+      <div style="font-size:13px;color:var(--muted);">Edit (limited) · View on Trippy ↗ · Mark as completed</div>
+      <div style="font-size:13px;color:var(--muted);">Automatic: when start date is within 30 days and trip is live.</div>
+      <div style="font-size:13px;color:var(--ink);">"Upcoming — departure soon"</div>
+    </div>
+    <div class="lc-row">
+      <td><span style="font:700 11px var(--fb);padding:3px 10px;border-radius:99px;background:var(--ls);color:var(--muted);">Completed</span></td>
+      <div style="font-size:13px;color:var(--muted);">Greyed. "Completed" badge. Booking click total shown as historical stat. No longer in search results.</div>
+      <div style="font-size:13px;color:var(--muted);">View · Archive · Duplicate (for next season)</div>
+      <div style="font-size:13px;color:var(--muted);">Automatic after end date passes, or manual "Mark as completed."</div>
+      <div style="font-size:13px;color:var(--ink);">"Completed — trip has ended"</div>
+    </div>
+    <div class="lc-row">
+      <td><span style="font:700 11px var(--fb);padding:3px 10px;border-radius:99px;background:var(--lss);color:var(--faint);">Archived</span></td>
+      <div style="font-size:13px;color:var(--muted);">Hidden from default dashboard view. Shown under "Archived" filter only. Deeply greyed.</div>
+      <div style="font-size:13px;color:var(--muted);">Unarchive · Duplicate</div>
+      <div style="font-size:13px;color:var(--muted);">Partner manually archives. No automatic archival.</div>
+      <div style="font-size:13px;color:var(--ink);">"Archived"</div>
+    </div>
+    <div class="lc-row">
+      <td><span style="font:700 11px var(--fb);padding:3px 10px;border-radius:99px;background:var(--red50);color:var(--red600);">Suspended</span></td>
+      <div style="font-size:13px;color:var(--muted);">Red badge. Prominent warning banner in editor: "This trip has been suspended by Trippy. Contact <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="36454346465944427642445f46464f185f58">[email&#160;protected]</a>." No edit actions allowed.</div>
+      <div style="font-size:13px;color:var(--muted);">View only · Contact support</div>
+      <div style="font-size:13px;color:var(--muted);">Admin action only. Partner cannot trigger this.</div>
+      <div style="font-size:13px;color:var(--ink);">"Suspended — contact Trippy support"</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 9. DESIGN CHECKLIST ────────────────────────────── -->
+<div class="section">
+  <div class="ey">09 — Design checklist</div>
+  <h2 class="sh">20-point pre-handoff validation for partner portal screens</h2>
+  <div style="background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px;">
+    <div class="cl-group">
+      <div class="cl-group-title"><i class="ph-bold ph-rocket-launch" style="font-size:12px;"></i>Activation (4 checks)</div>
+      <div class="cl-item"><div class="cl-box"></div><div class="cl-num">1</div><div class="cl-text"><strong>First-login state is handled.</strong> New partner with 0 trips never sees a blank dashboard. Onboarding wizard launches automatically.</div></div>
+      <div class="cl-item"><div class="cl-box"></div><div class="cl-num">2</div><div class="cl-text"><strong>"Continue setup" banner persists</strong> on the dashboard until the first trip is published. Partners should always know how to pick up where they left off.</div></div>
+      <div class="cl-item"><div class="cl-box"></div><div class="cl-num">3</div><div class="cl-text"><strong>Time-to-first-publish under 10 minutes</strong> for a partner who has their trip info ready. Validated by testing with a real operator who has never used the portal.</div></div>
+      <div class="cl-item"><div class="cl-box"></div><div class="cl-num">4</div><div class="cl-text"><strong>Publish success screen</strong> shows the consumer-facing URL and a "Copy link to share" button. Partner's first live moment must feel celebratory.</div></div>
+    </div>
+    <div class="cl-group">
+      <div class="cl-group-title"><i class="ph-bold ph-flow-arrow" style="font-size:12px;"></i>Trip builder (5 checks)</div>
+      <div class="cl-item"><div class="cl-box"></div><div class="cl-num">5</div><div class="cl-text"><strong>Autosave indicator always visible</strong> in the editor — never hidden off-screen. Partner should never wonder if their work is saved.</div></div>
+      <div class="cl-item"><div class="cl-box"></div><div class="cl-num">6</div><div class="cl-text"><strong>Completion percentage visible</strong> in the section nav sidebar. Partner knows "4 of 6 sections done" at a glance.</div></div>
+      <div class="cl-item"><div class="cl-box"></div><div class="cl-num">7</div><div class="cl-text"><strong>Payment link field has full guidance</strong> — not just a text input. Includes explainer, examples, and "help me create one" link for non-technical partners.</div></div>
+      <div class="cl-item"><div class="cl-box"></div><div class="cl-num">8</div><div class="cl-text"><strong>Publish validation errors are specific and actionable.</strong> "Your trip is missing a payment link" with a direct jump link — never "Validation error 422."</div></div>
+      <div class="cl-item"><div class="cl-box"></div><div class="cl-num">9</div><div class="cl-text"><strong>Preview opens in a new tab</strong> and includes a clear "close this tab to return to editing" instruction. Partner must never be stranded in preview with no way back.</div></div>
+    </div>
+    <div class="cl-group">
+      <div class="cl-group-title"><i class="ph-bold ph-buildings" style="font-size:12px;"></i>Multi-tenancy &amp; trust (3 checks)</div>
+      <div class="cl-item"><div class="cl-box"></div><div class="cl-num">10</div><div class="cl-text"><strong>Org name is always visible</strong> in the sidebar and topbar. A partner who manages multiple orgs (Phase 2) must always know which org they're in.</div></div>
+      <div class="cl-item"><div class="cl-box"></div><div class="cl-num">11</div><div class="cl-text"><strong>No data cross-contamination.</strong> Every API call is scoped to the authenticated org. The UI must never show trip names, analytics, or team members from another org — even as empty/loading states.</div></div>
+      <div class="cl-item"><div class="cl-box"></div><div class="cl-num">12</div><div class="cl-text"><strong>Suspended state is unambiguous.</strong> A suspended trip shows a red banner with contact instructions. The partner knows exactly what happened and what to do — not a confusing 403 error.</div></div>
+    </div>
+    <div class="cl-group">
+      <div class="cl-group-title"><i class="ph-bold ph-device-tablet" style="font-size:12px;"></i>Tablet UX (4 checks)</div>
+      <div class="cl-item"><div class="cl-box"></div><div class="cl-num">13</div><div class="cl-text"><strong>Touch targets ≥44px</strong> on all buttons, day reorder controls, and itinerary action buttons. Partners often work on-site with tablets where precision is lower.</div></div>
+      <div class="cl-item"><div class="cl-box"></div><div class="cl-num">14</div><div class="cl-text"><strong>Sidebar collapses to icons-only</strong> on tablet (&lt;900px) to preserve editor space. Full label visible on hover/tap.</div></div>
+      <div class="cl-item"><div class="cl-box"></div><div class="cl-num">15</div><div class="cl-text"><strong>Itinerary day reorder</strong> works on tablet. Up/down arrows are minimum 44px tap targets. Future: drag-to-reorder with long-press gesture.</div></div>
+      <div class="cl-item"><div class="cl-box"></div><div class="cl-num">16</div><div class="cl-text"><strong>Sticky action bar is always accessible</strong> on tablet — not hidden behind keyboard or cut off by viewport height changes.</div></div>
+    </div>
+    <div class="cl-group" style="margin-bottom:0;">
+      <div class="cl-group-title"><i class="ph-bold ph-text-aa" style="font-size:12px;"></i>Copy &amp; tone (4 checks)</div>
+      <div class="cl-item"><div class="cl-box"></div><div class="cl-num">17</div><div class="cl-text"><strong>No jargon.</strong> "Your trips" not "listing pipeline." "Go live" not "publish to production." "Book Now clicks" not "outbound CTR." Every label tested with a non-technical partner.</div></div>
+      <div class="cl-item"><div class="cl-box"></div><div class="cl-num">18</div><div class="cl-text"><strong>Help text is contextual, not generic.</strong> Every input field has a real example (not a placeholder like "enter text here"). The example must match a real Indian travel scenario.</div></div>
+      <div class="cl-item"><div class="cl-box"></div><div class="cl-num">19</div><div class="cl-text"><strong>Phase 2 features are teased, not faked.</strong> "Coming soon: direct booking" as a small footer card. Never shown as a broken/empty/locked UI section that confuses the partner.</div></div>
+      <div class="cl-item"><div class="cl-box"></div><div class="cl-num">20</div><div class="cl-text"><strong>Error states are warm, not punishing.</strong> "Your trip needs a payment link before it can go live — here's how to add one" not "Publishing failed. Required field missing." The partner should feel supported, not judged.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- footer -->
+<div style="margin-top:80px;padding-top:28px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+  <div style="display:flex;align-items:center;gap:9px;">
+    <div style="width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--c500),var(--c600));display:flex;align-items:center;justify-content:center;font-size:15px;">🧭</div>
+    <span style="font-family:var(--fh);font-weight:700;font-size:16px;color:var(--ink);">Trippy Partner CRM · UX Audit</span>
+  </div>
+  <span style="font-size:12px;color:var(--faint);">v1.0 · July 2026 · 4 P0 · 8 P1 · 20-point checklist</span>
+</div>
+
+</div>
+
+</x-dc>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+</html>

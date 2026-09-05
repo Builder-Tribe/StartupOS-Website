@@ -1,0 +1,22 @@
+{
+  "name": "businesspay",
+  "version": "1.0.0",
+  "description": "BusinessPay — B2B Accounts Receivable Collections & Early Payment Accelerator",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "concurrently \"node server/index.js\" \"vite --port 5000 --host\"",
+    "start": "concurrently \"node server/index.js\" \"vite --port 5000 --host\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.2",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "vite": "^6.0.7"
+  }
+}

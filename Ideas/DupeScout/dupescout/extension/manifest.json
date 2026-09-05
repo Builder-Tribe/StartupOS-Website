@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "DupeScout — Shop the Look. Not the Markup.",
+  "short_name": "DupeScout",
+  "description": "Find visually similar products and cheaper dupes across India and the web while browsing.",
+  "version": "1.0.0",
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "DupeScout — Find Dupes"
+  },
+  "side_panel": {
+    "default_path": "sidepanel/sidepanel.html"
+  },
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content/content-script.js"],
+      "css": ["content/content-script.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "contextMenus",
+    "sidePanel",
+    "notifications",
+    "tabs"
+  ],
+  "host_permissions": [
+    "http://localhost:8000/*",
+    "https://*/*"
+  ]
+}

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Hanken+Grotesque:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root{--t50:#e6f5f3;--t100:#cceae6;--t500:#0e9f8f;--t600:#0b7a6c;--t700:#085f54;--c50:#fff3ee;--c100:#ffe4d6;--c200:#ffc9ac;--c500:#f2683c;--c600:#c2410c;--i50:#eef0ff;--i500:#6366f1;--ink:#14202a;--muted:#5d6b76;--faint:#8795a0;--line:#e6ebee;--ls:#eef1f3;--lss:#f4f6f8;--bg:#fbfcfd;--red50:#fee2e2;--red600:#dc2626;--amber50:#fffbeb;--amber600:#d97706;--green50:#dcfce7;--green600:#16a34a;--fh:'Bricolage Grotesque',-apple-system,sans-serif;--fb:'Hanken Grotesque',-apple-system,sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--fb);background:#e8e4de;-webkit-font-smoothing:antialiased;}
+.canvas{padding:48px 40px 100px;display:flex;flex-direction:column;gap:72px;}
+.turn-hd{margin-bottom:24px;}
+.tl{font:800 11px var(--fb);letter-spacing:.1em;text-transform:uppercase;color:rgba(0,0,0,.35);margin-bottom:8px;}
+.tt{font-family:var(--fh);font-weight:700;font-size:26px;color:#1a1a1a;letter-spacing:-.02em;margin-bottom:6px;}
+.td{font-size:14px;color:rgba(0,0,0,.45);line-height:1.6;max-width:680px;}
+.row{display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start;}
+.sw{display:flex;flex-direction:column;gap:10px;}
+.slabel{display:flex;align-items:center;gap:8px;}
+.sid{font:700 11px monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none;}
+.sname{font:600 13px system-ui;color:#1a1a1a;}
+.sbadge{display:inline-flex;align-items:center;gap:4px;font:700 10px var(--fb);padding:2px 7px;border-radius:99px;}
+.p0b{background:var(--red50);color:var(--red600);}
+.nb{background:var(--green50);color:var(--green600);}
+.ib{background:var(--amber50);color:var(--amber600);}
+/* crm shell */
+.crm{display:flex;background:#f7f8fa;overflow:hidden;font-family:var(--fb);}
+.sb{width:220px;background:#fff;border-right:1px solid var(--line);display:flex;flex-direction:column;flex-shrink:0;}
+.sb-brand{display:flex;align-items:center;gap:8px;padding:16px 14px 14px;}
+.sb-tile{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--t500),#14b8a6);display:flex;align-items:center;justify-content:center;font-size:13px;}
+.sb-name{font:700 14px var(--fh);color:var(--ink);}
+.sb-sub{font:600 10px var(--fb);color:var(--faint);}
+.sb-nav{display:flex;flex-direction:column;gap:2px;padding:4px 10px;flex:1;}
+.sb-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;font:600 13px var(--fb);color:var(--muted);}
+.sb-item.active{background:var(--t50);color:var(--t700);}
+.sb-item i{font-size:15px;flex-shrink:0;}
+.sb-badge{margin-left:auto;font:700 10px var(--fb);background:var(--red600);color:#fff;padding:1px 6px;border-radius:99px;}
+.sb-badge-w{background:var(--amber600);}
+.sb-section{font:700 10px var(--fb);letter-spacing:.08em;text-transform:uppercase;color:var(--faint);padding:10px 10px 3px;}
+.sb-coming{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;font:600 12px var(--fb);color:var(--faint);opacity:.6;}
+.sb-org{margin-top:auto;padding:10px;border-top:1px solid var(--line);display:flex;align-items:center;gap:8px;}
+.sb-org-av{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,var(--c500),var(--c600));display:flex;align-items:center;justify-content:center;font-size:12px;}
+.sb-org-name{font:600 12px var(--fb);color:var(--ink);}
+.sb-org-role{font-size:10px;color:var(--faint);}
+/* topbar */
+.crm-top{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:10;}
+.crm-top-title{font-family:var(--fh);font-weight:700;font-size:17px;color:var(--ink);}
+.crm-top-sub{font-size:11.5px;color:var(--faint);margin-top:1px;}
+.crm-top-actions{display:flex;gap:8px;}
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:9px;border:none;font:700 12.5px var(--fb);cursor:pointer;}
+.btn-primary{background:var(--t500);color:#fff;}
+.btn-sec{background:var(--t50);color:var(--t700);}
+.btn-ghost{background:var(--lss);color:var(--muted);}
+.btn-danger{background:var(--red50);color:var(--red600);}
+/* content */
+.crm-body{flex:1;overflow:hidden;display:flex;flex-direction:column;}
+.crm-content{padding:18px 20px;display:flex;flex-direction:column;gap:14px;overflow-y:auto;}
+/* KPI tiles */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:11px;padding:13px 15px;}
+.kpi-val{font-family:var(--fh);font-weight:700;font-size:26px;margin-bottom:2px;}
+.kpi-label{font:600 11px var(--fb);color:var(--faint);}
+.kpi-delta{font:600 11px var(--fb);margin-top:3px;}
+.d-up{color:var(--green600);}
+.d-warn{color:var(--amber600);}
+/* action required */
+.ar-card{background:linear-gradient(135deg,#fffbeb,#fff);border:1.5px solid #fde68a;border-radius:12px;padding:14px 16px;}
+.ar-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.ar-title{font:700 13px var(--fh);color:#92400e;display:flex;align-items:center;gap:6px;}
+.ar-item{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;background:#fff;border:1px solid #fde68a;border-radius:9px;margin-bottom:6px;cursor:pointer;}
+.ar-item:last-child{margin-bottom:0;}
+.ar-item-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.ar-item-text{flex:1;font-size:13px;color:var(--ink);line-height:1.45;}
+.ar-item-action{font:600 11.5px var(--fb);color:var(--t600);text-decoration:underline;white-space:nowrap;}
+/* trip table */
+.trip-card{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+.trip-card-head{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-bottom:1px solid var(--line);background:var(--lss);}
+.trip-table-title{font:700 12.5px var(--fh);color:var(--ink);}
+.tt2{width:100%;border-collapse:collapse;font-size:12.5px;}
+.tt2 th{text-align:left;padding:9px 12px;font:700 10px var(--fb);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);border-bottom:1px solid var(--line);}
+.tt2 td{padding:11px 12px;border-bottom:1px solid var(--ls);vertical-align:middle;}
+.tt2 tr:last-child td{border-bottom:none;}
+.tt2 tr:hover td{background:var(--lss);cursor:pointer;}
+.ts{font:700 10.5px var(--fb);padding:3px 9px;border-radius:99px;}
+.ts-draft{background:var(--lss);color:var(--faint);}
+.ts-live{background:var(--green50);color:var(--green600);}
+.ts-upcoming{background:var(--i50);color:var(--i500);}
+.clicks{height:5px;border-radius:3px;background:var(--ls);width:72px;position:relative;overflow:hidden;}
+.clicks-fill{position:absolute;left:0;top:0;height:100%;border-radius:3px;background:var(--t500);}
+.health-icon{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:5px;font-size:10px;flex-shrink:0;}
+.h-ok{background:var(--green50);color:var(--green600);}
+.h-err{background:var(--red50);color:var(--red600);}
+.h-warn{background:var(--amber50);color:var(--amber600);}
+/* trip editor */
+.editor{display:grid;grid-template-columns:220px 1fr;height:600px;overflow:hidden;}
+.ed-sb{background:#fff;border-right:1px solid var(--line);display:flex;flex-direction:column;overflow-y:auto;}
+.ed-sb-head{padding:14px;border-bottom:1px solid var(--line);}
+.ed-back{display:flex;align-items:center;gap:5px;font:600 11.5px var(--fb);color:var(--muted);margin-bottom:8px;cursor:pointer;}
+.ed-trip-name{font:700 14px var(--fh);color:var(--ink);margin-bottom:4px;}
+.ed-status{display:flex;align-items:center;gap:6px;}
+.save-ind{font:500 11px var(--fb);color:var(--faint);}
+.prog{padding:12px 14px;}
+.prog-label{font:700 10px var(--fb);letter-spacing:.07em;text-transform:uppercase;color:var(--faint);margin-bottom:8px;}
+.prog-bar-bg{background:var(--ls);border-radius:99px;height:5px;margin-bottom:8px;}
+.prog-bar{background:var(--t500);border-radius:99px;height:5px;}
+.prog-sub{font-size:11.5px;color:var(--muted);margin-bottom:10px;}
+.prog-items{display:flex;flex-direction:column;gap:1px;}
+.pi{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:7px;font:600 12px var(--fb);cursor:pointer;color:var(--muted);}
+.pi.active{background:var(--t50);color:var(--t700);}
+.pi.done{color:var(--green600);}
+.pi-check{width:16px;height:16px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;}
+.pic-ok{background:var(--green50);color:var(--green600);}
+.pic-pending{background:var(--ls);color:var(--faint);}
+.pic-active{background:var(--t500);color:#fff;}
+.pic-err{background:var(--red50);color:var(--red600);}
+.ed-main{overflow-y:auto;background:var(--lss);display:flex;flex-direction:column;}
+.ed-topbar{background:#fff;border-bottom:1px solid var(--line);padding:11px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;}
+.ed-section-title{font-family:var(--fh);font-weight:700;font-size:15px;color:var(--ink);}
+.ed-body{padding:16px 18px;display:flex;flex-direction:column;gap:12px;flex:1;}
+.ecard{background:#fff;border:1px solid var(--line);border-radius:11px;padding:16px;}
+.ecard h4{font-family:var(--fh);font-weight:700;font-size:13.5px;color:var(--ink);margin-bottom:10px;}
+.field{display:flex;flex-direction:column;gap:3px;margin-bottom:8px;}
+.flabel{font:700 10px var(--fb);letter-spacing:.07em;text-transform:uppercase;color:var(--faint);}
+.finput{background:var(--lss);border:1.5px solid var(--line);border-radius:8px;padding:8px 11px;font:500 13px var(--fb);color:var(--ink);}
+.finput.focus{border-color:var(--t500);background:#fff;box-shadow:0 0 0 3px var(--t50);}
+.finput.err{border-color:var(--red600);background:#fff;}
+.fgrid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.fgrid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.pub-err{background:var(--red50);border:1px solid #fecaca;border-radius:8px;padding:10px 12px;margin-bottom:10px;}
+.pub-err strong{font-size:12.5px;color:var(--red600);}
+.pub-err ul{padding-left:14px;margin-top:5px;}
+.pub-err li{font-size:12px;color:var(--red600);margin:2px 0;}
+.ed-actionbar{background:#fff;border-top:1px solid var(--line);padding:11px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;bottom:0;}
+/* payment guide */
+.pay-guide{background:var(--t50);border:1px solid var(--t100);border-radius:9px;padding:12px 14px;margin-bottom:10px;}
+.pay-guide-title{font:700 12px var(--fh);color:var(--t700);margin-bottom:6px;display:flex;align-items:center;gap:5px;}
+.pay-guide-text{font-size:12.5px;color:var(--t600);line-height:1.5;}
+.pay-quick{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
+.pay-btn{font:600 11.5px var(--fb);padding:5px 12px;border-radius:99px;border:1px solid var(--t200,var(--t100));background:#fff;color:var(--t700);cursor:pointer;}
+/* success screen */
+.success-screen{background:linear-gradient(160deg,#0e9f8f 0%,#085f54 60%,#14202a 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 32px;position:relative;overflow:hidden;}
+.sblob{position:absolute;border-radius:50%;pointer-events:none;}
+/* onboarding */
+.ob-screen{background:#fff;display:flex;flex-direction:column;padding:32px 28px;}
+.ob-progress{display:flex;gap:5px;margin-bottom:22px;}
+.ob-dot{height:4px;border-radius:2px;flex:1;}
+.ob-h2{font-family:var(--fh);font-weight:700;font-size:20px;color:var(--ink);margin-bottom:5px;}
+.ob-sub{font-size:13.5px;color:var(--muted);line-height:1.5;margin-bottom:18px;}
+.ob-label{font:700 10px var(--fb);letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin:12px 0 5px;}
+.ob-input{background:var(--lss);border:1.5px solid var(--line);border-radius:10px;padding:10px 13px;font:500 14px var(--fb);color:var(--ink);width:100%;}
+.ob-input.focus{border-color:var(--t500);background:#fff;box-shadow:0 0 0 3px var(--t50);}
+.ob-nav{display:flex;justify-content:space-between;margin-top:18px;gap:10px;}
+</style>
+</helmet>
+
+<div class="canvas">
+
+<!-- ══ TURN 1: ONBOARDING WIZARD ══════════════════════════════ -->
+<div>
+  <div class="turn-hd">
+    <div class="tl">Turn 1 — P0 fix</div>
+    <div class="tt">Partner onboarding — first-login wizard</div>
+    <div class="td">New partners land on a blank dashboard today. Fix: a guided wizard that creates a draft trip at step 1 so progress is never lost, and leads to first publish in under 10 minutes.</div>
+  </div>
+  <div class="row">
+
+    <!-- 1a: Welcome screen -->
+    <div class="sw" id="1a">
+      <div class="slabel"><a href="#1a" class="sid">1a</a><span class="sname">Welcome — value prop before the form</span></div>
+      <div style="display:flex;gap:6px;"><span class="sbadge p0b">P0 fixed: first-login state</span><span class="sbadge nb">New screen</span></div>
+      <x-import component-from-global-scope="ChromeWindow" from="./browser-window.jsx" width="920" height="580" url="trippy.in/partner" hint-size="920px,580px">
+        <div style="background:linear-gradient(145deg,#0e9f8f,#085f54 55%,#14202a 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;height:580px;padding:40px;text-align:center;position:relative;overflow:hidden;font-family:var(--fb);">
+          <div style="position:absolute;top:-40px;right:-40px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(242,104,60,.3),transparent 70%);"></div>
+          <div style="position:absolute;bottom:-40px;left:-20px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.1),transparent 70%);"></div>
+          <div style="position:relative;z-index:1;max-width:560px;">
+            <div style="width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 20px;">🧭</div>
+            <div style="font:800 11px var(--fb);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:12px;">Welcome to Trippy Partner Portal</div>
+            <div style="font-family:var(--fh);font-weight:800;font-size:32px;color:#fff;line-height:1.05;letter-spacing:-.02em;margin-bottom:14px;">Reach 12,000+ solo travellers<br>searching your destination.</div>
+            <div style="display:flex;flex-direction:column;gap:8px;text-align:left;background:rgba(255,255,255,.1);border-radius:12px;padding:16px;margin-bottom:24px;">
+              <div style="display:flex;align-items:center;gap:9px;font-size:14px;color:rgba(255,255,255,.85);"><div style="width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ph-bold ph-check" style="font-size:11px;color:#fff;"></i></div>Zero commission — you keep 100% of bookings</div>
+              <div style="display:flex;align-items:center;gap:9px;font-size:14px;color:rgba(255,255,255,.85);"><div style="width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ph-bold ph-check" style="font-size:11px;color:#fff;"></i></div>No payment setup — use your existing Razorpay link</div>
+              <div style="display:flex;align-items:center;gap:9px;font-size:14px;color:rgba(255,255,255,.85);"><div style="width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ph-bold ph-check" style="font-size:11px;color:#fff;"></i></div>Live in under 10 minutes — we'll guide you step by step</div>
+            </div>
+            <button style="width:100%;padding:14px;border-radius:12px;background:#fff;color:var(--t700);font:700 15px var(--fb);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;"><i class="ph-bold ph-rocket-launch" style="font-size:16px;"></i>Let's publish your first trip →</button>
+            <div style="margin-top:10px;font-size:12px;color:rgba(255,255,255,.4);">Takes about 10 minutes · You can save at any time and come back</div>
+          </div>
+        </div>
+      </x-import>
+    </div>
+
+    <!-- 1b: Onboarding step 1 -->
+    <div class="sw" id="1b">
+      <div class="slabel"><a href="#1b" class="sid">1b</a><span class="sname">Step 1 of 5 — trip basics</span></div>
+      <div style="display:flex;gap:6px;"><span class="sbadge p0b">Draft created on save</span><span class="sbadge nb">5-step wizard</span></div>
+      <x-import component-from-global-scope="ChromeWindow" from="./browser-window.jsx" width="920" height="580" url="trippy.in/partner" hint-size="920px,580px">
+        <div style="display:grid;grid-template-columns:280px 1fr;height:580px;overflow:hidden;font-family:var(--fb);">
+          <!-- wizard sidebar -->
+          <div style="background:var(--ink);padding:28px 20px;display:flex;flex-direction:column;gap:0;">
+            <div style="font:700 11px var(--fb);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:20px;">Your first trip</div>
+            <div style="display:flex;flex-direction:column;gap:4px;">
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 10px;border-radius:9px;background:rgba(255,255,255,.1);">
+                <div style="width:26px;height:26px;border-radius:50%;background:var(--t500);color:#fff;display:flex;align-items:center;justify-content:center;font:700 12px var(--fh);">1</div>
+                <span style="font:700 13px var(--fb);color:#fff;">Trip basics</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 10px;border-radius:9px;opacity:.45;">
+                <div style="width:26px;height:26px;border-radius:50%;border:1.5px solid rgba(255,255,255,.3);color:rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;font:700 12px var(--fh);">2</div>
+                <span style="font:600 13px var(--fb);color:rgba(255,255,255,.6);">Itinerary</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 10px;border-radius:9px;opacity:.45;">
+                <div style="width:26px;height:26px;border-radius:50%;border:1.5px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font:700 12px var(--fh);color:rgba(255,255,255,.5);">3</div>
+                <span style="font:600 13px var(--fb);color:rgba(255,255,255,.6);">Pricing</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 10px;border-radius:9px;opacity:.45;">
+                <div style="width:26px;height:26px;border-radius:50%;border:1.5px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font:700 12px var(--fh);color:rgba(255,255,255,.5);">4</div>
+                <span style="font:600 13px var(--fb);color:rgba(255,255,255,.6);">Payment link</span>
+                <span style="margin-left:auto;font:700 9px var(--fb);background:var(--c500);color:#fff;padding:1px 5px;border-radius:99px;">Required</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 10px;border-radius:9px;opacity:.45;">
+                <div style="width:26px;height:26px;border-radius:50%;border:1.5px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font:700 12px var(--fh);color:rgba(255,255,255,.5);"><i class="ph-bold ph-rocket-launch" style="font-size:11px;"></i></div>
+                <span style="font:600 13px var(--fb);color:rgba(255,255,255,.6);">Review &amp; go live</span>
+              </div>
+            </div>
+            <div style="margin-top:auto;padding:12px;background:rgba(255,255,255,.06);border-radius:10px;">
+              <div style="font-size:11.5px;color:rgba(255,255,255,.5);line-height:1.5;">💾 Your progress is saved automatically — you can close this tab and come back anytime.</div>
+            </div>
+          </div>
+          <!-- form -->
+          <div style="background:#fff;padding:28px;overflow-y:auto;display:flex;flex-direction:column;">
+            <div class="ob-progress" style="margin-bottom:18px;">
+              <div class="ob-dot" style="background:var(--t500);"></div>
+              <div class="ob-dot" style="background:var(--ls);"></div>
+              <div class="ob-dot" style="background:var(--ls);"></div>
+              <div class="ob-dot" style="background:var(--ls);"></div>
+              <div class="ob-dot" style="background:var(--ls);"></div>
+            </div>
+            <div style="font:800 11px var(--fb);letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:6px;">Step 1 of 5</div>
+            <div class="ob-h2">Tell us about your trip</div>
+            <div class="ob-sub">Just the basics for now — we'll add itinerary and pricing next. You can edit everything later.</div>
+            <div class="field">
+              <div class="flabel">Trip name</div>
+              <div class="ob-input focus" style="border-radius:10px;padding:10px 13px;">Spiti Valley Circuit — 9 Days</div>
+              <div style="font-size:11.5px;color:var(--faint);margin-top:3px;">e.g. "Hampta Pass Trek &amp; Camp" — make it specific and exciting</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+              <div class="field">
+                <div class="flabel">Destination</div>
+                <select style="background:var(--lss);border:1.5px solid var(--line);border-radius:10px;padding:10px 13px;font:500 13.5px var(--fb);color:var(--ink);"><option>Spiti Valley, HP</option></select>
+              </div>
+              <div class="field">
+                <div class="flabel">Departure city</div>
+                <div class="ob-input" style="border-radius:10px;padding:10px 13px;font-size:13.5px;">Delhi</div>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+              <div class="field">
+                <div class="flabel">Start date</div>
+                <div class="ob-input" style="border-radius:10px;padding:10px 13px;font-size:13.5px;">14 Aug 2026</div>
+              </div>
+              <div class="field">
+                <div class="flabel">End date</div>
+                <div class="ob-input" style="border-radius:10px;padding:10px 13px;font-size:13.5px;">22 Aug 2026</div>
+              </div>
+              <div class="field">
+                <div class="flabel">Duration</div>
+                <div style="background:var(--t50);border:1.5px solid var(--t100);border-radius:10px;padding:10px 13px;font:600 13.5px var(--fb);color:var(--t700);">9 days ✓</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;margin-top:4px;background:rgba(14,159,143,.06);border-radius:9px;padding:10px 12px;">
+              <i class="ph-bold ph-info" style="font-size:14px;color:var(--t500);flex-shrink:0;"></i>
+              <span style="font-size:12.5px;color:var(--muted);">A draft trip will be created when you save this step. Your progress won't be lost.</span>
+            </div>
+            <div class="ob-nav">
+              <button class="btn btn-ghost" style="padding:11px 18px;">← Back</button>
+              <button class="btn btn-primary" style="flex:1;justify-content:center;padding:12px;font-size:14px;">Save &amp; continue <i class="ph-bold ph-arrow-right" style="font-size:13px;"></i></button>
+            </div>
+          </div>
+        </div>
+      </x-import>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TURN 2: DASHBOARD REDESIGN ════════════════════════════ -->
+<div>
+  <div class="turn-hd">
+    <div class="tl">Turn 2 — P1 fix</div>
+    <div class="tt">Dashboard — urgency zone + 4 actionable KPIs</div>
+    <div class="td">Action-required zone appears at the top when drafts need completing. 4 KPIs changed to forward-looking metrics. Trip table shows health indicator + booking click bars inline.</div>
+  </div>
+  <div class="row">
+
+    <!-- 2a: Full dashboard -->
+    <div class="sw" id="2a">
+      <div class="slabel"><a href="#2a" class="sid">2a</a><span class="sname">Dashboard — action required + health indicators</span></div>
+      <div style="display:flex;gap:6px;"><span class="sbadge ib">P1 fixed: urgency hierarchy</span><span class="sbadge nb">Click bars inline</span></div>
+      <x-import component-from-global-scope="ChromeWindow" from="./browser-window.jsx" width="1160" height="640" url="trippy.in/partner" hint-size="1160px,640px">
+        <div class="crm" style="height:640px;">
+          <div class="sb" style="height:640px;">
+            <div class="sb-brand"><div class="sb-tile">🏔️</div><div><div class="sb-name">Himalayan Wolves</div><div class="sb-sub">Partner portal</div></div></div>
+            <div class="sb-nav">
+              <div class="sb-item active"><i class="ph-bold ph-squares-four"></i>Dashboard</div>
+              <div class="sb-item"><i class="ph-bold ph-map-trifold"></i>My trips<span class="sb-badge sb-badge-w">1</span></div>
+              <div class="sb-item"><i class="ph-bold ph-chart-bar"></i>Analytics</div>
+              <div class="sb-section">Manage</div>
+              <div class="sb-item"><i class="ph-bold ph-buildings"></i>Organisation</div>
+              <div class="sb-item"><i class="ph-bold ph-users"></i>Team</div>
+              <div class="sb-section">Coming soon</div>
+              <div class="sb-coming"><i class="ph-bold ph-credit-card" style="font-size:14px;"></i>Direct booking</div>
+              <div class="sb-coming"><i class="ph-bold ph-trend-up" style="font-size:14px;"></i>Conversion analytics</div>
+            </div>
+            <div class="sb-org"><div class="sb-org-av">🏔️</div><div><div class="sb-org-name">Himalayan Wolves</div><div class="sb-org-role">Admin · 3 trips</div></div></div>
+          </div>
+          <div class="crm-body">
+            <div class="crm-top">
+              <div><div class="crm-top-title">Your trips</div><div class="crm-top-sub">Last updated 2 min ago</div></div>
+              <div class="crm-top-actions">
+                <button class="btn btn-ghost" style="font-size:12px;"><i class="ph-bold ph-eye" style="font-size:12px;"></i>Preview site</button>
+                <button class="btn btn-primary" style="font-size:12px;"><i class="ph-bold ph-plus" style="font-size:12px;"></i>Create trip</button>
+              </div>
+            </div>
+            <div class="crm-content" style="height:590px;">
+              <!-- action required -->
+              <div class="ar-card">
+                <div class="ar-head">
+                  <div class="ar-title"><i class="ph-bold ph-warning" style="font-size:14px;"></i>1 trip needs your attention before it can go live</div>
+                  <span style="font:700 10px var(--fb);background:var(--amber50);color:var(--amber600);padding:2px 7px;border-radius:99px;">1 draft</span>
+                </div>
+                <div class="ar-item">
+                  <div class="ar-item-icon" style="background:var(--red50);"><i class="ph-bold ph-link-break" style="font-size:13px;color:var(--red600);"></i></div>
+                  <div class="ar-item-text"><strong>Ladakh on a Shoestring</strong> — missing payment link and cover image before it can go live</div>
+                  <span class="ar-item-action">Fix now →</span>
+                </div>
+              </div>
+              <!-- 4 KPIs -->
+              <div class="kpi-row">
+                <div class="kpi"><div class="kpi-val" style="color:var(--green600);">2</div><div class="kpi-label">Live trips</div><div class="kpi-delta d-up">▲ +1 this month</div></div>
+                <div class="kpi"><div class="kpi-val" style="color:var(--c600);">148</div><div class="kpi-label">Book Now clicks (30d)</div><div class="kpi-delta d-up">▲ +23 this week</div></div>
+                <div class="kpi"><div class="kpi-val" style="color:var(--i500);">1</div><div class="kpi-label">Upcoming departures</div><div style="font-size:11px;color:var(--amber600);margin-top:3px;font-weight:600;">⚠ leaves in 6 days</div></div>
+                <div class="kpi"><div class="kpi-val" style="color:var(--amber600);">1</div><div class="kpi-label">Drafts needing action</div><div class="kpi-delta d-warn">2 issues to fix</div></div>
+              </div>
+              <!-- trip table -->
+              <div class="trip-card">
+                <div class="trip-card-head">
+                  <div class="trip-table-title">All trips</div>
+                  <div style="display:flex;gap:6px;align-items:center;">
+                    <input style="border:1px solid var(--line);border-radius:7px;padding:5px 10px;font:500 12px var(--fb);color:var(--ink);background:#fff;width:140px;" placeholder="Search trips…">
+                    <span style="font:500 12px var(--fb);color:var(--faint);">3 trips</span>
+                  </div>
+                </div>
+                <table class="tt2">
+                  <thead><tr><th>Trip</th><th>Dates</th><th>Price</th><th>Health</th><th>Status</th><th>Clicks ↓</th><th></th></tr></thead>
+                  <tbody>
+                    <tr>
+                      <td><div style="font:700 13px var(--fb);color:var(--ink);">Spiti Valley Circuit</div><div style="font-size:11px;color:var(--faint);">9 days · Manali → Kaza</div></td>
+                      <td style="font-size:12.5px;color:var(--muted);">Aug 14–22</td>
+                      <td style="font:700 13px var(--fb);color:var(--t600);">₹18,500</td>
+                      <td><div style="display:flex;gap:3px;"><span class="health-icon h-ok"><i class="ph-bold ph-check" style="font-size:9px;"></i></span><span class="health-icon h-ok"><i class="ph-bold ph-check" style="font-size:9px;"></i></span><span class="health-icon h-ok"><i class="ph-bold ph-check" style="font-size:9px;"></i></span><span style="font-size:11px;color:var(--green600);font-weight:600;margin-left:3px;">All good</span></div></td>
+                      <td><span class="ts ts-upcoming">Upcoming</span></td>
+                      <td><div style="display:flex;align-items:center;gap:6px;"><div class="clicks"><div class="clicks-fill" style="width:75%;"></div></div><span style="font:700 12px var(--fh);color:var(--ink);">112</span></div></td>
+                      <td style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:5px 9px;font-size:11.5px;">Edit</button><button class="btn btn-sec" style="padding:5px 9px;font-size:11.5px;">View ↗</button></td>
+                    </tr>
+                    <tr>
+                      <td><div style="font:700 13px var(--fb);color:var(--ink);">Kedarnath Yatra</div><div style="font-size:11px;color:var(--faint);">5 days · Haridwar base</div></td>
+                      <td style="font-size:12.5px;color:var(--muted);">Sep 3–7</td>
+                      <td style="font:700 13px var(--fb);color:var(--t600);">₹11,200</td>
+                      <td><div style="display:flex;gap:3px;"><span class="health-icon h-ok"><i class="ph-bold ph-check" style="font-size:9px;"></i></span><span class="health-icon h-ok"><i class="ph-bold ph-check" style="font-size:9px;"></i></span><span style="font-size:11px;color:var(--green600);font-weight:600;margin-left:3px;">All good</span></div></td>
+                      <td><span class="ts ts-live">Live</span></td>
+                      <td><div style="display:flex;align-items:center;gap:6px;"><div class="clicks"><div class="clicks-fill" style="width:24%;"></div></div><span style="font:700 12px var(--fh);color:var(--ink);">36</span></div></td>
+                      <td style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:5px 9px;font-size:11.5px;">Edit</button><button class="btn btn-sec" style="padding:5px 9px;font-size:11.5px;">View ↗</button></td>
+                    </tr>
+                    <tr style="opacity:.75;">
+                      <td><div style="font:700 13px var(--fb);color:var(--ink);">Ladakh on a Shoestring</div><div style="font-size:11px;color:var(--faint);">7 days · Leh base</div></td>
+                      <td style="font-size:12.5px;color:var(--muted);">Oct 1–7</td>
+                      <td style="font:700 13px var(--fb);color:var(--faint);">₹14,000</td>
+                      <td><div style="display:flex;gap:3px;"><span class="health-icon h-err"><i class="ph-bold ph-x" style="font-size:9px;"></i></span><span class="health-icon h-err"><i class="ph-bold ph-x" style="font-size:9px;"></i></span><span style="font-size:11px;color:var(--red600);font-weight:600;margin-left:3px;">2 issues</span></div></td>
+                      <td><span class="ts ts-draft">Draft</span></td>
+                      <td><span style="font-size:11.5px;color:var(--faint);">Not live</span></td>
+                      <td style="display:flex;gap:4px;"><button class="btn btn-ghost" style="padding:5px 9px;font-size:11.5px;">Edit</button><button class="btn btn-primary" style="padding:5px 9px;font-size:11.5px;">Fix &amp; publish</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- phase 2 teaser -->
+              <div style="background:var(--lss);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;">
+                <div style="width:28px;height:28px;border-radius:8px;background:var(--i50);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ph-bold ph-trend-up" style="font-size:14px;color:var(--i500);"></i></div>
+                <div><div style="font:700 12.5px var(--fb);color:var(--ink);">Coming soon: conversion analytics</div><div style="font-size:12px;color:var(--faint);">See how many book-now clicks convert to actual bookings. Available when Trippy adds direct booking (Phase 2).</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </x-import>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TURN 3: TRIP EDITOR + PUBLISH SUCCESS ═════════════════ -->
+<div>
+  <div class="turn-hd">
+    <div class="tl">Turn 3 — P0 fix</div>
+    <div class="tt">Trip editor with section nav + publish success</div>
+    <div class="td">Section nav sidebar with completion checkmarks replaces the blind single-scroll. Payment link section shown with full guidance. Publish success is a shareable moment.</div>
+  </div>
+  <div class="row">
+
+    <!-- 3a: Trip editor -->
+    <div class="sw" id="3a">
+      <div class="slabel"><a href="#3a" class="sid">3a</a><span class="sname">Trip editor — payment link section with guidance</span></div>
+      <div style="display:flex;gap:6px;"><span class="sbadge p0b">P0 fixed: section nav + payment guidance</span></div>
+      <x-import component-from-global-scope="ChromeWindow" from="./browser-window.jsx" width="1160" height="640" url="trippy.in/partner/trips/3" hint-size="1160px,640px">
+        <div class="crm" style="height:640px;">
+          <div class="sb" style="height:640px;">
+            <div class="sb-brand"><div class="sb-tile">🏔️</div><div><div class="sb-name">Himalayan Wolves</div><div class="sb-sub">Partner portal</div></div></div>
+            <div class="sb-nav">
+              <div class="sb-item"><i class="ph-bold ph-arrow-left"></i>All trips</div>
+            </div>
+            <div style="padding:0 10px;flex:1;">
+              <div style="font:700 10px var(--fb);letter-spacing:.07em;text-transform:uppercase;color:var(--faint);padding:10px 0 8px;">Trip completion</div>
+              <div style="background:var(--ls);border-radius:99px;height:5px;margin-bottom:6px;"><div style="width:66%;background:var(--t500);border-radius:99px;height:5px;"></div></div>
+              <div style="font-size:11.5px;color:var(--muted);margin-bottom:12px;">4 of 6 sections complete</div>
+              <div style="display:flex;flex-direction:column;gap:1px;">
+                <div class="pi done"><div class="pi-check pic-ok"><i class="ph-bold ph-check" style="font-size:8px;"></i></div>Basic info</div>
+                <div class="pi done"><div class="pi-check pic-ok"><i class="ph-bold ph-check" style="font-size:8px;"></i></div>Itinerary (9 days)</div>
+                <div class="pi done"><div class="pi-check pic-ok"><i class="ph-bold ph-check" style="font-size:8px;"></i></div>Pricing</div>
+                <div class="pi done"><div class="pi-check pic-ok"><i class="ph-bold ph-check" style="font-size:8px;"></i></div>Inclusions</div>
+                <div class="pi active" style="background:var(--t50);color:var(--t700);"><div class="pi-check pic-active"><i class="ph-bold ph-credit-card" style="font-size:8px;"></i></div>Payment link</div>
+                <div class="pi" style="color:var(--faint);"><div class="pi-check pic-pending"></div>Cover photo</div>
+              </div>
+            </div>
+            <div style="padding:10px;"><span style="font:500 11px var(--fb);color:var(--faint);">All changes saved ✓</span></div>
+          </div>
+          <div class="crm-body">
+            <div class="ed-topbar">
+              <div class="ed-section-title">Payment link</div>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="display:flex;gap:4px;align-items:center;"><span style="font:700 10px var(--fb);background:var(--amber50);color:var(--amber600);padding:2px 7px;border-radius:99px;">Draft</span><span class="save-ind">Saved</span></div>
+                <button class="btn btn-ghost" style="font-size:12px;"><i class="ph-bold ph-eye" style="font-size:12px;"></i>Preview ↗</button>
+                <button class="btn btn-ghost" style="font-size:12px;opacity:.5;cursor:not-allowed;">Publish (2 issues)</button>
+              </div>
+            </div>
+            <div style="overflow-y:auto;padding:16px 18px;background:var(--lss);flex:1;">
+              <div class="pub-err" style="border-radius:10px;">
+                <strong>Complete before going live:</strong>
+                <ul>
+                  <li>Payment link is required — travellers need a way to book</li>
+                  <li>Add a cover photo to attract more travellers <span style="opacity:.6;">(recommended)</span></li>
+                </ul>
+              </div>
+              <div class="ecard">
+                <h4 style="margin-bottom:6px;">Your payment link</h4>
+                <p style="font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:14px;">When a traveller taps "Book Now" on your trip, they'll be redirected here. Trippy doesn't process payments — you collect directly via your existing system.</p>
+                <!-- payment guidance -->
+                <div class="pay-guide">
+                  <div class="pay-guide-title"><i class="ph-bold ph-question" style="font-size:13px;"></i>What link should I paste here?</div>
+                  <div class="pay-guide-text">Any secure payment page where travellers can pay you — your Razorpay payment link, Instamojo link, or a page on your website with a payment button. Must start with https://</div>
+                  <div class="pay-quick">
+                    <button class="pay-btn">Razorpay</button>
+                    <button class="pay-btn">Instamojo</button>
+                    <button class="pay-btn">My website</button>
+                    <button class="pay-btn" style="color:var(--t600);">+ Create free Razorpay link →</button>
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="flabel">Payment URL (https://)</div>
+                  <div class="finput err" style="display:flex;align-items:center;gap:8px;padding:10px 12px;"><span style="flex:1;color:var(--faint);">Paste your payment link here…</span><i class="ph-bold ph-warning" style="font-size:14px;color:var(--red600);"></i></div>
+                  <div style="font-size:12px;color:var(--red600);margin-top:4px;display:flex;align-items:center;gap:4px;"><i class="ph-bold ph-warning-circle" style="font-size:12px;"></i>Required — your trip can't go live without this</div>
+                </div>
+                <div style="background:var(--lss);border-radius:9px;padding:10px 12px;font-size:12.5px;color:var(--muted);display:flex;gap:8px;align-items:center;">
+                  <i class="ph-bold ph-shield-check" style="font-size:14px;color:var(--t500);flex-shrink:0;"></i>
+                  <span>Trippy never sees or processes travellers' payment details. We just redirect them to your link.</span>
+                </div>
+              </div>
+            </div>
+            <div class="ed-actionbar">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <div style="width:90px;background:var(--ls);border-radius:99px;height:4px;"><div style="width:66%;background:var(--t500);border-radius:99px;height:4px;"></div></div>
+                <span style="font:600 11.5px var(--fb);color:var(--faint);">66% complete</span>
+              </div>
+              <div style="display:flex;gap:7px;">
+                <button class="btn btn-ghost" style="font-size:12px;">← Inclusions</button>
+                <button class="btn btn-sec" style="font-size:12px;">Next: Cover photo →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </x-import>
+    </div>
+
+    <!-- 3b: Publish success -->
+    <div class="sw" id="3b">
+      <div class="slabel"><a href="#3b" class="sid">3b</a><span class="sname">Publish success — shareable moment</span></div>
+      <span class="sbadge nb" style="margin-bottom:4px;">New celebratory state</span>
+      <x-import component-from-global-scope="ChromeWindow" from="./browser-window.jsx" width="920" height="540" url="trippy.in/partner" hint-size="920px,540px">
+        <div class="success-screen" style="height:540px;">
+          <div class="sblob" style="top:-50px;right:-50px;width:250px;height:250px;background:radial-gradient(circle,rgba(242,104,60,.3),transparent 70%);"></div>
+          <div class="sblob" style="bottom:-40px;left:-30px;width:200px;height:200px;background:radial-gradient(circle,rgba(99,102,241,.25),transparent 70%);"></div>
+          <div style="position:relative;z-index:1;max-width:520px;text-align:center;">
+            <div style="font-size:52px;margin-bottom:18px;">🎉</div>
+            <div style="font:800 11px var(--fb);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:10px;">Your trip is live</div>
+            <div style="font-family:var(--fh);font-weight:800;font-size:30px;color:#fff;line-height:1.05;letter-spacing:-.02em;margin-bottom:12px;">Spiti Valley Circuit is now visible to 12,000+ solo travellers on Trippy.</div>
+            <div style="font-size:14px;color:rgba(255,255,255,.65);line-height:1.6;margin-bottom:24px;">Travellers searching Spiti Valley for August dates can now find and book your trip. You'll receive booking clicks directly to your payment link.</div>
+            <div style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:14px 16px;margin-bottom:20px;">
+              <div style="font:700 10.5px var(--fb);letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:8px;">Your trip's public link</div>
+              <div style="font:600 14px var(--fb);color:#fff;word-break:break-all;margin-bottom:10px;">trippy.in/trip/spiti-valley-circuit-himalayan-wolves</div>
+              <div style="display:flex;gap:8px;justify-content:center;">
+                <button style="padding:9px 18px;border-radius:9px;background:#fff;color:var(--t700);font:700 13px var(--fb);border:none;cursor:pointer;display:flex;align-items:center;gap:6px;"><i class="ph-bold ph-copy" style="font-size:13px;"></i>Copy link</button>
+                <button style="padding:9px 18px;border-radius:9px;background:rgba(255,255,255,.15);color:#fff;font:700 13px var(--fb);border:1px solid rgba(255,255,255,.2);cursor:pointer;display:flex;align-items:center;gap:6px;"><i class="ph-bold ph-share-network" style="font-size:13px;"></i>Share</button>
+              </div>
+            </div>
+            <button style="padding:12px 28px;border-radius:10px;background:rgba(255,255,255,.15);color:#fff;font:700 14px var(--fb);border:1px solid rgba(255,255,255,.2);cursor:pointer;">Go to dashboard →</button>
+          </div>
+        </div>
+      </x-import>
+    </div>
+  </div>
+</div>
+
+</div>
+
+</x-dc>
+</body>
+</html>

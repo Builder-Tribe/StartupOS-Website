@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Hanken+Grotesque:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root{--teal-50:#e6f5f3;--teal-100:#cceae6;--teal-500:#0e9f8f;--teal-600:#0b7a6c;--teal-700:#085f54;--coral-50:#fff3ee;--coral-500:#f2683c;--coral-600:#c2410c;--indigo-50:#eef0ff;--indigo-500:#6366f1;--ink:#14202a;--muted:#5d6b76;--faint:#8795a0;--line:#e6ebee;--line-soft:#eef1f3;--bg:#fbfcfd;--fhead:'Bricolage Grotesque',-apple-system,sans-serif;--fbody:'Hanken Grotesque',-apple-system,sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--fbody);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5;}
+h1,h2,h3{font-family:var(--fhead);letter-spacing:-.02em;}
+.page{max-width:1100px;margin:0 auto;padding:0 40px 120px;}
+@media(max-width:640px){.page{padding:0 18px 80px;}}
+.cover{background:linear-gradient(150deg,#0e9f8f,#085f54 55%,#14202a 100%);padding:72px 40px 64px;margin-bottom:0;position:relative;overflow:hidden;}
+@media(max-width:640px){.cover{padding:48px 18px 48px;}}
+.cover-blob{position:absolute;border-radius:50%;pointer-events:none;}
+.section{margin-top:72px;}
+.eyebrow{font:800 11px var(--fbody);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:8px;}
+.sh2{font-family:var(--fhead);font-weight:700;font-size:clamp(22px,3vw,30px);color:var(--ink);margin-bottom:6px;}
+.sdesc{font-size:15px;color:var(--muted);line-height:1.6;margin-bottom:28px;max-width:680px;}
+hr{border:none;border-top:1px solid var(--line);margin:28px 0;}
+/* table */
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(20,32,42,.04);}
+.tbl th{text-align:left;padding:10px 14px;font:700 11px var(--fbody);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);background:var(--bg);border-bottom:1px solid var(--line);}
+.tbl td{padding:12px 14px;border-bottom:1px solid var(--line-soft);vertical-align:top;line-height:1.5;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td strong{color:var(--ink);font-weight:700;}
+/* sitemap */
+.sitemap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:760px){.sitemap-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.sitemap-grid{grid-template-columns:1fr;}}
+.sitem{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;}
+.sitem-url{font:700 13px monospace;color:var(--teal-600);margin-bottom:6px;}
+.sitem-name{font:700 15px var(--fhead);color:var(--ink);margin-bottom:4px;}
+.sitem-desc{font-size:13px;color:var(--muted);line-height:1.5;}
+.sitem-badge{display:inline-block;font:700 10px var(--fbody);letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:99px;margin-bottom:8px;}
+/* flows */
+.flow{display:flex;flex-direction:column;gap:0;}
+.fstep{display:grid;grid-template-columns:32px 1fr;gap:14px;align-items:flex-start;}
+.fstep-line{display:flex;flex-direction:column;align-items:center;}
+.fstep-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 13px var(--fbody);flex-shrink:0;}
+.fstep-connector{width:2px;flex:1;min-height:24px;margin:4px 0;}
+.fstep-content{padding-bottom:24px;}
+.fstep-title{font:700 15px var(--fbody);color:var(--ink);margin-bottom:4px;}
+.fstep-desc{font-size:13.5px;color:var(--muted);line-height:1.55;}
+.fstep-note{display:inline-flex;align-items:center;gap:5px;font:600 12px var(--fbody);margin-top:8px;padding:4px 10px;border-radius:99px;}
+/* micro */
+.micro-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:640px){.micro-grid{grid-template-columns:1fr;}}
+.mcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;}
+.mcard-trigger{font:700 12px var(--fbody);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:8px;}
+.mcard-title{font:700 16px var(--fhead);color:var(--ink);margin-bottom:6px;}
+.mcard-behavior{font-size:13.5px;color:var(--muted);line-height:1.55;margin-bottom:10px;}
+.mcard-why{font-size:12.5px;color:var(--teal-700);background:var(--teal-50);padding:6px 10px;border-radius:8px;line-height:1.5;}
+/* nav spec */
+.nav-spec{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;}
+.nav-spec-row{display:grid;grid-template-columns:140px 1fr 1fr;gap:0;border-bottom:1px solid var(--line-soft);}
+.nav-spec-row:last-child{border-bottom:none;}
+.nav-spec-cell{padding:12px 16px;font-size:13.5px;border-right:1px solid var(--line-soft);}
+.nav-spec-cell:last-child{border-right:none;}
+.nav-spec-cell.header{font:700 11px var(--fbody);letter-spacing:.06em;text-transform:uppercase;color:var(--faint);background:var(--bg);}
+</style>
+</helmet>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-blob" style="top:-60px;right:-60px;width:320px;height:320px;background:radial-gradient(circle,rgba(242,104,60,.3),transparent 70%);"></div>
+  <div class="cover-blob" style="bottom:-80px;left:5%;width:260px;height:260px;background:radial-gradient(circle,rgba(99,102,241,.2),transparent 70%);"></div>
+  <div style="max-width:1020px;margin:0 auto;position:relative;z-index:1;">
+    <div style="font:800 11px var(--fbody);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:14px;">Marketing Website · Brief &amp; Spec · v1.0 · July 2026</div>
+    <h1 style="font-family:var(--fhead);font-weight:800;font-size:clamp(32px,5vw,52px);color:#fff;line-height:1.0;letter-spacing:-.03em;margin-bottom:16px;max-width:700px;">Trippy website: acquisition brief &amp; design spec.</h1>
+    <p style="font-size:17px;color:rgba(255,255,255,.65);max-width:580px;line-height:1.6;">Two jobs. Strict priority order. Job 1: convert solo travellers → app download. Job 2: route travel operators → Partner CRM signup.</p>
+    <div style="display:flex;gap:10px;margin-top:28px;flex-wrap:wrap;">
+      <span style="font:600 12px var(--fbody);padding:6px 14px;border-radius:99px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);">Sitemap</span>
+      <span style="font:600 12px var(--fbody);padding:6px 14px;border-radius:99px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);">Homepage brief</span>
+      <span style="font:600 12px var(--fbody);padding:6px 14px;border-radius:99px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);">Travellers page</span>
+      <span style="font:600 12px var(--fbody);padding:6px 14px;border-radius:99px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);">Partners page</span>
+      <span style="font:600 12px var(--fbody);padding:6px 14px;border-radius:99px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);">Nav &amp; footer</span>
+      <span style="font:600 12px var(--fbody);padding:6px 14px;border-radius:99px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);">Conversion flows</span>
+      <span style="font:600 12px var(--fbody);padding:6px 14px;border-radius:99px;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);">Micro-interactions</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ─── 1. SITEMAP ─────────────────────────────────────────── -->
+<div class="section">
+  <div class="eyebrow">01 — Sitemap</div>
+  <h2 class="sh2">All pages</h2>
+  <p class="sdesc">5 marketing pages + 2 product portals (separate apps). Marketing site lives at the root domain; portals live at subpaths.</p>
+  <div class="sitemap-grid">
+    <div class="sitem">
+      <span class="sitem-badge" style="background:var(--teal-50);color:var(--teal-700);">Primary</span>
+      <div class="sitem-url">/</div>
+      <div class="sitem-name">Homepage</div>
+      <div class="sitem-desc">Dual-audience acquisition page. Primary: traveller app download. Secondary: partner discovery + routing.</div>
+    </div>
+    <div class="sitem">
+      <span class="sitem-badge" style="background:var(--teal-50);color:var(--teal-700);">Traveller</span>
+      <div class="sitem-url">/for-travellers</div>
+      <div class="sitem-name">For Travellers</div>
+      <div class="sitem-desc">Full consumer value prop across all phases. Live features + coming-soon roadmap. Drives app download.</div>
+    </div>
+    <div class="sitem">
+      <span class="sitem-badge" style="background:var(--coral-50);color:var(--coral-600);">Partner</span>
+      <div class="sitem-url">/for-partners</div>
+      <div class="sitem-name">For Partners</div>
+      <div class="sitem-desc">Supply-side pitch. How it works for operators. Routes to /partner signup.</div>
+    </div>
+    <div class="sitem">
+      <span class="sitem-badge" style="background:var(--line-soft);color:var(--muted);">Content</span>
+      <div class="sitem-url">/blog</div>
+      <div class="sitem-name">Blog</div>
+      <div class="sitem-desc">SEO surface. Travel guides, destination features, community stories. Phase 2 priority.</div>
+    </div>
+    <div class="sitem">
+      <span class="sitem-badge" style="background:var(--line-soft);color:var(--muted);">Content</span>
+      <div class="sitem-url">/about</div>
+      <div class="sitem-name">About</div>
+      <div class="sitem-desc">Founder story, mission, team. Trust-building for both audiences.</div>
+    </div>
+    <div class="sitem">
+      <span class="sitem-badge" style="background:var(--indigo-50);color:var(--indigo-500);">Product</span>
+      <div class="sitem-url">/partner</div>
+      <div class="sitem-name">Partner CRM</div>
+      <div class="sitem-desc">Separate app. Marketing site links here but does not own it. Login/signup for trip operators.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 2. HOMEPAGE SECTION BRIEF ─────────────────────────── -->
+<div class="section">
+  <div class="eyebrow">02 — Homepage section brief</div>
+  <h2 class="sh2">Section-by-section spec</h2>
+  <p class="sdesc">8 sections. Each has one job. No decorative sections.</p>
+  <div style="overflow-x:auto;">
+    <table class="tbl" style="min-width:900px;">
+      <thead><tr>
+        <th style="min-width:120px;">Section</th>
+        <th style="min-width:160px;">Mobile layout</th>
+        <th style="min-width:160px;">Desktop layout</th>
+        <th style="min-width:180px;">Headline</th>
+        <th style="min-width:180px;">Supporting copy</th>
+        <th style="min-width:140px;">CTA</th>
+        <th style="min-width:160px;">Visual direction</th>
+        <th style="min-width:140px;">Emotional job</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Hero</strong></td>
+          <td>Full-width, centered. Tag → H1 → sub → badges stacked → proof pills</td>
+          <td>Centered max-width 740px, blobs behind. Same vertical rhythm.</td>
+          <td>"Going solo doesn't mean going alone."</td>
+          <td>"Find travellers heading to Spiti, Manali, or Goa on the same dates. Or join a curated group trip leaving this weekend."</td>
+          <td>App Store + Play Store badges (both above fold)</td>
+          <td>Animated blobs (peach, sky, mint, lav). Glassmorphic proof pills. No hero image.</td>
+          <td><strong>Intercept the loneliness pang.</strong> The headline must land in the first 2 seconds.</td>
+        </tr>
+        <tr>
+          <td><strong>How it works</strong></td>
+          <td>3 stacked cards, numbered, icons</td>
+          <td>3-column grid, step connectors between cards</td>
+          <td>"From 'I want to go' to 'we're going' — in three steps."</td>
+          <td>"No WhatsApp group chaos. No spending 3 hours across 6 trip operator websites."</td>
+          <td>None (informational)</td>
+          <td>Clean white cards, teal step numbers, AI score pill visible in step 2</td>
+          <td><strong>Reduce perceived effort.</strong> Make the path from decision to departure feel short.</td>
+        </tr>
+        <tr>
+          <td><strong>Stats strip</strong></td>
+          <td>2×2 grid, dark bg</td>
+          <td>4-column, dark bg, full-width</td>
+          <td>N/A — numbers speak</td>
+          <td>12,400+ companions · 340+ trips · 47 destinations · ₹0 fees</td>
+          <td>None</td>
+          <td>Dark (#14202A) bg, white numbers, teal accent on + signs</td>
+          <td><strong>Social proof via scale.</strong> Validates that real people are here.</td>
+        </tr>
+        <tr>
+          <td><strong>Testimonials</strong></td>
+          <td>Vertical scroll of 3 cards</td>
+          <td>3-column grid</td>
+          <td>"The people who stopped going alone."</td>
+          <td>3 real-feeling stories: Arjun (Spiti, 91%), Sneha (Kasol, 87%), Rohan (Ladakh, hosted trip)</td>
+          <td>None (trust section)</td>
+          <td>White cards, avatar emoji, destination pill + score pill per card</td>
+          <td><strong>Identity match.</strong> Visitor sees themselves in the stories.</td>
+        </tr>
+        <tr>
+          <td><strong>Product modes</strong></td>
+          <td>2 stacked cards (teal DIY, coral hosted)</td>
+          <td>2-column equal split</td>
+          <td>"Your trip, your rules."</td>
+          <td>DIY: hostel → people → group → itinerary. Hosted: 340+ curated trips, 1-click book.</td>
+          <td>DIY: "Start your DIY trip →" (teal) · Hosted: "Browse group trips →" (coral)</td>
+          <td>Two distinct gradient cards. Teal family for DIY, coral family for hosted. Large background emoji decoration.</td>
+          <td><strong>Product comprehension.</strong> Both modes understood in one scroll.</td>
+        </tr>
+        <tr>
+          <td><strong>Hostel layer</strong></td>
+          <td>Stacked: copy above, mockup below</td>
+          <td>2-col: copy left, live mockup right</td>
+          <td>"See who else from Trippy is at your hostel."</td>
+          <td>"Book through Trippy and instantly see other members checking in the same week. Reach out before you even arrive."</td>
+          <td>None (feature showcase)</td>
+          <td>Teal-tinted bg. Realistic hostel member mockup with avatar, dates, compatibility score.</td>
+          <td><strong>Feature delight.</strong> A feature they didn't know they needed.</td>
+        </tr>
+        <tr>
+          <td><strong>For Partners</strong></td>
+          <td>Dark banner, stacked steps, coral CTA</td>
+          <td>Dark banner card, 3-col steps, CTA row</td>
+          <td>"Running group trips? You're missing 12,000+ solo travellers actively looking."</td>
+          <td>"List your trips in minutes. Reach solo travellers already searching. No payment integration."</td>
+          <td>"List your first trip free →" → /partner</td>
+          <td>Dark ink bg card with coral blob decoration. 3-step numbered coral grid. Secondary link "Learn more".</td>
+          <td><strong>Partner routing.</strong> Operators self-identify and proceed to /partner. Travellers scroll past.</td>
+        </tr>
+        <tr>
+          <td><strong>Final CTA</strong></td>
+          <td>Centered, large emoji, stores stacked</td>
+          <td>Centered max-width 680px</td>
+          <td>"Your next adventure is waiting. So are the people you'll meet on it."</td>
+          <td>"12,400 solo travellers have already found their travel tribe on Trippy…"</td>
+          <td>App Store + Play Store badges (both) + "Free · Android &amp; iOS · India-first"</td>
+          <td>Clean bg. Large 🧭 emoji. No blobs. Pure focus on conversion.</td>
+          <td><strong>Final push.</strong> Catch those who scrolled but haven't tapped yet.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ─── 3. FOR TRAVELLERS PAGE ─────────────────────────────── -->
+<div class="section">
+  <div class="eyebrow">03 — For Travellers page</div>
+  <h2 class="sh2">/for-travellers — section brief</h2>
+  <p class="sdesc">Full consumer value prop. Phase 1 features live; Phase 2–3 teased as coming soon. Every section drives app download.</p>
+  <div style="overflow-x:auto;">
+    <table class="tbl" style="min-width:860px;">
+      <thead><tr><th>Section</th><th>Mobile layout</th><th>Desktop layout</th><th>Headline</th><th>Copy / content</th><th>CTA</th><th>Emotional job</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Page hero</strong></td>
+          <td>Centered, teal gradient bg strip</td>
+          <td>Split: copy left, phone mockup right</td>
+          <td>"Everything you need to travel solo — and not feel it."</td>
+          <td>Sub: "Companions, trips, hostels, group planning, expense splitting. One app."</td>
+          <td>App download badges</td>
+          <td>Establish breadth of value in one sentence.</td>
+        </tr>
+        <tr>
+          <td><strong>Feature: Matchmaking</strong></td>
+          <td>Feature card with mockup</td>
+          <td>2-col: screenshot left, copy right</td>
+          <td>"Find your travel match. Not just anyone — the right one."</td>
+          <td>AI compatibility score (0–100). Based on travel style, budget, personality, trip dates. ±3 day overlap window. Verified profiles first.</td>
+          <td>"See your matches →" (in-app)</td>
+          <td>Make AI matching feel trustworthy, not gimmicky.</td>
+        </tr>
+        <tr>
+          <td><strong>Feature: Group trips</strong></td>
+          <td>Trip card grid (2-col)</td>
+          <td>3-col card grid with filters</td>
+          <td>"340+ curated group trips. Stop searching 6 websites."</td>
+          <td>Trekking, biking, beach, cultural. Verified operators. INR pricing. One booking link.</td>
+          <td>"Browse all trips →"</td>
+          <td>Solve the fragmentation frustration.</td>
+        </tr>
+        <tr>
+          <td><strong>Feature: DIY path</strong></td>
+          <td>4-step path card (coral)</td>
+          <td>4-step horizontal path</td>
+          <td>"Your adventure. Your rules. Built together."</td>
+          <td>Hostel → People → Group → Itinerary. Each step explained.</td>
+          <td>"Start building →"</td>
+          <td>Empowerment — you control the experience.</td>
+        </tr>
+        <tr>
+          <td><strong>Feature: Hostels</strong></td>
+          <td>Hostel card strip</td>
+          <td>2-col grid</td>
+          <td>"200+ partner hostels. Book and see who's checking in the same week."</td>
+          <td>Zostel, GoStops, Moustache. Social layer built in. ID-verified members only visible.</td>
+          <td>"Explore hostels →"</td>
+          <td>The hostel is no longer just accommodation — it's a meetup.</td>
+        </tr>
+        <tr>
+          <td><strong>Coming soon (Phase 2–3)</strong></td>
+          <td>Feature pill grid, "Coming soon" tags</td>
+          <td>3-col grid with indigo Coming Soon badges</td>
+          <td>"We're just getting started."</td>
+          <td>AI chatbot for trip planning (Phase 2) · In-trip expense OS (Phase 3) · Biker + road trip verticals (Phase 4) · Trippy-curated proprietary trips (Phase 5)</td>
+          <td>"Join the waitlist" (email capture)</td>
+          <td>Build FOMO + waitlist capture for future phases.</td>
+        </tr>
+        <tr>
+          <td><strong>Safety section</strong></td>
+          <td>Icon + copy list</td>
+          <td>2-col: copy + badge grid</td>
+          <td>"Safety isn't a feature. It's the foundation."</td>
+          <td>ID verification. Phone verification. Report + block. Verified profiles surfaced first. Safety guide in-app.</td>
+          <td>None (trust building)</td>
+          <td>Address the anxiety of meeting strangers from the internet for travel.</td>
+        </tr>
+        <tr>
+          <td><strong>Final CTA</strong></td>
+          <td>Centered, dark bg strip</td>
+          <td>Centered, dark bg strip</td>
+          <td>"Ready to stop going alone?"</td>
+          <td>App store badges. "Free · India-first · Available on Android &amp; iOS"</td>
+          <td>App Store + Play Store</td>
+          <td>Conversion at end of considered journey.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ─── 4. FOR PARTNERS PAGE ────────────────────────────────── -->
+<div class="section">
+  <div class="eyebrow">04 — For Partners page</div>
+  <h2 class="sh2">/for-partners — section brief</h2>
+  <p class="sdesc">Supply-side pitch page. Audience: travel community admins and trip operators. Primary CTA routes to /partner signup.</p>
+  <div style="overflow-x:auto;">
+    <table class="tbl" style="min-width:860px;">
+      <thead><tr><th>Section</th><th>Mobile layout</th><th>Desktop layout</th><th>Headline</th><th>Copy / content</th><th>CTA</th><th>Emotional job</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Page hero</strong></td>
+          <td>Dark bg, centered, coral CTA</td>
+          <td>Dark bg, split: copy left, partner dashboard mockup right</td>
+          <td>"Your trips deserve a bigger audience."</td>
+          <td>Sub: "12,000+ solo travellers search Trippy every month for group trips to your destination. List yours."</td>
+          <td>"List your first trip free →" → /partner</td>
+          <td>Establish the opportunity cost of NOT being on Trippy.</td>
+        </tr>
+        <tr>
+          <td><strong>How it works (3 steps)</strong></td>
+          <td>3 stacked step cards</td>
+          <td>3-column horizontal</td>
+          <td>"From signup to live in under 30 minutes."</td>
+          <td>Step 1: Sign up + create your org (2 min). Step 2: Build your trip — itinerary, pricing, media, payment link. Step 3: Publish + get discovered by solo travellers searching your destination.</td>
+          <td>"Get started →"</td>
+          <td>Overcome low-tech-literacy friction. Make it feel achievable.</td>
+        </tr>
+        <tr>
+          <td><strong>What partners get</strong></td>
+          <td>Feature card list</td>
+          <td>3-col feature grid</td>
+          <td>"Everything you need. Nothing you don't."</td>
+          <td>Reach: 12,000+ active travellers. Zero payment complexity: use your existing payment link. Analytics: click tracking, views, conversion. Trip builder: day-wise itinerary, media gallery, pricing tiers. No Trippy commission: we don't touch your money.</td>
+          <td>None (feature showcase)</td>
+          <td>Eliminate perceived risk. Partners fear complexity and losing control of money.</td>
+        </tr>
+        <tr>
+          <td><strong>Partner stories</strong></td>
+          <td>2 story cards vertical</td>
+          <td>2-col story cards</td>
+          <td>"Operators who grew their reach on Trippy."</td>
+          <td>Himalayan Wolves: "Listed 3 Spiti trips. 40+ booking clicks in the first month." · Coastal Nomads: "Our Goa trip filled in 12 days via Trippy. Zero marketing spend."</td>
+          <td>None (social proof)</td>
+          <td>Peer validation from operators of similar scale.</td>
+        </tr>
+        <tr>
+          <td><strong>FAQ</strong></td>
+          <td>Accordion list</td>
+          <td>2-col Q&amp;A grid</td>
+          <td>"Common questions."</td>
+          <td>Does Trippy take commission? (No) · Do I need to integrate payments? (No — use your link) · What types of trips can I list? (Any group trip, any destination) · How do I get approved? (Self-serve, no approval needed for Phase 1)</td>
+          <td>None</td>
+          <td>Remove final objections before CTA.</td>
+        </tr>
+        <tr>
+          <td><strong>Final CTA</strong></td>
+          <td>Coral banner, centered</td>
+          <td>Coral banner card, centered</td>
+          <td>"Your next group trip could be full before you finish this sentence."</td>
+          <td>"Join 80+ travel operators already on Trippy."</td>
+          <td>"Create your partner account →" → /partner</td>
+          <td>Urgency + FOMO. Close the loop on the page.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ─── 5. NAVIGATION ─────────────────────────────────────────── -->
+<div class="section">
+  <div class="eyebrow">05 — Navigation</div>
+  <h2 class="sh2">Nav spec — dual-audience routing</h2>
+  <p class="sdesc">Key challenge: serve two audiences without confusing either. Traveller path is primary; partner path is discoverable but subordinate.</p>
+  <div class="nav-spec">
+    <div class="nav-spec-row">
+      <div class="nav-spec-cell header">Element</div>
+      <div class="nav-spec-cell header">Desktop (≥760px)</div>
+      <div class="nav-spec-cell header">Mobile (&lt;760px)</div>
+    </div>
+    <div class="nav-spec-row">
+      <div class="nav-spec-cell"><strong>Logo</strong></div>
+      <div class="nav-spec-cell">🧭 Trippy wordmark. Links to /</div>
+      <div class="nav-spec-cell">🧭 Trippy wordmark only (no links hidden)</div>
+    </div>
+    <div class="nav-spec-row">
+      <div class="nav-spec-cell"><strong>Primary links</strong></div>
+      <div class="nav-spec-cell">"For travellers" · "How it works" · "Browse trips" — full-color, pill hover</div>
+      <div class="nav-spec-cell">Hidden — replaced by hamburger menu</div>
+    </div>
+    <div class="nav-spec-row">
+      <div class="nav-spec-cell"><strong>Partner link</strong></div>
+      <div class="nav-spec-cell">"For partners" — faint text color, no pill style. Discoverable but doesn't compete.</div>
+      <div class="nav-spec-cell">Inside hamburger menu, listed last</div>
+    </div>
+    <div class="nav-spec-row">
+      <div class="nav-spec-cell"><strong>Primary CTA</strong></div>
+      <div class="nav-spec-cell">"Get the app" — teal pill button, rightmost</div>
+      <div class="nav-spec-cell">"Get the app" — teal pill, stays visible always</div>
+    </div>
+    <div class="nav-spec-row">
+      <div class="nav-spec-cell"><strong>Scroll behavior</strong></div>
+      <div class="nav-spec-cell">Glassmorphic at top (rgba .78 + blur 12px). Solid white with stronger border on scroll.</div>
+      <div class="nav-spec-cell">Same behavior. 56px height on mobile.</div>
+    </div>
+    <div class="nav-spec-row">
+      <div class="nav-spec-cell"><strong>Active state</strong></div>
+      <div class="nav-spec-cell">Current page link: teal bg pill (background: var(--teal-50), color: var(--teal-700))</div>
+      <div class="nav-spec-cell">Same in hamburger menu</div>
+    </div>
+    <div class="nav-spec-row">
+      <div class="nav-spec-cell"><strong>Partner CRM nav</strong></div>
+      <div class="nav-spec-cell" colspan="2" style="grid-column:span 2;">Completely separate navigation — dark sidebar app shell. No marketing nav elements. The /partner app must never look like the marketing site.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 6. FOOTER ─────────────────────────────────────────────── -->
+<div class="section">
+  <div class="eyebrow">06 — Footer</div>
+  <h2 class="sh2">Footer spec</h2>
+  <p class="sdesc">Dark (#14202A) background. 4-column desktop / 2-column tablet / stacked mobile. App store badges repeat here.</p>
+  <div style="overflow-x:auto;">
+    <table class="tbl" style="min-width:600px;">
+      <thead><tr><th>Column</th><th>Content</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Col 1 — Brand</strong></td><td>Logo + wordmark · Tagline: "Travel solo, never alone." · Instagram, Twitter, YouTube icons</td><td>Tagline is the one-liner that must be memorable. Social links open new tab.</td></tr>
+        <tr><td><strong>Col 2 — For travellers</strong></td><td>How it works · Find companions · Browse group trips · DIY trip builder · Partner hostels</td><td>All link to /for-travellers# anchors or in-app deep links (Phase 2)</td></tr>
+        <tr><td><strong>Col 3 — For partners</strong></td><td>List your trips · Partner CRM · Partner stories · Pricing · Sign up →</td><td>"Sign up →" links directly to /partner. Bold/coral to signal it's an action.</td></tr>
+        <tr><td><strong>Col 4 — Company</strong></td><td>About · Blog · Safety · Contact · Privacy policy</td><td>Safety page is mandatory given the matchmaking product. Must be findable.</td></tr>
+        <tr><td><strong>Footer bottom bar</strong></td><td>"© 2026 Trippy · Travel solo, never alone · Made in India 🇮🇳" + App Store + Play Store mini badges</td><td>App store badges repeat at the very bottom — last conversion chance before exit.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ─── 7. CONVERSION FLOWS ──────────────────────────────────── -->
+<div class="section">
+  <div class="eyebrow">07 — Conversion flows</div>
+  <h2 class="sh2">Dual-audience journeys</h2>
+  <p class="sdesc">Two annotated flows. Every step has a design annotation explaining the decision.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;">
+    <div>
+      <div style="font:700 14px var(--fbody);color:var(--teal-700);background:var(--teal-50);border:1px solid var(--teal-100);border-radius:10px;padding:8px 14px;margin-bottom:20px;display:flex;align-items:center;gap:7px;"><i class="ph-bold ph-user" style="font-size:14px;"></i> Flow A — Solo Traveller</div>
+      <div class="flow">
+        <div class="fstep">
+          <div class="fstep-line"><div class="fstep-dot" style="background:var(--teal-500);color:#fff;">1</div><div class="fstep-connector" style="background:var(--teal-100);"></div></div>
+          <div class="fstep-content"><div class="fstep-title">Lands on homepage</div><div class="fstep-desc">Via Instagram ad, friend referral, or organic search. Mobile browser, 90% likelihood.</div><div class="fstep-note" style="background:var(--teal-50);color:var(--teal-700);">⚑ Hero headline must land in &lt;2s. No loading state visible above fold.</div></div>
+        </div>
+        <div class="fstep">
+          <div class="fstep-line"><div class="fstep-dot" style="background:var(--teal-500);color:#fff;">2</div><div class="fstep-connector" style="background:var(--teal-100);"></div></div>
+          <div class="fstep-content"><div class="fstep-title">Reads hero headline + sees badges</div><div class="fstep-desc">"Going solo doesn't mean going alone." lands emotionally. Sees App Store + Play Store badges immediately — both above fold.</div><div class="fstep-note" style="background:var(--teal-50);color:var(--teal-700);">⚑ Badges must be styled as buttons, not images. Tap target ≥44px.</div></div>
+        </div>
+        <div class="fstep">
+          <div class="fstep-line"><div class="fstep-dot" style="background:var(--teal-500);color:#fff;">3</div><div class="fstep-connector" style="background:var(--teal-100);"></div></div>
+          <div class="fstep-content"><div class="fstep-title">Scrolls — sees proof + "How it works"</div><div class="fstep-desc">Stats strip validates scale (12,400+ travellers). Step cards show the path is short: 3 steps.</div><div class="fstep-note" style="background:var(--teal-50);color:var(--teal-700);">⚑ AI match score pill visible in step 2 card — seeds the concept before the product section.</div></div>
+        </div>
+        <div class="fstep">
+          <div class="fstep-line"><div class="fstep-dot" style="background:var(--teal-500);color:#fff;">4</div><div class="fstep-connector" style="background:var(--teal-100);"></div></div>
+          <div class="fstep-content"><div class="fstep-title">Reads testimonials — identifies with Arjun/Sneha/Rohan</div><div class="fstep-desc">Stories are demographically matched: 24–28, Indian cities, real destinations. They see themselves.</div><div class="fstep-note" style="background:var(--teal-50);color:var(--teal-700);">⚑ Testimonials must feel specific, not generic. First name + city + destination + score.</div></div>
+        </div>
+        <div class="fstep">
+          <div class="fstep-line"><div class="fstep-dot" style="background:var(--teal-500);color:#fff;">5</div><div class="fstep-connector" style="background:var(--teal-100);"></div></div>
+          <div class="fstep-content"><div class="fstep-title">Scrolls past partner section (doesn't apply)</div><div class="fstep-desc">Partner section is visually contained inside a dark card — clearly a different audience. They scroll past without friction.</div><div class="fstep-note" style="background:var(--teal-50);color:var(--teal-700);">⚑ Partner section must not confuse travellers or distract from the primary flow.</div></div>
+        </div>
+        <div class="fstep">
+          <div class="fstep-line"><div class="fstep-dot" style="background:var(--teal-600);color:#fff;">6</div><div class="fstep-connector" style="background:transparent;"></div></div>
+          <div class="fstep-content"><div class="fstep-title">Reaches final CTA — taps App Store or Play Store</div><div class="fstep-desc">Second appearance of both badges. "Free · India-first · Android &amp; iOS" removes final friction objections.</div><div class="fstep-note" style="background:var(--green-50);color:#15803d;">✓ Conversion: app download initiated.</div></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="font:700 14px var(--fbody);color:var(--coral-600);background:var(--coral-50);border:1px solid var(--coral-100);border-radius:10px;padding:8px 14px;margin-bottom:20px;display:flex;align-items:center;gap:7px;"><i class="ph-bold ph-briefcase" style="font-size:14px;"></i> Flow B — Travel Operator / Partner</div>
+      <div class="flow">
+        <div class="fstep">
+          <div class="fstep-line"><div class="fstep-dot" style="background:var(--coral-500);color:#fff;">1</div><div class="fstep-connector" style="background:var(--coral-100);"></div></div>
+          <div class="fstep-content"><div class="fstep-title">Lands on homepage</div><div class="fstep-desc">Via word of mouth from another operator, or searches "list group trips India platform". Likely desktop.</div><div class="fstep-note" style="background:var(--coral-50);color:var(--coral-600);">⚑ Nav must show "For partners" link. Faint color — discoverable but not aggressive.</div></div>
+        </div>
+        <div class="fstep">
+          <div class="fstep-line"><div class="fstep-dot" style="background:var(--coral-500);color:#fff;">2</div><div class="fstep-connector" style="background:var(--coral-100);"></div></div>
+          <div class="fstep-content"><div class="fstep-title">Skims hero — doesn't self-identify as traveller</div><div class="fstep-desc">Hero copy is clearly traveller-facing. Operator sees "this is for travellers" and continues scrolling to find their entry point.</div><div class="fstep-note" style="background:var(--coral-50);color:var(--coral-600);">⚑ Partner section must be findable within 2 scrolls. No more than 4 sections above it.</div></div>
+        </div>
+        <div class="fstep">
+          <div class="fstep-line"><div class="fstep-dot" style="background:var(--coral-500);color:#fff;">3</div><div class="fstep-connector" style="background:var(--coral-100);"></div></div>
+          <div class="fstep-content"><div class="fstep-title">Notices partner section — headline resonates</div><div class="fstep-desc">"Running group trips? You're missing 12,000+ solo travellers actively looking." lands precisely for an operator who runs trips but lacks reach.</div><div class="fstep-note" style="background:var(--coral-50);color:var(--coral-600);">⚑ Headline must be operator-perspective, not platform-perspective. "You're missing" not "We have".</div></div>
+        </div>
+        <div class="fstep">
+          <div class="fstep-line"><div class="fstep-dot" style="background:var(--coral-500);color:#fff;">4</div><div class="fstep-connector" style="background:var(--coral-100);"></div></div>
+          <div class="fstep-content"><div class="fstep-title">Clicks "Learn more about the Partner CRM"</div><div class="fstep-desc">Secondary link below primary CTA routes to /for-partners — the full partner pitch page.</div><div class="fstep-note" style="background:var(--coral-50);color:var(--coral-600);">⚑ Two CTA options: "List your first trip free" (fast track) vs "Learn more" (considered). Both needed.</div></div>
+        </div>
+        <div class="fstep">
+          <div class="fstep-line"><div class="fstep-dot" style="background:var(--coral-500);color:#fff;">5</div><div class="fstep-connector" style="background:var(--coral-100);"></div></div>
+          <div class="fstep-content"><div class="fstep-title">Reads /for-partners — objections addressed</div><div class="fstep-desc">FAQ section removes "do you take commission?" and "do I need to integrate payments?" objections. Operator stories provide peer validation.</div><div class="fstep-note" style="background:var(--coral-50);color:var(--coral-600);">⚑ FAQ must answer the top 4 real objections, not generic ones.</div></div>
+        </div>
+        <div class="fstep">
+          <div class="fstep-line"><div class="fstep-dot" style="background:var(--coral-600);color:#fff;">6</div><div class="fstep-connector" style="background:transparent;"></div></div>
+          <div class="fstep-content"><div class="fstep-title">Clicks "Create your partner account" → /partner</div><div class="fstep-desc">Routes to the Partner CRM signup. Separate app, separate design language (opaque, professional).</div><div class="fstep-note" style="background:var(--green-50);color:#15803d;">✓ Conversion: partner signup initiated at /partner.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 8. MICRO-INTERACTIONS ─────────────────────────────────── -->
+<div class="section">
+  <div class="eyebrow">08 — Micro-interactions</div>
+  <h2 class="sh2">5 moments of delight</h2>
+  <p class="sdesc">Each micro-interaction must feel earned — it marks a meaningful moment in the traveller journey, not a decoration.</p>
+  <div class="micro-grid">
+    <div class="mcard">
+      <div class="mcard-trigger">Trigger</div>
+      <div class="mcard-title">Compatibility score reveal</div>
+      <div class="mcard-behavior">When a match card loads or enters viewport, the score pill animates from 0% → actual score (e.g. 84%) over 600ms with an ease-out curve. The pill color transitions simultaneously: gray → teal (high) or amber (mid).</div>
+      <div class="mcard-why">The score is the product's core differentiator. Animating it in draws the eye, makes the number feel earned rather than arbitrary, and communicates "the AI just calculated this for you."</div>
+    </div>
+    <div class="mcard">
+      <div class="mcard-trigger">Trigger</div>
+      <div class="mcard-title">Travel request sent ripple</div>
+      <div class="mcard-behavior">When a user taps "Send travel request", the button immediately transforms to "Request sent ✓" (optimistic UI, 0ms delay). A subtle ripple pulse radiates from the button outward — 2 expanding rings, teal, 300ms ease-out, opacity 0→0. No spinner.</div>
+      <div class="mcard-why">Sending a travel request is the highest-stakes action in the app. Instant visual feedback + the ripple signal "you've done something real." The pulse mirrors a heartbeat — this matters.</div>
+    </div>
+    <div class="mcard">
+      <div class="mcard-trigger">Trigger</div>
+      <div class="mcard-title">Hostel member count tick-up</div>
+      <div class="mcard-behavior">When the hostel member list loads, the member count badge animates from 0 → actual number (e.g. "6 members") with a fast count-up at 40ms/digit. Each new member row slides in from the right with 80ms stagger between rows.</div>
+      <div class="mcard-why">Shows the hostel as a living, dynamic space rather than a static list. "6 members are already there" feels exciting; seeing the number tick up to 6 feels even more so. Mirrors the social energy of arriving at a hostel.</div>
+    </div>
+    <div class="mcard">
+      <div class="mcard-trigger">Trigger</div>
+      <div class="mcard-title">Match notification ripple (nav badge)</div>
+      <div class="mcard-behavior">When a new match arrives (or an incoming travel request), the Matches nav icon gets a badge with a pulsing ring: the badge scales from 1.0 → 1.3 → 1.0 in a 1.5s loop. Ring color: teal. Badge disappears when the tab is opened.</div>
+      <div class="mcard-why">A new match is the equivalent of someone tapping you on the shoulder. The pulsing ring creates urgency without aggression — it's warm, not alarming. Uses the same visual language as a heartbeat or a notification from a person, not a system.</div>
+    </div>
+    <div class="mcard">
+      <div class="mcard-trigger">Trigger</div>
+      <div class="mcard-title">DIY path step completion celebration</div>
+      <div class="mcard-behavior">When a user completes a DIY step (e.g. hostel selected, or group formed), the step number in the stepper changes from coral → teal, and a checkmark icon pops in with a scale(0) → scale(1.2) → scale(1.0) spring at 250ms. A soft confetti burst (6 particles, coral + teal, 400ms) emits from the step dot.</div>
+      <div class="mcard-why">The DIY path is a multi-step flow that can feel long. Celebrating each completed step reinforces progress and creates a sense of momentum. The coral → teal color shift signals "you built this, and it's becoming real." The confetti is small enough to feel warm, not game-y.</div>
+    </div>
+  </div>
+</div>
+
+<!-- footer -->
+<div style="margin-top:80px;padding-top:28px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+  <div style="display:flex;align-items:center;gap:9px;">
+    <div style="width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--teal-500),#14b8a6);display:flex;align-items:center;justify-content:center;font-size:15px;">🧭</div>
+    <span style="font-family:var(--fhead);font-weight:700;font-size:16px;color:var(--ink);">Trippy · Website Brief</span>
+  </div>
+  <span style="font-size:12px;color:var(--faint);">v1.0 · July 2026 · 8 sections · 2 conversion flows · 5 micro-interactions</span>
+</div>
+
+</div>
+
+</x-dc>
+</body>
+</html>

@@ -1,0 +1,13 @@
+# Never copy host-built artifacts or secrets into the image build context.
+# node_modules is reinstalled inside the image (host binaries are macOS/arm and
+# would break Linux containers).
+node_modules
+**/node_modules
+**/dist
+.git
+.gitignore
+.env
+**/.env
+server/data
+Dockerfile
+.dockerignore

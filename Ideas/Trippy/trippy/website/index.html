@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trippy — Travel solo, never alone</title>
+  <meta name="description" content="Find travellers heading to Spiti, Manali, or Goa on the same dates as you. Or join a curated group trip. Going solo doesn't mean going alone." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧭</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesque:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  <link rel="stylesheet" href="/src/styles.css" />
+</head>
+<body>
+<!-- Dev links point at the local app; in production these map to the app + partner domains. -->
+
+<!-- ══ NAV ══════════════════════════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-tile"><i class="ph-bold ph-compass" style="font-size:19px;"></i></div>
+      <span class="nav-word">Trippy</span>
+    </a>
+    <div class="nav-links">
+      <a href="#how-it-works" class="nav-link">How it works</a>
+      <a href="#modes" class="nav-link">For travellers</a>
+      <a href="#partners" class="nav-link partner">For partners</a>
+    </div>
+    <a href="/" class="nav-cta"><i class="ph-bold ph-arrow-right" style="font-size:15px;"></i> Open Trippy</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ═════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="blobs">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="blob blob-d"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-tag fade-up">
+      <i class="ph-bold ph-sparkle" style="font-size:13px;color:var(--teal-500);"></i>
+      AI-powered solo travel community
+    </div>
+    <h1 class="hero-h1 fade-up-2">Going solo doesn't<br>mean going <em>alone.</em></h1>
+    <p class="hero-sub fade-up-3">Find travellers heading to Spiti, Manali, or Goa on the same dates as you. Or join a curated group trip leaving this weekend. Entirely your choice.</p>
+    <div class="hero-badges fade-up-3">
+      <a href="/" class="badge-btn" style="padding:14px 28px;border-radius:14px;font-size:16px;gap:10px;">
+        <i class="ph-bold ph-globe" style="font-size:22px;"></i>
+        <div class="badge-text">
+          <span class="badge-sup">Free · Works on any browser</span>
+          <span class="badge-name">Open Trippy on mobile</span>
+        </div>
+      </a>
+    </div>
+    <div class="hero-proof fade-up-3">
+      <span class="hero-proof-pill"><i class="ph-bold ph-users" style="font-size:12px;color:var(--teal-500);"></i> 12,400+ solo travellers</span>
+      <span class="hero-proof-dot"></span>
+      <span class="hero-proof-pill"><i class="ph-bold ph-motorcycle" style="font-size:12px;color:var(--coral-500);"></i> 1,800+ riders & road trippers</span>
+      <span class="hero-proof-dot"></span>
+      <span class="hero-proof-pill"><i class="ph-bold ph-map-pin" style="font-size:12px;color:var(--teal-500);"></i> 47 destinations</span>
+      <span class="hero-proof-dot"></span>
+      <span class="hero-proof-pill"><i class="ph-bold ph-path" style="font-size:12px;color:var(--indigo-500);"></i> 340+ group & bike trips</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOW IT WORKS ══════════════════════════════════════════ -->
+<section class="section" id="how-it-works" style="background:#fff;">
+  <div class="shell">
+    <div class="section-eyebrow">How it works</div>
+    <h2 class="section-h2">From "I want to go" to "we're going" — in three steps.</h2>
+    <p class="section-sub">No WhatsApp group chaos. No spending 3 hours across 6 trip operator websites. One app does it all.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-title">Set your destination + dates</div>
+        <p class="step-desc">Tell us where you want to go and when — even if it's flexible. Manali in August? Spiti in September? Goa anytime? We've got travellers heading there.</p>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-title">Meet your matches</div>
+        <p class="step-desc">Our AI finds travellers with overlapping dates and compatible travel styles — ranked by a compatibility score. See their profile, interests, budget, and personality type before connecting.</p>
+        <div class="step-chip"><span class="score">91% match</span><span class="meta">· Solo trekker · Budget</span></div>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-title">Travel together</div>
+        <p class="step-desc">Send a request, get accepted, open your shared group chat. Plan the itinerary together, split expenses, log memories. The whole trip — in one place.</p>
+        <div class="step-chip"><i class="ph-bold ph-chat-circle" style="font-size:14px;color:var(--teal-500);"></i><span class="meta" style="font-size:12.5px;color:var(--muted);">Group chat, expense split, shared itinerary</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STATS STRIP ═══════════════════════════════════════════ -->
+<div class="stats-section">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-num">12,400<span>+</span></div>
+      <div class="stat-label">Solo travellers found companions</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">340<span>+</span></div>
+      <div class="stat-label">Curated group trips live now</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">47</div>
+      <div class="stat-label">Destinations across India</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">₹<span>0</span></div>
+      <div class="stat-label">Booking fees — ever</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TESTIMONIALS ══════════════════════════════════════════ -->
+<section class="section" style="background:var(--bg);">
+  <div class="shell">
+    <div class="section-eyebrow">Real travellers</div>
+    <h2 class="section-h2">The people who stopped going alone.</h2>
+    <div class="testimonials-grid">
+      <div class="tcard">
+        <div class="tcard-top">
+          <div class="tcard-avatar" style="background:var(--teal-50);">🧑‍🎒</div>
+          <div>
+            <div class="tcard-name">Arjun Sharma</div>
+            <div class="tcard-meta">26 · Software engineer · Pune</div>
+          </div>
+        </div>
+        <p class="tcard-quote">"I'd been planning Spiti for 2 years but had no one to go with. Found 2 travel companions on Trippy with a 91% compatibility score. We left 3 weeks later. Best decision of my life."</p>
+        <div>
+          <span class="tcard-dest"><i class="ph-bold ph-map-pin" style="font-size:10px;"></i> Spiti Valley</span>
+          <span class="tcard-score"><i class="ph-bold ph-sparkle" style="font-size:10px;"></i> 91% match</span>
+        </div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-top">
+          <div class="tcard-avatar" style="background:var(--coral-50);">👩‍🦱</div>
+          <div>
+            <div class="tcard-name">Sneha Kulkarni</div>
+            <div class="tcard-meta">24 · UX designer · Mumbai</div>
+          </div>
+        </div>
+        <p class="tcard-quote">"Was nervous about solo travel as a woman. Trippy matched me with 3 girls heading to Kasol the same week — same budget, same vibe. We've done 4 trips together since."</p>
+        <div>
+          <span class="tcard-dest"><i class="ph-bold ph-map-pin" style="font-size:10px;"></i> Kasol, Himachal</span>
+          <span class="tcard-score"><i class="ph-bold ph-sparkle" style="font-size:10px;"></i> 87% match</span>
+        </div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-top">
+          <div class="tcard-avatar" style="background:var(--indigo-50);">🧔</div>
+          <div>
+            <div class="tcard-name">Rohan Nair</div>
+            <div class="tcard-meta">28 · Product manager · Bangalore</div>
+          </div>
+        </div>
+        <p class="tcard-quote">"Joined a Himalayan Wolves trip to Ladakh through Trippy. Saved ₹7,500 vs booking directly, and got to travel with 8 other solo travellers I'd never have met otherwise."</p>
+        <div>
+          <span class="tcard-dest"><i class="ph-bold ph-map-pin" style="font-size:10px;"></i> Leh-Ladakh</span>
+          <span class="tcard-hosted">Hosted trip</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRODUCT MODES ══════════════════════════════════════════ -->
+<section class="section" id="modes" style="background:#fff;">
+  <div class="shell">
+    <div class="section-eyebrow">Three ways to travel with Trippy</div>
+    <h2 class="section-h2">Your trip, your rules.</h2>
+    <p class="section-sub">Build your own adventure, join a curated group departure, or head out on a motorcycle expedition & road trip. All paths lead to the same place: not going alone.</p>
+    <div class="modes-grid">
+      <div class="mode-card diy">
+        <div class="mode-tag diy"><i class="ph-bold ph-path" style="font-size:11px;"></i> DIY path</div>
+        <h3 class="mode-h3">Build your own adventure, your way.</h3>
+        <p class="mode-desc">Pick a hostel, find compatible travellers checking in the same week, form a group, build a shared itinerary. Full flexibility, real community.</p>
+        <div class="mode-steps">
+          <div class="mode-step"><div class="mode-step-dot diy">1</div><span>Pick your hostel from Zostel, GoStops, and 200+ Trippy-partner properties</span></div>
+          <div class="mode-step"><div class="mode-step-dot diy">2</div><span>See who else is checking in — filter by travel style, gender, age, interests</span></div>
+          <div class="mode-step"><div class="mode-step-dot diy">3</div><span>Form a group, build your shared itinerary, split costs as you go</span></div>
+        </div>
+        <a href="/login?mode=signup" class="mode-cta diy">Start your DIY trip <i class="ph-bold ph-arrow-right" style="font-size:14px;"></i></a>
+        <div class="mode-decoration">🗺️</div>
+      </div>
+      <div class="mode-card hosted">
+        <div class="mode-tag hosted"><i class="ph-bold ph-users-three" style="font-size:11px;"></i> Hosted trips</div>
+        <h3 class="mode-h3">Join a curated group trip. Everything sorted.</h3>
+        <p class="mode-desc">340+ hosted trips from verified travel communities & riding clubs — Himalayan Wolves, Coastal Nomads, and 80+ operators. One link to book.</p>
+        <div class="mode-steps">
+          <div class="mode-step"><div class="mode-step-dot hosted">1</div><span>Search by destination, dates, budget, and trip type (trekking, biking, beach)</span></div>
+          <div class="mode-step"><div class="mode-step-dot hosted">2</div><span>See verified reviews, detailed itinerary, what's included, and who's going</span></div>
+          <div class="mode-step"><div class="mode-step-dot hosted">3</div><span>Book directly with the operator — Trippy handles discovery, they handle the trip</span></div>
+        </div>
+        <a href="/" class="mode-cta hosted">Browse group trips <i class="ph-bold ph-arrow-right" style="font-size:14px;"></i></a>
+        <div class="mode-decoration">🏔️</div>
+      </div>
+    </div>
+
+    <!-- Bike & Road Trips Showcase Banner -->
+    <div style="margin-top: 24px; background: linear-gradient(145deg, #14202a, #1a2e2b); color: #fff; border-radius: 24px; padding: 36px 40px; position: relative; overflow: hidden; box-shadow: var(--shadow-card);">
+      <div style="max-width: 620px; position: relative; z-index: 1;">
+        <div style="display: inline-flex; align-items: center; gap: 6px; font: 700 11px var(--fbody); letter-spacing: .08em; text-transform: uppercase; padding: 5px 12px; border-radius: 99px; background: rgba(14,159,143,.2); color: #2dd4bf; border: 1px solid rgba(45,212,191,.3); margin-bottom: 14px;">
+          <i class="ph-bold ph-motorcycle"></i> Bike Expeditions & Road Trips
+        </div>
+        <h3 style="font-family: var(--fhead); font-weight: 800; font-size: 26px; color: #fff; margin-bottom: 10px; letter-spacing: -.02em;">
+          Riding solo? Match with co-riders, track GPS live, & offer carpool seats.
+        </h3>
+        <p style="font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.6; margin-bottom: 22px;">
+          Planning a ride to Leh-Ladakh, Spiti, or the Western Ghats? Set up your bike or car profile, match with riders on identical dates, share 60-second live GPS tracking, log waypoint check-ins, and use emergency SOS safety alerts.
+        </p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <a href="/adventures" class="mode-cta diy" style="background: var(--teal-500); color: #fff; border: none; padding: 12px 22px; font-size: 14px;">
+            Explore Bike & Road Trips <i class="ph-bold ph-arrow-right" style="font-size:14px;"></i>
+          </a>
+          <a href="/partner" class="mode-cta hosted" style="background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 12px 20px; font-size: 14px;">
+            Host a Bike Trip as Partner <i class="ph-bold ph-arrow-right" style="font-size:14px;"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOSTEL LAYER ═══════════════════════════════════════════ -->
+<section class="hostel-section" id="hostels">
+  <div class="hostel-inner">
+    <div>
+      <div class="section-eyebrow">The hostel layer</div>
+      <h2 class="section-h2" style="margin-bottom:14px;">See who else from Trippy is at your hostel.</h2>
+      <p style="font-size:16px;color:var(--muted);line-height:1.6;margin-bottom:24px;">Book your Zostel, Moustache, or GoStops room through Trippy and instantly see other members checking in the same week. Reach out before you even arrive.</p>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="hostel-feature"><div class="hostel-feature-icon"><i class="ph-bold ph-users" style="font-size:13px;"></i></div><span>200+ partner hostels across 47 Indian destinations</span></div>
+        <div class="hostel-feature"><div class="hostel-feature-icon"><i class="ph-bold ph-shield-check" style="font-size:13px;"></i></div><span>Only ID-verified Trippy members visible — safety first</span></div>
+        <div class="hostel-feature"><div class="hostel-feature-icon"><i class="ph-bold ph-chat-circle" style="font-size:13px;"></i></div><span>Chat before you arrive. Show up with friends, not strangers.</span></div>
+      </div>
+    </div>
+    <div class="hostel-mockup">
+      <div class="hostel-mockup-header">
+        <div class="hostel-icon"><i class="ph-bold ph-house-line" style="font-size:18px;"></i></div>
+        <div>
+          <div class="hostel-name">Zostel Manali</div>
+          <div class="hostel-loc"><i class="ph-bold ph-map-pin" style="font-size:10px;"></i> Old Manali, Himachal Pradesh</div>
+        </div>
+        <span class="hostel-count">6 members</span>
+      </div>
+      <p class="hostel-checkin">Checking in Aug 12–16</p>
+      <div class="hostel-members">
+        <div class="hm-row">
+          <div class="hm-av" style="background:#e6f5f3;">🧑‍🎒</div>
+          <div class="hm-info"><div class="hm-name">Priya M.</div><div class="hm-dates">Aug 12–16 · Trekker · Budget</div></div>
+          <span class="hm-score">84%</span>
+        </div>
+        <div class="hm-row">
+          <div class="hm-av" style="background:#fff3ee;">👩</div>
+          <div class="hm-info"><div class="hm-name">Rahul K.</div><div class="hm-dates">Aug 11–17 · Photographer · Mid</div></div>
+          <span class="hm-score">76%</span>
+        </div>
+        <div class="hm-row">
+          <div class="hm-av" style="background:#eef0ff;">🧔</div>
+          <div class="hm-info"><div class="hm-name">Anika S.</div><div class="hm-dates">Aug 13–16 · Solo first-timer</div></div>
+          <span class="hm-score">91%</span>
+        </div>
+        <div class="hm-more">+ 3 more members · <a href="/hostels" style="text-decoration:underline;color:inherit;">See all</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOR PARTNERS ═══════════════════════════════════════════ -->
+<section class="partner-section" id="partners">
+  <div class="partner-inner">
+    <div class="partner-banner">
+      <div class="partner-blob"></div>
+      <div class="partner-blob-2"></div>
+      <div class="partner-content">
+        <div class="partner-tag"><i class="ph-bold ph-briefcase" style="font-size:11px;"></i> For travel communities, riding clubs &amp; operators</div>
+        <h2 class="partner-h2">Running group trips or bike expeditions? You're missing <em>12,000+</em> active travellers &amp; riders.</h2>
+        <p class="partner-sub">List your group departures, motorcycle tours &amp; road trip expeditions on Trippy. Connect directly with riders &amp; solo travellers actively searching for your routes. No complex setup, no booking fees.</p>
+        <div class="partner-steps">
+          <div class="ps"><div class="ps-num">01</div><div class="ps-title">Sign up in 2 minutes</div><div class="ps-desc">Create your partner org account. No contracts, no listing fees.</div></div>
+          <div class="ps"><div class="ps-num">02</div><div class="ps-title">Build your trip &amp; fleet info</div><div class="ps-desc">Add itinerary, vehicle fleet (Himalayan 450, SUV support van, mechanic crew), pricing, and payment links.</div></div>
+          <div class="ps"><div class="ps-num">03</div><div class="ps-title">Go live, get discovered</div><div class="ps-desc">Your trip appears in search results for 12,000+ travellers &amp; riders searching your destination.</div></div>
+        </div>
+        <a href="/partner" class="partner-cta"><i class="ph-bold ph-rocket-launch" style="font-size:15px;"></i> Host your first trip free</a>
+        <a href="/partner" class="partner-secondary">Learn more about Partner CRM <i class="ph-bold ph-arrow-right" style="font-size:13px;"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FINAL CTA ══════════════════════════════════════════════ -->
+<section class="finalcta">
+  <div class="finalcta-inner">
+    <div class="finalcta-compass"><i class="ph-bold ph-compass"></i></div>
+    <h2 class="finalcta-h2">Your next adventure is waiting.<br>So are the <em>people</em> you'll meet on it.</h2>
+    <p class="finalcta-sub">12,400 solo travellers have already found their travel tribe on Trippy. The next one could be your companion to Spiti, Ladakh, or wherever you've been putting off going.</p>
+    <div class="finalcta-stores">
+      <a href="/" class="badge-btn" style="padding:14px 28px;border-radius:14px;font-size:16px;gap:10px;">
+        <i class="ph-bold ph-globe" style="font-size:22px;"></i>
+        <div class="badge-text">
+          <span class="badge-sup">Free · Works on any browser</span>
+          <span class="badge-name">Open Trippy on mobile</span>
+        </div>
+      </a>
+    </div>
+    <p class="finalcta-note">Free · Works in any mobile browser · No download needed · India-first</p>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══════════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">
+          <div class="footer-tile"><i class="ph-bold ph-compass" style="font-size:17px;"></i></div>
+          <span class="footer-brand-name">Trippy</span>
+        </div>
+        <p class="footer-tagline">Travel solo, never alone. Find your travel tribe across India's most beautiful destinations.</p>
+        <div class="footer-social">
+          <a href="#" class="fsoc" aria-label="Instagram"><i class="ph-bold ph-instagram-logo" style="font-size:16px;"></i></a>
+          <a href="#" class="fsoc" aria-label="Twitter"><i class="ph-bold ph-twitter-logo" style="font-size:16px;"></i></a>
+          <a href="#" class="fsoc" aria-label="YouTube"><i class="ph-bold ph-youtube-logo" style="font-size:16px;"></i></a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">For travellers</div>
+        <div class="footer-links">
+          <a href="#how-it-works">How it works</a>
+          <a href="/login?mode=signup">Find companions</a>
+          <a href="/">Browse group trips</a>
+          <a href="/login?mode=signup">DIY trip builder</a>
+          <a href="/hostels">Partner hostels</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">For partners</div>
+        <div class="footer-links">
+          <a href="#partners">List your trips</a>
+          <a href="/partner">Partner CRM</a>
+          <a href="#partners">Partner stories</a>
+          <a href="#partners">Pricing</a>
+          <a href="/partner">Sign up →</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <div class="footer-links">
+          <a href="#">About Trippy</a>
+          <a href="#">Blog</a>
+          <a href="#">Safety</a>
+          <a href="#">Contact us</a>
+          <a href="#">Privacy policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-legal">© 2026 Trippy · Travel solo, never alone · Made in India 🇮🇳</span>
+      <div class="footer-stores">
+        <a href="/" class="fstore"><i class="ph-bold ph-globe" style="font-size:14px;"></i> Open Trippy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav active state: clicked link darkens + gets the teal underline, and a
+  // lightweight scroll-spy keeps the highlight on the section in view.
+  (() => {
+    const links = [...document.querySelectorAll('.nav-link')];
+    const setActive = (link) => links.forEach(l => l.classList.toggle('active', l === link));
+    links.forEach(l => l.addEventListener('click', () => setActive(l)));
+
+    const byId = {};
+    links.forEach(l => { const id = (l.getAttribute('href') || '').slice(1); if (id) byId[id] = l; });
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible && byId[visible.target.id]) setActive(byId[visible.target.id]);
+    }, { rootMargin: '-30% 0px -55% 0px' });
+    Object.keys(byId).forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
+  })();
+</script>
+
+</body>
+</html>

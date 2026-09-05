@@ -1,0 +1,56 @@
+modules = ["web", "nodejs-22"]
+
+[nix]
+channel = "stable-25_05"
+
+[agent]
+expertMode = true
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start application"
+
+[[workflows.workflow]]
+name = "Start application"
+author = "agent"
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd trippy && DATABASE_URL= npm run dev:server & cd trippy && npm run dev:web"
+waitForPort = 5000
+
+[[ports]]
+localPort = 4000
+externalPort = 3000
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[[ports]]
+localPort = 5001
+externalPort = 3002
+
+[[ports]]
+localPort = 5002
+externalPort = 3003
+
+[[ports]]
+localPort = 5003
+externalPort = 4200
+
+[userenv]
+
+[userenv.shared]
+JWT_SECRET = "2052fd41b28f28eba626d16421b5e47c9619b0655dcc7739167868fac2df87cb40c4eb3adf6baa07be312b5696cf231a"

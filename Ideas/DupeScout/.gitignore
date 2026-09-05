@@ -1,0 +1,47 @@
+# Next.js
+.next/
+out/
+build/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+.venv/
+venv/
+
+# Environment
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# OS
+.DS_Store
+*.swp
+*.swo
+Thumbs.db
+
+# IDEs
+.idea/
+.vscode/settings.json
+*.iml
+
+# Test outputs
+coverage/
+.pytest_cache/
+htmlcov/
+
+# Secrets — never commit
+*.pem
+*.key
+*.p12
+credentials.json
+service-account.json

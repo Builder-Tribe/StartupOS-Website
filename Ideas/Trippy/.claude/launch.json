@@ -1,0 +1,23 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "trippy-api",
+      "runtimeExecutable": "/bin/zsh",
+      "runtimeArgs": ["-c", "export PATH=\"$HOME/.local/node/node-v22.17.0-darwin-arm64/bin:$PATH\" && cd trippy && npm run dev -w server"],
+      "port": 4000
+    },
+    {
+      "name": "trippy-web",
+      "runtimeExecutable": "/bin/zsh",
+      "runtimeArgs": ["-c", "export PATH=\"$HOME/.local/node/node-v22.17.0-darwin-arm64/bin:$PATH\" && cd trippy && npm run dev -w web"],
+      "port": 5173
+    },
+    {
+      "name": "trippy-website",
+      "runtimeExecutable": "/bin/zsh",
+      "runtimeArgs": ["-c", "export PATH=\"$HOME/.local/node/node-v22.17.0-darwin-arm64/bin:$PATH\" && cd trippy && npm run dev -w website"],
+      "port": 5174
+    }
+  ]
+}

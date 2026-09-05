@@ -1,0 +1,29 @@
+{
+  "name": "server",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "sh -c 'set -a; [ -f .env ] && . ./.env; set +a; NODE_OPTIONS=--experimental-sqlite tsx watch src/index.ts'",
+    "start": "sh -c 'set -a; [ -f .env ] && . ./.env; set +a; NODE_OPTIONS=--experimental-sqlite tsx src/index.ts'",
+    "test": "NODE_OPTIONS=--experimental-sqlite node --import tsx --test --test-concurrency=1 test/*.test.ts",
+    "db:clean-dummy": "NODE_OPTIONS=--experimental-sqlite tsx src/scripts/cleanDummyData.ts",
+    "ingest:trips": "NODE_OPTIONS=--experimental-sqlite tsx src/scripts/ingestTrips.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.115.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.22.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/node": "^22.10.0",
+    "@types/pg": "^8.20.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

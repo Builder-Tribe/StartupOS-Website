@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesque:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root {
+  --teal-50:#e6f5f3;--teal-100:#cceae6;--teal-500:#0e9f8f;--teal-600:#0b7a6c;--teal-700:#085f54;
+  --coral-50:#fff3ee;--coral-100:#ffe4d6;--coral-500:#f2683c;--coral-600:#c2410c;
+  --indigo-50:#eef0ff;--indigo-500:#6366f1;
+  --ink:#14202a;--muted:#5d6b76;--faint:#8795a0;
+  --line:#e6ebee;--line-soft:#eef1f3;--bg:#fbfcfd;
+  --green-50:#dcfce7;--green-600:#16a34a;
+  --fhead:'Bricolage Grotesque',-apple-system,sans-serif;
+  --fbody:'Hanken Grotesque',-apple-system,sans-serif;
+  --r:18px;
+  --shadow-card:0 1px 2px rgba(20,32,42,.04),0 8px 22px rgba(20,32,42,.06);
+  --shadow-lift:0 2px 4px rgba(20,32,42,.04),0 20px 50px rgba(20,32,42,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--fbody);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+h1,h2,h3,h4{font-family:var(--fhead);letter-spacing:-.02em;}
+a{text-decoration:none;color:inherit;}
+button{font-family:var(--fbody);cursor:pointer;border:none;}
+img{max-width:100%;}
+@keyframes blobFloat{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(18px,-22px) scale(1.05);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+@keyframes countUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+@keyframes shimmer{0%{background-position:-200% 0;}100%{background-position:200% 0;}}
+.fade-up{animation:fadeUp .5s ease both;}
+.fade-up-2{animation:fadeUp .5s .1s ease both;}
+.fade-up-3{animation:fadeUp .5s .2s ease both;}
+/* blobs */
+.blobs{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;}
+.blob{position:absolute;border-radius:50%;filter:blur(14px);animation:blobFloat 20s ease-in-out infinite;}
+.blob-a{top:-10%;left:-8%;width:50vw;height:50vw;background:radial-gradient(circle at 30% 30%,#ffd9c4,transparent 70%);opacity:.5;animation-duration:18s;}
+.blob-b{top:2%;right:-10%;width:44vw;height:44vw;background:radial-gradient(circle at 60% 40%,#cfe6ff,transparent 70%);opacity:.45;animation-duration:24s;animation-direction:reverse;}
+.blob-c{bottom:-12%;left:18%;width:52vw;height:52vw;background:radial-gradient(circle at 50% 50%,#c9f0e0,transparent 70%);filter:blur(16px);animation-duration:28s;}
+.blob-d{bottom:4%;right:6%;width:28vw;height:28vw;background:radial-gradient(circle at 50% 50%,#ece0ff,transparent 70%);animation-duration:22s;}
+/* layout */
+.shell{max-width:1140px;margin:0 auto;padding:0 40px;}
+@media(max-width:640px){.shell{padding:0 18px;}}
+/* nav */
+.nav{position:sticky;top:0;z-index:50;background:rgba(251,252,253,.78);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(20,32,42,.07);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 40px;}
+@media(max-width:640px){.nav-inner{padding:12px 18px;}}
+.nav-logo{display:flex;align-items:center;gap:9px;}
+.nav-tile{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--teal-500),#14b8a6);display:flex;align-items:center;justify-content:center;font-size:18px;}
+.nav-word{font-family:var(--fhead);font-weight:700;font-size:20px;letter-spacing:-.02em;color:var(--ink);}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-link{font-size:14px;font-weight:600;color:var(--muted);padding:7px 14px;border-radius:99px;transition:background .15s,color .15s;}
+.nav-link:hover{background:var(--teal-50);color:var(--teal-700);}
+.nav-link.partner{color:var(--faint);}
+.nav-cta{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border-radius:99px;background:var(--teal-500);color:#fff;font:700 14px var(--fbody);transition:filter .15s;}
+.nav-cta:hover{filter:brightness(.93);}
+@media(max-width:760px){.nav-links{display:none;}}
+.nav-mobile-cta{display:none;}
+@media(max-width:760px){.nav-mobile-cta{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:99px;background:var(--teal-500);color:#fff;font:700 13px var(--fbody);}}
+/* hero */
+.hero{position:relative;padding:80px 40px 72px;overflow:hidden;min-height:540px;display:flex;align-items:center;}
+@media(max-width:640px){.hero{padding:52px 18px 56px;}}
+.hero-inner{position:relative;z-index:1;max-width:740px;margin:0 auto;text-align:center;}
+.hero-tag{display:inline-flex;align-items:center;gap:7px;font:600 13px var(--fbody);color:var(--teal-700);background:var(--teal-50);border:1px solid var(--teal-100);padding:6px 16px;border-radius:99px;margin-bottom:24px;}
+.hero-h1{font-family:var(--fhead);font-weight:800;font-size:clamp(38px,6.5vw,66px);line-height:1.0;letter-spacing:-.03em;color:var(--ink);margin-bottom:20px;}
+.hero-h1 em{font-style:normal;color:var(--teal-500);}
+.hero-sub{font-size:clamp(16px,2vw,19px);line-height:1.6;color:var(--muted);max-width:560px;margin:0 auto 36px;}
+.hero-badges{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:28px;}
+.badge-btn{display:inline-flex;align-items:center;gap:10px;padding:11px 20px;border-radius:14px;border:1.5px solid var(--ink);background:var(--ink);color:#fff;font-family:var(--fbody);cursor:pointer;transition:filter .15s;}
+.badge-btn:hover{filter:brightness(1.12);}
+.badge-btn.light{background:#fff;color:var(--ink);border-color:var(--line);}
+.badge-btn.light:hover{border-color:var(--ink);}
+.badge-icon{font-size:24px;line-height:1;}
+.badge-text{display:flex;flex-direction:column;align-items:flex-start;}
+.badge-sup{font-size:9.5px;font-weight:600;letter-spacing:.04em;opacity:.75;text-transform:uppercase;}
+.badge-name{font-size:16px;font-weight:700;line-height:1;}
+.hero-proof{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;}
+.hero-proof-pill{display:inline-flex;align-items:center;gap:5px;font:600 13px var(--fbody);color:var(--muted);background:rgba(255,255,255,.7);border:1px solid var(--line);padding:5px 13px;border-radius:99px;backdrop-filter:blur(4px);}
+.hero-proof-dot{width:5px;height:5px;border-radius:50%;background:var(--line);}
+/* how it works */
+.section{padding:80px 40px;}
+@media(max-width:640px){.section{padding:60px 18px;}}
+.section-eyebrow{font:800 11px var(--fbody);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:10px;}
+.section-h2{font-family:var(--fhead);font-weight:700;font-size:clamp(26px,4vw,36px);letter-spacing:-.02em;color:var(--ink);margin-bottom:12px;}
+.section-sub{font-size:16px;color:var(--muted);line-height:1.6;max-width:560px;}
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px;}
+@media(max-width:760px){.steps-grid{grid-template-columns:1fr;gap:20px;}}
+.step-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:28px;position:relative;box-shadow:var(--shadow-card);}
+.step-num{width:40px;height:40px;border-radius:12px;background:var(--teal-500);color:#fff;font-family:var(--fhead);font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
+.step-icon{font-size:28px;margin-bottom:12px;}
+.step-title{font-family:var(--fhead);font-weight:700;font-size:20px;color:var(--ink);margin-bottom:8px;}
+.step-desc{font-size:14px;color:var(--muted);line-height:1.6;}
+.step-connector{position:absolute;right:-14px;top:36px;width:28px;height:2px;background:var(--line);z-index:2;}
+@media(max-width:760px){.step-connector{display:none;}}
+/* stats */
+.stats-section{background:var(--ink);padding:56px 40px;}
+@media(max-width:640px){.stats-section{padding:48px 18px;}}
+.stats-grid{max-width:1140px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+@media(max-width:760px){.stats-grid{grid-template-columns:repeat(2,1fr);gap:16px;}}
+.stat-item{text-align:center;}
+.stat-num{font-family:var(--fhead);font-weight:800;font-size:clamp(28px,4vw,44px);color:#fff;letter-spacing:-.02em;margin-bottom:4px;}
+.stat-num span{color:var(--teal-500);}
+.stat-label{font-size:13px;color:rgba(255,255,255,.55);font-weight:500;}
+/* testimonials */
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;}
+@media(max-width:860px){.testimonials-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:560px){.testimonials-grid{grid-template-columns:1fr;}}
+.tcard{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:var(--shadow-card);display:flex;flex-direction:column;gap:14px;}
+.tcard-top{display:flex;align-items:center;gap:12px;}
+.tcard-avatar{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.tcard-name{font-weight:700;font-size:15px;color:var(--ink);}
+.tcard-meta{font-size:12.5px;color:var(--faint);}
+.tcard-quote{font-size:14.5px;color:var(--muted);line-height:1.6;}
+.tcard-dest{display:inline-flex;align-items:center;gap:5px;font:600 12px var(--fbody);color:var(--teal-700);background:var(--teal-50);padding:4px 10px;border-radius:99px;}
+.tcard-score{display:inline-flex;align-items:center;gap:5px;font:700 12px var(--fbody);color:var(--teal-700);background:var(--teal-50);padding:4px 10px;border-radius:99px;margin-left:6px;}
+/* product modes */
+.modes-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px;}
+@media(max-width:760px){.modes-grid{grid-template-columns:1fr;}}
+.mode-card{border-radius:24px;padding:36px;position:relative;overflow:hidden;}
+.mode-card.diy{background:linear-gradient(145deg,#fff,#f2fbf8);border:1.5px solid var(--teal-100);}
+.mode-card.hosted{background:linear-gradient(145deg,#fff,#fff6f2);border:1.5px solid #ffc9ac;}
+.mode-tag{display:inline-flex;align-items:center;gap:6px;font:700 11px var(--fbody);letter-spacing:.06em;text-transform:uppercase;padding:5px 12px;border-radius:99px;margin-bottom:20px;}
+.mode-tag.diy{background:var(--teal-50);color:var(--teal-700);}
+.mode-tag.hosted{background:var(--coral-50);color:var(--coral-600);}
+.mode-h3{font-family:var(--fhead);font-weight:700;font-size:clamp(22px,3vw,28px);color:var(--ink);margin-bottom:10px;line-height:1.15;}
+.mode-desc{font-size:15px;color:var(--muted);line-height:1.6;margin-bottom:24px;}
+.mode-steps{display:flex;flex-direction:column;gap:10px;margin-bottom:28px;}
+.mode-step{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--ink);}
+.mode-step-dot{width:22px;height:22px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;font-weight:700;}
+.mode-step-dot.diy{background:var(--teal-500);color:#fff;}
+.mode-step-dot.hosted{background:var(--coral-500);color:#fff;}
+.mode-cta{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:12px;font:700 14px var(--fbody);cursor:pointer;transition:filter .15s;}
+.mode-cta.diy{background:var(--teal-500);color:#fff;}
+.mode-cta.hosted{background:var(--coral-500);color:#fff;}
+.mode-cta:hover{filter:brightness(.93);}
+.mode-decoration{position:absolute;bottom:-20px;right:-20px;font-size:100px;opacity:.06;}
+/* hostel */
+.hostel-section{background:linear-gradient(145deg,#fff,#f2fbf8);border-top:1px solid var(--teal-100);border-bottom:1px solid var(--teal-100);padding:80px 40px;}
+@media(max-width:640px){.hostel-section{padding:60px 18px;}}
+.hostel-inner{max-width:1140px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+@media(max-width:760px){.hostel-inner{grid-template-columns:1fr;gap:36px;}}
+.hostel-mockup{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--shadow-lift);}
+.hostel-mockup-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--line-soft);}
+.hostel-icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--teal-500),#14b8a6);display:flex;align-items:center;justify-content:center;font-size:18px;}
+.hostel-name{font:700 15px var(--fhead);color:var(--ink);}
+.hostel-loc{font:500 12px var(--fbody);color:var(--faint);}
+.hostel-members{display:flex;flex-direction:column;gap:10px;}
+.hm-row{display:flex;align-items:center;gap:10px;}
+.hm-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.hm-info{flex:1;}
+.hm-name{font:600 13.5px var(--fbody);color:var(--ink);}
+.hm-dates{font:500 11.5px var(--fbody);color:var(--faint);}
+.hm-score{font:700 12px var(--fbody);padding:3px 8px;border-radius:99px;background:var(--teal-50);color:var(--teal-700);}
+/* partner */
+.partner-section{padding:80px 40px;background:var(--bg);}
+@media(max-width:640px){.partner-section{padding:60px 18px;}}
+.partner-inner{max-width:1140px;margin:0 auto;}
+.partner-banner{background:linear-gradient(145deg,var(--ink),#1e3a35);border-radius:28px;padding:52px 56px;position:relative;overflow:hidden;}
+@media(max-width:640px){.partner-banner{padding:36px 24px;}}
+.partner-blob{position:absolute;top:-40px;right:-40px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(242,104,60,.25),transparent 70%);pointer-events:none;}
+.partner-blob-2{position:absolute;bottom:-60px;left:-40px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(14,159,143,.2),transparent 70%);pointer-events:none;}
+.partner-content{position:relative;z-index:1;}
+.partner-tag{display:inline-flex;align-items:center;gap:6px;font:700 11px var(--fbody);letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:99px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.15);margin-bottom:20px;}
+.partner-h2{font-family:var(--fhead);font-weight:800;font-size:clamp(26px,4vw,40px);color:#fff;line-height:1.08;margin-bottom:14px;max-width:680px;letter-spacing:-.03em;}
+.partner-h2 em{font-style:normal;color:var(--coral-500);}
+.partner-sub{font-size:16px;color:rgba(255,255,255,.65);line-height:1.6;max-width:520px;margin-bottom:36px;}
+.partner-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:40px;}
+@media(max-width:640px){.partner-steps{grid-template-columns:1fr;gap:12px;}}
+.ps{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:20px;}
+.ps-num{font-family:var(--fhead);font-weight:700;font-size:28px;color:var(--coral-500);margin-bottom:6px;}
+.ps-title{font:700 14px var(--fbody);color:#fff;margin-bottom:4px;}
+.ps-desc{font-size:13px;color:rgba(255,255,255,.55);line-height:1.5;}
+.partner-cta{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:13px;background:var(--coral-500);color:#fff;font:700 15px var(--fbody);transition:filter .15s;}
+.partner-cta:hover{filter:brightness(.93);}
+.partner-secondary{display:inline-flex;align-items:center;gap:6px;padding:14px 20px;border-radius:13px;background:transparent;color:rgba(255,255,255,.6);font:600 14px var(--fbody);margin-left:12px;}
+/* final cta */
+.finalcta{padding:100px 40px;background:var(--bg);}
+@media(max-width:640px){.finalcta{padding:72px 18px;}}
+.finalcta-inner{max-width:680px;margin:0 auto;text-align:center;}
+.finalcta-h2{font-family:var(--fhead);font-weight:800;font-size:clamp(30px,5vw,48px);color:var(--ink);letter-spacing:-.03em;line-height:1.05;margin-bottom:16px;}
+.finalcta-h2 em{font-style:normal;color:var(--teal-500);}
+.finalcta-sub{font-size:16px;color:var(--muted);line-height:1.6;margin-bottom:36px;}
+.finalcta-stores{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;}
+/* footer */
+.footer{background:var(--ink);padding:56px 40px 40px;}
+@media(max-width:640px){.footer{padding:48px 18px 32px;}}
+.footer-inner{max-width:1140px;margin:0 auto;}
+.footer-top{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px;}
+@media(max-width:760px){.footer-top{grid-template-columns:1fr 1fr;gap:28px;}}
+@media(max-width:480px){.footer-top{grid-template-columns:1fr;}}
+.footer-brand-name{font-family:var(--fhead);font-weight:700;font-size:20px;color:#fff;margin-bottom:8px;}
+.footer-tagline{font-size:14px;color:rgba(255,255,255,.45);line-height:1.5;margin-bottom:20px;max-width:220px;}
+.footer-social{display:flex;gap:10px;}
+.fsoc{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5);transition:background .15s;}
+.fsoc:hover{background:rgba(255,255,255,.15);color:#fff;}
+.footer-col-title{font:700 12px var(--fbody);letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:16px;}
+.footer-links{display:flex;flex-direction:column;gap:10px;}
+.footer-links a{font-size:14px;color:rgba(255,255,255,.55);transition:color .15s;}
+.footer-links a:hover{color:#fff;}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.footer-legal{font-size:13px;color:rgba(255,255,255,.3);}
+.footer-stores{display:flex;gap:10px;}
+.fstore{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:9px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);font:600 12px var(--fbody);border:1px solid rgba(255,255,255,.1);transition:background .15s;}
+.fstore:hover{background:rgba(255,255,255,.15);color:#fff;}
+</style>
+</helmet>
+
+<!-- ══ NAV ══════════════════════════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-tile">🧭</div>
+      <span class="nav-word">Trippy</span>
+    </a>
+    <div class="nav-links">
+      <a href="#" class="nav-link">For travellers</a>
+      <a href="#" class="nav-link partner">For partners</a>
+      <a href="#" class="nav-link">How it works</a>
+    </div>
+    <a href="/" class="nav-cta"><i class="ph-bold ph-arrow-right" style="font-size:15px;"></i> Open Trippy</a>
+    <a href="/" class="nav-mobile-cta"><i class="ph-bold ph-arrow-right" style="font-size:14px;"></i> Open Trippy</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ═════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="blobs">
+    <div class="blob blob-a"></div>
+    <div class="blob blob-b"></div>
+    <div class="blob blob-c"></div>
+    <div class="blob blob-d"></div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-tag fade-up">
+      <i class="ph-bold ph-sparkle" style="font-size:13px;color:var(--teal-500);"></i>
+      AI-powered solo travel community
+    </div>
+    <h1 class="hero-h1 fade-up-2">Going solo doesn't<br>mean going <em>alone.</em></h1>
+    <p class="hero-sub fade-up-3">Find travellers heading to Spiti, Manali, or Goa on the same dates as you. Or join a curated group trip leaving this weekend. Entirely your choice.</p>
+    <div class="hero-badges fade-up-3">
+      <a href="/" class="badge-btn" style="padding:14px 28px;border-radius:14px;font-size:16px;gap:10px;">
+        <i class="ph-bold ph-globe" style="font-size:22px;"></i>
+        <div class="badge-text">
+          <span class="badge-sup">Free · Works on any browser</span>
+          <span class="badge-name">Open Trippy on mobile</span>
+        </div>
+      </a>
+    </div>
+    <div class="hero-proof fade-up-3">
+      <span class="hero-proof-pill"><i class="ph-bold ph-users" style="font-size:12px;color:var(--teal-500);"></i> 12,400+ solo travellers</span>
+      <span class="hero-proof-dot"></span>
+      <span class="hero-proof-pill"><i class="ph-bold ph-map-pin" style="font-size:12px;color:var(--coral-500);"></i> 47 destinations</span>
+      <span class="hero-proof-dot"></span>
+      <span class="hero-proof-pill"><i class="ph-bold ph-path" style="font-size:12px;color:var(--indigo-500);"></i> 340+ group trips</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOW IT WORKS ══════════════════════════════════════════ -->
+<section class="section" style="background:#fff;">
+  <div class="shell">
+    <div class="section-eyebrow">How it works</div>
+    <h2 class="section-h2">From "I want to go" to "we're going" — in three steps.</h2>
+    <p class="section-sub">No WhatsApp group chaos. No spending 3 hours across 6 trip operator websites. One app does it all.</p>
+    <div class="steps-grid">
+      <div class="step-card" style="position:relative;">
+        <div class="step-num">1</div>
+        <div class="step-title">Set your destination + dates</div>
+        <p class="step-desc">Tell us where you want to go and when — even if it's flexible. Manali in August? Spiti in September? Goa anytime? We've got travellers heading there.</p>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step-card" style="position:relative;">
+        <div class="step-num">2</div>
+        <div class="step-title">Meet your matches</div>
+        <p class="step-desc">Our AI finds travellers with overlapping dates and compatible travel styles — ranked by a compatibility score. See their profile, interests, budget, and personality type before connecting.</p>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:12px;"><span style="font:700 12px var(--fbody);padding:4px 10px;border-radius:99px;background:var(--teal-50);color:var(--teal-700);">91% match</span><span style="font-size:12px;color:var(--faint);">· Solo trekker · Budget</span></div>
+        <div class="step-connector"></div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-title">Travel together</div>
+        <p class="step-desc">Send a request, get accepted, open your shared group chat. Plan the itinerary together, split expenses, log memories. The whole trip — in one place.</p>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:12px;"><i class="ph-bold ph-chat-circle" style="font-size:14px;color:var(--teal-500);"></i><span style="font-size:12.5px;color:var(--muted);">Group chat, expense split, shared itinerary</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STATS STRIP ═══════════════════════════════════════════ -->
+<div class="stats-section">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-num">12,400<span>+</span></div>
+      <div class="stat-label">Solo travellers found companions</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">340<span>+</span></div>
+      <div class="stat-label">Curated group trips live now</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">47</div>
+      <div class="stat-label">Destinations across India</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">₹<span>0</span></div>
+      <div class="stat-label">Booking fees — ever</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TESTIMONIALS ══════════════════════════════════════════ -->
+<section class="section" style="background:var(--bg);">
+  <div class="shell">
+    <div class="section-eyebrow">Real travellers</div>
+    <h2 class="section-h2">The people who stopped going alone.</h2>
+    <div class="testimonials-grid">
+      <div class="tcard">
+        <div class="tcard-top">
+          <div class="tcard-avatar" style="background:var(--teal-50);">🧑‍🎒</div>
+          <div>
+            <div class="tcard-name">Arjun Sharma</div>
+            <div class="tcard-meta">26 · Software engineer · Pune</div>
+          </div>
+        </div>
+        <p class="tcard-quote">"I'd been planning Spiti for 2 years but had no one to go with. Found 2 travel companions on Trippy with a 91% compatibility score. We left 3 weeks later. Best decision of my life."</p>
+        <div>
+          <span class="tcard-dest"><i class="ph-bold ph-map-pin" style="font-size:10px;"></i> Spiti Valley</span>
+          <span class="tcard-score"><i class="ph-bold ph-sparkle" style="font-size:10px;"></i> 91% match</span>
+        </div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-top">
+          <div class="tcard-avatar" style="background:var(--coral-50);">👩‍🦱</div>
+          <div>
+            <div class="tcard-name">Sneha Kulkarni</div>
+            <div class="tcard-meta">24 · UX designer · Mumbai</div>
+          </div>
+        </div>
+        <p class="tcard-quote">"Was nervous about solo travel as a woman. Trippy matched me with 3 girls heading to Kasol the same week — same budget, same vibe. We've done 4 trips together since."</p>
+        <div>
+          <span class="tcard-dest"><i class="ph-bold ph-map-pin" style="font-size:10px;"></i> Kasol, Himachal</span>
+          <span class="tcard-score"><i class="ph-bold ph-sparkle" style="font-size:10px;"></i> 87% match</span>
+        </div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-top">
+          <div class="tcard-avatar" style="background:var(--indigo-50);">🧔</div>
+          <div>
+            <div class="tcard-name">Rohan Nair</div>
+            <div class="tcard-meta">28 · Product manager · Bangalore</div>
+          </div>
+        </div>
+        <p class="tcard-quote">"Joined a Himalayan Wolves trip to Ladakh through Trippy. Saved ₹7,500 vs booking directly, and got to travel with 8 other solo travellers I'd never have met otherwise."</p>
+        <div>
+          <span class="tcard-dest"><i class="ph-bold ph-map-pin" style="font-size:10px;"></i> Leh-Ladakh</span>
+          <span style="display:inline-flex;align-items:center;gap:5px;font:600 12px var(--fbody);color:var(--indigo-500);background:var(--indigo-50);padding:4px 10px;border-radius:99px;margin-left:6px;">Hosted trip</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRODUCT MODES ══════════════════════════════════════════ -->
+<section class="section" style="background:#fff;">
+  <div class="shell">
+    <div class="section-eyebrow">Two ways to travel with Trippy</div>
+    <h2 class="section-h2">Your trip, your rules.</h2>
+    <p class="section-sub">Build your own adventure from scratch — or join a curated group trip leaving soon. Both paths lead to the same place: not going alone.</p>
+    <div class="modes-grid">
+      <div class="mode-card diy">
+        <div class="mode-tag diy"><i class="ph-bold ph-path" style="font-size:11px;"></i> DIY path</div>
+        <h3 class="mode-h3">Build your own adventure, your way.</h3>
+        <p class="mode-desc">Pick a hostel, find compatible travellers checking in the same week, form a group, build a shared itinerary. Full flexibility, real community.</p>
+        <div class="mode-steps">
+          <div class="mode-step"><div class="mode-step-dot diy">1</div><span>Pick your hostel from Zostel, GoStops, and 200+ Trippy-partner properties</span></div>
+          <div class="mode-step"><div class="mode-step-dot diy">2</div><span>See who else is checking in — filter by travel style, gender, age, interests</span></div>
+          <div class="mode-step"><div class="mode-step-dot diy">3</div><span>Form a group, build your shared itinerary, split costs as you go</span></div>
+        </div>
+        <button class="mode-cta diy">Start your DIY trip <i class="ph-bold ph-arrow-right" style="font-size:14px;"></i></button>
+        <div class="mode-decoration">🗺️</div>
+      </div>
+      <div class="mode-card hosted">
+        <div class="mode-tag hosted"><i class="ph-bold ph-users-three" style="font-size:11px;"></i> Hosted trips</div>
+        <h3 class="mode-h3">Join a curated group trip. Everything sorted.</h3>
+        <p class="mode-desc">340+ hosted trips from verified travel communities — Himalayan Wolves, Coastal Nomads, and 80+ operators. One link to book. No coordination stress.</p>
+        <div class="mode-steps">
+          <div class="mode-step"><div class="mode-step-dot hosted">1</div><span>Search by destination, dates, budget, and trip type (trekking, biking, beach)</span></div>
+          <div class="mode-step"><div class="mode-step-dot hosted">2</div><span>See verified reviews, detailed itinerary, what's included, and who's going</span></div>
+          <div class="mode-step"><div class="mode-step-dot hosted">3</div><span>Book directly with the operator — Trippy handles discovery, they handle the trip</span></div>
+        </div>
+        <button class="mode-cta hosted">Browse group trips <i class="ph-bold ph-arrow-right" style="font-size:14px;"></i></button>
+        <div class="mode-decoration">🏔️</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOSTEL LAYER ═══════════════════════════════════════════ -->
+<section class="hostel-section">
+  <div class="hostel-inner">
+    <div>
+      <div class="section-eyebrow">The hostel layer</div>
+      <h2 class="section-h2" style="margin-bottom:14px;">See who else from Trippy is at your hostel.</h2>
+      <p style="font-size:16px;color:var(--muted);line-height:1.6;margin-bottom:24px;">Book your Zostel, Moustache, or GoStops room through Trippy and instantly see other members checking in the same week. Reach out before you even arrive.</p>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;align-items:flex-start;gap:10px;"><div style="width:28px;height:28px;border-radius:8px;background:var(--teal-50);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ph-bold ph-users" style="font-size:13px;color:var(--teal-600);"></i></div><span style="font-size:14.5px;color:var(--muted);line-height:1.5;">200+ partner hostels across 47 Indian destinations</span></div>
+        <div style="display:flex;align-items:flex-start;gap:10px;"><div style="width:28px;height:28px;border-radius:8px;background:var(--teal-50);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ph-bold ph-shield-check" style="font-size:13px;color:var(--teal-600);"></i></div><span style="font-size:14.5px;color:var(--muted);line-height:1.5;">Only ID-verified Trippy members visible — safety first</span></div>
+        <div style="display:flex;align-items:flex-start;gap:10px;"><div style="width:28px;height:28px;border-radius:8px;background:var(--teal-50);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ph-bold ph-chat-circle" style="font-size:13px;color:var(--teal-600);"></i></div><span style="font-size:14.5px;color:var(--muted);line-height:1.5;">Chat before you arrive. Show up with friends, not strangers.</span></div>
+      </div>
+    </div>
+    <div class="hostel-mockup">
+      <div class="hostel-mockup-header">
+        <div class="hostel-icon">🏠</div>
+        <div>
+          <div class="hostel-name">Zostel Manali</div>
+          <div class="hostel-loc"><i class="ph-bold ph-map-pin" style="font-size:10px;"></i> Old Manali, Himachal Pradesh</div>
+        </div>
+        <span style="margin-left:auto;font:700 11.5px var(--fbody);padding:3px 9px;border-radius:99px;background:var(--teal-50);color:var(--teal-700);">6 members</span>
+      </div>
+      <p style="font:800 11px var(--fbody);letter-spacing:.07em;text-transform:uppercase;color:var(--faint);margin-bottom:12px;">Checking in Aug 12–16</p>
+      <div class="hostel-members">
+        <div class="hm-row">
+          <div class="hm-av" style="background:#e6f5f3;">🧑‍🎒</div>
+          <div class="hm-info"><div class="hm-name">Priya M.</div><div class="hm-dates">Aug 12–16 · Trekker · Budget</div></div>
+          <span class="hm-score">84%</span>
+        </div>
+        <div class="hm-row">
+          <div class="hm-av" style="background:#fff3ee;">👩</div>
+          <div class="hm-info"><div class="hm-name">Rahul K.</div><div class="hm-dates">Aug 11–17 · Photographer · Mid</div></div>
+          <span class="hm-score">76%</span>
+        </div>
+        <div class="hm-row">
+          <div class="hm-av" style="background:#eef0ff;">🧔</div>
+          <div class="hm-info"><div class="hm-name">Anika S.</div><div class="hm-dates">Aug 13–16 · Solo first-timer</div></div>
+          <span class="hm-score">91%</span>
+        </div>
+        <div style="text-align:center;padding-top:8px;border-top:1px solid var(--line-soft);"><span style="font:600 13px var(--fbody);color:var(--teal-700);">+ 3 more members · <span style="text-decoration:underline;cursor:pointer;">See all</span></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOR PARTNERS ═══════════════════════════════════════════ -->
+<section class="partner-section">
+  <div class="partner-inner">
+    <div class="partner-banner">
+      <div class="partner-blob"></div>
+      <div class="partner-blob-2"></div>
+      <div class="partner-content">
+        <div class="partner-tag"><i class="ph-bold ph-briefcase" style="font-size:11px;"></i> For travel communities &amp; operators</div>
+        <h2 class="partner-h2">Running group trips? You're missing <em>12,000+</em> solo travellers actively looking.</h2>
+        <p class="partner-sub">List your trips on Trippy in minutes. Reach solo travellers who are already searching for group trips to your destination. No complex setup. No payment integration required.</p>
+        <div class="partner-steps">
+          <div class="ps"><div class="ps-num">01</div><div class="ps-title">Sign up in 2 minutes</div><div class="ps-desc">Create your partner account. No contracts, no fees to get started.</div></div>
+          <div class="ps"><div class="ps-num">02</div><div class="ps-title">Build your trip</div><div class="ps-desc">Add itinerary, pricing, media, and your existing payment link. We don't touch your money.</div></div>
+          <div class="ps"><div class="ps-num">03</div><div class="ps-title">Go live, get discovered</div><div class="ps-desc">Your trip appears in search results for 12,000+ solo travellers searching your destination.</div></div>
+        </div>
+        <a href="/partner" class="partner-cta"><i class="ph-bold ph-rocket-launch" style="font-size:15px;"></i> List your first trip free</a>
+        <a href="#" class="partner-secondary">Learn more about the Partner CRM <i class="ph-bold ph-arrow-right" style="font-size:13px;"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FINAL CTA ══════════════════════════════════════════════ -->
+<section class="finalcta">
+  <div class="finalcta-inner">
+    <div style="font-size:48px;margin-bottom:20px;">🧭</div>
+    <h2 class="finalcta-h2">Your next adventure is waiting.<br>So are the <em>people</em> you'll meet on it.</h2>
+    <p class="finalcta-sub">12,400 solo travellers have already found their travel tribe on Trippy. The next one could be your companion to Spiti, Ladakh, or wherever you've been putting off going.</p>
+    <div class="finalcta-stores">
+      <a href="/" class="badge-btn" style="padding:14px 28px;border-radius:14px;font-size:16px;gap:10px;">
+        <i class="ph-bold ph-globe" style="font-size:22px;"></i>
+        <div class="badge-text">
+          <span class="badge-sup">Free · Works on any browser</span>
+          <span class="badge-name">Open Trippy on mobile</span>
+        </div>
+      </a>
+      
+    </div>
+    <p style="margin-top:16px;font-size:13px;color:var(--faint);">Free · Works in any mobile browser · No download needed · India-first</p>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══════════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:8px;">
+          <div style="width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--teal-500),#14b8a6);display:flex;align-items:center;justify-content:center;font-size:16px;">🧭</div>
+          <span class="footer-brand-name">Trippy</span>
+        </div>
+        <p class="footer-tagline">Travel solo, never alone. Find your travel tribe across India's most beautiful destinations.</p>
+        <div class="footer-social">
+          <a href="#" class="fsoc"><i class="ph-bold ph-instagram-logo" style="font-size:16px;"></i></a>
+          <a href="#" class="fsoc"><i class="ph-bold ph-twitter-logo" style="font-size:16px;"></i></a>
+          <a href="#" class="fsoc"><i class="ph-bold ph-youtube-logo" style="font-size:16px;"></i></a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">For travellers</div>
+        <div class="footer-links">
+          <a href="#">How it works</a>
+          <a href="#">Find companions</a>
+          <a href="#">Browse group trips</a>
+          <a href="#">DIY trip builder</a>
+          <a href="#">Partner hostels</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">For partners</div>
+        <div class="footer-links">
+          <a href="#">List your trips</a>
+          <a href="#">Partner CRM</a>
+          <a href="#">Partner stories</a>
+          <a href="#">Pricing</a>
+          <a href="/partner">Sign up →</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <div class="footer-links">
+          <a href="#">About Trippy</a>
+          <a href="#">Blog</a>
+          <a href="#">Safety</a>
+          <a href="#">Contact us</a>
+          <a href="#">Privacy policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-legal">© 2026 Trippy · Travel solo, never alone · Made in India 🇮🇳</span>
+      <div class="footer-stores">
+        <a href="/" class="fstore"><i class="ph-bold ph-globe" style="font-size:14px;"></i> Open Trippy</a>
+        
+    </div>
+  </div>
+</footer>
+
+</x-dc>
+</body>
+</html>

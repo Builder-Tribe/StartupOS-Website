@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesque:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+:root {
+  --teal-50: #e6f5f3; --teal-100: #cceae6; --teal-200: #99d5cc;
+  --teal-400: #14b8a6; --teal-500: #0e9f8f; --teal-600: #0b7a6c; --teal-700: #085f54;
+  --coral-50: #fff3ee; --coral-100: #ffe4d6; --coral-200: #ffc9ac;
+  --coral-400: #f87a52; --coral-500: #f2683c; --coral-600: #c2410c; --coral-700: #9a3309;
+  --indigo-50: #eef0ff; --indigo-100: #e0e3ff;
+  --indigo-400: #818cf8; --indigo-500: #6366f1; --indigo-600: #4f46e5;
+  --amber-50: #fffbeb; --amber-500: #f59e0b; --amber-600: #d97706;
+  --ink: #14202a; --ink-muted: #5d6b76; --ink-faint: #8795a0;
+  --line: #e6ebee; --line-soft: #eef1f3; --line-softer: #f4f6f8;
+  --bg: #fbfcfd; --card: #ffffff;
+  --green-50: #dcfce7; --green-600: #16a34a;
+  --red-50: #fee2e2; --red-600: #dc2626;
+  --fhead: 'Bricolage Grotesque', -apple-system, sans-serif;
+  --fbody: 'Hanken Grotesque', -apple-system, sans-serif;
+  --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-xl: 20px; --r-full: 9999px;
+  --shadow-card: 0 1px 2px rgba(20,32,42,.04), 0 4px 16px rgba(20,32,42,.06);
+  --shadow-lift: 0 2px 6px rgba(20,32,42,.05), 0 16px 40px rgba(20,32,42,.09);
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--fbody); background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; line-height: 1.5; }
+h1,h2,h3,h4,h5,h6 { font-family: var(--fhead); letter-spacing: -.02em; margin: 0; }
+p { margin: 0; }
+a { color: var(--teal-600); }
+@keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+.page { max-width: 1160px; margin: 0 auto; padding: 0 40px 120px; }
+@media(max-width:680px){ .page { padding: 0 20px 80px; } }
+.ds-section { margin-top: 80px; }
+.section-label { font-family: var(--fbody); font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 8px; }
+.section-title { font-size: 28px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+.section-sub { font-size: 15px; color: var(--ink-muted); line-height: 1.6; margin-bottom: 32px; max-width: 680px; }
+.rule { height: 1px; background: var(--line); margin: 0 0 32px; border: none; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+@media(max-width:860px){ .grid-3 { grid-template-columns: 1fr 1fr; } .grid-4 { grid-template-columns: 1fr 1fr; } }
+@media(max-width:560px){ .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--r-xl); padding: 24px; box-shadow: var(--shadow-card); }
+.tag { display: inline-block; font-family: var(--fbody); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 3px 8px; border-radius: var(--r-full); }
+</style>
+</helmet>
+
+<!-- ─── COVER ──────────────────────────────────────────────────── -->
+<div style="background: linear-gradient(150deg, #0e9f8f 0%, #085f54 55%, #14202a 100%); padding: 80px 40px 72px; position: relative; overflow: hidden;">
+  <div style="position:absolute;top:-80px;right:-60px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(242,104,60,.35),transparent 70%);pointer-events:none;"></div>
+  <div style="position:absolute;bottom:-100px;left:10%;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(99,102,241,.25),transparent 70%);pointer-events:none;"></div>
+  <div style="max-width:1080px;margin:0 auto;position:relative;z-index:1;">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:36px;">
+      <div style="width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:20px;">🧭</div>
+      <span style="font-family:var(--fhead);font-weight:700;font-size:22px;color:#fff;letter-spacing:-.02em;">Trippy</span>
+    </div>
+    <div style="font-family:var(--fbody);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:16px;">Design System Foundation · v1.0 · July 2026</div>
+    <h1 style="font-family:var(--fhead);font-weight:800;font-size:clamp(36px,5vw,60px);line-height:1.0;letter-spacing:-.03em;color:#fff;margin-bottom:20px;max-width:700px;">The language of solo travel. Made social.</h1>
+    <p style="font-size:18px;color:rgba(255,255,255,.75);max-width:560px;line-height:1.6;">A unified visual + interaction system spanning the consumer app, partner CRM, admin console, and marketing web — built for warmth, trust, and the thrill of going somewhere new.</p>
+    <div style="display:flex;gap:10px;margin-top:32px;flex-wrap:wrap;">
+      <span style="font-family:var(--fbody);font-size:12px;font-weight:600;padding:7px 16px;border-radius:var(--r-full);background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);">Color</span>
+      <span style="font-family:var(--fbody);font-size:12px;font-weight:600;padding:7px 16px;border-radius:var(--r-full);background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);">Typography</span>
+      <span style="font-family:var(--fbody);font-size:12px;font-weight:600;padding:7px 16px;border-radius:var(--r-full);background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);">Spacing</span>
+      <span style="font-family:var(--fbody);font-size:12px;font-weight:600;padding:7px 16px;border-radius:var(--r-full);background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);">Components</span>
+      <span style="font-family:var(--fbody);font-size:12px;font-weight:600;padding:7px 16px;border-radius:var(--r-full);background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);">Motion</span>
+      <span style="font-family:var(--fbody);font-size:12px;font-weight:600;padding:7px 16px;border-radius:var(--r-full);background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);">Surface Adaptations</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ─── 1. BRAND PERSONALITY ──────────────────────────────────── -->
+<div class="ds-section">
+  <div class="section-label">01 — Brand Personality</div>
+  <h2 class="section-title">What Trippy feels like</h2>
+  <p class="section-sub">Every visual decision — a button radius, a shadow depth, a transition curve — should resolve the core tension: solo travellers need to feel <em>excited</em> and <em>safe</em> at the same time. These five adjectives are the filter.</p>
+  <div class="grid-3" style="gap:20px;">
+    <div style="background:#fff;border:1px solid var(--line);border-radius:var(--r-xl);padding:28px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--teal-500),var(--teal-400));"></div>
+      <div style="font-size:28px;margin-bottom:12px;">🌊</div>
+      <div style="font-family:var(--fhead);font-weight:700;font-size:20px;color:var(--ink);margin-bottom:8px;">Warmly adventurous</div>
+      <p style="font-size:14px;color:var(--ink-muted);line-height:1.6;">Adventure without arrogance. Trippy should feel like your most well-travelled friend — genuinely excited about where you're going, not intimidating about having been there first. Energy without edge.</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--line);border-radius:var(--r-xl);padding:28px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--coral-500),var(--coral-400));"></div>
+      <div style="font-size:28px;margin-bottom:12px;">🤝</div>
+      <div style="font-family:var(--fhead);font-weight:700;font-size:20px;color:var(--ink);margin-bottom:8px;">Community-first</div>
+      <p style="font-size:14px;color:var(--ink-muted);line-height:1.6;">The product exists to fight loneliness on the road. Design decisions that surface people — faces, names, compatibility — get the best real estate. Trip cards show the humans going, not just the destination.</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--line);border-radius:var(--r-xl);padding:28px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--indigo-500),var(--indigo-400));"></div>
+      <div style="font-size:28px;margin-bottom:12px;">🛡️</div>
+      <div style="font-family:var(--fhead);font-weight:700;font-size:20px;color:var(--ink);margin-bottom:8px;">Quietly trustworthy</div>
+      <p style="font-size:14px;color:var(--ink-muted);line-height:1.6;">Trust is earned structurally, not asserted loudly. Verification badges are small and factual. Compatibility scores show their reasoning. Safety is designed into affordances, not marketed via anxiety-inducing copy.</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--line);border-radius:var(--r-xl);padding:28px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--amber-500),#f59e0b88);"></div>
+      <div style="font-size:28px;margin-bottom:12px;">🇮🇳</div>
+      <div style="font-family:var(--fhead);font-weight:700;font-size:20px;color:var(--ink);margin-bottom:8px;">India-native</div>
+      <p style="font-size:14px;color:var(--ink-muted);line-height:1.6;">Not "India-adapted." INR-first, Devanagari-ready, mid-range Android performant. Spiti Valley and Kedarnath are primary content, not "exotic" content. The default audience is 24-year-old Puneet on a Redmi Note.</p>
+    </div>
+    <div style="background:#fff;border:1px solid var(--line);border-radius:var(--r-xl);padding:28px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#14b8a6,#6366f1);"></div>
+      <div style="font-size:28px;margin-bottom:12px;">⚡</div>
+      <div style="font-family:var(--fhead);font-weight:700;font-size:20px;color:var(--ink);margin-bottom:8px;">Decisively simple</div>
+      <p style="font-size:14px;color:var(--ink-muted);line-height:1.6;">Every screen has one clear primary action. Mixed digital literacy demands that the right move is obvious before the user has to think. Complexity is a product decision, not a design one — the UI never adds it.</p>
+    </div>
+    <div style="background:linear-gradient(145deg,#14202a,#0b3d35);border-radius:var(--r-xl);padding:28px;display:flex;flex-direction:column;justify-content:space-between;">
+      <div style="font-size:14px;font-weight:600;color:rgba(255,255,255,.5);letter-spacing:.05em;text-transform:uppercase;margin-bottom:16px;">The core tension</div>
+      <div>
+        <div style="font-family:var(--fhead);font-size:22px;font-weight:700;color:#fff;margin-bottom:10px;line-height:1.2;">Adventure energy vs. safety trust — resolved by design.</div>
+        <p style="font-size:13px;color:rgba(255,255,255,.6);line-height:1.6;">Warm teal anchors trust (consistent, calm, reliable). Coral activates energy (CTAs, discovery moments). Indigo signals intelligence (AI match, compatibility). The system never uses red for energy — red is reserved for errors only.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 2. COLOR PALETTE ──────────────────────────────────────── -->
+<div class="ds-section">
+  <div class="section-label">02 — Color Palette</div>
+  <h2 class="section-title">Color system</h2>
+  <p class="section-sub">Three roles: <strong>Teal</strong> (brand trust + navigation), <strong>Coral</strong> (energy + discovery), <strong>Indigo</strong> (AI + community intelligence). Distinct from Airbnb (#FF5A5F coral-red), MakeMyTrip (#007DC6 corporate blue), and Zostel (#2ECC71 bright green).</p>
+
+  <!-- Primary ramp -->
+  <div style="margin-bottom:32px;">
+    <div style="font-family:var(--fbody);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px;">Primary — Trippy Teal</div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:0;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-card);">
+      <div style="background:var(--teal-50);padding:20px 10px 14px;"><div style="font-size:11px;font-weight:700;color:var(--teal-700);margin-bottom:2px;">50</div><div style="font-size:10px;color:var(--teal-600);">#E6F5F3</div></div>
+      <div style="background:var(--teal-100);padding:20px 10px 14px;"><div style="font-size:11px;font-weight:700;color:var(--teal-700);margin-bottom:2px;">100</div><div style="font-size:10px;color:var(--teal-600);">#CCEAE6</div></div>
+      <div style="background:var(--teal-200);padding:20px 10px 14px;"><div style="font-size:11px;font-weight:700;color:var(--teal-700);margin-bottom:2px;">200</div><div style="font-size:10px;color:var(--teal-600);">#99D5CC</div></div>
+      <div style="background:var(--teal-400);padding:20px 10px 14px;"><div style="font-size:11px;font-weight:700;color:#fff;margin-bottom:2px;">400</div><div style="font-size:10px;color:rgba(255,255,255,.8);">#14B8A6</div></div>
+      <div style="background:var(--teal-500);padding:20px 10px 14px;position:relative;"><div style="position:absolute;top:6px;right:6px;font-size:9px;font-weight:800;background:rgba(255,255,255,.25);color:#fff;padding:2px 5px;border-radius:4px;">500 ★</div><div style="font-size:11px;font-weight:700;color:#fff;margin-bottom:2px;">Primary</div><div style="font-size:10px;color:rgba(255,255,255,.8);">#0E9F8F</div></div>
+      <div style="background:var(--teal-600);padding:20px 10px 14px;"><div style="font-size:11px;font-weight:700;color:#fff;margin-bottom:2px;">600</div><div style="font-size:10px;color:rgba(255,255,255,.8);">#0B7A6C</div></div>
+      <div style="background:var(--teal-700);padding:20px 10px 14px;"><div style="font-size:11px;font-weight:700;color:#fff;margin-bottom:2px;">700</div><div style="font-size:10px;color:rgba(255,255,255,.8);">#085F54</div></div>
+    </div>
+  </div>
+
+  <!-- Coral ramp -->
+  <div style="margin-bottom:32px;">
+    <div style="font-family:var(--fbody);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px;">Secondary — Sunset Coral</div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:0;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-card);">
+      <div style="background:var(--coral-50);padding:20px 10px 14px;"><div style="font-size:11px;font-weight:700;color:var(--coral-700);margin-bottom:2px;">50</div><div style="font-size:10px;color:var(--coral-600);">#FFF3EE</div></div>
+      <div style="background:var(--coral-100);padding:20px 10px 14px;"><div style="font-size:11px;font-weight:700;color:var(--coral-700);margin-bottom:2px;">100</div><div style="font-size:10px;color:var(--coral-600);">#FFE4D6</div></div>
+      <div style="background:var(--coral-200);padding:20px 10px 14px;"><div style="font-size:11px;font-weight:700;color:var(--coral-700);margin-bottom:2px;">200</div><div style="font-size:10px;color:var(--coral-600);">#FFC9AC</div></div>
+      <div style="background:var(--coral-400);padding:20px 10px 14px;"><div style="font-size:11px;font-weight:700;color:#fff;margin-bottom:2px;">400</div><div style="font-size:10px;color:rgba(255,255,255,.8);">#F87A52</div></div>
+      <div style="background:var(--coral-500);padding:20px 10px 14px;position:relative;"><div style="position:absolute;top:6px;right:6px;font-size:9px;font-weight:800;background:rgba(255,255,255,.25);color:#fff;padding:2px 5px;border-radius:4px;">500 ★</div><div style="font-size:11px;font-weight:700;color:#fff;margin-bottom:2px;">Energy</div><div style="font-size:10px;color:rgba(255,255,255,.8);">#F2683C</div></div>
+      <div style="background:var(--coral-600);padding:20px 10px 14px;"><div style="font-size:11px;font-weight:700;color:#fff;margin-bottom:2px;">600</div><div style="font-size:10px;color:rgba(255,255,255,.8);">#C2410C</div></div>
+      <div style="background:var(--coral-700);padding:20px 10px 14px;"><div style="font-size:11px;font-weight:700;color:#fff;margin-bottom:2px;">700</div><div style="font-size:10px;color:rgba(255,255,255,.8);">#9A3309</div></div>
+    </div>
+  </div>
+
+  <!-- Indigo + Neutrals side by side -->
+  <div class="grid-2" style="margin-bottom:32px;gap:20px;">
+    <div>
+      <div style="font-family:var(--fbody);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px;">Accent — Community Indigo (AI / Match)</div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-card);">
+        <div style="background:var(--indigo-50);padding:18px 8px 12px;"><div style="font-size:10px;font-weight:700;color:var(--indigo-600);">50</div><div style="font-size:9px;color:var(--indigo-600);">#EEF0FF</div></div>
+        <div style="background:var(--indigo-100);padding:18px 8px 12px;"><div style="font-size:10px;font-weight:700;color:var(--indigo-600);">100</div><div style="font-size:9px;color:var(--indigo-600);">#E0E3FF</div></div>
+        <div style="background:var(--indigo-400);padding:18px 8px 12px;"><div style="font-size:10px;font-weight:700;color:#fff;">400</div><div style="font-size:9px;color:rgba(255,255,255,.8);">#818CF8</div></div>
+        <div style="background:var(--indigo-500);padding:18px 8px 12px;position:relative;"><div style="font-size:10px;font-weight:700;color:#fff;">500★</div><div style="font-size:9px;color:rgba(255,255,255,.8);">#6366F1</div></div>
+        <div style="background:var(--indigo-600);padding:18px 8px 12px;"><div style="font-size:10px;font-weight:700;color:#fff;">600</div><div style="font-size:9px;color:rgba(255,255,255,.8);">#4F46E5</div></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-family:var(--fbody);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px;">Semantic — Success / Warning / Error</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:grid;grid-template-columns:48px 1fr 1fr;gap:0;border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-card);">
+          <div style="background:#16a34a;display:flex;align-items:center;justify-content:center;"><i class="ph-bold ph-check" style="color:#fff;font-size:18px;"></i></div>
+          <div style="background:#dcfce7;padding:10px 12px;"><div style="font-size:11px;font-weight:700;color:#15803d;">Success</div><div style="font-size:10px;color:#15803d;">#16A34A / #DCFCE7</div></div>
+          <div style="background:#f0fdf4;padding:10px 12px;"><div style="font-size:10px;color:#15803d;">Ratio #16A34A on white: 5.1:1 ✓ AA</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:48px 1fr 1fr;gap:0;border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-card);">
+          <div style="background:#d97706;display:flex;align-items:center;justify-content:center;"><i class="ph-bold ph-warning" style="color:#fff;font-size:18px;"></i></div>
+          <div style="background:#fffbeb;padding:10px 12px;"><div style="font-size:11px;font-weight:700;color:#92400e;">Warning</div><div style="font-size:10px;color:#92400e;">#D97706 / #FEF3C7</div></div>
+          <div style="background:#fffdf5;padding:10px 12px;"><div style="font-size:10px;color:#92400e;">Ratio #D97706 on white: 4.6:1 ✓ AA</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:48px 1fr 1fr;gap:0;border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow-card);">
+          <div style="background:#dc2626;display:flex;align-items:center;justify-content:center;"><i class="ph-bold ph-x-circle" style="color:#fff;font-size:18px;"></i></div>
+          <div style="background:#fee2e2;padding:10px 12px;"><div style="font-size:11px;font-weight:700;color:#991b1b;">Error</div><div style="font-size:10px;color:#991b1b;">#DC2626 / #FEE2E2</div></div>
+          <div style="background:#fff5f5;padding:10px 12px;"><div style="font-size:10px;color:#991b1b;">Ratio #DC2626 on white: 5.9:1 ✓ AA</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Neutrals -->
+  <div>
+    <div style="font-family:var(--fbody);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px;">Neutrals — Ink scale</div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:0;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-card);">
+      <div style="background:#fbfcfd;padding:20px 10px 14px;border-right:1px solid var(--line);"><div style="font-size:11px;font-weight:700;color:var(--ink-faint);margin-bottom:2px;">BG</div><div style="font-size:10px;color:var(--ink-faint);">#FBFCFD</div></div>
+      <div style="background:var(--line-softer);padding:20px 10px 14px;border-right:1px solid var(--line);"><div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:2px;">Softer</div><div style="font-size:10px;color:var(--ink-muted);">#F4F6F8</div></div>
+      <div style="background:var(--line-soft);padding:20px 10px 14px;border-right:1px solid var(--line);"><div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:2px;">Soft</div><div style="font-size:10px;color:var(--ink-muted);">#EEF1F3</div></div>
+      <div style="background:var(--line);padding:20px 10px 14px;border-right:1px solid #d5dce2;"><div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:2px;">Line</div><div style="font-size:10px;color:var(--ink-muted);">#E6EBEE</div></div>
+      <div style="background:var(--ink-faint);padding:20px 10px 14px;border-right:1px solid rgba(255,255,255,.1);"><div style="font-size:11px;font-weight:700;color:#fff;margin-bottom:2px;">Faint</div><div style="font-size:10px;color:rgba(255,255,255,.8);">#8795A0</div></div>
+      <div style="background:var(--ink-muted);padding:20px 10px 14px;border-right:1px solid rgba(255,255,255,.1);"><div style="font-size:11px;font-weight:700;color:#fff;margin-bottom:2px;">Muted</div><div style="font-size:10px;color:rgba(255,255,255,.8);">#5D6B76</div></div>
+      <div style="background:var(--ink);padding:20px 10px 14px;"><div style="font-size:11px;font-weight:700;color:#fff;margin-bottom:2px;">Ink ★</div><div style="font-size:10px;color:rgba(255,255,255,.8);">#14202A</div></div>
+    </div>
+  </div>
+
+  <!-- Contrast table -->
+  <div style="margin-top:24px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;">
+    <div style="padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;">
+      <i class="ph-bold ph-eye" style="color:var(--teal-500);font-size:16px;"></i>
+      <span style="font-family:var(--fbody);font-size:13px;font-weight:700;color:var(--ink);">Contrast ratios (WCAG AA = 4.5:1 normal text, 3:1 large text)</span>
+    </div>
+    <div style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;font-family:var(--fbody);font-size:13px;min-width:600px;">
+        <thead><tr style="background:var(--line-softer);">
+          <th style="text-align:left;padding:10px 16px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);border-bottom:1px solid var(--line);">Color combo</th>
+          <th style="text-align:left;padding:10px 16px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);border-bottom:1px solid var(--line);">Ratio</th>
+          <th style="text-align:left;padding:10px 16px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);border-bottom:1px solid var(--line);">WCAG</th>
+          <th style="text-align:left;padding:10px 16px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);border-bottom:1px solid var(--line);">Usage</th>
+        </tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--line-soft);">
+            <td style="padding:10px 16px;"><span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:32px;height:20px;border-radius:4px;background:var(--teal-500);display:inline-block;"></span><span style="font-weight:600;">Teal 500 on White</span></span></td>
+            <td style="padding:10px 16px;font-weight:700;color:var(--teal-600);">4.7:1</td>
+            <td style="padding:10px 16px;"><span style="background:var(--green-50);color:var(--green-600);font-weight:700;font-size:11px;padding:2px 8px;border-radius:99px;">AA ✓</span></td>
+            <td style="padding:10px 16px;color:var(--ink-muted);">Primary buttons, links, nav active</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line-soft);">
+            <td style="padding:10px 16px;"><span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:32px;height:20px;border-radius:4px;background:var(--teal-600);display:inline-block;"></span><span style="font-weight:600;">Teal 600 on White</span></span></td>
+            <td style="padding:10px 16px;font-weight:700;color:var(--teal-600);">6.2:1</td>
+            <td style="padding:10px 16px;"><span style="background:var(--green-50);color:var(--green-600);font-weight:700;font-size:11px;padding:2px 8px;border-radius:99px;">AAA ✓</span></td>
+            <td style="padding:10px 16px;color:var(--ink-muted);">Prices, key values, hover states</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line-soft);">
+            <td style="padding:10px 16px;"><span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:32px;height:20px;border-radius:4px;background:var(--coral-500);display:inline-block;"></span><span style="font-weight:600;">Coral 500 on White</span></span></td>
+            <td style="padding:10px 16px;font-weight:700;color:var(--coral-600);">3.2:1</td>
+            <td style="padding:10px 16px;"><span style="background:#fef3c7;color:#92400e;font-weight:700;font-size:11px;padding:2px 8px;border-radius:99px;">AA Large ✓</span></td>
+            <td style="padding:10px 16px;color:var(--ink-muted);">Large buttons, display text only — not body copy</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line-soft);">
+            <td style="padding:10px 16px;"><span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:32px;height:20px;border-radius:4px;background:var(--coral-600);display:inline-block;"></span><span style="font-weight:600;">Coral 600 on White</span></span></td>
+            <td style="padding:10px 16px;font-weight:700;color:var(--coral-600);">5.6:1</td>
+            <td style="padding:10px 16px;"><span style="background:var(--green-50);color:var(--green-600);font-weight:700;font-size:11px;padding:2px 8px;border-radius:99px;">AA ✓</span></td>
+            <td style="padding:10px 16px;color:var(--ink-muted);">Text labels, helper text on coral surfaces</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line-soft);">
+            <td style="padding:10px 16px;"><span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:32px;height:20px;border-radius:4px;background:var(--ink);display:inline-block;"></span><span style="font-weight:600;">Ink on White</span></span></td>
+            <td style="padding:10px 16px;font-weight:700;color:var(--ink);">18.4:1</td>
+            <td style="padding:10px 16px;"><span style="background:var(--green-50);color:var(--green-600);font-weight:700;font-size:11px;padding:2px 8px;border-radius:99px;">AAA ✓</span></td>
+            <td style="padding:10px 16px;color:var(--ink-muted);">All body text, headings, labels</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 16px;"><span style="display:inline-flex;align-items:center;gap:8px;"><span style="width:32px;height:20px;border-radius:4px;background:var(--ink-muted);display:inline-block;"></span><span style="font-weight:600;">Ink-muted on White</span></span></td>
+            <td style="padding:10px 16px;font-weight:700;color:var(--ink-muted);">6.8:1</td>
+            <td style="padding:10px 16px;"><span style="background:var(--green-50);color:var(--green-600);font-weight:700;font-size:11px;padding:2px 8px;border-radius:99px;">AA ✓</span></td>
+            <td style="padding:10px 16px;color:var(--ink-muted);">Secondary text, metadata, descriptions</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 3. TYPOGRAPHY ─────────────────────────────────────────── -->
+<div class="ds-section">
+  <div class="section-label">03 — Typography</div>
+  <h2 class="section-title">Type system</h2>
+  <p class="section-sub"><strong>Bricolage Grotesque</strong> (headings) — variable-weight, expressive, personality-forward. Reads beautifully at large display sizes; excellent for the Indian market. <strong>Hanken Grotesque</strong> (body) — geometric, clean, highly legible at small sizes on mid-range Android screens. Both support Devanagari via system fallbacks.</p>
+
+  <div class="grid-2" style="gap:20px;margin-bottom:32px;">
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-xl);padding:28px;">
+      <div style="font-family:var(--fbody);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:16px;">Bricolage Grotesque — Headings</div>
+      <div style="font-family:var(--fhead);font-weight:800;font-size:52px;line-height:1.0;letter-spacing:-.03em;color:var(--ink);">Find your</div>
+      <div style="font-family:var(--fhead);font-weight:800;font-size:52px;line-height:1.0;letter-spacing:-.03em;color:var(--teal-500);">people.</div>
+      <div style="margin-top:20px;font-family:var(--fhead);font-weight:400;font-size:22px;color:var(--ink-muted);letter-spacing:-.01em;">400 · 500 · 600 · 700 · 800</div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-xl);padding:28px;">
+      <div style="font-family:var(--fbody);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:16px;">Hanken Grotesque — Body</div>
+      <div style="font-family:var(--fbody);font-size:16px;line-height:1.6;color:var(--ink);margin-bottom:14px;">We matched you with <strong>3 travellers</strong> heading to Spiti Valley on overlapping dates. Your compatibility scores are based on travel style, budget, and interests.</div>
+      <div style="font-family:var(--fbody);font-size:13px;color:var(--ink-muted);line-height:1.5;">Verified · 400 · 500 · 600 · 700</div>
+    </div>
+  </div>
+
+  <!-- Type scale table -->
+  <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;">
+    <div style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;min-width:700px;">
+        <thead><tr style="background:var(--line-softer);">
+          <th style="text-align:left;padding:10px 16px;font-family:var(--fbody);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);border-bottom:1px solid var(--line);">Token</th>
+          <th style="text-align:left;padding:10px 16px;font-family:var(--fbody);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);border-bottom:1px solid var(--line);">Size</th>
+          <th style="text-align:left;padding:10px 16px;font-family:var(--fbody);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);border-bottom:1px solid var(--line);">Weight</th>
+          <th style="text-align:left;padding:10px 16px;font-family:var(--fbody);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);border-bottom:1px solid var(--line);">Line-height</th>
+          <th style="text-align:left;padding:10px 16px;font-family:var(--fbody);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);border-bottom:1px solid var(--line);">Mobile</th>
+          <th style="text-align:left;padding:10px 16px;font-family:var(--fbody);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);border-bottom:1px solid var(--line);">Usage</th>
+        </tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--line-soft);">
+            <td style="padding:12px 16px;"><span style="font-family:var(--fbody);font-size:11px;font-weight:700;background:var(--teal-50);color:var(--teal-700);padding:2px 8px;border-radius:4px;">display</span></td>
+            <td style="padding:12px 16px;font-family:var(--fbody);font-weight:600;">52px</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">800</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">1.0</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">36px</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);color:var(--ink-muted);">Marketing hero, onboarding splash</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line-soft);">
+            <td style="padding:12px 16px;"><span style="font-family:var(--fbody);font-size:11px;font-weight:700;background:var(--teal-50);color:var(--teal-700);padding:2px 8px;border-radius:4px;">h1</span></td>
+            <td style="padding:12px 16px;font-family:var(--fbody);font-weight:600;">36px</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">700</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">1.08</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">28px</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);color:var(--ink-muted);">Page titles (Matches, Results, Profile)</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line-soft);">
+            <td style="padding:12px 16px;"><span style="font-family:var(--fbody);font-size:11px;font-weight:700;background:var(--teal-50);color:var(--teal-700);padding:2px 8px;border-radius:4px;">h2</span></td>
+            <td style="padding:12px 16px;font-family:var(--fbody);font-weight:600;">28px</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">700</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">1.15</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">22px</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);color:var(--ink-muted);">Section headers, trip card titles</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line-soft);">
+            <td style="padding:12px 16px;"><span style="font-family:var(--fbody);font-size:11px;font-weight:700;background:var(--teal-50);color:var(--teal-700);padding:2px 8px;border-radius:4px;">h3</span></td>
+            <td style="padding:12px 16px;font-family:var(--fbody);font-weight:600;">22px</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">600</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">1.2</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">18px</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);color:var(--ink-muted);">Card headings, modal titles</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line-soft);">
+            <td style="padding:12px 16px;"><span style="font-family:var(--fbody);font-size:11px;font-weight:700;background:var(--teal-50);color:var(--teal-700);padding:2px 8px;border-radius:4px;">h4</span></td>
+            <td style="padding:12px 16px;font-family:var(--fbody);font-weight:600;">18px</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">600</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">1.3</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">16px</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);color:var(--ink-muted);">Subheadings, sidebar headers</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line-soft);">
+            <td style="padding:12px 16px;"><span style="font-family:var(--fbody);font-size:11px;font-weight:700;background:var(--line-softer);color:var(--ink-muted);padding:2px 8px;border-radius:4px;">body-lg</span></td>
+            <td style="padding:12px 16px;font-family:var(--fbody);font-weight:600;">18px</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">400</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">1.6</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">16px</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);color:var(--ink-muted);">Hero subtitles, trip descriptions lede</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line-soft);">
+            <td style="padding:12px 16px;"><span style="font-family:var(--fbody);font-size:11px;font-weight:700;background:var(--line-softer);color:var(--ink-muted);padding:2px 8px;border-radius:4px;">body</span></td>
+            <td style="padding:12px 16px;font-family:var(--fbody);font-weight:600;">16px</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">400</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">1.55</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">15px</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);color:var(--ink-muted);">Default paragraph text, form inputs</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line-soft);">
+            <td style="padding:12px 16px;"><span style="font-family:var(--fbody);font-size:11px;font-weight:700;background:var(--line-softer);color:var(--ink-muted);padding:2px 8px;border-radius:4px;">body-sm</span></td>
+            <td style="padding:12px 16px;font-family:var(--fbody);font-weight:600;">14px</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">400</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">1.5</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">13px</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);color:var(--ink-muted);">Card metadata, secondary descriptions</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line-soft);">
+            <td style="padding:12px 16px;"><span style="font-family:var(--fbody);font-size:11px;font-weight:700;background:var(--line-softer);color:var(--ink-muted);padding:2px 8px;border-radius:4px;">caption</span></td>
+            <td style="padding:12px 16px;font-family:var(--fbody);font-weight:600;">12px</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">500</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">1.4</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">11px</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);color:var(--ink-muted);">Timestamps, helper text, footnotes</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--line-soft);">
+            <td style="padding:12px 16px;"><span style="font-family:var(--fbody);font-size:11px;font-weight:700;background:var(--coral-50);color:var(--coral-700);padding:2px 8px;border-radius:4px;">label</span></td>
+            <td style="padding:12px 16px;font-family:var(--fbody);font-weight:600;">11px</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">700</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">1.3</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">11px</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);color:var(--ink-muted);">Form field labels (uppercase + tracking)</td>
+          </tr>
+          <tr>
+            <td style="padding:12px 16px;"><span style="font-family:var(--fbody);font-size:11px;font-weight:700;background:var(--coral-50);color:var(--coral-700);padding:2px 8px;border-radius:4px;">overline</span></td>
+            <td style="padding:12px 16px;font-family:var(--fbody);font-weight:600;">10px</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">800</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">1.4</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);">10px</td>
+            <td style="padding:12px 16px;font-family:var(--fbody);color:var(--ink-muted);">Section eyebrows, category labels (uppercase, 0.1em tracking)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 4. SPACING & GRID ─────────────────────────────────────── -->
+<div class="ds-section">
+  <div class="section-label">04 — Spacing &amp; Grid</div>
+  <h2 class="section-title">Spacing system</h2>
+  <p class="section-sub">4px base unit. 16 steps from 4px (space-1) to 96px (space-16). Use multiples of 4 everywhere; half-steps (space-0-5 = 2px) only for micro-adjustments inside dense components.</p>
+
+  <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-xl);padding:28px;margin-bottom:28px;">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="font-family:var(--fbody);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:4px;">Scale visualisation</div>
+      <div style="display:flex;align-items:center;gap:0;flex-wrap:nowrap;overflow-x:auto;">
+        <div style="display:flex;gap:10px;align-items:flex-end;padding-bottom:8px;">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:4px;background:var(--teal-500);border-radius:2px;height:4px;"></div><span style="font-size:9px;font-weight:700;color:var(--ink-faint);">1</span><span style="font-size:8px;color:var(--ink-faint);">4px</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:8px;background:var(--teal-500);border-radius:2px;height:8px;"></div><span style="font-size:9px;font-weight:700;color:var(--ink-faint);">2</span><span style="font-size:8px;color:var(--ink-faint);">8px</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:12px;background:var(--teal-500);border-radius:2px;height:12px;"></div><span style="font-size:9px;font-weight:700;color:var(--ink-faint);">3</span><span style="font-size:8px;color:var(--ink-faint);">12px</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:16px;background:var(--teal-500);border-radius:2px;height:16px;"></div><span style="font-size:9px;font-weight:700;color:var(--ink-faint);">4</span><span style="font-size:8px;color:var(--ink-faint);">16px</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:20px;background:var(--teal-500);border-radius:2px;height:20px;"></div><span style="font-size:9px;font-weight:700;color:var(--ink-faint);">5</span><span style="font-size:8px;color:var(--ink-faint);">20px</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:24px;background:var(--teal-400);border-radius:2px;height:24px;"></div><span style="font-size:9px;font-weight:700;color:var(--ink-faint);">6</span><span style="font-size:8px;color:var(--ink-faint);">24px</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:28px;background:var(--teal-400);border-radius:2px;height:28px;"></div><span style="font-size:9px;font-weight:700;color:var(--ink-faint);">7</span><span style="font-size:8px;color:var(--ink-faint);">28px</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:32px;background:var(--teal-400);border-radius:2px;height:32px;"></div><span style="font-size:9px;font-weight:700;color:var(--ink-faint);">8</span><span style="font-size:8px;color:var(--ink-faint);">32px</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:36px;background:var(--coral-500);border-radius:2px;height:36px;"></div><span style="font-size:9px;font-weight:700;color:var(--ink-faint);">9</span><span style="font-size:8px;color:var(--ink-faint);">36px</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:40px;background:var(--coral-500);border-radius:2px;height:40px;"></div><span style="font-size:9px;font-weight:700;color:var(--ink-faint);">10</span><span style="font-size:8px;color:var(--ink-faint);">40px</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:48px;background:var(--coral-500);border-radius:2px;height:48px;"></div><span style="font-size:9px;font-weight:700;color:var(--ink-faint);">12</span><span style="font-size:8px;color:var(--ink-faint);">48px</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:56px;background:var(--indigo-500);border-radius:2px;height:56px;"></div><span style="font-size:9px;font-weight:700;color:var(--ink-faint);">14</span><span style="font-size:8px;color:var(--ink-faint);">56px</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:64px;background:var(--indigo-500);border-radius:2px;height:64px;"></div><span style="font-size:9px;font-weight:700;color:var(--ink-faint);">16</span><span style="font-size:8px;color:var(--ink-faint);">64px</span></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><div style="width:96px;background:var(--indigo-500);border-radius:2px;height:96px;"></div><span style="font-size:9px;font-weight:700;color:var(--ink-faint);">24</span><span style="font-size:8px;color:var(--ink-faint);">96px</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-3" style="gap:16px;">
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;">
+      <div style="font-family:var(--fbody);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--teal-600);margin-bottom:14px;">Mobile · 375px · 4 col</div>
+      <div style="background:var(--line-softer);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:6px;">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;height:40px;">
+          <div style="background:var(--teal-100);border-radius:4px;"></div>
+          <div style="background:var(--teal-100);border-radius:4px;"></div>
+          <div style="background:var(--teal-100);border-radius:4px;"></div>
+          <div style="background:var(--teal-100);border-radius:4px;"></div>
+        </div>
+        <div style="font-size:11px;color:var(--ink-muted);">16px gutter · 16px outer margin · 8px gap</div>
+      </div>
+      <div style="margin-top:12px;font-size:13px;color:var(--ink-muted);line-height:1.5;">Full-width cards. 2-col grids use full bleed. Bottom nav safe area: 83px (iPhone) / 48px (Android).</div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;">
+      <div style="font-family:var(--fbody);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--coral-600);margin-bottom:14px;">Tablet · 768px · 8 col</div>
+      <div style="background:var(--line-softer);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:6px;">
+        <div style="display:grid;grid-template-columns:repeat(8,1fr);gap:5px;height:40px;">
+          <div style="background:var(--coral-100);border-radius:4px;"></div>
+          <div style="background:var(--coral-100);border-radius:4px;"></div>
+          <div style="background:var(--coral-100);border-radius:4px;"></div>
+          <div style="background:var(--coral-100);border-radius:4px;"></div>
+          <div style="background:var(--coral-100);border-radius:4px;"></div>
+          <div style="background:var(--coral-100);border-radius:4px;"></div>
+          <div style="background:var(--coral-100);border-radius:4px;"></div>
+          <div style="background:var(--coral-100);border-radius:4px;"></div>
+        </div>
+        <div style="font-size:11px;color:var(--ink-muted);">24px gutter · 24px outer margin · 12px gap</div>
+      </div>
+      <div style="margin-top:12px;font-size:13px;color:var(--ink-muted);line-height:1.5;">2-col card grids. Sidebar patterns begin here (matches + filter). Top nav replaces bottom nav.</div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;">
+      <div style="font-family:var(--fbody);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--indigo-600);margin-bottom:14px;">Desktop · 1160px · 12 col</div>
+      <div style="background:var(--line-softer);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:6px;">
+        <div style="display:grid;grid-template-columns:repeat(12,1fr);gap:4px;height:40px;">
+          <div style="background:var(--indigo-100);border-radius:3px;"></div>
+          <div style="background:var(--indigo-100);border-radius:3px;"></div>
+          <div style="background:var(--indigo-100);border-radius:3px;"></div>
+          <div style="background:var(--indigo-100);border-radius:3px;"></div>
+          <div style="background:var(--indigo-100);border-radius:3px;"></div>
+          <div style="background:var(--indigo-100);border-radius:3px;"></div>
+          <div style="background:var(--indigo-100);border-radius:3px;"></div>
+          <div style="background:var(--indigo-100);border-radius:3px;"></div>
+          <div style="background:var(--indigo-100);border-radius:3px;"></div>
+          <div style="background:var(--indigo-100);border-radius:3px;"></div>
+          <div style="background:var(--indigo-100);border-radius:3px;"></div>
+          <div style="background:var(--indigo-100);border-radius:3px;"></div>
+        </div>
+        <div style="font-size:11px;color:var(--ink-muted);">40px gutter · 40px outer margin · 16px gap</div>
+      </div>
+      <div style="margin-top:12px;font-size:13px;color:var(--ink-muted);line-height:1.5;">3-col trip grids. Results: content 8-col + sidebar 4-col. Max-width 1160px, centered.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 5. COMPONENT LANGUAGE ─────────────────────────────────── -->
+<div class="ds-section">
+  <div class="section-label">05 — Component Language</div>
+  <h2 class="section-title">Core components</h2>
+  <p class="section-sub">All components share 18px default border-radius (warm, approachable — mirrors the app's personality). Minimum touch target 44px on mobile. Focus rings: 2px solid teal-500, offset 2px.</p>
+
+  <!-- Buttons -->
+  <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-xl);padding:28px;margin-bottom:20px;">
+    <div style="font-family:var(--fbody);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:20px;">Buttons</div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:20px;">
+      <button style="display:inline-flex;align-items:center;gap:7px;padding:11px 20px;border-radius:12px;border:none;background:var(--teal-500);color:#fff;font:700 14px var(--fbody);cursor:pointer;">Primary</button>
+      <button style="display:inline-flex;align-items:center;gap:7px;padding:11px 20px;border-radius:12px;border:none;background:var(--teal-50);color:var(--teal-700);font:700 14px var(--fbody);cursor:pointer;">Secondary</button>
+      <button style="display:inline-flex;align-items:center;gap:7px;padding:11px 20px;border-radius:12px;border:1.5px solid var(--teal-500);background:transparent;color:var(--teal-600);font:700 14px var(--fbody);cursor:pointer;">Ghost</button>
+      <button style="display:inline-flex;align-items:center;gap:7px;padding:11px 20px;border-radius:12px;border:none;background:var(--coral-500);color:#fff;font:700 14px var(--fbody);cursor:pointer;"><i class="ph-bold ph-lightning"></i>DIY / Energy</button>
+      <button style="display:inline-flex;align-items:center;gap:7px;padding:11px 20px;border-radius:12px;border:none;background:var(--red-50);color:var(--red-600);font:700 14px var(--fbody);cursor:pointer;">Destructive</button>
+      <button style="display:inline-flex;align-items:center;gap:7px;padding:11px 20px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--ink-muted);font:700 14px var(--fbody);cursor:pointer;opacity:0.5;" disabled="">Disabled</button>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+      <button style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:9px;border:none;background:var(--teal-500);color:#fff;font:700 12px var(--fbody);cursor:pointer;">Small</button>
+      <button style="display:inline-flex;align-items:center;gap:7px;padding:14px 28px;border-radius:14px;border:none;background:var(--teal-500);color:#fff;font:700 16px var(--fbody);cursor:pointer;width:100%;max-width:280px;justify-content:center;">Full-width CTA</button>
+      <button style="display:inline-flex;align-items:center;gap:7px;padding:11px 20px;border-radius:12px;border:none;background:var(--indigo-500);color:#fff;font:700 14px var(--fbody);cursor:pointer;"><i class="ph-bold ph-sparkle"></i>AI / Match</button>
+    </div>
+    <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:13px;color:var(--ink-muted);line-height:1.6;">
+      <div><strong style="color:var(--ink);">States:</strong> Default → Hover (brightness 0.93) → Active (brightness 0.87) → Focus (teal ring) → Disabled (opacity 0.45, cursor not-allowed)</div>
+      <div><strong style="color:var(--ink);">Rules:</strong> One primary CTA per view. Primary = teal (trust/action). Energy CTA (coral) only for DIY path + discovery moments. Never two primary buttons in proximity.</div>
+    </div>
+  </div>
+
+  <!-- Inputs -->
+  <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-xl);padding:28px;margin-bottom:20px;">
+    <div style="font-family:var(--fbody);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:20px;">Input fields</div>
+    <div class="grid-2" style="gap:16px;">
+      <div>
+        <div style="font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:5px;">Default</div>
+        <input style="width:100%;padding:11px 14px;border:1.5px solid var(--line);border-radius:12px;font:500 15px var(--fbody);color:var(--ink);background:#fff;outline:none;" placeholder="Enter your destination" readonly="">
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:5px;">Focus</div>
+        <input style="width:100%;padding:11px 14px;border:2px solid var(--teal-500);border-radius:12px;font:500 15px var(--fbody);color:var(--ink);background:#fff;outline:none;box-shadow:0 0 0 3px var(--teal-50);" value="Spiti Valley" readonly="">
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:5px;">Error</div>
+        <input style="width:100%;padding:11px 14px;border:2px solid var(--red-600);border-radius:12px;font:500 15px var(--fbody);color:var(--ink);background:#fff;outline:none;" value="abc" readonly="">
+        <div style="font-size:12px;color:var(--red-600);margin-top:5px;font-weight:500;display:flex;align-items:center;gap:4px;"><i class="ph-bold ph-warning-circle" style="font-size:14px;"></i>Please enter a valid phone number.</div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:5px;">Disabled</div>
+        <input style="width:100%;padding:11px 14px;border:1.5px solid var(--line-soft);border-radius:12px;font:500 15px var(--fbody);color:var(--ink-faint);background:var(--line-softer);cursor:not-allowed;outline:none;" value="Verified via OTP" disabled="" readonly="">
+      </div>
+    </div>
+  </div>
+
+  <!-- Cards row -->
+  <div style="margin-bottom:20px;">
+    <div style="font-family:var(--fbody);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:16px;">Cards</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
+
+      <!-- Traveller profile card -->
+      <div style="background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow-card);">
+        <div style="display:flex;gap:12px;align-items:center;margin-bottom:12px;">
+          <div style="width:52px;height:52px;border-radius:99px;background:linear-gradient(135deg,#0e9f8f,#14b8a6);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;">🧭</div>
+          <div style="flex:1;min-width:0;">
+            <div style="display:flex;align-items:center;gap:6px;"><span style="font-family:var(--fhead);font-weight:700;font-size:16px;color:var(--ink);">Priya Mehta</span><span style="font-size:11px;font-weight:700;background:var(--teal-50);color:var(--teal-700);padding:2px 7px;border-radius:99px;display:flex;align-items:center;gap:3px;"><i class="ph-bold ph-seal-check" style="font-size:10px;"></i>ID</span></div>
+            <div style="font-size:12.5px;color:var(--ink-faint);">26 · Mumbai</div>
+          </div>
+          <span style="font-weight:700;font-size:13px;padding:5px 10px;border-radius:99px;white-space:nowrap;background:var(--teal-50);color:var(--teal-700);">84% match</span>
+        </div>
+        <p style="font-size:13px;color:var(--ink-muted);line-height:1.5;margin-bottom:10px;">Solo trekker, 3 Himachal trips. Prefers early mornings and off-trail routes. Looking for a fellow introvert for Spiti.</p>
+        <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px;">
+          <span style="font-size:11.5px;font-weight:500;color:var(--ink-muted);background:var(--line-softer);padding:4px 10px;border-radius:99px;">Trekking</span>
+          <span style="font-size:11.5px;font-weight:500;color:var(--ink-muted);background:var(--line-softer);padding:4px 10px;border-radius:99px;">Photography</span>
+          <span style="font-size:11.5px;font-weight:500;color:var(--ink-muted);background:var(--line-softer);padding:4px 10px;border-radius:99px;">Camping</span>
+        </div>
+        <div style="font-size:12px;color:var(--teal-700);background:var(--teal-50);padding:7px 11px;border-radius:9px;margin-bottom:12px;font-weight:500;">✨ Same travel style · Budget traveller · Night owl overlap</div>
+        <button style="width:100%;padding:10px;border-radius:11px;border:none;background:var(--teal-500);color:#fff;font:700 14px var(--fbody);cursor:pointer;">Send travel request</button>
+      </div>
+
+      <!-- Hosted trip card -->
+      <div style="background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow-card);">
+        <div style="height:130px;background:linear-gradient(135deg,#e6f5f3,#eef0ff);position:relative;display:flex;align-items:center;justify-content:center;">
+          <span style="font-size:42px;">🏔️</span>
+          <span style="position:absolute;top:10px;left:10px;font-size:11px;font-weight:700;background:rgba(255,255,255,.9);color:var(--teal-700);padding:3px 9px;border-radius:99px;">Trekking</span>
+          <span style="position:absolute;top:10px;right:10px;font-size:11px;font-weight:700;background:#fff;color:var(--coral-600);border:1px solid var(--coral-200);padding:3px 9px;border-radius:99px;">Filling fast</span>
+        </div>
+        <div style="padding:16px;">
+          <div style="font-size:11.5px;font-weight:700;color:var(--indigo-500);margin-bottom:3px;">Himalayan Wolves</div>
+          <div style="font-family:var(--fhead);font-size:17px;color:var(--ink);line-height:1.2;margin-bottom:4px;font-weight:700;">Spiti Valley Circuit</div>
+          <div style="font-size:12.5px;color:var(--ink-faint);margin-bottom:10px;">📍 Manali to Kaza · 🗓️ Aug 14–22 · 9D</div>
+          <div style="display:flex;align-items:baseline;gap:8px;">
+            <span style="font-family:var(--fhead);font-weight:700;font-size:19px;color:var(--teal-600);">₹18,500</span>
+            <span style="font-size:12.5px;color:var(--ink-faint);text-decoration:line-through;">₹22,000</span>
+            <span style="font-size:11px;font-weight:700;color:var(--green-600);">/person</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hostel card -->
+      <div style="background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow-card);">
+        <div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:8px;">
+          <div>
+            <div style="font-family:var(--fhead);font-weight:700;font-size:17px;color:var(--ink);margin-bottom:2px;">Zostel Manali</div>
+            <div style="font-size:12px;color:var(--ink-faint);">📍 Old Manali, HP</div>
+          </div>
+          <div style="text-align:right;flex-shrink:0;">
+            <div style="font-weight:700;color:var(--teal-600);font-size:16px;">₹599</div>
+            <div style="font-size:11px;color:var(--ink-faint);">/night</div>
+          </div>
+        </div>
+        <p style="font-size:13px;color:var(--ink-muted);line-height:1.45;margin-bottom:12px;">Social dorms with mountain views. Rooftop cafe, open kitchen, evening bonfires. Community trips every Thursday.</p>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;">
+          <span style="font-size:11.5px;font-weight:600;background:var(--teal-50);color:var(--teal-700);padding:3px 9px;border-radius:99px;">Trippy Member</span>
+          <span style="font-size:11.5px;color:var(--ink-muted);background:var(--line-softer);padding:3px 9px;border-radius:99px;">WiFi</span>
+          <span style="font-size:11.5px;color:var(--ink-muted);background:var(--line-softer);padding:3px 9px;border-radius:99px;">Kitchen</span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line-soft);padding-top:11px;">
+          <span style="font-size:12px;color:var(--ink-muted);">⭐ 4.7 · 312 reviews</span>
+          <button style="padding:8px 16px;border-radius:9px;border:none;background:var(--teal-50);color:var(--teal-700);font:700 13px var(--fbody);cursor:pointer;">View hostel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Match + Badges + Status -->
+  <div class="grid-2" style="gap:16px;margin-bottom:20px;">
+    <!-- Compatibility + verification badges -->
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-xl);padding:24px;">
+      <div style="font-family:var(--fbody);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:16px;">Compatibility scores &amp; verification</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <span style="font-size:12px;font-weight:700;color:var(--ink);">Match score:</span>
+          <span style="font-weight:700;font-size:13px;padding:5px 11px;border-radius:99px;background:var(--teal-50);color:var(--teal-700);">91% match</span>
+          <span style="font-weight:700;font-size:13px;padding:5px 11px;border-radius:99px;background:#fef3c7;color:#92400e;">55% match</span>
+          <span style="font-weight:700;font-size:13px;padding:5px 11px;border-radius:99px;background:var(--line-softer);color:var(--ink-faint);">28% match</span>
+        </div>
+        <div style="font-size:12px;color:var(--ink-muted);">≥70 = high (teal) · 40–69 = mid (amber) · &lt;40 = low (gray). Score derived from travel style + budget + overlap + interests.</div>
+        <div style="height:1px;background:var(--line);"></div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <span style="font-size:12px;font-weight:700;color:var(--ink);">Verification:</span>
+          <span style="display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;background:var(--teal-50);color:var(--teal-700);padding:3px 9px;border-radius:99px;"><i class="ph-bold ph-seal-check" style="font-size:12px;"></i>ID verified</span>
+          <span style="display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;background:var(--line-softer);color:var(--ink-faint);padding:3px 9px;border-radius:99px;"><i class="ph-bold ph-phone" style="font-size:12px;"></i>Phone</span>
+        </div>
+        <div style="font-size:12px;color:var(--ink-muted);">Show only positive trust signals — never show "unverified" as a negative flag. Unverified profiles are dimmed (opacity 0.75) in match lists.</div>
+      </div>
+    </div>
+
+    <!-- Status badges -->
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-xl);padding:24px;">
+      <div style="font-family:var(--fbody);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:16px;">Status badges</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div>
+          <div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;">Trip lifecycle</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <span style="font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:99px;background:var(--line-softer);color:var(--ink-faint);">Draft</span>
+            <span style="font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:99px;background:var(--green-50);color:var(--green-600);">Live</span>
+            <span style="font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:99px;background:var(--indigo-50);color:var(--indigo-600);">Upcoming</span>
+            <span style="font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:99px;background:var(--line-soft);color:var(--ink-muted);">Completed</span>
+          </div>
+        </div>
+        <div style="height:1px;background:var(--line);"></div>
+        <div>
+          <div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;">Availability</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">
+            <span style="font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:99px;background:var(--green-50);color:var(--green-600);">Open</span>
+            <span style="font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:99px;background:#fef3c7;color:#92400e;">Filling fast</span>
+            <span style="font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:99px;background:var(--red-50);color:var(--red-600);">Full</span>
+            <span style="font-size:11.5px;font-weight:700;padding:4px 11px;border-radius:99px;background:var(--line-softer);color:var(--ink-faint);">Waitlist</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom nav + empty + skeleton -->
+  <div class="grid-3" style="gap:16px;">
+    <!-- Bottom nav -->
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-xl);padding:20px;">
+      <div style="font-family:var(--fbody);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:16px;">Bottom navigation (mobile)</div>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:14px;padding:4px;box-shadow:0 -4px 16px rgba(20,32,42,.06);">
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0;">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;border-radius:10px;background:var(--teal-50);">
+            <i class="ph-bold ph-compass" style="font-size:20px;color:var(--teal-600);"></i>
+            <span style="font-size:10px;font-weight:700;color:var(--teal-700);">Discover</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;">
+            <i class="ph-bold ph-users" style="font-size:20px;color:var(--ink-faint);"></i>
+            <span style="font-size:10px;font-weight:600;color:var(--ink-faint);">Matches</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;">
+            <div style="width:40px;height:40px;border-radius:99px;background:linear-gradient(135deg,var(--teal-500),var(--coral-500));display:flex;align-items:center;justify-content:center;margin:-6px 0;"><i class="ph-bold ph-plus" style="font-size:20px;color:#fff;"></i></div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;">
+            <i class="ph-bold ph-chat-circle" style="font-size:20px;color:var(--ink-faint);"></i>
+            <span style="font-size:10px;font-weight:600;color:var(--ink-faint);">Chats</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px;">
+            <i class="ph-bold ph-user-circle" style="font-size:20px;color:var(--ink-faint);"></i>
+            <span style="font-size:10px;font-weight:600;color:var(--ink-faint);">Profile</span>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--ink-muted);margin-top:12px;line-height:1.5;">5 tabs max. Active = teal fill. Floating center CTA for primary action. Safe area: padding-bottom 83px iOS / 48px Android.</div>
+    </div>
+
+    <!-- Empty state -->
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-xl);padding:20px;">
+      <div style="font-family:var(--fbody);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:16px;">Empty states</div>
+      <div style="text-align:center;padding:24px 16px;">
+        <div style="font-size:48px;margin-bottom:12px;">🔭</div>
+        <div style="font-family:var(--fhead);font-size:18px;font-weight:700;color:var(--ink);margin-bottom:6px;">No travellers yet</div>
+        <p style="font-size:13.5px;color:var(--ink-muted);line-height:1.55;margin-bottom:20px;">You're early! Check back closer to your dates, or try flexible dates to see more matches.</p>
+        <button style="padding:10px 20px;border-radius:11px;border:none;background:var(--teal-500);color:#fff;font:700 14px var(--fbody);cursor:pointer;">Try flexible dates</button>
+      </div>
+      <div style="font-size:12px;color:var(--ink-muted);line-height:1.5;">Always include an action. Tone: curious, never defeated. "You're early!" not "Sorry, no results."</div>
+    </div>
+
+    <!-- Skeleton -->
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-xl);padding:20px;">
+      <div style="font-family:var(--fbody);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:16px;">Skeleton / loading state</div>
+      <style>@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}.skel{background:linear-gradient(90deg,#eef1f3 25%,#f4f6f8 50%,#eef1f3 75%);background-size:200% 100%;animation:shimmer 1.4s linear infinite;border-radius:6px;}</style>
+      <div style="display:flex;gap:12px;align-items:center;margin-bottom:16px;">
+        <div class="skel" style="width:52px;height:52px;border-radius:99px;flex-shrink:0;"></div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:6px;">
+          <div class="skel" style="height:14px;width:60%;"></div>
+          <div class="skel" style="height:12px;width:40%;"></div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px;">
+        <div class="skel" style="height:12px;width:100%;"></div>
+        <div class="skel" style="height:12px;width:85%;"></div>
+        <div class="skel" style="height:12px;width:70%;"></div>
+      </div>
+      <div style="display:flex;gap:6px;margin-bottom:14px;">
+        <div class="skel" style="height:26px;width:70px;border-radius:99px;"></div>
+        <div class="skel" style="height:26px;width:80px;border-radius:99px;"></div>
+      </div>
+      <div class="skel" style="height:40px;width:100%;border-radius:11px;"></div>
+      <div style="font-size:12px;color:var(--ink-muted);margin-top:12px;line-height:1.5;">Linear shimmer, 1.4s. Match card skeleton only — no spinner for card grids. Spinner (teal border-top) for full-page loads only.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 6. ICONOGRAPHY ────────────────────────────────────────── -->
+<div class="ds-section">
+  <div class="section-label">06 — Iconography</div>
+  <h2 class="section-title">Icons</h2>
+  <p class="section-sub">Phosphor Icons exclusively — <code style="font-family:monospace;font-size:13px;background:var(--line-softer);padding:2px 6px;border-radius:4px;">@phosphor-icons/web</code> v2. Default weight: <strong>bold</strong> (2px stroke, best for 16–24px on Android). Filled reserved for status icons and active nav tabs. No emoji as icons.</p>
+
+  <div class="grid-2" style="gap:20px;">
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-xl);padding:24px;">
+      <div style="font-family:var(--fbody);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:16px;">Sizes &amp; weights</div>
+      <div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-end;margin-bottom:20px;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <i class="ph-bold ph-map-pin" style="font-size:16px;color:var(--teal-500);"></i>
+          <span style="font-size:10px;color:var(--ink-faint);">16px</span>
+          <span style="font-size:9px;color:var(--ink-faint);">form fields</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <i class="ph-bold ph-map-pin" style="font-size:20px;color:var(--teal-500);"></i>
+          <span style="font-size:10px;color:var(--ink-faint);">20px</span>
+          <span style="font-size:9px;color:var(--ink-faint);">nav, buttons</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <i class="ph-bold ph-map-pin" style="font-size:24px;color:var(--teal-500);"></i>
+          <span style="font-size:10px;color:var(--ink-faint);">24px</span>
+          <span style="font-size:9px;color:var(--ink-faint);">empty states</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <i class="ph-bold ph-map-pin" style="font-size:32px;color:var(--teal-500);"></i>
+          <span style="font-size:10px;color:var(--ink-faint);">32px</span>
+          <span style="font-size:9px;color:var(--ink-faint);">feature icons</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;opacity:.4;">
+          <i class="ph ph-map-pin" style="font-size:24px;color:var(--ink);"></i>
+          <span style="font-size:10px;color:var(--ink-faint);">Regular</span>
+          <span style="font-size:9px;color:var(--red-600);">avoid</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <i class="ph-fill ph-seal-check" style="font-size:24px;color:var(--teal-500);"></i>
+          <span style="font-size:10px;color:var(--ink-faint);">Fill</span>
+          <span style="font-size:9px;color:var(--ink-faint);">status only</span>
+        </div>
+      </div>
+      <div style="font-size:13px;color:var(--ink-muted);line-height:1.5;">Bold weight is the Trippy default — it renders crisply on low-DPI Android screens where thin strokes disappear. Regular weight is banned from product UI.</div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--line);border-radius:var(--r-xl);padding:24px;">
+      <div style="font-family:var(--fbody);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:16px;">Core icon set</div>
+      <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:14px;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><i class="ph-bold ph-compass" style="font-size:22px;color:var(--ink-muted);"></i><span style="font-size:9px;color:var(--ink-faint);text-align:center;">discover</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><i class="ph-bold ph-users" style="font-size:22px;color:var(--ink-muted);"></i><span style="font-size:9px;color:var(--ink-faint);text-align:center;">matches</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><i class="ph-bold ph-chat-circle" style="font-size:22px;color:var(--ink-muted);"></i><span style="font-size:9px;color:var(--ink-faint);text-align:center;">chats</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><i class="ph-bold ph-user-circle" style="font-size:22px;color:var(--ink-muted);"></i><span style="font-size:9px;color:var(--ink-faint);text-align:center;">profile</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><i class="ph-bold ph-map-pin" style="font-size:22px;color:var(--ink-muted);"></i><span style="font-size:9px;color:var(--ink-faint);text-align:center;">location</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><i class="ph-bold ph-calendar" style="font-size:22px;color:var(--ink-muted);"></i><span style="font-size:9px;color:var(--ink-faint);text-align:center;">dates</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><i class="ph-bold ph-sparkle" style="font-size:22px;color:var(--indigo-500);"></i><span style="font-size:9px;color:var(--ink-faint);text-align:center;">AI match</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><i class="ph-fill ph-seal-check" style="font-size:22px;color:var(--teal-500);"></i><span style="font-size:9px;color:var(--ink-faint);text-align:center;">verified</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><i class="ph-bold ph-star" style="font-size:22px;color:var(--amber-500);"></i><span style="font-size:9px;color:var(--ink-faint);text-align:center;">rating</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><i class="ph-bold ph-bag" style="font-size:22px;color:var(--ink-muted);"></i><span style="font-size:9px;color:var(--ink-faint);text-align:center;">trip bag</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><i class="ph-bold ph-house" style="font-size:22px;color:var(--ink-muted);"></i><span style="font-size:9px;color:var(--ink-faint);text-align:center;">hostel</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><i class="ph-bold ph-path" style="font-size:22px;color:var(--coral-500);"></i><span style="font-size:9px;color:var(--ink-faint);text-align:center;">DIY path</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><i class="ph-bold ph-currency-inr" style="font-size:22px;color:var(--teal-600);"></i><span style="font-size:9px;color:var(--ink-faint);text-align:center;">price</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><i class="ph-bold ph-warning" style="font-size:22px;color:var(--amber-500);"></i><span style="font-size:9px;color:var(--ink-faint);text-align:center;">warning</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><i class="ph-bold ph-x-circle" style="font-size:22px;color:var(--red-600);"></i><span style="font-size:9px;color:var(--ink-faint);text-align:center;">error</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><i class="ph-bold ph-check-circle" style="font-size:22px;color:var(--green-600);"></i><span style="font-size:9px;color:var(--ink-faint);text-align:center;">success</span></div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><i class="ph-bold ph-arrow-right" style="font-size:22px;color:var(--ink-muted);"></i><span style="font-size:9px;color:var(--ink-faint);text-align:center;">navigate</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 7. MOTION ─────────────────────────────────────────────── -->
+<div class="ds-section">
+  <div class="section-label">07 — Motion</div>
+  <h2 class="section-title">Motion principles</h2>
+  <p class="section-sub">Motion reinforces personality. Three principles that resolve the adventure/trust tension through time and movement. All timings are fast by consumer app standards — this audience is on 4G, sometimes 2G, and mid-range hardware. Heavy animation = broken UX.</p>
+  <div class="grid-3" style="gap:20px;">
+    <div style="background:linear-gradient(145deg,var(--teal-700),var(--teal-500));border-radius:var(--r-xl);padding:28px;color:#fff;">
+      <div style="font-size:32px;margin-bottom:16px;">01</div>
+      <div style="font-family:var(--fhead);font-weight:700;font-size:20px;margin-bottom:10px;line-height:1.2;">Purposeful, never decorative</div>
+      <p style="font-size:14px;opacity:.85;line-height:1.6;margin-bottom:16px;">Every transition communicates something: a new page arriving (fade-up 250ms), a match accepted (scale pulse 150ms), a message sending (slide-left 120ms). Nothing moves just to show off.</p>
+      <div style="background:rgba(255,255,255,.12);border-radius:10px;padding:12px;font-size:13px;">
+        <div><strong>Enter (pages):</strong> opacity 0→1 + translateY 10px→0, 250ms ease-out</div>
+        <div style="margin-top:4px;"><strong>Micro (buttons):</strong> filter brightness, 120ms ease</div>
+        <div style="margin-top:4px;"><strong>Sheet expand:</strong> translateY bottom→0, 320ms ease-out</div>
+      </div>
+    </div>
+    <div style="background:linear-gradient(145deg,var(--coral-600),var(--coral-400));border-radius:var(--r-xl);padding:28px;color:#fff;">
+      <div style="font-size:32px;margin-bottom:16px;">02</div>
+      <div style="font-family:var(--fhead);font-weight:700;font-size:20px;margin-bottom:10px;line-height:1.2;">Warmth through gentle easing</div>
+      <p style="font-size:14px;opacity:.85;line-height:1.6;margin-bottom:16px;">Avoid linear and harsh ease-in. Prefer ease-out (things decelerate as they arrive — feels calm) and gentle springs for cards lifting on hover. The feel should be "card rises to greet you," not "element slides in."</p>
+      <div style="background:rgba(255,255,255,.12);border-radius:10px;padding:12px;font-size:13px;">
+        <div><strong>Page transitions:</strong> ease-out only</div>
+        <div style="margin-top:4px;"><strong>Card hover:</strong> translateY -2px, 120ms ease</div>
+        <div style="margin-top:4px;"><strong>Match score reveal:</strong> scale 0.8→1, 200ms ease-out</div>
+        <div style="margin-top:4px;"><strong>Never:</strong> bounce, spin, elastic spring</div>
+      </div>
+    </div>
+    <div style="background:linear-gradient(145deg,var(--indigo-600),var(--indigo-400));border-radius:var(--r-xl);padding:28px;color:#fff;">
+      <div style="font-size:32px;margin-bottom:16px;">03</div>
+      <div style="font-family:var(--fhead);font-weight:700;font-size:20px;margin-bottom:10px;line-height:1.2;">Instant feedback for trust</div>
+      <p style="font-size:14px;opacity:.85;line-height:1.6;margin-bottom:16px;">Connection requests, chat sends, and payment clicks must respond in &lt;100ms visually (optimistic UI) even if the API takes longer. Trust is built by immediacy. Spinners only for data loads — never for interactions.</p>
+      <div style="background:rgba(255,255,255,.12);border-radius:10px;padding:12px;font-size:13px;">
+        <div><strong>Button press:</strong> immediate brightness change</div>
+        <div style="margin-top:4px;"><strong>Request sent:</strong> optimistic badge, 0ms delay</div>
+        <div style="margin-top:4px;"><strong>Chat message:</strong> bubble appears instantly</div>
+        <div style="margin-top:4px;"><strong>Skeleton:</strong> shimmer 1.4s linear, shown &gt;200ms loads</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── 8. SURFACE ADAPTATIONS ────────────────────────────────── -->
+<div class="ds-section">
+  <div class="section-label">08 — Surface Adaptations</div>
+  <h2 class="section-title">Four surfaces, one token set</h2>
+  <p class="section-sub">Same primitives everywhere. Semantic roles shift per surface — the admin console uses the same teal token but almost never shows it, while the marketing site leads with it. Layout density, type scale, and information architecture are what truly separate the surfaces.</p>
+
+  <div style="display:flex;flex-direction:column;gap:20px;">
+    <!-- Marketing -->
+    <div style="background:linear-gradient(135deg,#0e9f8f08,#f2683c08);border:1px solid var(--line);border-radius:var(--r-xl);padding:28px;">
+      <div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
+        <div style="flex:1;min-width:280px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+            <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--teal-500),var(--teal-400));display:flex;align-items:center;justify-content:center;"><i class="ph-bold ph-globe" style="font-size:18px;color:#fff;"></i></div>
+            <div>
+              <div style="font-family:var(--fhead);font-weight:700;font-size:16px;color:var(--ink);">Marketing Website</div>
+              <div style="font-size:12px;color:var(--ink-faint);">Acquisition · Drive app download + partner discovery</div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;gap:8px;"><span style="width:6px;height:6px;border-radius:99px;background:var(--teal-500);flex-shrink:0;margin-top:5px;"></span><span style="font-size:14px;color:var(--ink-muted);">Display-size type (52–60px heroes). Bricolage Grotesque at max weight.</span></div>
+            <div style="display:flex;gap:8px;"><span style="width:6px;height:6px;border-radius:99px;background:var(--teal-500);flex-shrink:0;margin-top:5px;"></span><span style="font-size:14px;color:var(--ink-muted);">Ambient blobs (peach, sky, mint, lavender) — only surface that uses decorative gradients.</span></div>
+            <div style="display:flex;gap:8px;"><span style="width:6px;height:6px;border-radius:99px;background:var(--teal-500);flex-shrink:0;margin-top:5px;"></span><span style="font-size:14px;color:var(--ink-muted);">One dark full-width CTA section ("Get the app") + coral energy pill badges.</span></div>
+            <div style="display:flex;gap:8px;"><span style="width:6px;height:6px;border-radius:99px;background:var(--teal-500);flex-shrink:0;margin-top:5px;"></span><span style="font-size:14px;color:var(--ink-muted);">Glassmorphic topbar (72% blur). Sticky. Converts to solid on scroll.</span></div>
+            <div style="display:flex;gap:8px;"><span style="width:6px;height:6px;border-radius:99px;background:var(--coral-500);flex-shrink:0;margin-top:5px;"></span><span style="font-size:14px;color:var(--ink-muted);"><strong>Primary CTA:</strong> "Find your trip" (teal). <strong>Secondary CTA:</strong> "List your trips" (coral, partner-facing).</span></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <span style="font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:99px;background:var(--teal-50);color:var(--teal-700);">Blob backgrounds ✓</span>
+          <span style="font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:99px;background:var(--coral-50);color:var(--coral-700);">Decorative gradients ✓</span>
+          <span style="font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:99px;background:var(--line-softer);color:var(--ink-muted);">Dense data tables ✗</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Consumer App -->
+    <div style="background:linear-gradient(135deg,#6366f108,#0e9f8f08);border:1px solid var(--line);border-radius:var(--r-xl);padding:28px;">
+      <div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
+        <div style="flex:1;min-width:280px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+            <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--indigo-500),var(--teal-500));display:flex;align-items:center;justify-content:center;"><i class="ph-bold ph-device-mobile" style="font-size:18px;color:#fff;"></i></div>
+            <div>
+              <div style="font-family:var(--fhead);font-weight:700;font-size:16px;color:var(--ink);">Consumer App</div>
+              <div style="font-size:12px;color:var(--ink-faint);">Community-first · Social warmth · Matchmaking energy</div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;gap:8px;"><span style="width:6px;height:6px;border-radius:99px;background:var(--indigo-500);flex-shrink:0;margin-top:5px;"></span><span style="font-size:14px;color:var(--ink-muted);">People come first: faces and names above trip specs in match cards. Avatar + name is the primary visual unit.</span></div>
+            <div style="display:flex;gap:8px;"><span style="width:6px;height:6px;border-radius:99px;background:var(--indigo-500);flex-shrink:0;margin-top:5px;"></span><span style="font-size:14px;color:var(--ink-muted);">Bottom nav (5 tabs). No sidebar. Every screen has a single floating primary action.</span></div>
+            <div style="display:flex;gap:8px;"><span style="width:6px;height:6px;border-radius:99px;background:var(--indigo-500);flex-shrink:0;margin-top:5px;"></span><span style="font-size:14px;color:var(--ink-muted);">Match score (teal/amber/gray) is always visible on profile cards. AI reason pills shown prominently.</span></div>
+            <div style="display:flex;gap:8px;"><span style="width:6px;height:6px;border-radius:99px;background:var(--coral-500);flex-shrink:0;margin-top:5px;"></span><span style="font-size:14px;color:var(--ink-muted);">DIY path uses coral exclusively — creates a distinct visual mode that signals "you're building something."</span></div>
+            <div style="display:flex;gap:8px;"><span style="width:6px;height:6px;border-radius:99px;background:var(--indigo-500);flex-shrink:0;margin-top:5px;"></span><span style="font-size:14px;color:var(--ink-muted);">Topbar: glassmorphic. Background: animated ambient blobs (low opacity, behind content).</span></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <span style="font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:99px;background:var(--indigo-50);color:var(--indigo-600);">Social components ✓</span>
+          <span style="font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:99px;background:var(--coral-50);color:var(--coral-700);">Coral DIY mode ✓</span>
+          <span style="font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:99px;background:var(--line-softer);color:var(--ink-muted);">Admin density ✗</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Partner CRM -->
+    <div style="background:linear-gradient(135deg,#f59e0b08,#0e9f8f08);border:1px solid var(--line);border-radius:var(--r-xl);padding:28px;">
+      <div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
+        <div style="flex:1;min-width:280px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+            <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--amber-500),var(--coral-400));display:flex;align-items:center;justify-content:center;"><i class="ph-bold ph-briefcase" style="font-size:18px;color:#fff;"></i></div>
+            <div>
+              <div style="font-family:var(--fhead);font-weight:700;font-size:16px;color:var(--ink);">Partner CRM</div>
+              <div style="font-size:12px;color:var(--ink-faint);">Professional tool · Progress-oriented · Confidence-building</div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;gap:8px;"><span style="width:6px;height:6px;border-radius:99px;background:var(--amber-500);flex-shrink:0;margin-top:5px;"></span><span style="font-size:14px;color:var(--ink-muted);">Opaque #F7F8FA background — no blobs. Clean SaaS layout. Operators need to focus on their data, not the aesthetic.</span></div>
+            <div style="display:flex;gap:8px;"><span style="width:6px;height:6px;border-radius:99px;background:var(--amber-500);flex-shrink:0;margin-top:5px;"></span><span style="font-size:14px;color:var(--ink-muted);">KPI tiles across the top (5 cols): Total, Published, Draft, Upcoming, Total Bookings — always visible.</span></div>
+            <div style="display:flex;gap:8px;"><span style="width:6px;height:6px;border-radius:99px;background:var(--amber-500);flex-shrink:0;margin-top:5px;"></span><span style="font-size:14px;color:var(--ink-muted);">Trip editor is a multi-section scroll (Details → Itinerary → Pricing → Media → Publish) with sticky action bar at bottom.</span></div>
+            <div style="display:flex;gap:8px;"><span style="width:6px;height:6px;border-radius:99px;background:var(--amber-500);flex-shrink:0;margin-top:5px;"></span><span style="font-size:14px;color:var(--ink-muted);">Publish validation errors surface as a pre-flight checklist in red — never silent failures. Save indicator shows "Saving…" / "Saved" in faint text.</span></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <span style="font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:99px;background:var(--amber-50);color:#92400e;">Opaque BG ✓</span>
+          <span style="font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:99px;background:var(--teal-50);color:var(--teal-700);">Table views ✓</span>
+          <span style="font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:99px;background:var(--line-softer);color:var(--ink-muted);">Blobs ✗</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin Console -->
+    <div style="background:linear-gradient(135deg,#14202a0a,#14202a05);border:1px solid var(--line);border-radius:var(--r-xl);padding:28px;">
+      <div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
+        <div style="flex:1;min-width:280px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+            <div style="width:36px;height:36px;border-radius:10px;background:var(--ink);display:flex;align-items:center;justify-content:center;"><i class="ph-bold ph-shield-check" style="font-size:18px;color:#fff;"></i></div>
+            <div>
+              <div style="font-family:var(--fhead);font-weight:700;font-size:16px;color:var(--ink);">Admin Console</div>
+              <div style="font-size:12px;color:var(--ink-faint);">Dense, efficient, audit-aware · Never confused with consumer app</div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;gap:8px;"><span style="width:6px;height:6px;border-radius:99px;background:var(--ink);flex-shrink:0;margin-top:5px;"></span><span style="font-size:14px;color:var(--ink-muted);">Dark sidebar (#14202A) immediately signals "this is not the consumer app." Shared token, different semantic role.</span></div>
+            <div style="display:flex;gap:8px;"><span style="width:6px;height:6px;border-radius:99px;background:var(--ink);flex-shrink:0;margin-top:5px;"></span><span style="font-size:14px;color:var(--ink-muted);">Information density is acceptable here. 13px body, 11px caption, compact table rows (40px height).</span></div>
+            <div style="display:flex;gap:8px;"><span style="width:6px;height:6px;border-radius:99px;background:var(--ink);flex-shrink:0;margin-top:5px;"></span><span style="font-size:14px;color:var(--ink-muted);">Audit logs: monospace font, immutable row styling (gray background + lock icon). No edit affordances visible.</span></div>
+            <div style="display:flex;gap:8px;"><span style="width:6px;height:6px;border-radius:99px;background:var(--red-600);flex-shrink:0;margin-top:5px;"></span><span style="font-size:14px;color:var(--ink-muted);">Destructive actions (revoke session, deactivate partner) require 2-step confirmation. Red is used more than any other surface — appropriate here, where errors have consequences.</span></div>
+            <div style="display:flex;gap:8px;"><span style="width:6px;height:6px;border-radius:99px;background:var(--ink);flex-shrink:0;margin-top:5px;"></span><span style="font-size:14px;color:var(--ink-muted);">RBAC visual: role pills (9 roles) color-coded by permission tier. Super Admin = ink dark. Read-only = gray.</span></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <span style="font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:99px;background:var(--ink);color:#fff;">Dark sidebar ✓</span>
+          <span style="font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:99px;background:var(--line-softer);color:var(--ink-muted);">Dense tables ✓</span>
+          <span style="font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:99px;background:var(--red-50);color:var(--red-600);">Blobs ✗ Warm tone ✗</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── DESIGN PRINCIPLES ─────────────────────────────────────── -->
+<div class="ds-section">
+  <div class="section-label">09 — Design Principles</div>
+  <h2 class="section-title">The four principles</h2>
+  <p class="section-sub">These four principles are the QA filter. Every screen in the product can be evaluated against them. A screen that fails one should be redesigned before shipping.</p>
+
+  <div class="grid-2" style="gap:20px;">
+    <div style="background:var(--ink);border-radius:var(--r-xl);padding:32px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(14,159,143,.3),transparent 70%);"></div>
+      <div style="font-family:var(--fhead);font-weight:800;font-size:64px;color:rgba(255,255,255,.08);line-height:1;margin-bottom:8px;">01</div>
+      <div style="font-family:var(--fhead);font-weight:700;font-size:22px;color:#fff;margin-bottom:10px;">People over places</div>
+      <p style="font-size:15px;color:rgba(255,255,255,.7);line-height:1.6;">Every screen that surfaces travellers should show a human face and a real name before it shows a destination. The community is the product.</p>
+    </div>
+    <div style="background:linear-gradient(145deg,var(--teal-500),var(--teal-700));border-radius:var(--r-xl);padding:32px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.2),transparent 70%);"></div>
+      <div style="font-family:var(--fhead);font-weight:800;font-size:64px;color:rgba(255,255,255,.12);line-height:1;margin-bottom:8px;">02</div>
+      <div style="font-family:var(--fhead);font-weight:700;font-size:22px;color:#fff;margin-bottom:10px;">One clear next step</div>
+      <p style="font-size:15px;color:rgba(255,255,255,.8);line-height:1.6;">No screen ends in a dead end. No view has two primary actions competing for attention. The hierarchy of actions is always visible and unambiguous.</p>
+    </div>
+    <div style="background:linear-gradient(145deg,var(--coral-500),var(--coral-600));border-radius:var(--r-xl);padding:32px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.2),transparent 70%);"></div>
+      <div style="font-family:var(--fhead);font-weight:800;font-size:64px;color:rgba(255,255,255,.12);line-height:1;margin-bottom:8px;">03</div>
+      <div style="font-family:var(--fhead);font-weight:700;font-size:22px;color:#fff;margin-bottom:10px;">Trust through transparency</div>
+      <p style="font-size:15px;color:rgba(255,255,255,.85);line-height:1.6;">AI scores show their reasons. Verification badges are factual, not marketing. Prices are complete (per person, inclusive of what). Never obscure anything that affects a traveller's safety or money.</p>
+    </div>
+    <div style="background:linear-gradient(145deg,var(--indigo-600),var(--indigo-500));border-radius:var(--r-xl);padding:32px;position:relative;overflow:hidden;">
+      <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.2),transparent 70%);"></div>
+      <div style="font-family:var(--fhead);font-weight:800;font-size:64px;color:rgba(255,255,255,.12);line-height:1;margin-bottom:8px;">04</div>
+      <div style="font-family:var(--fhead);font-weight:700;font-size:22px;color:#fff;margin-bottom:10px;">Earned by 375px</div>
+      <p style="font-size:15px;color:rgba(255,255,255,.85);line-height:1.6;">If a design doesn't work on a Redmi Note at 375px width on a slow connection, it doesn't work. Mobile is not a constraint — it's the primary canvas. Every layout decision starts there.</p>
+    </div>
+  </div>
+</div>
+
+<!-- footer -->
+<div style="margin-top:80px;padding-top:32px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <div style="width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#0e9f8f,#14b8a6);display:flex;align-items:center;justify-content:center;font-size:16px;">🧭</div>
+    <span style="font-family:var(--fhead);font-weight:700;font-size:17px;color:var(--ink);">Trippy Design System</span>
+  </div>
+  <span style="font-size:12px;color:var(--ink-faint);">Foundation v1.0 · July 2026 · Bricolage Grotesque + Hanken Grotesque · Phosphor Icons v2</span>
+</div>
+
+</div>
+
+</x-dc>
+</body>
+</html>

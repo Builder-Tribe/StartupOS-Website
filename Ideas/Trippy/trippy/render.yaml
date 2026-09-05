@@ -1,0 +1,24 @@
+# Render Blueprint — single combined service.
+# Express (server) serves the built React app (web) + the /api routes on one port.
+services:
+  - type: web
+    name: trippy
+    runtime: node
+    plan: starter            # A paid plan is required for the persistent disk below.
+    branch: main
+    # Install all workspaces, then build the web app into web/dist.
+    buildCommand: yarn install && yarn workspace web build
+    # Run the API in production (NOT `dev`). It also serves web/dist.
+    startCommand: yarn workspace server start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: JWT_SECRET
+        generateValue: true   # Render generates a strong secret; overrides the dev default.
+      - key: TRIPPY_DB_PATH
+        value: /var/data/trippy.db
+    disk:
+      name: trippy-data       # Persists SQLite across deploys/restarts.
+      mountPath: /var/data
+      sizeGB: 1

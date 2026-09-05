@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand: #059669;
+  --brand-dark: #047857;
+  --background: #ffffff;
+  --foreground: #09090b;
+  --muted: #71717a;
+  --muted-bg: #f4f4f5;
+  --border: #e4e4e7;
+  --radius: 12px;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    @apply bg-white text-zinc-900 antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  body.overflow-hidden {
+    overflow: hidden;
+  }
+}
+
+@layer components {
+  /* Skeleton shimmer loader */
+  .skeleton {
+    @apply bg-zinc-100 rounded-lg;
+    background: linear-gradient(90deg, #f4f4f5 25%, #e4e4e7 50%, #f4f4f5 75%);
+    background-size: 400px 100%;
+    animation: shimmer 1.5s infinite linear;
+  }
+
+  /* Card base */
+  .card {
+    @apply bg-white rounded-2xl border border-zinc-100 shadow-sm;
+  }
+
+  /* Bottom nav safe area */
+  .bottom-nav {
+    @apply fixed bottom-0 left-0 right-0 bg-white border-t border-zinc-100;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+
+  /* Pill / chip */
+  .pill {
+    @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium;
+  }
+
+  /* Accessible focus ring — apply to every interactive element */
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2;
+  }
+}
+
+/* Safe area padding for iOS home bar */
+.pb-safe {
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { @apply bg-transparent; }
+::-webkit-scrollbar-thumb { @apply bg-zinc-300 rounded-full; }
+
+/* Hide scrollbar utility */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
