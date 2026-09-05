@@ -1,7 +1,7 @@
 # AGENTS.md — How to work in this repository
 
 > **Read this first.** This file is the constitution of the StartupOS repository. It applies to every
-> engineer and every AI coding assistant (AntiGravity, Claude Code, Cursor, Copilot, Codex, Windsurf, Replit Agent,
+> engineer and every AI coding assistant (AntiGravity, Replit Agent, Claude Code, Codex, Cursor, Windsurf, Copilot,
 > or anything that comes later). If a tool only reads one file, it should be this one.
 
 ---
@@ -41,12 +41,44 @@ The platform hosts multiple product surfaces backed by shared backend modules:
 | **Database** | SQLite (`data/startup_os.db`) / PostgreSQL + pgvector | Lightweight local dev & vector search capabilities. Parameterized SQL queries. |
 | **Auth System** | Multi-Realm JWT (scrypt hashing) | Scope isolation between User, Partner/Seller, and Admin. |
 | **Mobile App** | React Native (Expo) + TypeScript | Cross-platform iOS & Android companion app in `apps/mobile/`. |
-| **Replit Integration** | `replit.md` + `.replit` config | Co-development setup for AntiGravity + Replit execution environments. |
 | **Payments** | Razorpay SDK | UPI, Card subscriptions, B2B invoicing. |
 
 ---
 
-## 3. Non-Negotiable Rules
+## 3. Tool-Wise Development Protocol & Execution Matrix
+
+Every AI tool and environment has a designated role, configuration protocol, and operational boundary:
+
+### 🤖 For AntiGravity (Primary Agentic IDE & Autonomous Systems)
+- **Role:** Lead architectural design, multi-agent orchestration, full-stack implementation, multi-volume PRDs, and local runtime verification.
+- **Configuration & Rules:** Reads `AGENTS.md`, `.agents/rules/*.md`, `GEMINI.md`, and global rules in `~/.gemini/config/rules/`.
+- **Artifacts & Planning Workflow:** Uses Implementation Plans (`implementation_plan.md`), Walkthroughs (`walkthrough.md`), interactive visual HTML previews, and subagent invocation (`invoke_subagent`).
+- **Verification Protocol:** Conducts automated linting/type-checks (`npx tsc --noEmit`), test suite execution, and verifies live web servers on `http://localhost:8081`.
+
+### ⚡ For Replit (Cloud Prototyping & Live Web Hosting)
+- **Role:** Instant cloud workspace execution, live webview previews, team demo sharing, and public deployment.
+- **Configuration & Rules:** Reads `replit.md` and `.replit` config file with Nix channel setup (`stable-24_05`).
+- **Port & Secret Protocol:** Standardized on `process.env.PORT` (dynamic proxy binding, default 8081/5173); environment variables bound via Replit Secrets UI.
+- **Sync Protocol:** Always fetch and pull the latest code from `https://github.com/1997agarwal/StartupOS.git` before beginning work, and commit/push changes on completion.
+
+### 💻 For Claude Code (CLI Agent & Rapid Terminal Execution)
+- **Role:** Fast command-line refactoring, deep single-file reasoning, terminal automation, and script execution.
+- **Configuration & Rules:** Reads `CLAUDE.md` (thin pointer file) and `AGENTS.md`. Auto-backup on exit configured in `.claude/settings.json` triggering `scripts/auto-backup.sh`.
+- **Verification Protocol:** Executes syntax validation (`python3 -m py_compile`), TypeScript checks (`npx tsc --noEmit`), and git commit/push workflows.
+
+### 🧠 For Codex & GitHub Copilot (Inline Code Autocomplete)
+- **Role:** Real-time function autocomplete, inline syntax generation, type definitions, and boilerplate docstrings.
+- **Configuration & Rules:** Governed by `tsconfig.json`, `.copilotignore`, and design system tokens in `styles.css`.
+- **Safety Boundary:** Prohibited from adding unapproved external npm/pip dependencies or modifying database schema without lead agent approval.
+
+### 🔍 For Cursor & Windsurf (AI-Assisted IDEs & Agentic Edits)
+- **Role:** Contextual multi-file editing, codebase indexing, semantic search, and interactive diff reviews.
+- **Configuration & Rules:** Reads `.cursorrules` / `.windsurfrules` (pointing to `AGENTS.md`).
+- **Reuse Protocol:** Must inspect `docs/frontend.md` component catalogue and `docs/api.md` before generating new UI elements or API endpoints.
+
+---
+
+## 4. Non-Negotiable Rules
 
 1. **Analyze before coding.** Inspect relevant files, existing endpoints, UI components, and `docs/` before writing code.
 2. **Reuse before generating.** Always reuse UI primitives, dialogs, toasts, formatters, and backend helpers. Creating duplicate logic is a defect.
@@ -55,14 +87,11 @@ The platform hosts multiple product surfaces backed by shared backend modules:
 5. **Server-side enforcement is the security boundary.** Every API endpoint must enforce authentication, permission checks, and payload validation. Never leak secrets, hashes, or tokens.
 6. **Audit administrative actions.** Immutable logging for administrative state changes (`writeAudit`).
 7. **Additive migrations & database safety.** Schema updates must be non-destructive (`CREATE TABLE IF NOT EXISTS`, additive `ALTER TABLE`). Never reset databases or clear `data/` without explicit user consent.
-8. **Verify before declaring done.** Mandatory 3-step verification:
-   - Compile check: `npx tsc --noEmit` or syntax verification.
-   - Test check: Run test suite where applicable.
-   - Runtime flow check: Verify in live browser/server context.
+8. **Verify before declaring done.** Mandatory 3-step verification across all AI environments.
 
 ---
 
-## 4. Documentation Covenant
+## 5. Documentation Covenant
 
 **Every change altering scope, features, API, schema, or architecture must update documentation in the same commit set.**
 
@@ -75,14 +104,6 @@ The platform hosts multiple product surfaces backed by shared backend modules:
 | Mobile app features | [`apps/mobile/MOBILE_PRD.md`](apps/mobile/MOBILE_PRD.md) |
 | Architecture decisions | [`docs/decision-log.md`](docs/decision-log.md) |
 | User-visible changes | Root [`README.md`](README.md) |
-
----
-
-## 5. Replit & AntiGravity Co-Development Protocol
-
-- Maintain `replit.md` with explicit setup instructions, port maps, and environment variables.
-- Keep `.replit` updated with `npm run dev` entrypoint and Nix package dependencies.
-- Ensure all API endpoints listen on `process.env.PORT || 8081` to support Replit's dynamic proxy routing.
 
 ---
 
@@ -107,11 +128,11 @@ The platform hosts multiple product surfaces backed by shared backend modules:
 ```
 StartupOS/                                 ← Git Root (https://github.com/1997agarwal/StartupOS)
 ├── AGENTS.md                              ← You are here (Repository Constitution)
-├── CLAUDE.md                              ← Thin pointer for CLI agents
+├── CLAUDE.md                              ← Thin pointer for Claude Code CLI
+├── replit.md                              ← Environment & port rules for Replit
 ├── README.md                              ← Master project overview & quickstart
 ├── ROADMAP.md                             ← Live feature completion status
 ├── CONTRIBUTING.md                        ← Workflow, pull requests, branch guidelines
-├── replit.md                              ← Instructions for Replit co-development
 ├── VOLUME1_Vision_Market_Research.md      # PRD Vol 1
 ├── VOLUME2_Consumer_PRD.md                # PRD Vol 2
 ├── VOLUME3_Partner_Vendor_CRM_PRD.md      # PRD Vol 3
