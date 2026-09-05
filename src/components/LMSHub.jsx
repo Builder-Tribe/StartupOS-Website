@@ -93,16 +93,16 @@ export default function LMSHub() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
       {/* 3-System Role Switcher Header */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 flex flex-col md:flex-row justify-between items-center gap-4 shadow-xl">
+      <div className="bg-white border border-slate-200/90 rounded-2xl p-6 flex flex-col md:flex-row justify-between items-center gap-4 shadow-sm">
         <div>
-          <span className="text-xs text-indigo-400 font-mono uppercase font-semibold">
+          <span className="text-xs text-indigo-600 font-mono font-bold uppercase tracking-widest bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-full">
             AB-LMS Engine: Learn → Build → Ship AI Products
           </span>
-          <h1 className="text-2xl font-extrabold text-white mt-1">AI Builder LMS Platform</h1>
+          <h1 className="text-2xl font-extrabold text-slate-900 mt-2 tracking-tight">AI Builder Academy Platform</h1>
         </div>
 
         {/* System Role Selector */}
-        <div className="flex bg-slate-950 p-1.5 rounded-xl border border-slate-800">
+        <div className="flex bg-slate-100/80 p-1.5 rounded-xl border border-slate-200">
           {[
             { id: 'LEARNER', label: '1. Learner LMS Portal', icon: GraduationCap },
             { id: 'CREATOR', label: '2. Creator & Examiner Studio', icon: FileCode },
@@ -114,10 +114,10 @@ export default function LMSHub() {
               <button
                 key={roleTab.id}
                 onClick={() => setCurrentRole(roleTab.id)}
-                className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all ${
+                className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-bold transition-all ${
                   isActive
-                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
-                    : 'text-slate-400 hover:text-slate-200'
+                    ? 'bg-indigo-600 text-white shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 <Icon className="w-4 h-4" />
@@ -132,18 +132,18 @@ export default function LMSHub() {
       {currentRole === 'LEARNER' && (
         <div className="space-y-8">
           {/* Tool Abstraction Workbench */}
-          <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 sm:p-8">
-            <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 border-b border-slate-800 pb-6 mb-6">
+          <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-sm">
+            <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 border-b border-slate-200 pb-6 mb-6">
               <div>
-                <span className="text-xs font-mono text-emerald-400 uppercase">Standardized 8-Part Course Architecture</span>
-                <h2 className="text-2xl font-extrabold text-white mt-1">{currentCourse.title}</h2>
-                <p className="text-xs text-slate-300 mt-1">{currentCourse.subtitle}</p>
+                <span className="text-xs font-mono text-emerald-700 font-bold uppercase bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">Standardized 8-Part Course Architecture</span>
+                <h2 className="text-2xl font-extrabold text-slate-900 mt-2 tracking-tight">{currentCourse.title}</h2>
+                <p className="text-xs text-slate-600 mt-1">{currentCourse.subtitle}</p>
               </div>
 
               {/* AI Tutor Button */}
               <button
                 onClick={() => setIsAITutorOpen(!isAITutorOpen)}
-                className="px-4 py-2 bg-gradient-to-r from-amber-500 to-indigo-600 text-white text-xs font-bold rounded-xl flex items-center gap-2 shadow-lg shadow-amber-500/20"
+                className="px-4 py-2 bg-gradient-to-r from-amber-500 to-indigo-600 text-white text-xs font-bold rounded-xl flex items-center gap-2 shadow-md shadow-amber-500/20"
               >
                 <Sparkles className="w-4 h-4" /> Floating AI Tutor Layer
               </button>
@@ -151,7 +151,7 @@ export default function LMSHub() {
 
             {/* Tool Selector Tabs */}
             <div className="mb-6">
-              <label className="block text-xs font-mono uppercase text-slate-400 mb-2">
+              <label className="block text-xs font-mono font-bold uppercase text-slate-600 mb-2">
                 Tool Abstraction Workbench (Select AI Coding Agent)
               </label>
               <div className="flex flex-wrap gap-2">
@@ -159,10 +159,10 @@ export default function LMSHub() {
                   <button
                     key={tool}
                     onClick={() => setSelectedTool(tool)}
-                    className={`px-4 py-2 rounded-xl text-xs font-semibold border transition-all ${
+                    className={`px-4 py-2 rounded-xl text-xs font-bold border transition-all ${
                       selectedTool === tool
-                        ? 'bg-indigo-950 border-indigo-500 text-indigo-300 font-bold shadow'
-                        : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200'
+                        ? 'bg-indigo-600 border-indigo-600 text-white shadow-sm'
+                        : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-50'
                     }`}
                   >
                     {tool}
@@ -172,7 +172,7 @@ export default function LMSHub() {
             </div>
 
             {/* Active Tool Copyable Prompt Box */}
-            <div className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3">
+            <div className="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-3">
               <div className="flex justify-between items-center">
                 <span className="text-xs font-mono text-indigo-400 font-bold">
                   {selectedTool} Execution Prompt & Schema Specification
@@ -198,54 +198,54 @@ export default function LMSHub() {
           </div>
 
           {/* Learner Project Submission Form */}
-          <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 sm:p-8">
-            <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
-              <Trophy className="w-5 h-5 text-amber-400" /> Ship Product & Submit Link
+          <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-sm">
+            <h3 className="text-lg font-bold text-slate-900 mb-1 flex items-center gap-2">
+              <Trophy className="w-5 h-5 text-amber-500" /> Ship Product & Submit Link
             </h3>
-            <p className="text-xs text-slate-400 mb-6">
+            <p className="text-xs text-slate-600 mb-6">
               Submit your live demo and GitHub repository link to trigger automated AI Evaluator scoring and Examiner review.
             </p>
 
             <form onSubmit={handleSubmitProject} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-slate-200 mb-1">Project Title *</label>
+                  <label className="block text-xs font-bold uppercase text-slate-700 mb-1 font-mono">Project Title *</label>
                   <input
                     type="text"
                     required
                     value={subTitle}
                     onChange={(e) => setSubTitle(e.target.value)}
                     placeholder="e.g. FeedbackPulse AI"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs text-slate-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-slate-200 mb-1">GitHub Repository URL *</label>
+                  <label className="block text-xs font-bold uppercase text-slate-700 mb-1 font-mono">GitHub Repository URL *</label>
                   <input
                     type="url"
                     required
                     value={subGithub}
                     onChange={(e) => setSubGithub(e.target.value)}
                     placeholder="https://github.com/username/repo"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs text-slate-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-200 mb-1">Live Demo URL</label>
+                <label className="block text-xs font-bold uppercase text-slate-700 mb-1 font-mono">Live Demo URL</label>
                 <input
                   type="url"
                   value={subDemo}
                   onChange={(e) => setSubDemo(e.target.value)}
                   placeholder="https://my-ai-product.vercel.app"
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs text-slate-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-emerald-600/20"
+                className="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold text-xs rounded-xl shadow-md shadow-emerald-500/20"
               >
                 Submit Shipped Product for AI Evaluation →
               </button>
@@ -258,33 +258,33 @@ export default function LMSHub() {
       {currentRole === 'CREATOR' && (
         <div className="space-y-8">
           {/* Course Authoring Suite */}
-          <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 sm:p-8">
-            <h2 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
-              <FileCode className="w-5 h-5 text-indigo-400" /> Course Authoring Suite (8-Part PRD Template)
+          <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-sm">
+            <h2 className="text-xl font-extrabold text-slate-900 mb-1 flex items-center gap-2">
+              <FileCode className="w-5 h-5 text-indigo-600" /> Course Authoring Suite (8-Part PRD Template)
             </h2>
-            <p className="text-xs text-slate-400 mb-6">
+            <p className="text-xs text-slate-600 mb-6">
               Create standardized PRD-backed courses for founders and non-coders.
             </p>
 
             <form onSubmit={handlePublishCourse} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-slate-200 mb-1">Course Title *</label>
+                  <label className="block text-xs font-bold uppercase text-slate-700 mb-1 font-mono">Course Title *</label>
                   <input
                     type="text"
                     required
                     value={newCourseTitle}
                     onChange={(e) => setNewCourseTitle(e.target.value)}
                     placeholder="e.g. Build an AI Agent with Antigravity"
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs text-slate-900 focus:outline-none focus:border-indigo-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-slate-200 mb-1">Category</label>
+                  <label className="block text-xs font-bold uppercase text-slate-700 mb-1 font-mono">Category</label>
                   <select
                     value={newCourseCategory}
                     onChange={(e) => setNewCourseCategory(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none"
+                    className="w-full bg-white border border-slate-200 rounded-xl p-3 text-xs text-slate-900 focus:outline-none cursor-pointer"
                   >
                     <option value="Full-Stack AI SaaS">Full-Stack AI SaaS</option>
                     <option value="AI Agents & RAG">AI Agents & RAG</option>
@@ -295,7 +295,7 @@ export default function LMSHub() {
 
               <button
                 type="submit"
-                className="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs rounded-xl shadow-md shadow-indigo-600/30"
+                className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-md"
               >
                 Publish Course to Live Registry
               </button>
@@ -303,24 +303,24 @@ export default function LMSHub() {
           </div>
 
           {/* Examiner Evaluation Workspace */}
-          <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 sm:p-8">
-            <h2 className="text-xl font-bold text-white mb-4">Examiner Evaluation Workspace</h2>
+          <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-sm">
+            <h2 className="text-xl font-bold text-slate-900 mb-4">Examiner Evaluation Workspace</h2>
             <div className="space-y-4">
               {submissions.map((sub) => (
-                <div key={sub.id} className="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-3">
+                <div key={sub.id} className="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3">
                   <div className="flex justify-between items-start">
                     <div>
-                      <h4 className="text-sm font-bold text-white">{sub.projectTitle}</h4>
-                      <p className="text-xs text-slate-400">{sub.studentName} • {sub.studentRole}</p>
+                      <h4 className="text-sm font-bold text-slate-900">{sub.projectTitle}</h4>
+                      <p className="text-xs text-slate-600">{sub.studentName} • {sub.studentRole}</p>
                     </div>
-                    <span className="text-xs font-bold text-emerald-400 bg-emerald-950 border border-emerald-800 px-2 py-0.5 rounded">
+                    <span className="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded font-mono">
                       AI Score: {sub.aiEvaluation?.score || 90}/100
                     </span>
                   </div>
 
-                  <p className="text-xs text-slate-300">{sub.problemSolved}</p>
+                  <p className="text-xs text-slate-700">{sub.problemSolved}</p>
 
-                  <div className="bg-slate-900/80 p-3 rounded-xl border border-slate-800 text-xs text-slate-300">
+                  <div className="bg-white p-3 rounded-xl border border-slate-200 text-xs text-slate-700">
                     <strong>AI Evaluator Summary:</strong> {sub.aiEvaluation?.overallSummary || 'Solid MVP execution.'}
                   </div>
                 </div>
@@ -335,34 +335,34 @@ export default function LMSHub() {
         <div className="space-y-8">
           {/* Executive Metrics Bar */}
           <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
-            <div className="bg-slate-900/80 p-4 rounded-xl border border-slate-800">
-              <span className="text-[10px] font-mono uppercase text-slate-400">Creators</span>
-              <div className="text-2xl font-bold text-white mt-1">{CREATORS_DATABASE.length}</div>
+            <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+              <span className="text-[10px] font-mono font-bold uppercase text-slate-500">Creators</span>
+              <div className="text-2xl font-extrabold text-slate-900 mt-1">{CREATORS_DATABASE.length}</div>
             </div>
-            <div className="bg-slate-900/80 p-4 rounded-xl border border-slate-800">
-              <span className="text-[10px] font-mono uppercase text-slate-400">Live Courses</span>
-              <div className="text-2xl font-bold text-indigo-400 mt-1">{courses.length}</div>
+            <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+              <span className="text-[10px] font-mono font-bold uppercase text-slate-500">Live Courses</span>
+              <div className="text-2xl font-extrabold text-indigo-600 mt-1">{courses.length}</div>
             </div>
-            <div className="bg-slate-900/80 p-4 rounded-xl border border-slate-800">
-              <span className="text-[10px] font-mono uppercase text-slate-400">Learners</span>
-              <div className="text-2xl font-bold text-white mt-1">{LEARNERS_DATABASE.length}</div>
+            <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+              <span className="text-[10px] font-mono font-bold uppercase text-slate-500">Learners</span>
+              <div className="text-2xl font-extrabold text-slate-900 mt-1">{LEARNERS_DATABASE.length}</div>
             </div>
-            <div className="bg-slate-900/80 p-4 rounded-xl border border-slate-800">
-              <span className="text-[10px] font-mono uppercase text-slate-400">Submissions</span>
-              <div className="text-2xl font-bold text-emerald-400 mt-1">{submissions.length}</div>
+            <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+              <span className="text-[10px] font-mono font-bold uppercase text-slate-500">Submissions</span>
+              <div className="text-2xl font-extrabold text-emerald-600 mt-1">{submissions.length}</div>
             </div>
-            <div className="bg-slate-900/80 p-4 rounded-xl border border-slate-800">
-              <span className="text-[10px] font-mono uppercase text-slate-400">Products Shipped</span>
-              <div className="text-2xl font-bold text-amber-400 mt-1">4</div>
+            <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+              <span className="text-[10px] font-mono font-bold uppercase text-slate-500">Products Shipped</span>
+              <div className="text-2xl font-extrabold text-amber-600 mt-1">4</div>
             </div>
           </div>
 
           {/* Learners Activity Audit Table */}
-          <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 sm:p-8 overflow-x-auto">
-            <h3 className="text-lg font-bold text-white mb-4">Learner Activity & Shipped Products Audit Table</h3>
+          <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 overflow-x-auto shadow-sm">
+            <h3 className="text-lg font-bold text-slate-900 mb-4">Learner Activity & Shipped Products Audit Table</h3>
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-slate-800 text-slate-400 uppercase font-mono text-[10px]">
+                <tr className="border-b border-slate-200 text-slate-500 uppercase font-mono text-[10px]">
                   <th className="pb-3">Learner</th>
                   <th className="pb-3">Role</th>
                   <th className="pb-3">Streak & XP</th>
@@ -370,19 +370,19 @@ export default function LMSHub() {
                   <th className="pb-3">Links</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 text-slate-200">
+              <tbody className="divide-y divide-slate-100 text-slate-700">
                 {LEARNERS_DATABASE.map((learner) => (
-                  <tr key={learner.id} className="hover:bg-slate-900/40">
-                    <td className="py-3 font-semibold text-white">{learner.name}</td>
-                    <td className="py-3 text-slate-400">{learner.role}</td>
-                    <td className="py-3 font-mono text-amber-400">{learner.streakDays}d 🔥 • {learner.xp} XP</td>
-                    <td className="py-3 font-semibold text-indigo-300">{learner.shippedProjects[0]?.title || 'FeedbackPulse AI'}</td>
+                  <tr key={learner.id} className="hover:bg-slate-50">
+                    <td className="py-3 font-bold text-slate-900">{learner.name}</td>
+                    <td className="py-3 text-slate-500">{learner.role}</td>
+                    <td className="py-3 font-mono font-bold text-amber-600">{learner.streakDays}d 🔥 • {learner.xp} XP</td>
+                    <td className="py-3 font-semibold text-indigo-700">{learner.shippedProjects[0]?.title || 'FeedbackPulse AI'}</td>
                     <td className="py-3 space-x-2">
-                      <a href={learner.shippedProjects[0]?.githubUrl} target="_blank" rel="noreferrer" className="text-indigo-400 hover:underline">
+                      <a href={learner.shippedProjects[0]?.githubUrl} target="_blank" rel="noreferrer" className="text-indigo-600 font-semibold hover:underline">
                         GitHub
                       </a>
                       <span>•</span>
-                      <a href={learner.shippedProjects[0]?.demoUrl} target="_blank" rel="noreferrer" className="text-emerald-400 hover:underline">
+                      <a href={learner.shippedProjects[0]?.demoUrl} target="_blank" rel="noreferrer" className="text-emerald-600 font-semibold hover:underline">
                         Demo
                       </a>
                     </td>
@@ -396,20 +396,20 @@ export default function LMSHub() {
 
       {/* Floating Context-Aware AI Tutor Drawer */}
       {isAITutorOpen && (
-        <div className="fixed bottom-6 right-6 w-80 bg-slate-900 border border-indigo-500 rounded-2xl p-4 shadow-2xl z-50 space-y-3 animate-in fade-in slide-in-from-bottom-4">
-          <div className="flex justify-between items-center border-b border-slate-800 pb-2">
-            <span className="text-xs font-bold text-white flex items-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-amber-400" /> AI Tutor Layer
+        <div className="fixed bottom-6 right-6 w-80 bg-white border border-indigo-300 rounded-2xl p-4 shadow-xl z-50 space-y-3 animate-in fade-in slide-in-from-bottom-4">
+          <div className="flex justify-between items-center border-b border-slate-200 pb-2">
+            <span className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+              <Sparkles className="w-4 h-4 text-amber-500" /> AI Tutor Layer
             </span>
-            <button onClick={() => setIsAITutorOpen(false)} className="text-slate-400 hover:text-white text-xs">✕</button>
+            <button onClick={() => setIsAITutorOpen(false)} className="text-slate-400 hover:text-slate-700 text-xs">✕</button>
           </div>
-          <p className="text-xs text-slate-300">
+          <p className="text-xs text-slate-600">
             Need help debugging your prompt or understanding database migration schemas? Ask me anything!
           </p>
           <input
             type="text"
             placeholder="Type your question..."
-            className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white focus:outline-none"
+            className="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-900 focus:outline-none focus:border-indigo-500"
           />
         </div>
       )}

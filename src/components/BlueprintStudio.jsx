@@ -67,23 +67,23 @@ export default function BlueprintStudio({ currentUser, userIdeas, onNavigateToId
       {/* Studio Header with User Auth Context */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
         <div>
-          <span className="text-xs text-indigo-400 uppercase tracking-widest font-mono font-semibold">
+          <span className="text-xs text-indigo-600 font-mono font-bold uppercase tracking-widest bg-indigo-50 border border-indigo-200 px-2.5 py-0.5 rounded-full">
             Phase 2: User-Authenticated Workspace
           </span>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-white mt-1 flex items-center gap-3">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2 tracking-tight flex flex-wrap items-center gap-3">
             <span>My Projects</span>
-            <span className="text-xs font-mono font-normal bg-indigo-950 text-indigo-300 border border-indigo-800 px-3 py-1 rounded-full">
+            <span className="text-xs font-mono font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/90 px-3 py-1 rounded-full">
               {currentUser.avatar} Logged in as {currentUser.name}
             </span>
           </h1>
-          <p className="text-slate-400 text-sm mt-1">
+          <p className="text-slate-600 text-sm mt-1">
             View, manage, and export PRD specifications for projects mapped to your account or created using Startup OS.
           </p>
         </div>
 
         <button
           onClick={onNavigateToIdeaLab}
-          className="px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-xs font-bold rounded-xl shadow-lg shadow-indigo-600/20 flex items-center gap-2"
+          className="px-4 py-2.5 bg-gradient-to-r from-indigo-600 via-indigo-700 to-violet-700 hover:from-indigo-700 hover:to-violet-800 text-white text-xs font-bold rounded-xl shadow-md shadow-indigo-500/20 flex items-center gap-2 transition-all active:scale-98"
         >
           <Plus className="w-4 h-4" /> Create New Project via Startup OS
         </button>
@@ -91,15 +91,15 @@ export default function BlueprintStudio({ currentUser, userIdeas, onNavigateToId
 
       {/* User Projects Grid */}
       {userProjects.length === 0 ? (
-        <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-12 text-center max-w-xl mx-auto space-y-4">
+        <div className="bg-white border border-slate-200/90 rounded-2xl p-12 text-center max-w-xl mx-auto space-y-4 shadow-sm">
           <div className="text-4xl">🚀</div>
-          <h3 className="text-lg font-bold text-white">No Projects Mapped Yet</h3>
-          <p className="text-xs text-slate-400">
+          <h3 className="text-lg font-bold text-slate-900">No Projects Mapped Yet</h3>
+          <p className="text-xs text-slate-600">
             You are logged in as <strong>{currentUser.name}</strong>. You haven't mapped existing projects or created a project using Startup OS yet.
           </p>
           <button
             onClick={onNavigateToIdeaLab}
-            className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow-md"
+            className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow-md"
           >
             Start Idea Lab & Build First Project →
           </button>
@@ -117,22 +117,22 @@ export default function BlueprintStudio({ currentUser, userIdeas, onNavigateToId
                     setSelectedBlueprint(bp);
                     setActiveTab('overview');
                   }}
-                  className={`p-4 rounded-xl border text-left transition-all flex flex-col justify-between ${
+                  className={`p-4 rounded-2xl border text-left transition-all flex flex-col justify-between ${
                     isSelected
-                      ? 'bg-indigo-950/80 border-indigo-500 shadow-lg shadow-indigo-950 ring-1 ring-indigo-500'
-                      : 'bg-slate-900/60 border-slate-800 hover:border-slate-700 hover:bg-slate-900'
+                      ? 'bg-indigo-50/90 border-indigo-500 shadow-md ring-1 ring-indigo-400'
+                      : 'bg-white border-slate-200/80 hover:border-slate-300 hover:bg-slate-50/60 shadow-xs'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <div className={`p-2 rounded-lg ${isSelected ? 'bg-indigo-600 text-white' : 'bg-slate-800 text-slate-300'}`}>
+                    <div className={`p-2 rounded-xl ${isSelected ? 'bg-indigo-600 text-white shadow-sm' : 'bg-slate-100 text-slate-700'}`}>
                       <Icon className="w-4 h-4" />
                     </div>
-                    <span className="text-[10px] font-mono text-indigo-300 bg-indigo-950 border border-indigo-800 px-2 py-0.5 rounded">
+                    <span className="text-[10px] font-mono text-indigo-700 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded font-semibold">
                       Mapped to {bp.ownerName || currentUser.name}
                     </span>
                   </div>
-                  <h3 className="text-xs font-bold text-white line-clamp-1">{bp.title}</h3>
-                  <p className="text-[11px] text-slate-400 line-clamp-1 mt-0.5">{bp.category}</p>
+                  <h3 className="text-xs font-bold text-slate-900 line-clamp-1">{bp.title}</h3>
+                  <p className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">{bp.category}</p>
                 </button>
               );
             })}
@@ -140,27 +140,27 @@ export default function BlueprintStudio({ currentUser, userIdeas, onNavigateToId
 
           {/* Selected Project Specification Detail Studio */}
           {selectedBlueprint && (
-            <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 sm:p-8">
-              <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-4 border-b border-slate-800 pb-6 mb-6">
+            <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-sm">
+              <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-4 border-b border-slate-200 pb-6 mb-6">
                 <div className="flex items-start gap-4">
-                  <div className="p-3.5 bg-indigo-600/20 border border-indigo-500/30 rounded-2xl text-indigo-400">
+                  <div className="p-3.5 bg-indigo-50 border border-indigo-200 rounded-2xl text-indigo-600 shadow-xs">
                     <IconComponent className="w-8 h-8" />
                   </div>
                   <div>
-                    <div className="flex items-center gap-2">
-                      <h2 className="text-2xl font-extrabold text-white">{selectedBlueprint.title}</h2>
-                      <span className="text-xs font-mono bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded-full">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">{selectedBlueprint.title}</h2>
+                      <span className="text-xs font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded-full">
                         {selectedBlueprint.status || 'Validated'}
                       </span>
                     </div>
-                    <p className="text-sm font-medium text-indigo-300 mt-0.5">{selectedBlueprint.tagline}</p>
+                    <p className="text-sm font-semibold text-indigo-700 mt-0.5">{selectedBlueprint.tagline}</p>
                   </div>
                 </div>
 
                 <div className="flex gap-2">
                   <button
                     onClick={() => handleCopyPrompt(selectedBlueprint.prd?.buildPrompt || '')}
-                    className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-xl flex items-center gap-2 shadow-md shadow-indigo-600/20"
+                    className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl flex items-center gap-2 shadow-sm transition-all"
                   >
                     {copied ? <Check className="w-4 h-4 text-emerald-300" /> : <Copy className="w-4 h-4" />}
                     {copied ? 'Copied AI Prompt' : 'Copy AI Build Prompt'}
@@ -169,7 +169,7 @@ export default function BlueprintStudio({ currentUser, userIdeas, onNavigateToId
               </div>
 
               {/* Inner Tabs */}
-              <div className="flex border-b border-slate-800 gap-4 mb-6 overflow-x-auto pb-1">
+              <div className="flex border-b border-slate-200 gap-4 mb-6 overflow-x-auto pb-1">
                 {[
                   { id: 'overview', label: 'Overview & Target Audience' },
                   { id: 'prd', label: 'PRD Specs' },
@@ -180,10 +180,10 @@ export default function BlueprintStudio({ currentUser, userIdeas, onNavigateToId
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`pb-2.5 text-xs font-semibold whitespace-nowrap border-b-2 transition-all ${
+                    className={`pb-2.5 text-xs font-bold whitespace-nowrap border-b-2 transition-all ${
                       activeTab === tab.id
-                        ? 'border-indigo-500 text-indigo-400'
-                        : 'border-transparent text-slate-400 hover:text-slate-200'
+                        ? 'border-indigo-600 text-indigo-600'
+                        : 'border-transparent text-slate-500 hover:text-slate-900'
                     }`}
                   >
                     {tab.label}
@@ -195,22 +195,22 @@ export default function BlueprintStudio({ currentUser, userIdeas, onNavigateToId
               {activeTab === 'overview' && (
                 <div className="space-y-6">
                   <div>
-                    <h4 className="text-xs uppercase font-mono text-slate-400 tracking-wider mb-2">Project Summary</h4>
-                    <p className="text-sm text-slate-200 leading-relaxed">{selectedBlueprint.summary}</p>
+                    <h4 className="text-xs uppercase font-mono text-slate-500 font-bold tracking-wider mb-2">Project Summary</h4>
+                    <p className="text-sm text-slate-700 leading-relaxed">{selectedBlueprint.summary}</p>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
-                      <h4 className="text-xs uppercase font-mono text-indigo-400 tracking-wider mb-2 flex items-center gap-1.5">
+                    <div className="bg-slate-50/80 p-4 rounded-xl border border-slate-200">
+                      <h4 className="text-xs uppercase font-mono text-indigo-700 font-bold tracking-wider mb-2 flex items-center gap-1.5">
                         <Target className="w-4 h-4" /> Target Audience
                       </h4>
-                      <p className="text-sm text-slate-300">{selectedBlueprint.targetAudience}</p>
+                      <p className="text-xs text-slate-700 leading-relaxed">{selectedBlueprint.targetAudience}</p>
                     </div>
-                    <div className="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
-                      <h4 className="text-xs uppercase font-mono text-indigo-400 tracking-wider mb-2 flex items-center gap-1.5">
+                    <div className="bg-slate-50/80 p-4 rounded-xl border border-slate-200">
+                      <h4 className="text-xs uppercase font-mono text-indigo-700 font-bold tracking-wider mb-2 flex items-center gap-1.5">
                         <Layers className="w-4 h-4" /> Proposed Solution
                       </h4>
-                      <p className="text-sm text-slate-300">{selectedBlueprint.prd?.solution}</p>
+                      <p className="text-xs text-slate-700 leading-relaxed">{selectedBlueprint.prd?.solution}</p>
                     </div>
                   </div>
                 </div>
@@ -219,14 +219,14 @@ export default function BlueprintStudio({ currentUser, userIdeas, onNavigateToId
               {activeTab === 'prd' && (
                 <div className="space-y-6">
                   <div>
-                    <h4 className="text-xs uppercase font-mono text-indigo-400 tracking-wider mb-2">Problem Statement</h4>
-                    <p className="text-sm text-slate-200 leading-relaxed bg-slate-950/50 p-4 rounded-xl border border-slate-800">
+                    <h4 className="text-xs uppercase font-mono text-indigo-700 font-bold tracking-wider mb-2">Problem Statement</h4>
+                    <p className="text-sm text-slate-700 leading-relaxed bg-slate-50/80 p-4 rounded-xl border border-slate-200">
                       {selectedBlueprint.prd?.problem}
                     </p>
                   </div>
                   <div>
-                    <h4 className="text-xs uppercase font-mono text-indigo-400 tracking-wider mb-2">Product Solution</h4>
-                    <p className="text-sm text-slate-200 leading-relaxed bg-slate-950/50 p-4 rounded-xl border border-slate-800">
+                    <h4 className="text-xs uppercase font-mono text-indigo-700 font-bold tracking-wider mb-2">Product Solution</h4>
+                    <p className="text-sm text-slate-700 leading-relaxed bg-slate-50/80 p-4 rounded-xl border border-slate-200">
                       {selectedBlueprint.prd?.solution}
                     </p>
                   </div>
@@ -235,10 +235,10 @@ export default function BlueprintStudio({ currentUser, userIdeas, onNavigateToId
 
               {activeTab === 'competitors' && (
                 <div className="space-y-4">
-                  <h4 className="text-xs uppercase font-mono text-indigo-400 tracking-wider mb-2">Competitor Analysis</h4>
+                  <h4 className="text-xs uppercase font-mono text-indigo-700 font-bold tracking-wider mb-2">Competitor Analysis</h4>
                   <div className="space-y-3">
                     {selectedBlueprint.prd?.competitorResearch?.map((comp, idx) => (
-                      <div key={idx} className="bg-slate-950/60 p-4 rounded-xl border border-slate-800 text-sm text-slate-200">
+                      <div key={idx} className="bg-slate-50/80 p-4 rounded-xl border border-slate-200 text-xs text-slate-700 leading-relaxed">
                         {comp}
                       </div>
                     ))}
@@ -249,9 +249,9 @@ export default function BlueprintStudio({ currentUser, userIdeas, onNavigateToId
               {activeTab === 'architecture' && (
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {Object.entries(selectedBlueprint.prd?.technicalArchitecture || {}).map(([key, val]) => (
-                    <div key={key} className="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
-                      <span className="text-xs font-mono uppercase text-indigo-400 font-semibold">{key}</span>
-                      <p className="text-xs text-slate-200 font-mono mt-2 leading-relaxed">{val}</p>
+                    <div key={key} className="bg-slate-50/80 p-4 rounded-xl border border-slate-200">
+                      <span className="text-xs font-mono uppercase text-indigo-700 font-bold">{key}</span>
+                      <p className="text-xs text-slate-800 font-mono mt-2 leading-relaxed">{val}</p>
                     </div>
                   ))}
                 </div>
@@ -260,16 +260,16 @@ export default function BlueprintStudio({ currentUser, userIdeas, onNavigateToId
               {activeTab === 'prompt' && (
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-xs font-mono text-slate-400">Structured AI Build Execution Prompt</span>
+                    <span className="text-xs font-mono text-slate-500 font-semibold">Structured AI Build Execution Prompt</span>
                     <button
                       onClick={() => handleCopyPrompt(selectedBlueprint.prd?.buildPrompt || '')}
-                      className="px-3 py-1 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium rounded-lg flex items-center gap-1.5 shadow-md shadow-indigo-600/20"
+                      className="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 shadow-sm"
                     >
                       {copied ? <Check className="w-3.5 h-3.5 text-emerald-300" /> : <Copy className="w-3.5 h-3.5" />}
                       {copied ? 'Copied' : 'Copy Prompt'}
                     </button>
                   </div>
-                  <pre className="bg-slate-950 p-4 rounded-xl text-xs font-mono text-slate-300 border border-slate-800 whitespace-pre-wrap overflow-x-auto">
+                  <pre className="bg-slate-900 p-4 rounded-xl text-xs font-mono text-slate-200 border border-slate-800 whitespace-pre-wrap overflow-x-auto">
                     {selectedBlueprint.prd?.buildPrompt}
                   </pre>
                 </div>
