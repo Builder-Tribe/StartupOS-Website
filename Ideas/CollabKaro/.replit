@@ -1,0 +1,14 @@
+run = "npm start"
+entrypoint = "index.html"
+hidden = [".git", "node_modules", "dist"]
+
+[nix]
+channel = "stable-24_05"
+
+[env]
+PORT = "3002"
+VITE_PORT = "5175"
+
+[ports]
+localPort = 5175
+externalPort = 80
