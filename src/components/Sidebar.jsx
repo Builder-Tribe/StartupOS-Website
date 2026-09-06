@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
   Trophy, FolderGit2, Sparkles, GraduationCap, ShieldCheck, Plus, User, Crown, 
-  ChevronRight, CheckCircle2, HelpCircle, BookOpen, ArrowUpRight
+  Globe, HelpCircle, ArrowUpRight, CheckCircle2, Layout
 } from 'lucide-react';
 
 export default function Sidebar({ activeTab, setActiveTab, currentUser, onOpenLaunchModal }) {
@@ -48,7 +48,7 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser, onOpenLa
           {/* Main Workspace Section */}
           <div className="space-y-1">
             <span className="text-[10px] font-bold tracking-wider text-slate-400 uppercase px-3 block mb-2">
-              StartupOS Modules
+              StartupOS Portal
             </span>
             {mainNav.map((item) => {
               const Icon = item.icon;
@@ -77,6 +77,29 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser, onOpenLa
                 </button>
               );
             })}
+          </div>
+
+          {/* External Website Section */}
+          <div className="space-y-1 border-t border-slate-800/80 pt-3">
+            <span className="text-[10px] font-bold tracking-wider text-slate-400 uppercase px-3 block mb-2">
+              Public Website
+            </span>
+            <button
+              onClick={() => setActiveTab('landing')}
+              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                activeTab === 'landing'
+                  ? 'bg-indigo-600/20 text-white border border-indigo-500/40 font-bold'
+                  : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/60'
+              }`}
+            >
+              <div className="flex items-center gap-2.5">
+                <Globe className="w-4 h-4 text-indigo-400" />
+                <span>Marketing Website</span>
+              </div>
+              <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">
+                Landing
+              </span>
+            </button>
           </div>
 
           {/* Admin Governance Section */}
