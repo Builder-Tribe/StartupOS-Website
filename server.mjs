@@ -355,7 +355,7 @@ async function handleRequest(req, res) {
     }
 
     // STATIC FILE SERVING
-    if (req.method === "GET") {
+    if (req.method === "GET" || req.method === "HEAD") {
       const distDir = join(root, "dist");
       let file = url.pathname === "/" ? join(distDir, "index.html") : normalize(join(distDir, url.pathname));
       if (!file.startsWith(distDir)) file = join(distDir, "index.html");
