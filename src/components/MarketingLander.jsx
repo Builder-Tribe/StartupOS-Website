@@ -121,18 +121,19 @@ export default function MarketingLander({ onEnterPortal, onOpenAuthModal }) {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
             <button
-              onClick={onEnterPortal}
+              onClick={onOpenAuthModal}
               className="w-full sm:w-auto bg-gradient-to-r from-indigo-600 via-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-extrabold text-base px-8 py-4 rounded-2xl shadow-xl shadow-indigo-600/30 transition-all transform active:scale-95 flex items-center justify-center gap-2"
             >
-              <Rocket className="w-5 h-5 text-amber-300" />
-              Launch StartupOS Portal
+              <UserCheck className="w-5 h-5 text-amber-300" />
+              <span>Get Started Free — Create Account</span>
             </button>
             <button
-              onClick={onOpenAuthModal}
+              onClick={onEnterPortal}
               className="w-full sm:w-auto bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 font-bold text-base px-8 py-4 rounded-2xl shadow-md transition-all flex items-center justify-center gap-2"
             >
-              <UserCheck className="w-5 h-5 text-indigo-400" />
-              Create Builder Account
+              <Rocket className="w-5 h-5 text-indigo-400" />
+              <span>Explore Portal Demo</span>
+              <ArrowRight className="w-4 h-4 text-slate-400" />
             </button>
           </div>
 
