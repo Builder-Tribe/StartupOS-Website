@@ -30,5 +30,17 @@
     "badge": "Startup Founder",
     "token": "token-4570d479-0",
     "createdAt": "2026-09-06T06:42:20.000Z"
+  },
+  {
+    "id": "user-318bf2d5",
+    "name": "Dev User",
+    "email": "dev@startupos.io",
+    "role": "user",
+    "persona": "developer",
+    "workspaceName": "Dev Lab",
+    "avatar": "💻",
+    "badge": "Full-Stack Dev",
+    "token": "token-bebed92f-b",
+    "createdAt": "2026-09-06T06:51:13.582Z"
   }
 ]

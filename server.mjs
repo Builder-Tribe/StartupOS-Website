@@ -175,7 +175,10 @@ async function handleRequest(req, res) {
     if (req.method === "POST" && url.pathname === "/api/auth/login") {
       const { email, role = "user" } = await body(req);
       const users = await readUsers();
-      let user = users.find(u => u.email.toLowerCase() === (email || "").toLowerCase() || (role === 'admin' ? u.role === 'admin' : u.role === 'user'));
+      let user = users.find(u => u.email.toLowerCase() === (email || "").toLowerCase());
+      if (!user && role) {
+        user = users.find(u => u.role === role);
+      }
       if (!user) {
         user = {
           id: "user-" + randomUUID().slice(0, 8),
