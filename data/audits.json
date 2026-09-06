@@ -1,0 +1,47 @@
+[
+  {
+    "id": "audit-dupescout",
+    "projectName": "DupeScout",
+    "builderName": "Harshita G",
+    "persona": "founder",
+    "githubUrl": "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/DupeScout",
+    "hasAgents": true,
+    "hasRoadmap": true,
+    "hasClaude": true,
+    "hasContributing": true,
+    "score": 98,
+    "status": "verified",
+    "examinerFeedback": "100% 4-File Parity score achieved. Clean modular FastAPI/Next.js visual similarity architecture.",
+    "createdAt": "2026-09-04T07:23:23.266Z"
+  },
+  {
+    "id": "audit-trippy",
+    "projectName": "Trippy",
+    "builderName": "Harshita G",
+    "persona": "founder",
+    "githubUrl": "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/Trippy",
+    "hasAgents": true,
+    "hasRoadmap": true,
+    "hasClaude": true,
+    "hasContributing": true,
+    "score": 95,
+    "status": "verified",
+    "examinerFeedback": "Full 4-File Parity compliance. Great solo-travel group matching schema.",
+    "createdAt": "2026-09-03T07:23:23.266Z"
+  },
+  {
+    "id": "audit-businesspay",
+    "projectName": "BusinessPay",
+    "builderName": "Harshita G",
+    "persona": "founder",
+    "githubUrl": "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/BusinessPay",
+    "hasAgents": true,
+    "hasRoadmap": true,
+    "hasClaude": true,
+    "hasContributing": true,
+    "score": 94,
+    "status": "pending",
+    "examinerFeedback": "Audit requested by founder. Pending final code quality & dynamic discounting SLA verification.",
+    "createdAt": "2026-09-05T07:23:23.266Z"
+  }
+]

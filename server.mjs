@@ -9,6 +9,7 @@ const dataDirectory = join(root, "data");
 const databaseFile = join(dataDirectory, "ideas.json");
 const launchesFile = join(dataDirectory, "launches.json");
 const usersFile = join(dataDirectory, "users.json");
+const auditsFile = join(dataDirectory, "audits.json");
 
 const types = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8" };
 const json = (res, status, body) => { res.writeHead(status, { "content-type": "application/json; charset=utf-8" }); res.end(JSON.stringify(body)); };
@@ -112,11 +113,60 @@ const INITIAL_LAUNCHES = [
   }
 ];
 
+const INITIAL_AUDITS = [
+  {
+    id: "audit-dupescout",
+    projectName: "DupeScout",
+    builderName: "Harshita G",
+    persona: "founder",
+    githubUrl: "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/DupeScout",
+    hasAgents: true,
+    hasRoadmap: true,
+    hasClaude: true,
+    hasContributing: true,
+    score: 98,
+    status: "verified",
+    examinerFeedback: "100% 4-File Parity score achieved. Clean modular FastAPI/Next.js visual similarity architecture.",
+    createdAt: new Date(Date.now() - 86400000 * 2).toISOString()
+  },
+  {
+    id: "audit-trippy",
+    projectName: "Trippy",
+    builderName: "Harshita G",
+    persona: "founder",
+    githubUrl: "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/Trippy",
+    hasAgents: true,
+    hasRoadmap: true,
+    hasClaude: true,
+    hasContributing: true,
+    score: 95,
+    status: "verified",
+    examinerFeedback: "Full 4-File Parity compliance. Great solo-travel group matching schema.",
+    createdAt: new Date(Date.now() - 86400000 * 3).toISOString()
+  },
+  {
+    id: "audit-businesspay",
+    projectName: "BusinessPay",
+    builderName: "Harshita G",
+    persona: "founder",
+    githubUrl: "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/BusinessPay",
+    hasAgents: true,
+    hasRoadmap: true,
+    hasClaude: true,
+    hasContributing: true,
+    score: 94,
+    status: "pending",
+    examinerFeedback: "Audit requested by founder. Pending final code quality & dynamic discounting SLA verification.",
+    createdAt: new Date(Date.now() - 86400000 * 1).toISOString()
+  }
+];
+
 async function initializeDatabase() {
   await mkdir(dataDirectory, { recursive: true });
   try { await readFile(databaseFile, "utf8"); } catch { await writeFile(databaseFile, "[]\n", "utf8"); }
   try { await readFile(launchesFile, "utf8"); } catch { await writeFile(launchesFile, `${JSON.stringify(INITIAL_LAUNCHES, null, 2)}\n`, "utf8"); }
   try { await readFile(usersFile, "utf8"); } catch { await writeFile(usersFile, `${JSON.stringify(INITIAL_USERS, null, 2)}\n`, "utf8"); }
+  try { await readFile(auditsFile, "utf8"); } catch { await writeFile(auditsFile, `${JSON.stringify(INITIAL_AUDITS, null, 2)}\n`, "utf8"); }
 }
 
 async function readIdeas() { return JSON.parse(await readFile(databaseFile, "utf8")); }
@@ -127,6 +177,9 @@ async function writeLaunches(launches) { await writeFile(launchesFile, `${JSON.s
 
 async function readUsers() { return JSON.parse(await readFile(usersFile, "utf8")); }
 async function writeUsers(users) { await writeFile(usersFile, `${JSON.stringify(users, null, 2)}\n`, "utf8"); }
+
+async function readAudits() { return JSON.parse(await readFile(auditsFile, "utf8")); }
+async function writeAudits(audits) { await writeFile(auditsFile, `${JSON.stringify(audits, null, 2)}\n`, "utf8"); }
 
 const clean = (value, limit = 1200) => String(value || "").trim().slice(0, limit);
 
@@ -345,6 +398,27 @@ async function handleRequest(req, res) {
       targetUser.badge = badge || (role === 'admin' ? 'Super Admin' : 'Pro Builder');
       await writeUsers(users);
       return json(res, 200, { success: true, user: targetUser });
+    }
+
+    // ADMIN AUDITS API
+    if (req.method === "GET" && url.pathname === "/api/admin/audits") {
+      const audits = await readAudits();
+      return json(res, 200, audits);
+    }
+
+    const auditReviewMatch = url.pathname.match(/^\/api\/admin\/audits\/([a-z0-9-]+)\/review$/i);
+    if (req.method === "POST" && auditReviewMatch) {
+      const auditId = auditReviewMatch[1];
+      const { score, status = "verified", examinerFeedback } = await body(req);
+      const audits = await readAudits();
+      const audit = audits.find(a => a.id === auditId);
+      if (!audit) return json(res, 404, { error: "Audit record not found." });
+
+      audit.score = Number(score || audit.score);
+      audit.status = status;
+      audit.examinerFeedback = clean(examinerFeedback || audit.examinerFeedback);
+      await writeAudits(audits);
+      return json(res, 200, { success: true, audit });
     }
 
     // PROJECTS HEALTH API
