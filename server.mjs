@@ -1,6 +1,6 @@
 import { createServer } from "node:http";
 import { mkdir, readFile, writeFile, stat } from "node:fs/promises";
-import { randomUUID, scryptSync, timingSafeEqual } from "node:crypto";
+import { randomUUID } from "node:crypto";
 import { extname, join, normalize } from "node:path";
 
 const port = Number(process.env.PORT || 8081);
@@ -19,6 +19,8 @@ const INITIAL_USERS = [
     name: "Harshita G",
     email: "harshita@vibe-coding.io",
     role: "user",
+    persona: "founder",
+    workspaceName: "Harshita's Studio",
     avatar: "👩‍💻",
     badge: "Pro Builder",
     token: "token-harshita-12345",
@@ -29,6 +31,8 @@ const INITIAL_USERS = [
     name: "Platform Admin Ops",
     email: "admin@startupos.io",
     role: "admin",
+    persona: "admin",
+    workspaceName: "StartupOS Ops",
     avatar: "👑",
     badge: "Super Admin",
     token: "token-admin-99999",
@@ -167,7 +171,7 @@ async function handleRequest(req, res) {
   try {
     if (req.method === "GET" && url.pathname === "/api/health") return json(res, 200, { status: "ok" });
 
-    // AUTH API
+    // AUTH APIs
     if (req.method === "POST" && url.pathname === "/api/auth/login") {
       const { email, role = "user" } = await body(req);
       const users = await readUsers();
@@ -178,6 +182,8 @@ async function handleRequest(req, res) {
           name: email ? email.split("@")[0] : "Builder User",
           email: email || "builder@startupos.io",
           role: role,
+          persona: "founder",
+          workspaceName: "My AI Workspace",
           avatar: role === 'admin' ? "👑" : "👩‍💻",
           badge: role === 'admin' ? "Super Admin" : "Pro Builder",
           token: "token-" + randomUUID().slice(0, 10),
@@ -187,6 +193,35 @@ async function handleRequest(req, res) {
         await writeUsers(users);
       }
       return json(res, 200, user);
+    }
+
+    if (req.method === "POST" && url.pathname === "/api/auth/register") {
+      const { name, email, persona = "founder", workspaceName = "My Studio" } = await body(req);
+      if (!name || !email) return json(res, 400, { error: "Name and email are required." });
+      
+      const users = await readUsers();
+      const existing = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+      if (existing) return json(res, 400, { error: "An account with this email already exists." });
+
+      const personaAvatars = { student: "🎓", founder: "🚀", developer: "💻", admin: "👑" };
+      const personaBadges = { student: "Student Builder", founder: "Startup Founder", developer: "Full-Stack Dev", admin: "Super Admin" };
+
+      const newUser = {
+        id: "user-" + randomUUID().slice(0, 8),
+        name: clean(name),
+        email: clean(email).toLowerCase(),
+        role: persona === "admin" ? "admin" : "user",
+        persona: persona,
+        workspaceName: clean(workspaceName),
+        avatar: personaAvatars[persona] || "👩‍💻",
+        badge: personaBadges[persona] || "Pro Builder",
+        token: "token-" + randomUUID().slice(0, 10),
+        createdAt: new Date().toISOString()
+      };
+
+      users.push(newUser);
+      await writeUsers(users);
+      return json(res, 201, newUser);
     }
 
     if (req.method === "GET" && url.pathname === "/api/auth/users") {
@@ -293,6 +328,20 @@ async function handleRequest(req, res) {
       }
       await writeLaunches(launches);
       return json(res, 200, { success: true, launches });
+    }
+
+    const roleMatch = url.pathname.match(/^\/api\/admin\/users\/([a-z0-9-]+)\/role$/i);
+    if (req.method === "POST" && roleMatch) {
+      const targetUserId = roleMatch[1];
+      const { role, badge } = await body(req);
+      const users = await readUsers();
+      const targetUser = users.find(u => u.id === targetUserId);
+      if (!targetUser) return json(res, 404, { error: "User not found." });
+
+      targetUser.role = role || targetUser.role;
+      targetUser.badge = badge || (role === 'admin' ? 'Super Admin' : 'Pro Builder');
+      await writeUsers(users);
+      return json(res, 200, { success: true, user: targetUser });
     }
 
     // PROJECTS HEALTH API

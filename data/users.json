@@ -18,5 +18,17 @@
     "badge": "Super Admin",
     "token": "token-admin-99999",
     "createdAt": "2026-09-06T06:35:00.913Z"
+  },
+  {
+    "id": "user-35f8e56e",
+    "name": "Aman Gupta",
+    "email": "aman@boat.io",
+    "role": "user",
+    "persona": "founder",
+    "workspaceName": "boAt Studio",
+    "avatar": "🚀",
+    "badge": "Startup Founder",
+    "token": "token-4570d479-0",
+    "createdAt": "2026-09-06T06:42:20.000Z"
   }
 ]
