@@ -4,7 +4,7 @@ import {
   Globe, HelpCircle, ArrowUpRight, CheckCircle2, ArrowLeftRight, LogOut
 } from 'lucide-react';
 
-export default function Sidebar({ activeTab, setActiveTab, currentUser, onOpenLaunchModal, onExitToWebsite }) {
+export default function Sidebar({ activeTab, setActiveTab, currentUser, onOpenLaunchModal, onExitToWebsite, onOpenHelpCenter }) {
   const mainNav = [
     { id: 'launchpad', label: 'Launchpad Feed', icon: Trophy, badge: 'Live' },
     { id: 'blueprints', label: 'My Projects', icon: FolderGit2 },
@@ -108,9 +108,9 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser, onOpenLa
 
       {/* Bottom Footer Section: "How We Can Help", Health & Exit Link */}
       <div className="p-4 border-t border-slate-800/80 space-y-3 bg-slate-900/90">
-        {/* "How We Can Help" Feature Card */}
+        {/* Dedicated "How We Can Help?" Trigger Card */}
         <div 
-          onClick={() => setActiveTab('academy')}
+          onClick={onOpenHelpCenter}
           className="p-3 rounded-xl bg-gradient-to-br from-indigo-950/80 to-slate-800 border border-indigo-500/30 hover:border-indigo-400 transition-all cursor-pointer group shadow-xs"
         >
           <div className="flex items-center justify-between text-xs mb-1">
@@ -120,7 +120,7 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser, onOpenLa
             <ArrowUpRight className="w-3.5 h-3.5 text-indigo-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </div>
           <p className="text-[10px] text-slate-300 font-medium leading-relaxed">
-            Learn ideation, prompts, architecture & deployment guides in **AI Academy**.
+            Get 1-on-1 AI assistance, tech stack guidance & governance answers.
           </p>
         </div>
 

@@ -9,6 +9,7 @@ import LMSHub from './components/LMSHub';
 import AdminConsole from './components/AdminConsole';
 import MarketingLander from './components/MarketingLander';
 import AuthModal from './components/AuthModal';
+import HelpCenterModal from './components/HelpCenterModal';
 
 export default function App() {
   // Top-level View Mode: 'website' (Standalone Marketing Lander) | 'portal' (StartupOS Builder Workspace)
@@ -19,6 +20,7 @@ export default function App() {
   const [activeIdea, setActiveIdea] = useState(null);
   const [showLaunchModal, setShowLaunchModal] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showHelpCenter, setShowHelpCenter] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const [currentUser, setCurrentUser] = useState({
@@ -113,6 +115,7 @@ export default function App() {
         currentUser={currentUser}
         onOpenLaunchModal={() => setShowLaunchModal(true)}
         onExitToWebsite={() => setViewMode('website')}
+        onOpenHelpCenter={() => setShowHelpCenter(true)}
       />
 
       {/* Main Layout Container */}
@@ -148,6 +151,10 @@ export default function App() {
                 }}
                 onExitToWebsite={() => {
                   setViewMode('website');
+                  setMobileMenuOpen(false);
+                }}
+                onOpenHelpCenter={() => {
+                  setShowHelpCenter(true);
                   setMobileMenuOpen(false);
                 }}
               />
@@ -208,6 +215,14 @@ export default function App() {
         isOpen={showAuthModal}
         onClose={() => setShowAuthModal(false)}
         onLoginSuccess={handleLoginSuccess}
+      />
+
+      {/* Dedicated Help Center AI Assistance Modal */}
+      <HelpCenterModal
+        isOpen={showHelpCenter}
+        onClose={() => setShowHelpCenter(false)}
+        onNavigateToAcademy={() => setActiveTab('academy')}
+        currentUser={currentUser}
       />
     </div>
   );
