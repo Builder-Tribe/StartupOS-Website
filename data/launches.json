@@ -1,0 +1,119 @@
+[
+  {
+    "id": "launch-dupescout",
+    "title": "DupeScout",
+    "tagline": "Shop the Look. Not the Markup. AI Visual Similarity & Dupes Engine.",
+    "description": "Upload any photo or paste a link — AI finds visually similar fashion products across the internet ranked by similarity score with price-quality explanations.",
+    "category": "AI Vision",
+    "upvotes": 342,
+    "upvotedBy": [
+      "user-harshita"
+    ],
+    "maker": {
+      "name": "Harshita G",
+      "avatar": "👩‍💻",
+      "title": "Founder"
+    },
+    "demoUrl": "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/DupeScout",
+    "tags": [
+      "CLIP Vision",
+      "FastAPI",
+      "Next.js 14",
+      "pgvector"
+    ],
+    "comments": [
+      {
+        "id": "c1",
+        "author": "Aman Gupta",
+        "avatar": "👨‍💼",
+        "text": "Incredible visual search accuracy! Perfect for Gen Z shoppers.",
+        "timestamp": "2 hours ago"
+      },
+      {
+        "id": "c2",
+        "author": "Priya Sharma",
+        "avatar": "👩‍🎨",
+        "text": "Love the honest similarity percentage scores.",
+        "timestamp": "5 hours ago"
+      }
+    ],
+    "createdAt": "2026-09-04T06:18:59.504Z"
+  },
+  {
+    "id": "launch-trippy",
+    "title": "Trippy",
+    "tagline": "AI Solo-Travel Group Matching & Community Trip Host Platform.",
+    "description": "Connect with compatible solo travelers on overlapping dates, build group itineraries, and book hosted trips directly from travel communities.",
+    "category": "Solo Travel AI",
+    "upvotes": 289,
+    "upvotedBy": [],
+    "maker": {
+      "name": "Harshita G",
+      "avatar": "👩‍💻",
+      "title": "Founder"
+    },
+    "demoUrl": "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/Trippy",
+    "tags": [
+      "React 18",
+      "Express",
+      "SQLite",
+      "Node 22"
+    ],
+    "comments": [
+      {
+        "id": "c3",
+        "author": "Rohan V",
+        "avatar": "🎒",
+        "text": "Finally an app that makes solo travel group matching safe and easy!",
+        "timestamp": "1 day ago"
+      }
+    ],
+    "createdAt": "2026-09-03T06:18:59.505Z"
+  },
+  {
+    "id": "launch-businesspay",
+    "title": "BusinessPay",
+    "tagline": "B2B Accounts Receivable Collections & Early Payment Cash Accelerator.",
+    "description": "Reduce DSO and accelerate cash flow with dynamic discounting, collector workqueues, buyer portal simulation, and dispute SLA tracking.",
+    "category": "B2B Fintech",
+    "upvotes": 215,
+    "upvotedBy": [],
+    "maker": {
+      "name": "Harshita G",
+      "avatar": "👩‍💻",
+      "title": "Founder"
+    },
+    "demoUrl": "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/BusinessPay",
+    "tags": [
+      "React 19",
+      "Express 5",
+      "Dynamic Discounts",
+      "SQLite"
+    ],
+    "comments": [],
+    "createdAt": "2026-09-02T06:18:59.505Z"
+  },
+  {
+    "id": "launch-collabkaro",
+    "title": "CollabKaro",
+    "tagline": "India-First Creator Marketplace & Escrow Milestone Operating System.",
+    "description": "Connect brands with influencers and UGC creators using secure milestone escrow funding, campaign briefs, and proof-of-delivery payouts.",
+    "category": "Creator Marketplace",
+    "upvotes": 198,
+    "upvotedBy": [],
+    "maker": {
+      "name": "Harshita G",
+      "avatar": "👩‍💻",
+      "title": "Founder"
+    },
+    "demoUrl": "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/CollabKaro",
+    "tags": [
+      "React TS",
+      "Escrow API",
+      "UGC Media Kit",
+      "SQLite"
+    ],
+    "comments": [],
+    "createdAt": "2026-09-01T06:18:59.505Z"
+  }
+]

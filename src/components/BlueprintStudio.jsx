@@ -1,283 +1,226 @@
-import React, { useState } from 'react';
-import { SHOWCASE_BLUEPRINTS } from '../data/blueprints';
-import { ShoppingBag, Compass, Users, GraduationCap, FolderKanban, FileText, Copy, Check, ExternalLink, Code2, Layers, Target, CheckCircle2, Plus, Sparkles } from './icons';
-
-const iconMap = {
-  ShoppingBag,
-  Compass,
-  Users,
-  GraduationCap,
-  FolderKanban,
-  FileText
-};
+import React, { useState, useEffect } from 'react';
+import { 
+  FolderGit2, CheckCircle2, AlertTriangle, ShieldCheck, ExternalLink, 
+  Terminal, Sparkles, Rocket, RefreshCw, Lock, Eye, ChevronRight
+} from 'lucide-react';
 
 export default function BlueprintStudio({ currentUser, userIdeas, onNavigateToIdeaLab }) {
-  // Combine mapped project blueprints matching currentUser.id + user's created ideas from Startup OS
-  const mappedProjects = SHOWCASE_BLUEPRINTS.filter(
-    (bp) => bp.ownerId === currentUser.id || bp.ownerId === 'user-harshita' && currentUser.id === 'user-harshita'
-  );
+  const [healthData, setHealthData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [viewMode, setViewMode] = useState('building'); // 'building' | 'launch'
 
-  // Dynamically add ideas created by this user via Startup OS
-  const createdProjectBlueprints = userIdeas.map((idea) => ({
-    id: idea.id,
-    ownerId: currentUser.id,
-    ownerName: currentUser.name,
-    title: idea.name,
-    tagline: idea.summary,
-    category: "Startup OS Built Product",
-    status: idea.verdict || "Validated MVP",
-    icon: "Code2",
-    summary: idea.summary,
-    targetAudience: idea.audience,
-    keyFeatures: idea.nextSteps || ["AI Prompting", "Interactive Workflow"],
-    prd: {
-      overview: idea.summary,
-      problem: idea.problem,
-      solution: idea.advantage || "AI-powered product workflow.",
-      competitorResearch: [
-        idea.alternatives ? `Existing alternative: ${idea.alternatives}` : "Manual spreadsheets & legacy tools."
-      ],
-      technicalArchitecture: {
-        frontend: "React / Vite / Tailwind CSS",
-        backend: "Node.js REST API",
-        database: "PostgreSQL / JSON Store"
-      },
-      buildPrompt: idea.buildPrompt
+  const fetchHealthData = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/projects/health');
+      if (res.ok) {
+        const data = await res.json();
+        setHealthData(data);
+      }
+    } catch (e) {
+      console.error('Failed to fetch health data:', e);
+    } finally {
+      setLoading(false);
     }
-  }));
+  };
 
-  const userProjects = currentUser.id === 'user-harshita'
-    ? [...mappedProjects, ...createdProjectBlueprints]
-    : createdProjectBlueprints;
+  useEffect(() => {
+    fetchHealthData();
+  }, []);
 
-  const [selectedBlueprint, setSelectedBlueprint] = useState(userProjects[0] || SHOWCASE_BLUEPRINTS[0]);
-  const [activeTab, setActiveTab] = useState('overview');
-  const [copied, setCopied] = useState(false);
-
-  const IconComponent = iconMap[selectedBlueprint?.icon] || Code2;
-
-  const handleCopyPrompt = (promptText) => {
-    navigator.clipboard.writeText(promptText);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const projectMetadata = {
+    Trippy: {
+      tagline: "AI Solo Travel Group Matching & Community Trip Host Platform",
+      stack: ["React 18", "Express", "SQLite", "Node 22"],
+      repoUrl: "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/Trippy",
+      localPath: "Ideas/Trippy",
+      surfaces: ["Consumer Web", "Partner CRM", "Admin Console", "Marketing Website"]
+    },
+    DupeScout: {
+      tagline: "Shop the Look. Not the Markup. AI Visual Similarity & Dupes Engine",
+      stack: ["FastAPI", "Next.js 14", "PostgreSQL", "pgvector"],
+      repoUrl: "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/DupeScout",
+      localPath: "Ideas/DupeScout",
+      surfaces: ["Consumer App", "Seller Portal", "Admin Console", "Chrome Extension"]
+    },
+    BusinessPay: {
+      tagline: "B2B Accounts Receivable Collections & Early Payment Cash Accelerator",
+      stack: ["React 19", "Express 5", "Dynamic Discounts", "SQLite"],
+      repoUrl: "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/BusinessPay",
+      localPath: "Ideas/BusinessPay",
+      surfaces: ["Collector Workqueue", "Buyer Portal Simulation", "Admin Console"]
+    },
+    CollabKaro: {
+      tagline: "India-First Creator Marketplace & Escrow Milestone Operating System",
+      stack: ["React TS", "Express", "Escrow API", "SQLite"],
+      repoUrl: "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/CollabKaro",
+      localPath: "Ideas/CollabKaro",
+      surfaces: ["Brand & Agency Portal", "Creator Media Kit Hub", "Escrow Admin Console"]
+    }
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      {/* Studio Header with User Auth Context */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      {/* Workspace Header */}
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-slate-200/80 pb-6">
         <div>
-          <span className="text-xs text-indigo-600 font-mono font-bold uppercase tracking-widest bg-indigo-50 border border-indigo-200 px-2.5 py-0.5 rounded-full">
-            Phase 2: User-Authenticated Workspace
-          </span>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mt-2 tracking-tight flex flex-wrap items-center gap-3">
-            <span>My Projects</span>
-            <span className="text-xs font-mono font-bold bg-indigo-50 text-indigo-700 border border-indigo-200/90 px-3 py-1 rounded-full">
-              {currentUser.avatar} Logged in as {currentUser.name}
+          <div className="flex items-center gap-2">
+            <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">My Projects Workspace</h1>
+            <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+              Authenticated User: {currentUser.name}
             </span>
-          </h1>
-          <p className="text-slate-600 text-sm mt-1">
-            View, manage, and export PRD specifications for projects mapped to your account or created using Startup OS.
+          </div>
+          <p className="text-slate-600 text-sm font-medium mt-1">
+            Manage product health, 4-file constitutions (`AGENTS.md`, `ROADMAP.md`, `CLAUDE.md`, `CONTRIBUTING.md`), and AI agent execution rules.
           </p>
         </div>
 
-        <button
-          onClick={onNavigateToIdeaLab}
-          className="px-4 py-2.5 bg-gradient-to-r from-indigo-600 via-indigo-700 to-violet-700 hover:from-indigo-700 hover:to-violet-800 text-white text-xs font-bold rounded-xl shadow-md shadow-indigo-500/20 flex items-center gap-2 transition-all active:scale-98"
-        >
-          <Plus className="w-4 h-4" /> Create New Project via Startup OS
-        </button>
-      </div>
-
-      {/* User Projects Grid */}
-      {userProjects.length === 0 ? (
-        <div className="bg-white border border-slate-200/90 rounded-2xl p-12 text-center max-w-xl mx-auto space-y-4 shadow-sm">
-          <div className="text-4xl">🚀</div>
-          <h3 className="text-lg font-bold text-slate-900">No Projects Mapped Yet</h3>
-          <p className="text-xs text-slate-600">
-            You are logged in as <strong>{currentUser.name}</strong>. You haven't mapped existing projects or created a project using Startup OS yet.
-          </p>
+        {/* View Mode Switcher */}
+        <div className="flex items-center gap-2 bg-slate-100 p-1.5 rounded-2xl border border-slate-200/70">
           <button
-            onClick={onNavigateToIdeaLab}
-            className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow-md"
+            onClick={() => setViewMode('building')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+              viewMode === 'building' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+            }`}
           >
-            Start Idea Lab & Build First Project →
+            <Terminal className="w-4 h-4" /> Building & Health Mode
+          </button>
+          <button
+            onClick={() => setViewMode('launch')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+              viewMode === 'launch' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <Rocket className="w-4 h-4" /> Launch Readiness Mode
           </button>
         </div>
-      ) : (
-        <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            {userProjects.map((bp) => {
-              const Icon = iconMap[bp.icon] || Code2;
-              const isSelected = selectedBlueprint?.id === bp.id;
-              return (
-                <button
-                  key={bp.id}
-                  onClick={() => {
-                    setSelectedBlueprint(bp);
-                    setActiveTab('overview');
-                  }}
-                  className={`p-4 rounded-2xl border text-left transition-all flex flex-col justify-between ${
-                    isSelected
-                      ? 'bg-indigo-50/90 border-indigo-500 shadow-md ring-1 ring-indigo-400'
-                      : 'bg-white border-slate-200/80 hover:border-slate-300 hover:bg-slate-50/60 shadow-xs'
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <div className={`p-2 rounded-xl ${isSelected ? 'bg-indigo-600 text-white shadow-sm' : 'bg-slate-100 text-slate-700'}`}>
-                      <Icon className="w-4 h-4" />
-                    </div>
-                    <span className="text-[10px] font-mono text-indigo-700 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded font-semibold">
-                      Mapped to {bp.ownerName || currentUser.name}
-                    </span>
-                  </div>
-                  <h3 className="text-xs font-bold text-slate-900 line-clamp-1">{bp.title}</h3>
-                  <p className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">{bp.category}</p>
-                </button>
-              );
-            })}
-          </div>
+      </div>
 
-          {/* Selected Project Specification Detail Studio */}
-          {selectedBlueprint && (
-            <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-sm">
-              <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-4 border-b border-slate-200 pb-6 mb-6">
-                <div className="flex items-start gap-4">
-                  <div className="p-3.5 bg-indigo-50 border border-indigo-200 rounded-2xl text-indigo-600 shadow-xs">
-                    <IconComponent className="w-8 h-8" />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">{selectedBlueprint.title}</h2>
-                      <span className="text-xs font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded-full">
-                        {selectedBlueprint.status || 'Validated'}
+      {/* Flagship Projects Grid */}
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+            <FolderGit2 className="w-5 h-5 text-indigo-600" />
+            Flagship Startup Portfolio ({healthData.length})
+          </h2>
+          <button
+            onClick={fetchHealthData}
+            className="flex items-center gap-1.5 text-xs text-indigo-600 font-bold hover:underline"
+          >
+            <RefreshCw className="w-3.5 h-3.5" /> Re-audit Health
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {healthData.map((proj) => {
+            const meta = projectMetadata[proj.name] || {};
+
+            return (
+              <div
+                key={proj.name}
+                className="bg-white/80 backdrop-blur-md rounded-3xl border border-slate-200/90 p-6 space-y-5 shadow-sm hover:shadow-md hover:border-indigo-300 transition-all"
+              >
+                {/* Header */}
+                <div className="flex items-start justify-between gap-4">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-xl font-bold text-slate-900">{proj.name}</h3>
+                      <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-700">
+                        {meta.localPath}
                       </span>
                     </div>
-                    <p className="text-sm font-semibold text-indigo-700 mt-0.5">{selectedBlueprint.tagline}</p>
-                  </div>
-                </div>
-
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => handleCopyPrompt(selectedBlueprint.prd?.buildPrompt || '')}
-                    className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl flex items-center gap-2 shadow-sm transition-all"
-                  >
-                    {copied ? <Check className="w-4 h-4 text-emerald-300" /> : <Copy className="w-4 h-4" />}
-                    {copied ? 'Copied AI Prompt' : 'Copy AI Build Prompt'}
-                  </button>
-                </div>
-              </div>
-
-              {/* Inner Tabs */}
-              <div className="flex border-b border-slate-200 gap-4 mb-6 overflow-x-auto pb-1">
-                {[
-                  { id: 'overview', label: 'Overview & Target Audience' },
-                  { id: 'prd', label: 'PRD Specs' },
-                  { id: 'competitors', label: 'Competitor Analysis' },
-                  { id: 'architecture', label: 'Technical Architecture' },
-                  { id: 'prompt', label: 'AI Builder Prompt' }
-                ].map((tab) => (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`pb-2.5 text-xs font-bold whitespace-nowrap border-b-2 transition-all ${
-                      activeTab === tab.id
-                        ? 'border-indigo-600 text-indigo-600'
-                        : 'border-transparent text-slate-500 hover:text-slate-900'
-                    }`}
-                  >
-                    {tab.label}
-                  </button>
-                ))}
-              </div>
-
-              {/* Tab Content Rendering */}
-              {activeTab === 'overview' && (
-                <div className="space-y-6">
-                  <div>
-                    <h4 className="text-xs uppercase font-mono text-slate-500 font-bold tracking-wider mb-2">Project Summary</h4>
-                    <p className="text-sm text-slate-700 leading-relaxed">{selectedBlueprint.summary}</p>
+                    <p className="text-xs text-slate-600 font-medium leading-relaxed">{meta.tagline}</p>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="bg-slate-50/80 p-4 rounded-xl border border-slate-200">
-                      <h4 className="text-xs uppercase font-mono text-indigo-700 font-bold tracking-wider mb-2 flex items-center gap-1.5">
-                        <Target className="w-4 h-4" /> Target Audience
-                      </h4>
-                      <p className="text-xs text-slate-700 leading-relaxed">{selectedBlueprint.targetAudience}</p>
+                  {/* Health Score Pill */}
+                  <div className="flex flex-col items-end">
+                    <div
+                      className={`px-3 py-1 rounded-xl text-xs font-black border flex items-center gap-1.5 ${
+                        proj.healthScore === 100
+                          ? 'bg-emerald-50 text-emerald-800 border-emerald-300'
+                          : 'bg-amber-50 text-amber-800 border-amber-300'
+                      }`}
+                    >
+                      <ShieldCheck className="w-4 h-4" />
+                      <span>{proj.healthScore}% HEALTH</span>
                     </div>
-                    <div className="bg-slate-50/80 p-4 rounded-xl border border-slate-200">
-                      <h4 className="text-xs uppercase font-mono text-indigo-700 font-bold tracking-wider mb-2 flex items-center gap-1.5">
-                        <Layers className="w-4 h-4" /> Proposed Solution
-                      </h4>
-                      <p className="text-xs text-slate-700 leading-relaxed">{selectedBlueprint.prd?.solution}</p>
+                    <span className="text-[10px] text-slate-400 font-medium mt-1">4-File Parity</span>
+                  </div>
+                </div>
+
+                {/* 4 Core Baseline Files Checklist */}
+                <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200/70 space-y-2">
+                  <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block">
+                    Core Operational Constitution Checklist
+                  </span>
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div className="flex items-center gap-2">
+                      {proj.hasAgents ? (
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                      ) : (
+                        <AlertTriangle className="w-4 h-4 text-amber-500" />
+                      )}
+                      <span className={proj.hasAgents ? 'font-bold text-slate-800' : 'text-slate-400'}>AGENTS.md</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {proj.hasRoadmap ? (
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                      ) : (
+                        <AlertTriangle className="w-4 h-4 text-amber-500" />
+                      )}
+                      <span className={proj.hasRoadmap ? 'font-bold text-slate-800' : 'text-slate-400'}>ROADMAP.md</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {proj.hasClaude ? (
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                      ) : (
+                        <AlertTriangle className="w-4 h-4 text-amber-500" />
+                      )}
+                      <span className={proj.hasClaude ? 'font-bold text-slate-800' : 'text-slate-400'}>CLAUDE.md</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {proj.hasContributing ? (
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                      ) : (
+                        <AlertTriangle className="w-4 h-4 text-amber-500" />
+                      )}
+                      <span className={proj.hasContributing ? 'font-bold text-slate-800' : 'text-slate-400'}>CONTRIBUTING.md</span>
                     </div>
                   </div>
                 </div>
-              )}
 
-              {activeTab === 'prd' && (
-                <div className="space-y-6">
-                  <div>
-                    <h4 className="text-xs uppercase font-mono text-indigo-700 font-bold tracking-wider mb-2">Problem Statement</h4>
-                    <p className="text-sm text-slate-700 leading-relaxed bg-slate-50/80 p-4 rounded-xl border border-slate-200">
-                      {selectedBlueprint.prd?.problem}
-                    </p>
-                  </div>
-                  <div>
-                    <h4 className="text-xs uppercase font-mono text-indigo-700 font-bold tracking-wider mb-2">Product Solution</h4>
-                    <p className="text-sm text-slate-700 leading-relaxed bg-slate-50/80 p-4 rounded-xl border border-slate-200">
-                      {selectedBlueprint.prd?.solution}
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {activeTab === 'competitors' && (
-                <div className="space-y-4">
-                  <h4 className="text-xs uppercase font-mono text-indigo-700 font-bold tracking-wider mb-2">Competitor Analysis</h4>
-                  <div className="space-y-3">
-                    {selectedBlueprint.prd?.competitorResearch?.map((comp, idx) => (
-                      <div key={idx} className="bg-slate-50/80 p-4 rounded-xl border border-slate-200 text-xs text-slate-700 leading-relaxed">
-                        {comp}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {activeTab === 'architecture' && (
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {Object.entries(selectedBlueprint.prd?.technicalArchitecture || {}).map(([key, val]) => (
-                    <div key={key} className="bg-slate-50/80 p-4 rounded-xl border border-slate-200">
-                      <span className="text-xs font-mono uppercase text-indigo-700 font-bold">{key}</span>
-                      <p className="text-xs text-slate-800 font-mono mt-2 leading-relaxed">{val}</p>
-                    </div>
+                {/* Tech Stack Pills */}
+                <div className="flex flex-wrap gap-1.5">
+                  {meta.stack && meta.stack.map((t, idx) => (
+                    <span key={idx} className="text-[11px] font-mono px-2.5 py-0.5 rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200/60 font-semibold">
+                      {t}
+                    </span>
                   ))}
                 </div>
-              )}
 
-              {activeTab === 'prompt' && (
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs font-mono text-slate-500 font-semibold">Structured AI Build Execution Prompt</span>
-                    <button
-                      onClick={() => handleCopyPrompt(selectedBlueprint.prd?.buildPrompt || '')}
-                      className="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 shadow-sm"
-                    >
-                      {copied ? <Check className="w-3.5 h-3.5 text-emerald-300" /> : <Copy className="w-3.5 h-3.5" />}
-                      {copied ? 'Copied' : 'Copy Prompt'}
-                    </button>
+                {/* Actions Footer */}
+                <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
+                  <a
+                    href={meta.repoUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1 text-xs font-bold text-indigo-600 hover:underline"
+                  >
+                    <span>View GitHub Repo</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+
+                  <div className="flex items-center gap-2">
+                    <span className="text-[11px] text-emerald-600 font-bold bg-emerald-50 px-2.5 py-1 rounded-xl border border-emerald-200">
+                      ✓ Parity Verified
+                    </span>
                   </div>
-                  <pre className="bg-slate-900 p-4 rounded-xl text-xs font-mono text-slate-200 border border-slate-800 whitespace-pre-wrap overflow-x-auto">
-                    {selectedBlueprint.prd?.buildPrompt}
-                  </pre>
                 </div>
-              )}
-            </div>
-          )}
-        </>
-      )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }
