@@ -42,5 +42,17 @@
     "badge": "Full-Stack Dev",
     "token": "token-bebed92f-b",
     "createdAt": "2026-09-06T06:51:13.582Z"
+  },
+  {
+    "id": "user-8371be9a",
+    "name": "Test",
+    "email": "test@gmail.com",
+    "role": "user",
+    "persona": "student",
+    "workspaceName": "Building New",
+    "avatar": "🎓",
+    "badge": "Student Builder",
+    "token": "token-46c0d8c4-b",
+    "createdAt": "2026-09-06T09:10:27.501Z"
   }
 ]

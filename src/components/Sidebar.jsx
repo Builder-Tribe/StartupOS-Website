@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
   Trophy, FolderGit2, Sparkles, GraduationCap, ShieldCheck, Plus, User, Crown, 
-  Globe, HelpCircle, ArrowUpRight, CheckCircle2, ArrowLeftRight, LogOut
+  Globe, HelpCircle, ArrowUpRight, CheckCircle2, ArrowLeftRight, LogOut, Cpu, Terminal, UserCheck
 } from 'lucide-react';
 
 export default function Sidebar({ activeTab, setActiveTab, currentUser, isLoggedIn, onOpenLaunchModal, onExitToWebsite, onOpenHelpCenter, onOpenCommandCenter }) {
@@ -9,6 +9,8 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser, isLogged
     { id: 'launchpad', label: 'Launchpad Feed', icon: Trophy, badge: 'Live' },
     { id: 'blueprints', label: 'My Projects', icon: FolderGit2 },
     { id: 'idealab', label: 'AI Builder Studio', icon: Sparkles, badge: 'AGY AI' },
+    { id: 'promptvault', label: 'Prompt Vault', icon: Terminal, badge: 'Tested' },
+    { id: 'toolmatrix', label: 'Tool Matrix & Arch', icon: Cpu, badge: '2026' },
     { id: 'academy', label: 'AI Academy', icon: GraduationCap },
   ];
 
@@ -120,17 +122,31 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser, isLogged
           </button>
         )}
 
-        {/* User Mini Profile */}
-        <div className="flex items-center justify-between pt-1 border-t border-slate-800/60">
+        {/* User Mini Profile (Clickable -> Opens Maker Profile) */}
+        <div 
+          onClick={() => setActiveTab('makerprofile')}
+          className={`flex items-center justify-between p-2 rounded-xl transition-all cursor-pointer border ${
+            activeTab === 'makerprofile' 
+              ? 'bg-indigo-950/90 border-indigo-500/50 shadow-xs' 
+              : 'hover:bg-slate-800/80 border-transparent'
+          }`}
+          title="View & Export Your Maker Profile"
+        >
           <div className="flex items-center gap-2.5 overflow-hidden">
-            <span className="w-8 h-8 rounded-lg bg-indigo-950 border border-indigo-700/60 flex items-center justify-center text-sm shrink-0">
+            <span className="w-8 h-8 rounded-lg bg-indigo-600 border border-indigo-400/40 flex items-center justify-center text-sm shrink-0 shadow-xs">
               {currentUser.avatar}
             </span>
-            <div className="truncate">
-              <span className="text-xs font-bold text-slate-200 block truncate">{currentUser.name}</span>
-              <span className="text-[10px] text-slate-400 block truncate">{currentUser.badge}</span>
+            <div className="truncate text-left">
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs font-bold text-slate-200 block truncate">{currentUser.name}</span>
+                <span className="text-[9px] font-extrabold px-1.5 py-0.2 rounded bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                  L5
+                </span>
+              </div>
+              <span className="text-[10px] text-slate-400 block truncate">{currentUser.badge} • Profile</span>
             </div>
           </div>
+          <ArrowUpRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-white" />
         </div>
       </div>
     </aside>

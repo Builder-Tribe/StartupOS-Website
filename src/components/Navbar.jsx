@@ -71,10 +71,21 @@ export default function Navbar({ activeTab, setActiveTab, currentUser, isLoggedI
             </button>
           )}
 
-          {/* Profile Trigger */}
+          {/* Profile Trigger (Opens Maker Profile & Credentials) */}
           <button
-            onClick={onOpenAuthModal}
-            className="flex items-center gap-2.5 p-1.5 pr-3 rounded-2xl border border-slate-200/80 hover:bg-slate-50 transition-all group"
+            onClick={() => {
+              if (isLoggedIn) {
+                setActiveTab('makerprofile');
+              } else {
+                onOpenAuthModal();
+              }
+            }}
+            className={`flex items-center gap-2.5 p-1.5 pr-3 rounded-2xl border transition-all group ${
+              activeTab === 'makerprofile'
+                ? 'bg-indigo-50 border-indigo-300 ring-2 ring-indigo-500/20 shadow-xs'
+                : 'border-slate-200/80 hover:bg-slate-50'
+            }`}
+            title="View & Export Your Maker Profile"
           >
             <span className="w-8 h-8 rounded-xl bg-indigo-100 border border-indigo-200 flex items-center justify-center text-sm shadow-2xs group-hover:scale-105 transition-transform">
               {currentUser.avatar}

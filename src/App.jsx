@@ -4,7 +4,10 @@ import Sidebar from './components/Sidebar';
 import LaunchpadFeed from './components/LaunchpadFeed';
 import LaunchSubmissionModal from './components/LaunchSubmissionModal';
 import BlueprintStudio from './components/BlueprintStudio';
+import MakerProfileStudio from './components/MakerProfileStudio';
 import IdeaLab from './components/IdeaLab';
+import ToolMatrixStudio from './components/ToolMatrixStudio';
+import PromptVaultStudio from './components/PromptVaultStudio';
 import LMSHub from './components/LMSHub';
 import AdminConsole from './components/AdminConsole';
 import MarketingLander from './components/MarketingLander';
@@ -223,6 +226,13 @@ export default function App() {
             />
           )}
 
+          {activeTab === 'makerprofile' && (
+            <MakerProfileStudio
+              currentUser={currentUser}
+              ideas={ideas}
+            />
+          )}
+
           {activeTab === 'blueprints' && (
             <BlueprintStudio
               currentUser={currentUser}
@@ -238,6 +248,21 @@ export default function App() {
               setActiveIdea={setActiveIdea}
               onSaveIdea={handleSaveIdea}
               onNewIdea={handleNewIdea}
+            />
+          )}
+
+          {activeTab === 'promptvault' && (
+            <PromptVaultStudio
+              ideas={ideas}
+              activeIdea={activeIdea}
+              setActiveIdea={setActiveIdea}
+            />
+          )}
+
+          {activeTab === 'toolmatrix' && (
+            <ToolMatrixStudio
+              ideas={ideas}
+              activeIdea={activeIdea}
             />
           )}
 
