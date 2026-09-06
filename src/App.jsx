@@ -6,18 +6,24 @@ import BlueprintStudio from './components/BlueprintStudio';
 import IdeaLab from './components/IdeaLab';
 import PRDGeneratorStudio from './components/PRDGeneratorStudio';
 import LMSHub from './components/LMSHub';
+import AdminConsole from './components/AdminConsole';
+import MarketingLander from './components/MarketingLander';
+import AuthModal from './components/AuthModal';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('launchpad'); // 'launchpad' | 'blueprints' | 'idealab' | 'lms'
+  const [activeTab, setActiveTab] = useState('launchpad'); // 'launchpad' | 'blueprints' | 'idealab' | 'lms' | 'admin' | 'landing'
   const [ideas, setIdeas] = useState([]);
   const [activeIdea, setActiveIdea] = useState(null);
   const [showLaunchModal, setShowLaunchModal] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   const [currentUser, setCurrentUser] = useState({
     id: 'user-harshita',
     name: 'Harshita G (Founder)',
     email: 'harshita@vibe-coding.io',
-    avatar: '👩‍💻'
+    role: 'user',
+    avatar: '👩‍💻',
+    badge: 'Pro Builder'
   });
 
   const fetchIdeas = async () => {
@@ -58,6 +64,13 @@ export default function App() {
     setActiveTab('launchpad');
   };
 
+  const handleLoginSuccess = (userData) => {
+    setCurrentUser(userData);
+    if (userData.role === 'admin') {
+      setActiveTab('admin');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50/80 text-slate-900 font-sans selection:bg-indigo-600 selection:text-white relative overflow-hidden bg-grid-light">
       {/* Ambient Floating Background Mesh Orbs (OpenAI Astra & Razorpay 2026 Style) */}
@@ -73,6 +86,7 @@ export default function App() {
           setActiveTab={setActiveTab}
           currentUser={currentUser}
           onOpenLaunchModal={() => setShowLaunchModal(true)}
+          onOpenAuthModal={() => setShowAuthModal(true)}
         />
 
         <main className="flex-1 pb-16">
@@ -104,6 +118,17 @@ export default function App() {
           {activeTab === 'lms' && (
             <LMSHub />
           )}
+
+          {activeTab === 'admin' && (
+            <AdminConsole currentUser={currentUser} />
+          )}
+
+          {activeTab === 'landing' && (
+            <MarketingLander
+              onGetStarted={() => setActiveTab('launchpad')}
+              onOpenLms={() => setActiveTab('lms')}
+            />
+          )}
         </main>
 
         <footer className="border-t border-slate-200/80 py-6 text-center text-xs text-slate-500 bg-white/60 backdrop-blur-sm">
@@ -117,6 +142,13 @@ export default function App() {
         onClose={() => setShowLaunchModal(false)}
         onLaunchSubmitted={handleLaunchSubmitted}
         currentUser={currentUser}
+      />
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        onLoginSuccess={handleLoginSuccess}
       />
     </div>
   );

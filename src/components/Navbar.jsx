@@ -1,15 +1,20 @@
 import React from 'react';
 import { 
-  Trophy, FolderGit2, Sparkles, GraduationCap, ShieldCheck, Plus, User
+  Trophy, FolderGit2, Sparkles, GraduationCap, ShieldCheck, Plus, User, Crown, Lock, Compass
 } from 'lucide-react';
 
-export default function Navbar({ activeTab, setActiveTab, currentUser, onOpenLaunchModal }) {
+export default function Navbar({ activeTab, setActiveTab, currentUser, onOpenLaunchModal, onOpenAuthModal }) {
   const tabs = [
     { id: 'launchpad', label: '🏆 Launchpad', icon: Trophy, badge: 'Product Hunt' },
     { id: 'blueprints', label: '📁 My Projects', icon: FolderGit2 },
     { id: 'idealab', label: '💡 AI Builder', icon: Sparkles },
     { id: 'lms', label: '🎓 AI Academy', icon: GraduationCap },
+    { id: 'landing', label: '🌐 Overview', icon: Compass },
   ];
+
+  if (currentUser.role === 'admin') {
+    tabs.push({ id: 'admin', label: '👑 Admin Console', icon: Crown });
+  }
 
   return (
     <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
@@ -33,7 +38,7 @@ export default function Navbar({ activeTab, setActiveTab, currentUser, onOpenLau
         </div>
 
         {/* Navigation Tabs */}
-        <nav className="hidden md:flex items-center gap-1.5 bg-slate-100/80 p-1.5 rounded-2xl border border-slate-200/70">
+        <nav className="hidden md:flex items-center gap-1 bg-slate-100/80 p-1.5 rounded-2xl border border-slate-200/70">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -41,7 +46,7 @@ export default function Navbar({ activeTab, setActiveTab, currentUser, onOpenLau
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all relative ${
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
                   isActive
                     ? 'bg-white text-indigo-600 shadow-sm'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
@@ -68,17 +73,21 @@ export default function Navbar({ activeTab, setActiveTab, currentUser, onOpenLau
             <Plus className="w-4 h-4" /> Launch Product
           </button>
 
-          <div className="flex items-center gap-2 pl-2 border-l border-slate-200/80">
+          <button
+            onClick={onOpenAuthModal}
+            className="flex items-center gap-2 pl-2 border-l border-slate-200/80 hover:opacity-80 transition-opacity"
+          >
             <span className="w-8 h-8 rounded-full bg-indigo-100 border border-indigo-200 flex items-center justify-center text-sm shadow-xs">
               {currentUser.avatar}
             </span>
             <div className="hidden lg:block text-left">
               <span className="text-xs font-bold text-slate-800 block leading-tight">{currentUser.name}</span>
-              <span className="text-[10px] font-medium text-emerald-600 flex items-center gap-1">
-                <ShieldCheck className="w-3 h-3" /> Pro Builder
+              <span className={`text-[10px] font-medium flex items-center gap-1 ${currentUser.role === 'admin' ? 'text-amber-600' : 'text-emerald-600'}`}>
+                {currentUser.role === 'admin' ? <Crown className="w-3 h-3 text-amber-500" /> : <ShieldCheck className="w-3 h-3" />}
+                {currentUser.badge}
               </span>
             </div>
-          </div>
+          </button>
         </div>
       </div>
     </header>

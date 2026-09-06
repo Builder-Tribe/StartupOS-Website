@@ -1,0 +1,22 @@
+[
+  {
+    "id": "user-harshita",
+    "name": "Harshita G",
+    "email": "harshita@vibe-coding.io",
+    "role": "user",
+    "avatar": "👩‍💻",
+    "badge": "Pro Builder",
+    "token": "token-harshita-12345",
+    "createdAt": "2026-09-06T06:35:00.912Z"
+  },
+  {
+    "id": "user-admin",
+    "name": "Platform Admin Ops",
+    "email": "admin@startupos.io",
+    "role": "admin",
+    "avatar": "👑",
+    "badge": "Super Admin",
+    "token": "token-admin-99999",
+    "createdAt": "2026-09-06T06:35:00.913Z"
+  }
+]
