@@ -112,7 +112,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                 Build Software As Easy As Writing A Document.
               </h3>
               <p className="text-xs text-slate-300 font-medium leading-relaxed">
-                Connect your workspace to AntiGravity, Emergent, Replit, and Claude. Audit project health, manage 4-file parity, and launch to Product Hunt feed.
+                Connect your workspace to AntiGravity, Emergent, Replit, and Claude. Audit project health, manage 4-file parity, and launch to StartupOS Launchpad feed.
               </p>
             </div>
           </div>

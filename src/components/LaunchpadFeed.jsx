@@ -95,7 +95,7 @@ export default function LaunchpadFeed({ currentUser, onOpenLaunchModal }) {
         <div className="relative z-10 max-w-3xl space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-200 text-xs font-semibold backdrop-blur-md">
             <Trophy className="w-3.5 h-3.5 text-amber-400" />
-            <span>Product Hunt for AI Founders</span>
+            <span>StartupOS AI Product Exchange</span>
           </div>
 
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight bg-gradient-to-r from-white via-slate-100 to-indigo-200 bg-clip-text text-transparent">

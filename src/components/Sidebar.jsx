@@ -1,22 +1,21 @@
 import React from 'react';
 import { 
   Trophy, FolderGit2, Sparkles, GraduationCap, ShieldCheck, Plus, User, Crown, 
-  Compass, LayoutGrid, ChevronRight, CheckCircle2, Zap
+  ChevronRight, CheckCircle2, HelpCircle, BookOpen, ArrowUpRight
 } from 'lucide-react';
 
 export default function Sidebar({ activeTab, setActiveTab, currentUser, onOpenLaunchModal }) {
   const mainNav = [
-    { id: 'launchpad', label: 'Launchpad Feed', icon: Trophy, badge: 'Product Hunt' },
+    { id: 'launchpad', label: 'Launchpad Feed', icon: Trophy, badge: 'Live' },
     { id: 'blueprints', label: 'My Projects', icon: FolderGit2 },
-    { id: 'idealab', label: 'AI Builder Studio', icon: Sparkles, badge: 'AGY' },
-    { id: 'lms', label: 'AI Academy (LMS)', icon: GraduationCap },
-    { id: 'landing', label: 'Platform Overview', icon: Compass },
+    { id: 'idealab', label: 'AI Builder Studio', icon: Sparkles, badge: 'AGY AI' },
+    { id: 'academy', label: 'AI Academy', icon: GraduationCap },
   ];
 
   return (
     <aside className="w-64 bg-slate-900 text-slate-300 flex flex-col justify-between shrink-0 border-r border-slate-800 hidden md:flex sticky top-0 h-screen select-none z-30">
       {/* Top Branding Section */}
-      <div className="p-5 space-y-6">
+      <div className="p-5 space-y-5 overflow-y-auto">
         <div 
           onClick={() => setActiveTab('launchpad')}
           className="flex items-center gap-3 cursor-pointer group"
@@ -28,10 +27,10 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser, onOpenLa
             <div className="flex items-center gap-1.5">
               <span className="font-extrabold text-lg text-white tracking-tight">StartupOS</span>
               <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 uppercase tracking-widest">
-                2026
+                Portal
               </span>
             </div>
-            <span className="text-[11px] text-slate-400 font-medium block">AI Launch & Build Platform</span>
+            <span className="text-[11px] text-slate-400 font-medium block">AI Product OS & Incubator</span>
           </div>
         </div>
 
@@ -45,11 +44,11 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser, onOpenLa
         </button>
 
         {/* Navigation Categories */}
-        <div className="space-y-6 pt-2">
+        <div className="space-y-5 pt-1">
           {/* Main Workspace Section */}
           <div className="space-y-1">
             <span className="text-[10px] font-bold tracking-wider text-slate-400 uppercase px-3 block mb-2">
-              Ecosystem Navigation
+              StartupOS Modules
             </span>
             {mainNav.map((item) => {
               const Icon = item.icon;
@@ -82,9 +81,9 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser, onOpenLa
 
           {/* Admin Governance Section */}
           {currentUser.role === 'admin' && (
-            <div className="space-y-1 border-t border-slate-800/80 pt-4">
+            <div className="space-y-1 border-t border-slate-800/80 pt-3">
               <span className="text-[10px] font-bold tracking-wider text-amber-400 uppercase px-3 block mb-2 flex items-center gap-1">
-                <Crown className="w-3 h-3 text-amber-400" /> Admin Ops Realm
+                <Crown className="w-3 h-3 text-amber-400" /> Admin Realm
               </span>
               <button
                 onClick={() => setActiveTab('admin')}
@@ -107,21 +106,32 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser, onOpenLa
         </div>
       </div>
 
-      {/* Bottom Health & User Card */}
-      <div className="p-4 border-t border-slate-800/80 space-y-3">
-        {/* 4-File Parity Health Card */}
-        <div className="p-3 rounded-xl bg-slate-800/70 border border-slate-700/60 space-y-2">
-          <div className="flex items-center justify-between text-[11px]">
-            <span className="text-slate-300 font-semibold flex items-center gap-1.5">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> 4-File Parity
+      {/* Bottom Footer Section: "How We Can Help" & User Profile */}
+      <div className="p-4 border-t border-slate-800/80 space-y-3 bg-slate-900/90">
+        {/* "How We Can Help" Feature Card */}
+        <div 
+          onClick={() => setActiveTab('academy')}
+          className="p-3 rounded-xl bg-gradient-to-br from-indigo-950/80 to-slate-800 border border-indigo-500/30 hover:border-indigo-400 transition-all cursor-pointer group shadow-xs"
+        >
+          <div className="flex items-center justify-between text-xs mb-1">
+            <span className="text-white font-bold flex items-center gap-1.5">
+              <HelpCircle className="w-3.5 h-3.5 text-indigo-400" /> How We Can Help?
             </span>
-            <span className="text-emerald-400 font-extrabold text-[10px] bg-emerald-400/10 px-1.5 py-0.5 rounded border border-emerald-400/20">
-              100% Health
-            </span>
+            <ArrowUpRight className="w-3.5 h-3.5 text-indigo-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </div>
-          <p className="text-[10px] text-slate-400 font-medium leading-tight">
-            All 4 projects contain AGENTS, ROADMAP, CLAUDE & CONTRIBUTING.
+          <p className="text-[10px] text-slate-300 font-medium leading-relaxed">
+            Learn ideation, prompts, architecture & deployment guides in **AI Academy**.
           </p>
+        </div>
+
+        {/* 4-File Parity Health Card */}
+        <div className="p-2.5 rounded-xl bg-slate-800/60 border border-slate-700/60 flex items-center justify-between text-[11px]">
+          <span className="text-slate-300 font-semibold flex items-center gap-1.5 text-[10px]">
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" /> 4-File Parity
+          </span>
+          <span className="text-emerald-400 font-extrabold text-[9px] bg-emerald-400/10 px-1.5 py-0.5 rounded border border-emerald-400/20">
+            100% Health
+          </span>
         </div>
 
         {/* User Mini Profile */}

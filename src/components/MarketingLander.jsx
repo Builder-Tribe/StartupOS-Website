@@ -44,7 +44,7 @@ export default function MarketingLander({ onGetStarted, onOpenLms }) {
     {
       step: "06",
       title: "Deployment & Distribution",
-      desc: "One-click deployment recipes + Product Hunt-inspired Launchpad feed for upvotes & traction.",
+      desc: "One-click deployment recipes + StartupOS Launchpad feed for upvotes & traction.",
       icon: Trophy,
       color: "from-rose-500 to-pink-600"
     }
@@ -147,7 +147,7 @@ export default function MarketingLander({ onGetStarted, onOpenLms }) {
               <Terminal className="w-4 h-4" /> <span>AntiGravity + Emergent + Replit Engine Ready</span>
             </div>
             <div className="text-amber-300 flex items-center gap-2">
-              <Trophy className="w-4 h-4" /> <span>Product Hunt Launchpad Active</span>
+              <Trophy className="w-4 h-4" /> <span>StartupOS Ecosystem Launchpad Active</span>
             </div>
           </div>
         </div>

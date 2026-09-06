@@ -151,7 +151,7 @@ export default function App() {
             />
           )}
 
-          {activeTab === 'lms' && (
+          {(activeTab === 'academy' || activeTab === 'lms') && (
             <LMSHub />
           )}
 
@@ -162,13 +162,13 @@ export default function App() {
           {activeTab === 'landing' && (
             <MarketingLander
               onGetStarted={() => setActiveTab('launchpad')}
-              onOpenLms={() => setActiveTab('lms')}
+              onOpenLms={() => setActiveTab('academy')}
             />
           )}
         </main>
 
         <footer className="border-t border-slate-200/80 py-6 text-center text-xs text-slate-500 bg-white/60 backdrop-blur-sm mt-auto">
-          StartupOS 2026 — Universal Launchpad, My Projects Workspace, AI Builder Studio & LMS Academy.
+          StartupOS 2026 — Universal Launchpad, My Projects Workspace, AI Builder Studio & AI Academy.
         </footer>
       </div>
 
