@@ -12,9 +12,10 @@ import AuthModal from './components/AuthModal';
 import HelpCenterModal from './components/HelpCenterModal';
 
 export default function App() {
-  // Top-level View Mode: 'website' (Standalone Marketing Lander) | 'portal' (StartupOS Builder Workspace)
+  // Top-level View Mode: 'website' (Standalone Marketing Lander) | 'portal' (StartupOS Builder Workspace) | 'admin' (Standalone Team Command Center)
   const [viewMode, setViewMode] = useState('website');
-  const [activeTab, setActiveTab] = useState('launchpad'); // 'launchpad' | 'blueprints' | 'idealab' | 'academy' | 'admin'
+  const [activeTab, setActiveTab] = useState('launchpad'); // 'launchpad' | 'blueprints' | 'idealab' | 'academy'
+  const [isLoggedIn, setIsLoggedIn] = useState(true); // Tracks logged-in vs guest demo mode
   
   const [ideas, setIdeas] = useState([]);
   const [activeIdea, setActiveIdea] = useState(null);
@@ -47,6 +48,21 @@ export default function App() {
 
   useEffect(() => {
     fetchIdeas();
+    
+    // Parse URL query parameter ?view=website | portal | admin
+    const params = new URLSearchParams(window.location.search);
+    const viewParam = params.get('view');
+    if (viewParam === 'portal') {
+      setViewMode('portal');
+      setActiveTab('launchpad');
+      setIsLoggedIn(true);
+    } else if (viewParam === 'admin') {
+      setViewMode('admin');
+      setIsLoggedIn(true);
+      setCurrentUser((prev) => ({ ...prev, role: 'admin', badge: 'Super Admin' }));
+    } else if (viewParam === 'website') {
+      setViewMode('website');
+    }
   }, []);
 
   const handleSaveIdea = async (formData) => {
@@ -73,18 +89,24 @@ export default function App() {
 
   const handleLoginSuccess = (userData) => {
     setCurrentUser(userData);
-    setViewMode('portal'); // Transition directly to portal upon login
+    setIsLoggedIn(true);
     if (userData.role === 'admin') {
-      setActiveTab('admin');
+      setViewMode('admin');
+    } else {
+      setViewMode('portal');
+      setActiveTab('launchpad');
     }
   };
 
-  // IF VIEW MODE IS 'WEBSITE': Render Standalone Marketing Landing Page
+  // 1. IF VIEW MODE IS 'WEBSITE': Render Standalone Marketing Landing Page
   if (viewMode === 'website') {
     return (
       <>
         <MarketingLander
-          onEnterPortal={() => setViewMode('portal')}
+          onEnterPortal={() => {
+            setIsLoggedIn(false); // Entering via demo CTA set as guest
+            setViewMode('portal');
+          }}
           onOpenAuthModal={() => setShowAuthModal(true)}
         />
 
@@ -98,7 +120,30 @@ export default function App() {
     );
   }
 
-  // IF VIEW MODE IS 'PORTAL': Render Dedicated Builder Workspace Layout
+  // 2. IF VIEW MODE IS 'ADMIN': Render Standalone Full-Screen Admin Command Center
+  if (viewMode === 'admin') {
+    return (
+      <>
+        <AdminConsole
+          currentUser={currentUser}
+          onExitToPortal={() => setViewMode('portal')}
+          onExitToWebsite={() => {
+            setViewMode('website');
+            setIsLoggedIn(false);
+          }}
+          onOpenAuthModal={() => setShowAuthModal(true)}
+        />
+
+        <AuthModal
+          isOpen={showAuthModal}
+          onClose={() => setShowAuthModal(false)}
+          onLoginSuccess={handleLoginSuccess}
+        />
+      </>
+    );
+  }
+
+  // 3. IF VIEW MODE IS 'PORTAL': Render Dedicated Builder Workspace Layout
   return (
     <div className="min-h-screen bg-slate-50/80 text-slate-900 font-sans selection:bg-indigo-600 selection:text-white relative overflow-x-hidden flex">
       {/* Ambient Floating Background Mesh Orbs */}
@@ -113,9 +158,11 @@ export default function App() {
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         currentUser={currentUser}
+        isLoggedIn={isLoggedIn}
         onOpenLaunchModal={() => setShowLaunchModal(true)}
         onExitToWebsite={() => setViewMode('website')}
         onOpenHelpCenter={() => setShowHelpCenter(true)}
+        onOpenCommandCenter={() => setViewMode('admin')}
       />
 
       {/* Main Layout Container */}
@@ -124,11 +171,13 @@ export default function App() {
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           currentUser={currentUser}
+          isLoggedIn={isLoggedIn}
           onOpenLaunchModal={() => setShowLaunchModal(true)}
           onOpenAuthModal={() => setShowAuthModal(true)}
           mobileMenuOpen={mobileMenuOpen}
           setMobileMenuOpen={setMobileMenuOpen}
           onExitToWebsite={() => setViewMode('website')}
+          onOpenCommandCenter={() => setViewMode('admin')}
         />
 
         {/* Mobile Navigation Drawer Overlay */}
@@ -145,6 +194,7 @@ export default function App() {
                   setMobileMenuOpen(false);
                 }}
                 currentUser={currentUser}
+                isLoggedIn={isLoggedIn}
                 onOpenLaunchModal={() => {
                   setShowLaunchModal(true);
                   setMobileMenuOpen(false);
@@ -155,6 +205,10 @@ export default function App() {
                 }}
                 onOpenHelpCenter={() => {
                   setShowHelpCenter(true);
+                  setMobileMenuOpen(false);
+                }}
+                onOpenCommandCenter={() => {
+                  setViewMode('admin');
                   setMobileMenuOpen(false);
                 }}
               />
@@ -190,10 +244,6 @@ export default function App() {
 
           {(activeTab === 'academy' || activeTab === 'lms') && (
             <LMSHub />
-          )}
-
-          {activeTab === 'admin' && (
-            <AdminConsole currentUser={currentUser} />
           )}
         </main>
 

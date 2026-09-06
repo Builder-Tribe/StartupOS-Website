@@ -4,7 +4,7 @@ import {
   Globe, LogOut
 } from 'lucide-react';
 
-export default function Navbar({ activeTab, setActiveTab, currentUser, onOpenLaunchModal, onOpenAuthModal, mobileMenuOpen, setMobileMenuOpen, onExitToWebsite }) {
+export default function Navbar({ activeTab, setActiveTab, currentUser, isLoggedIn, onOpenLaunchModal, onOpenAuthModal, mobileMenuOpen, setMobileMenuOpen, onExitToWebsite, onOpenCommandCenter }) {
   return (
     <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
@@ -59,15 +59,29 @@ export default function Navbar({ activeTab, setActiveTab, currentUser, onOpenLau
             <Plus className="w-4 h-4" /> Launch Product
           </button>
 
-          {/* Exit to Marketing Website button */}
-          <button
-            onClick={onExitToWebsite}
-            className="hidden lg:flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-indigo-600 px-3 py-2 rounded-xl border border-slate-200 hover:bg-slate-50 transition-all"
-            title="View Public Marketing Website"
-          >
-            <Globe className="w-3.5 h-3.5 text-indigo-500" />
-            <span>Website</span>
-          </button>
+          {/* Admin Command Center Switch Button (Visible to Admin Users) */}
+          {currentUser.role === 'admin' && (
+            <button
+              onClick={onOpenCommandCenter}
+              className="hidden sm:flex items-center gap-1.5 text-xs font-bold text-amber-800 bg-amber-100 hover:bg-amber-200 px-3 py-2 rounded-xl border border-amber-300 transition-all shadow-xs"
+              title="Open Team Command Center"
+            >
+              <Crown className="w-3.5 h-3.5 text-amber-600" />
+              <span>Command Center</span>
+            </button>
+          )}
+
+          {/* Exit to Marketing Website button (ONLY SHOWN TO GUEST DEMO VISITORS) */}
+          {!isLoggedIn && (
+            <button
+              onClick={onExitToWebsite}
+              className="hidden lg:flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-indigo-600 px-3 py-2 rounded-xl border border-slate-200 hover:bg-slate-50 transition-all"
+              title="View Public Marketing Website"
+            >
+              <Globe className="w-3.5 h-3.5 text-indigo-500" />
+              <span>Website</span>
+            </button>
+          )}
 
           {/* Profile Trigger */}
           <button

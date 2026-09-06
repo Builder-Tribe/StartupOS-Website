@@ -6,7 +6,7 @@ import {
   MessageSquare, Star, Sliders, Layers, ChevronRight
 } from 'lucide-react';
 
-export default function AdminConsole({ currentUser }) {
+export default function AdminConsole({ currentUser, onExitToPortal, onExitToWebsite, onOpenAuthModal }) {
   const [launches, setLaunches] = useState([]);
   const [usersList, setUsersList] = useState([]);
   const [auditsList, setAuditsList] = useState([]);
@@ -92,14 +92,30 @@ export default function AdminConsole({ currentUser }) {
 
   if (currentUser.role !== 'admin') {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-20 text-center space-y-4">
-        <div className="w-16 h-16 rounded-3xl bg-amber-100 text-amber-700 flex items-center justify-center mx-auto shadow-sm">
-          <Lock className="w-8 h-8" />
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center p-4">
+        <div className="max-w-md w-full bg-slate-900 border border-slate-800 rounded-3xl p-8 text-center space-y-5 text-white shadow-2xl">
+          <div className="w-16 h-16 rounded-3xl bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center mx-auto shadow-lg shadow-amber-500/10">
+            <Lock className="w-8 h-8" />
+          </div>
+          <h2 className="text-2xl font-extrabold tracking-tight">StartupOS Team Access Required</h2>
+          <p className="text-slate-400 text-xs leading-relaxed font-medium">
+            You are currently signed in as <span className="font-bold text-white">{currentUser.name}</span> (User Realm). Super Admin privileges are required to access the StartupOS Team Command Center.
+          </p>
+          <div className="pt-2 flex flex-col gap-2">
+            <button
+              onClick={onOpenAuthModal}
+              className="w-full py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-extrabold text-xs rounded-xl shadow-lg shadow-amber-500/20 transition-all"
+            >
+              Sign In as Platform Admin
+            </button>
+            <button
+              onClick={onExitToPortal}
+              className="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs rounded-xl transition-all"
+            >
+              Return to Builder Portal
+            </button>
+          </div>
         </div>
-        <h2 className="text-2xl font-extrabold text-slate-900">StartupOS Team Access Required</h2>
-        <p className="text-slate-600 text-sm max-w-md mx-auto font-medium">
-          You are currently signed in as <span className="font-bold text-slate-900">{currentUser.name}</span> (User Realm). Super Admin privileges are required to inspect registered users and moderate ecosystem content.
-        </p>
       </div>
     );
   }
@@ -131,33 +147,106 @@ export default function AdminConsole({ currentUser }) {
   const featuredCount = launches.filter(l => l.isFeatured).length;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-      {/* Top Team Operations Header */}
-      <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-6 sm:p-8 text-white shadow-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 border border-indigo-900/50">
-        <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-600 text-white font-bold flex items-center justify-center shadow-lg shadow-amber-500/30 shrink-0">
-            <Crown className="w-7 h-7 text-white" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-extrabold tracking-tight">StartupOS Core Team Command Center</h1>
-              <span className="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/40 uppercase tracking-widest">
-                Team Ops
-              </span>
+    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-amber-500 selection:text-slate-950 flex flex-col">
+      {/* COMMAND CENTER TOP HEADER BAR */}
+      <header className="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 shadow-xl">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+          {/* Brand & Command Center Badge */}
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-600 flex items-center justify-center text-slate-950 font-black text-xl shadow-lg shadow-amber-500/20">
+              <Crown className="w-6 h-6 text-slate-950" />
             </div>
-            <p className="text-xs text-slate-300 font-medium mt-1">
-              One-stop telemetry interface for the StartupOS team to track signed-up builders, approve products, and conduct code audits.
-            </p>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="font-extrabold text-base tracking-tight text-white">StartupOS Command Center</span>
+                <span className="text-[9px] font-black px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 uppercase tracking-widest">
+                  Admin Ops
+                </span>
+              </div>
+              <span className="text-[10px] text-slate-400 font-medium block">Core Platform Telemetry & Governance</span>
+            </div>
+          </div>
+
+          {/* Real-time Infrastructure Telemetry Ticker */}
+          <div className="hidden lg:flex items-center gap-4 text-[11px] bg-slate-950/80 px-4 py-1.5 rounded-full border border-slate-800">
+            <span className="flex items-center gap-1.5 text-emerald-400 font-bold">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Node API Hub (8081)
+            </span>
+            <span className="text-slate-700">|</span>
+            <span className="text-slate-300 font-medium">👥 <strong className="text-white">{usersList.length}</strong> Registered Users</span>
+            <span className="text-slate-700">|</span>
+            <span className="text-slate-300 font-medium">🚀 <strong className="text-white">{launches.length}</strong> Shipped Products</span>
+            <span className="text-slate-700">|</span>
+            <span className="text-slate-300 font-medium">🛡️ <strong className="text-white">{auditsList.length}</strong> Audits Pending</span>
+          </div>
+
+          {/* Right Header Navigation & Exit Options */}
+          <div className="flex items-center gap-3">
+            {/* Switch to Builder Portal */}
+            {onExitToPortal && (
+              <button
+                onClick={onExitToPortal}
+                className="flex items-center gap-1.5 text-xs font-bold text-slate-300 bg-slate-800 hover:bg-slate-700 px-3.5 py-2 rounded-xl border border-slate-700 transition-all"
+                title="Switch to User Builder Portal"
+              >
+                <Rocket className="w-3.5 h-3.5 text-indigo-400" />
+                <span>Builder Portal</span>
+              </button>
+            )}
+
+            {/* Logout / Exit to Marketing Website */}
+            {onExitToWebsite && (
+              <button
+                onClick={onExitToWebsite}
+                className="flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-white px-3 py-2 rounded-xl border border-slate-800 hover:bg-slate-900 transition-all"
+                title="Exit Command Center to Marketing Website"
+              >
+                <span>Logout</span>
+              </button>
+            )}
+
+            {/* Admin User Badge */}
+            <div className="flex items-center gap-2 pl-2 border-l border-slate-800">
+              <span className="w-8 h-8 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-sm">
+                👑
+              </span>
+              <div className="text-left hidden sm:block">
+                <span className="text-xs font-bold text-white block leading-tight">{currentUser.name}</span>
+                <span className="text-[10px] font-bold text-amber-400 block">Super Admin</span>
+              </div>
+            </div>
           </div>
         </div>
+      </header>
 
-        <button
-          onClick={fetchAdminData}
-          className="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all"
-        >
-          <RefreshCw className="w-4 h-4" /> Sync Telemetry Data
-        </button>
-      </div>
+      {/* COMMAND CENTER MAIN WORKBENCH */}
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        {/* Top Team Operations Header */}
+        <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-6 sm:p-8 text-white shadow-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 border border-indigo-900/50">
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-600 text-slate-950 font-bold flex items-center justify-center shadow-lg shadow-amber-500/30 shrink-0">
+              <Crown className="w-7 h-7 text-slate-950" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h1 className="text-2xl font-extrabold tracking-tight">StartupOS Core Team Command Center</h1>
+                <span className="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/40 uppercase tracking-widest">
+                  1-Stop Ops Console
+                </span>
+              </div>
+              <p className="text-xs text-slate-300 font-medium mt-1">
+                Unified internal dashboard to monitor registered users across personas (*Founders*, *College Students*, *Developers*), approve community launches, feature #1 Product of the Day, and conduct 4-file parity code audits.
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={fetchAdminData}
+            className="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all"
+          >
+            <RefreshCw className="w-4 h-4" /> Sync Telemetry Data
+          </button>
+        </div>
 
       {/* EXECUTIVE TELEMETRY KPI DASHBOARD */}
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
@@ -578,6 +667,10 @@ export default function AdminConsole({ currentUser }) {
           )}
         </div>
       )}
+      </main>
+      <footer className="border-t border-slate-800 py-6 text-center text-xs text-slate-500 bg-slate-900/60 mt-auto">
+        StartupOS Team Command Center — 1-Stop Admin Ops, User Telemetry, Moderation & 4-File Parity Audits.
+      </footer>
     </div>
   );
 }

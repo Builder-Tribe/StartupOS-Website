@@ -4,7 +4,7 @@ import {
   Globe, HelpCircle, ArrowUpRight, CheckCircle2, ArrowLeftRight, LogOut
 } from 'lucide-react';
 
-export default function Sidebar({ activeTab, setActiveTab, currentUser, onOpenLaunchModal, onExitToWebsite, onOpenHelpCenter }) {
+export default function Sidebar({ activeTab, setActiveTab, currentUser, isLoggedIn, onOpenLaunchModal, onExitToWebsite, onOpenHelpCenter, onOpenCommandCenter }) {
   const mainNav = [
     { id: 'launchpad', label: 'Launchpad Feed', icon: Trophy, badge: 'Live' },
     { id: 'blueprints', label: 'My Projects', icon: FolderGit2 },
@@ -79,26 +79,22 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser, onOpenLa
             })}
           </div>
 
-          {/* Admin Governance Section */}
+          {/* Admin Launcher Section for Admin Users */}
           {currentUser.role === 'admin' && (
             <div className="space-y-1 border-t border-slate-800/80 pt-3">
               <span className="text-[10px] font-bold tracking-wider text-amber-400 uppercase px-3 block mb-2 flex items-center gap-1">
-                <Crown className="w-3 h-3 text-amber-400" /> Admin Realm
+                <Crown className="w-3 h-3 text-amber-400" /> StartupOS Ops
               </span>
               <button
-                onClick={() => setActiveTab('admin')}
-                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all ${
-                  activeTab === 'admin'
-                    ? 'bg-amber-500/20 text-amber-200 border border-amber-500/40'
-                    : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/60'
-                }`}
+                onClick={onOpenCommandCenter}
+                className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all bg-amber-500/10 text-amber-200 border border-amber-500/30 hover:bg-amber-500/20"
               >
                 <div className="flex items-center gap-2.5">
                   <Crown className="w-4 h-4 text-amber-400" />
-                  <span>Admin Console</span>
+                  <span>Team Command Center</span>
                 </div>
                 <span className="text-[9px] font-black px-1.5 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/30 uppercase">
-                  Ops
+                  Admin
                 </span>
               </button>
             </div>
@@ -134,14 +130,16 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser, onOpenLa
           </span>
         </div>
 
-        {/* Exit to Marketing Website */}
-        <button
-          onClick={onExitToWebsite}
-          className="w-full text-[11px] font-semibold text-slate-400 hover:text-white flex items-center justify-center gap-1.5 py-1.5 rounded-lg hover:bg-slate-800 transition-colors"
-        >
-          <Globe className="w-3.5 h-3.5 text-indigo-400" />
-          <span>Exit to Marketing Website</span>
-        </button>
+        {/* Exit to Marketing Website (ONLY SHOWN TO GUEST DEMO VISITORS) */}
+        {!isLoggedIn && (
+          <button
+            onClick={onExitToWebsite}
+            className="w-full text-[11px] font-semibold text-slate-400 hover:text-white flex items-center justify-center gap-1.5 py-1.5 rounded-lg hover:bg-slate-800 transition-colors"
+          >
+            <Globe className="w-3.5 h-3.5 text-indigo-400" />
+            <span>Exit Demo to Marketing Website</span>
+          </button>
+        )}
 
         {/* User Mini Profile */}
         <div className="flex items-center justify-between pt-1 border-t border-slate-800/60">
