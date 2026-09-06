@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { 
   ShieldCheck, Crown, Flame, Trash2, Award, Users, Lock, CheckCircle2, 
-  AlertTriangle, RefreshCw, Search, Filter, Activity, UserPlus, Zap,
+  AlertTriangle, RefreshCw, Search, Filter, Activity, Zap, LayoutDashboard,
   GraduationCap, Rocket, Code2, Building2, Check, FileText, ExternalLink,
-  MessageSquare, Star, Sliders, Layers, ChevronRight
+  MessageSquare, Star, Sliders, Layers, ChevronRight, LogOut, Settings
 } from 'lucide-react';
 
-export default function AdminConsole({ currentUser, onExitToPortal, onExitToWebsite, onOpenAuthModal }) {
+export default function AdminConsole({ currentUser, onExitToWebsite, onOpenAuthModal }) {
   const [launches, setLaunches] = useState([]);
   const [usersList, setUsersList] = useState([]);
   const [auditsList, setAuditsList] = useState([]);
-  const [activeTab, setActiveTab] = useState('users'); // 'users' | 'moderation' | 'audits' | 'cms'
+  const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'users' | 'moderation' | 'audits' | 'settings'
   
   // Filters & Inputs
-  const [personaFilter, setPersonaFilter] = useState('all'); // 'all' | 'student' | 'founder' | 'developer' | 'admin'
-  const [statusFilter, setStatusFilter] = useState('all'); // 'all' | 'featured' | 'approved' | 'pending'
+  const [personaFilter, setPersonaFilter] = useState('all'); // 'all' | 'student' | 'founder' | 'developer'
+  const [statusFilter, setStatusFilter] = useState('all'); // 'all' | 'featured' | 'approved'
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
 
@@ -35,7 +35,7 @@ export default function AdminConsole({ currentUser, onExitToPortal, onExitToWebs
       setUsersList(resU || []);
       setAuditsList(resA || []);
     } catch (e) {
-      console.error('Failed to load admin telemetry', e);
+      console.error('Failed to load admin data', e);
     } finally {
       setLoading(false);
     }
@@ -51,19 +51,6 @@ export default function AdminConsole({ currentUser, onExitToPortal, onExitToWebs
       if (res.ok) fetchAdminData();
     } catch (err) {
       console.error('Admin action failed:', err);
-    }
-  };
-
-  const handleRolePromotion = async (userId, newRole) => {
-    try {
-      const res = await fetch(`/api/admin/users/${userId}/role`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ role: newRole, badge: newRole === 'admin' ? 'Super Admin' : 'Pro Builder' })
-      });
-      if (res.ok) fetchAdminData();
-    } catch (err) {
-      console.error('Role promotion failed:', err);
     }
   };
 
@@ -97,22 +84,22 @@ export default function AdminConsole({ currentUser, onExitToPortal, onExitToWebs
           <div className="w-16 h-16 rounded-3xl bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center mx-auto shadow-lg shadow-amber-500/10">
             <Lock className="w-8 h-8" />
           </div>
-          <h2 className="text-2xl font-extrabold tracking-tight">StartupOS Team Access Required</h2>
+          <h2 className="text-2xl font-extrabold tracking-tight">StartupOS Admin Access Required</h2>
           <p className="text-slate-400 text-xs leading-relaxed font-medium">
-            You are currently signed in as <span className="font-bold text-white">{currentUser.name}</span> (User Realm). Super Admin privileges are required to access the StartupOS Team Command Center.
+            You are signed in as <span className="font-bold text-white">{currentUser.name}</span>. Admin credentials are required to access the StartupOS Internal CMS.
           </p>
           <div className="pt-2 flex flex-col gap-2">
             <button
               onClick={onOpenAuthModal}
-              className="w-full py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-extrabold text-xs rounded-xl shadow-lg shadow-amber-500/20 transition-all"
+              className="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold text-xs rounded-xl shadow-lg shadow-indigo-600/20 transition-all"
             >
-              Sign In as Platform Admin
+              Sign In as Admin
             </button>
             <button
-              onClick={onExitToPortal}
+              onClick={onExitToWebsite}
               className="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs rounded-xl transition-all"
             >
-              Return to Builder Portal
+              Exit to Website
             </button>
           </div>
         </div>
@@ -120,7 +107,7 @@ export default function AdminConsole({ currentUser, onExitToPortal, onExitToWebs
     );
   }
 
-  // Persona telemetry breakdown
+  // Telemetry breakdown
   const studentCount = usersList.filter(u => u.persona === 'student').length;
   const founderCount = usersList.filter(u => u.persona === 'founder' || !u.persona).length;
   const devCount = usersList.filter(u => u.persona === 'developer').length;
@@ -146,531 +133,512 @@ export default function AdminConsole({ currentUser, onExitToPortal, onExitToWebs
 
   const featuredCount = launches.filter(l => l.isFeatured).length;
 
+  const adminNavItems = [
+    { id: 'overview', label: 'Dashboard Overview', icon: LayoutDashboard },
+    { id: 'users', label: 'Users & Personas', icon: Users, badge: `${usersList.length}` },
+    { id: 'moderation', label: 'Product Launches (CMS)', icon: Rocket, badge: `${launches.length}` },
+    { id: 'audits', label: 'Project Audits (LMS)', icon: ShieldCheck, badge: `${auditsList.length}` },
+    { id: 'settings', label: 'System & Health', icon: Settings },
+  ];
+
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-amber-500 selection:text-slate-950 flex flex-col">
-      {/* COMMAND CENTER TOP HEADER BAR */}
-      <header className="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 shadow-xl">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
-          {/* Brand & Command Center Badge */}
+    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-indigo-600 selection:text-white flex overflow-hidden">
+      {/* 1. LEFT ADMIN SIDEBAR PANEL */}
+      <aside className="w-64 bg-slate-900 border-r border-slate-800 flex flex-col justify-between shrink-0 h-screen sticky top-0 z-30 select-none">
+        <div className="p-5 space-y-6">
+          {/* Brand Logo */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-600 flex items-center justify-center text-slate-950 font-black text-xl shadow-lg shadow-amber-500/20">
-              <Crown className="w-6 h-6 text-slate-950" />
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-indigo-700 flex items-center justify-center text-white font-black text-xl shadow-lg shadow-indigo-600/30">
+              S
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <span className="font-extrabold text-base tracking-tight text-white">StartupOS Command Center</span>
-                <span className="text-[9px] font-black px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 uppercase tracking-widest">
-                  Admin Ops
+              <div className="flex items-center gap-1.5">
+                <span className="font-extrabold text-lg text-white tracking-tight">StartupOS</span>
+                <span className="text-[9px] font-black px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30 uppercase tracking-widest">
+                  Admin CMS
                 </span>
               </div>
-              <span className="text-[10px] text-slate-400 font-medium block">Core Platform Telemetry & Governance</span>
+              <span className="text-[10px] text-slate-400 font-medium block">Internal Management Portal</span>
             </div>
           </div>
 
-          {/* Real-time Infrastructure Telemetry Ticker */}
-          <div className="hidden lg:flex items-center gap-4 text-[11px] bg-slate-950/80 px-4 py-1.5 rounded-full border border-slate-800">
-            <span className="flex items-center gap-1.5 text-emerald-400 font-bold">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Node API Hub (8081)
+          {/* Nav Links */}
+          <nav className="space-y-1 pt-2">
+            <span className="text-[10px] font-bold tracking-wider text-slate-400 uppercase px-3 block mb-2">
+              Management Modules
             </span>
-            <span className="text-slate-700">|</span>
-            <span className="text-slate-300 font-medium">👥 <strong className="text-white">{usersList.length}</strong> Registered Users</span>
-            <span className="text-slate-700">|</span>
-            <span className="text-slate-300 font-medium">🚀 <strong className="text-white">{launches.length}</strong> Shipped Products</span>
-            <span className="text-slate-700">|</span>
-            <span className="text-slate-300 font-medium">🛡️ <strong className="text-white">{auditsList.length}</strong> Audits Pending</span>
-          </div>
+            {adminNavItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeTab === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveTab(item.id)}
+                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all ${
+                    isActive
+                      ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
+                      : 'text-slate-400 hover:text-white hover:bg-slate-800/80'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-slate-400'}`} />
+                    <span>{item.label}</span>
+                  </div>
+                  {item.badge && (
+                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${
+                      isActive ? 'bg-indigo-700 text-white' : 'bg-slate-800 text-slate-400 border border-slate-700'
+                    }`}>
+                      {item.badge}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </nav>
+        </div>
 
-          {/* Right Header Navigation & Exit Options */}
-          <div className="flex items-center gap-3">
-            {/* Switch to Builder Portal */}
-            {onExitToPortal && (
-              <button
-                onClick={onExitToPortal}
-                className="flex items-center gap-1.5 text-xs font-bold text-slate-300 bg-slate-800 hover:bg-slate-700 px-3.5 py-2 rounded-xl border border-slate-700 transition-all"
-                title="Switch to User Builder Portal"
-              >
-                <Rocket className="w-3.5 h-3.5 text-indigo-400" />
-                <span>Builder Portal</span>
-              </button>
-            )}
+        {/* Bottom Profile & Sign Out */}
+        <div className="p-4 border-t border-slate-800 space-y-3 bg-slate-900/90">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2.5 overflow-hidden">
+              <span className="w-8 h-8 rounded-lg bg-indigo-950 border border-indigo-700 flex items-center justify-center text-sm shrink-0">
+                👑
+              </span>
+              <div className="truncate">
+                <span className="text-xs font-bold text-white block truncate">{currentUser.name}</span>
+                <span className="text-[10px] text-amber-400 font-semibold block truncate">Platform Admin</span>
+              </div>
+            </div>
 
-            {/* Logout / Exit to Marketing Website */}
             {onExitToWebsite && (
               <button
                 onClick={onExitToWebsite}
-                className="flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-white px-3 py-2 rounded-xl border border-slate-800 hover:bg-slate-900 transition-all"
-                title="Exit Command Center to Marketing Website"
+                className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+                title="Sign Out to Website"
               >
-                <span>Logout</span>
+                <LogOut className="w-4 h-4" />
               </button>
             )}
-
-            {/* Admin User Badge */}
-            <div className="flex items-center gap-2 pl-2 border-l border-slate-800">
-              <span className="w-8 h-8 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-sm">
-                👑
-              </span>
-              <div className="text-left hidden sm:block">
-                <span className="text-xs font-bold text-white block leading-tight">{currentUser.name}</span>
-                <span className="text-[10px] font-bold text-amber-400 block">Super Admin</span>
-              </div>
-            </div>
           </div>
         </div>
-      </header>
+      </aside>
 
-      {/* COMMAND CENTER MAIN WORKBENCH */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-        {/* Top Team Operations Header */}
-        <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-6 sm:p-8 text-white shadow-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 border border-indigo-900/50">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-600 text-slate-950 font-bold flex items-center justify-center shadow-lg shadow-amber-500/30 shrink-0">
-              <Crown className="w-7 h-7 text-slate-950" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-2xl font-extrabold tracking-tight">StartupOS Core Team Command Center</h1>
-                <span className="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/40 uppercase tracking-widest">
-                  1-Stop Ops Console
-                </span>
-              </div>
-              <p className="text-xs text-slate-300 font-medium mt-1">
-                Unified internal dashboard to monitor registered users across personas (*Founders*, *College Students*, *Developers*), approve community launches, feature #1 Product of the Day, and conduct 4-file parity code audits.
-              </p>
-            </div>
+      {/* 2. MAIN ADMIN CONTENT CONTAINER */}
+      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto h-screen">
+        {/* Top Header */}
+        <header className="bg-slate-900/80 backdrop-blur-md border-b border-slate-800 sticky top-0 z-20 px-6 py-4 flex items-center justify-between gap-4">
+          <div>
+            <h1 className="text-lg font-extrabold text-white capitalize flex items-center gap-2">
+              {activeTab === 'overview' && '📊 Platform Dashboard Overview'}
+              {activeTab === 'users' && '👥 Signed-Up Users & Persona Directory'}
+              {activeTab === 'moderation' && '🚀 Product Launches & Moderation CMS'}
+              {activeTab === 'audits' && '🎓 4-File Parity Project Audits (LMS)'}
+              {activeTab === 'settings' && '⚙️ System Architecture & Backend Health'}
+            </h1>
+            <p className="text-xs text-slate-400 font-medium">StartupOS Core Team Admin Panel</p>
           </div>
 
-          <button
-            onClick={fetchAdminData}
-            className="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all"
-          >
-            <RefreshCw className="w-4 h-4" /> Sync Telemetry Data
-          </button>
-        </div>
-
-      {/* EXECUTIVE TELEMETRY KPI DASHBOARD */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
-        {/* Total Users */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs space-y-2">
-          <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
-            <span>Signed-up Users</span>
-            <Users className="w-4 h-4 text-indigo-600" />
-          </div>
-          <div className="text-3xl font-extrabold text-slate-900">{usersList.length}</div>
-          <div className="flex gap-1 text-[10px] text-slate-500 font-medium pt-1">
-            <span className="text-indigo-600 font-bold">{founderCount} Founders</span> • 
-            <span className="text-emerald-600 font-bold">{studentCount} Students</span>
-          </div>
-        </div>
-
-        {/* Total Shipped Products */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs space-y-2">
-          <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
-            <span>Products Shipped</span>
-            <Flame className="w-4 h-4 text-amber-500" />
-          </div>
-          <div className="text-3xl font-extrabold text-slate-900">{launches.length}</div>
-          <div className="text-[10px] text-slate-500 font-medium pt-1">
-            {featuredCount} Featured Product of the Day
-          </div>
-        </div>
-
-        {/* College Students */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs space-y-2">
-          <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
-            <span>College Students</span>
-            <GraduationCap className="w-4 h-4 text-emerald-600" />
-          </div>
-          <div className="text-3xl font-extrabold text-emerald-600">{studentCount}</div>
-          <div className="text-[10px] text-slate-500 font-medium pt-1">
-            Resume portfolio builders
-          </div>
-        </div>
-
-        {/* Audit Requests */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs space-y-2">
-          <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
-            <span>Audit Requests</span>
-            <ShieldCheck className="w-4 h-4 text-indigo-600" />
-          </div>
-          <div className="text-3xl font-extrabold text-indigo-600">{auditsList.length}</div>
-          <div className="text-[10px] text-slate-500 font-medium pt-1">
-            {auditsList.filter(a => a.status === 'pending').length} Pending Team Review
-          </div>
-        </div>
-
-        {/* System Parity Health */}
-        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs space-y-2">
-          <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
-            <span>4-File Parity Health</span>
-            <CheckCircle2 className="w-4 h-4 text-emerald-500" />
-          </div>
-          <div className="text-3xl font-extrabold text-emerald-500">100%</div>
-          <div className="text-[10px] text-slate-500 font-medium pt-1">
-            AGENTS, ROADMAP, CLAUDE & CONTRIBUTING
-          </div>
-        </div>
-      </div>
-
-      {/* TEAM COMMAND TAB NAVIGATION */}
-      <div className="flex border-b border-slate-200/80 gap-6 overflow-x-auto">
-        {[
-          { id: 'users', label: '👥 User & Persona Directory', badge: `${usersList.length}` },
-          { id: 'moderation', label: '🚀 Product Launch Approval & CMS', badge: `${launches.length}` },
-          { id: 'audits', label: '🎓 Project Audit Workbench (Admin LMS)', badge: `${auditsList.length}` },
-        ].map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`pb-3.5 text-xs font-bold flex items-center gap-2 border-b-2 transition-all shrink-0 ${
-              activeTab === tab.id
-                ? 'border-indigo-600 text-indigo-600 font-black'
-                : 'border-transparent text-slate-500 hover:text-slate-900'
-            }`}
-          >
-            <span>{tab.label}</span>
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 font-mono">
-              {tab.badge}
-            </span>
-          </button>
-        ))}
-      </div>
-
-      {/* TAB 1: USER & PERSONA DIRECTORY (WHO ALL SIGNED UP & WHAT THEY ARE DOING) */}
-      {activeTab === 'users' && (
-        <div className="space-y-4">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="relative w-full sm:w-80">
-              <Search className="w-4 h-4 absolute left-3.5 top-3 text-slate-400" />
+          <div className="flex items-center gap-3">
+            <div className="relative w-64 hidden sm:block">
+              <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-slate-400" />
               <input
                 type="text"
-                placeholder="Search registered builders by name or email..."
+                placeholder="Search users or products..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full pl-8 pr-3 py-1.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
             </div>
-
-            {/* Persona Filters */}
-            <div className="flex items-center gap-2 overflow-x-auto w-full sm:w-auto">
-              <span className="text-xs font-semibold text-slate-500 shrink-0">Persona:</span>
-              {['all', 'student', 'founder', 'developer', 'admin'].map((p) => (
-                <button
-                  key={p}
-                  onClick={() => setPersonaFilter(p)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold capitalize transition-all shrink-0 ${
-                    personaFilter === p
-                      ? 'bg-indigo-600 text-white shadow-xs'
-                      : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'
-                  }`}
-                >
-                  {p}
-                </button>
-              ))}
-            </div>
+            <button
+              onClick={fetchAdminData}
+              className="flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold px-3 py-1.5 rounded-xl border border-slate-700 transition-all"
+            >
+              <RefreshCw className="w-3.5 h-3.5" /> Refresh
+            </button>
           </div>
+        </header>
 
-          <div className="bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-sm">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 font-mono uppercase text-[10px]">
-                <tr>
-                  <th className="py-3.5 px-4">User Name & Avatar</th>
-                  <th className="py-3.5 px-4">Work Email</th>
-                  <th className="py-3.5 px-4">Persona</th>
-                  <th className="py-3.5 px-4">Workspace Studio</th>
-                  <th className="py-3.5 px-4">Role & Badge</th>
-                  <th className="py-3.5 px-4 text-right">Team Controls</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 text-slate-700">
-                {filteredUsers.map((u) => (
-                  <tr key={u.id} className="hover:bg-slate-50/70 transition-colors">
-                    <td className="py-3.5 px-4">
-                      <div className="flex items-center gap-3">
-                        <span className="w-9 h-9 rounded-xl bg-indigo-50 border border-indigo-200 flex items-center justify-center text-lg shrink-0">
-                          {u.avatar || '👩‍💻'}
-                        </span>
-                        <div>
-                          <span className="font-bold text-slate-900 block text-xs">{u.name}</span>
-                          <span className="text-[10px] text-slate-400">ID: {u.id}</span>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="py-3.5 px-4 font-medium text-slate-600">{u.email}</td>
-                    <td className="py-3.5 px-4">
-                      <span className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider ${
-                        u.persona === 'student' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
-                        u.persona === 'admin' ? 'bg-amber-50 text-amber-800 border border-amber-200' :
-                        'bg-indigo-50 text-indigo-700 border border-indigo-200'
-                      }`}>
-                        {u.persona || 'founder'}
-                      </span>
-                    </td>
-                    <td className="py-3.5 px-4 font-semibold text-slate-800 flex items-center gap-1.5 pt-5">
-                      <Building2 className="w-3.5 h-3.5 text-slate-400" />
-                      <span>{u.workspaceName || `${u.name}'s Studio`}</span>
-                    </td>
-                    <td className="py-3.5 px-4">
-                      <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full ${
-                        u.role === 'admin' ? 'bg-amber-100 text-amber-800 border border-amber-300' : 'bg-slate-100 text-slate-800 border border-slate-200'
-                      }`}>
-                        {u.badge || 'Pro Builder'}
-                      </span>
-                    </td>
-                    <td className="py-3.5 px-4 text-right space-x-2">
-                      {u.role === 'user' ? (
-                        <button
-                          onClick={() => handleRolePromotion(u.id, 'admin')}
-                          className="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition-all shadow-xs"
-                        >
-                          Promote to Admin
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => handleRolePromotion(u.id, 'user')}
-                          className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-all"
-                        >
-                          Demote to User
-                        </button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-
-      {/* TAB 2: PRODUCT LAUNCH APPROVAL & CMS DRIVER */}
-      {activeTab === 'moderation' && (
-        <div className="space-y-4">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="relative w-full sm:w-80">
-              <Search className="w-4 h-4 absolute left-3.5 top-3 text-slate-400" />
-              <input
-                type="text"
-                placeholder="Filter launches or makers..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 rounded-xl border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              />
-            </div>
-
-            <div className="flex gap-2 w-full sm:w-auto overflow-x-auto">
-              <button
-                onClick={() => setStatusFilter('all')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold ${statusFilter === 'all' ? 'bg-indigo-600 text-white' : 'bg-white text-slate-600 border border-slate-200'}`}
-              >
-                All ({launches.length})
-              </button>
-              <button
-                onClick={() => setStatusFilter('featured')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold ${statusFilter === 'featured' ? 'bg-amber-500 text-white' : 'bg-white text-slate-600 border border-slate-200'}`}
-              >
-                ★ Product of the Day ({featuredCount})
-              </button>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-sm">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 font-mono uppercase text-[10px]">
-                <tr>
-                  <th className="py-3.5 px-4">Product Details</th>
-                  <th className="py-3.5 px-4">Category</th>
-                  <th className="py-3.5 px-4">Upvotes</th>
-                  <th className="py-3.5 px-4">Status & Featured</th>
-                  <th className="py-3.5 px-4 text-right">CMS Moderation Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 text-slate-700">
-                {filteredLaunches.map((item) => (
-                  <tr key={item.id} className="hover:bg-slate-50/50">
-                    <td className="py-4 px-4">
-                      <div className="font-bold text-slate-900 text-xs">{item.title}</div>
-                      <div className="text-slate-500 font-medium line-clamp-1 mt-0.5">{item.tagline}</div>
-                      <div className="text-[11px] text-indigo-600 font-bold mt-0.5">Maker: {item.maker.name}</div>
-                    </td>
-                    <td className="py-4 px-4 font-semibold text-slate-700">{item.category}</td>
-                    <td className="py-4 px-4 font-mono font-bold text-slate-900">{item.upvotes}</td>
-                    <td className="py-4 px-4">
-                      {item.isFeatured ? (
-                        <span className="text-[10px] font-extrabold px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 border border-amber-300">
-                          ★ #1 Product of Day
-                        </span>
-                      ) : (
-                        <span className="text-[10px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
-                          Approved Listing
-                        </span>
-                      )}
-                    </td>
-                    <td className="py-4 px-4 text-right space-x-2">
-                      <button
-                        onClick={() => handleAdminAction(item.id, 'feature')}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                          item.isFeatured ? 'bg-slate-200 text-slate-800' : 'bg-amber-500 hover:bg-amber-600 text-white shadow-xs'
-                        }`}
-                      >
-                        {item.isFeatured ? 'Unfeature' : 'Set #1 Featured'}
-                      </button>
-                      <button
-                        onClick={() => handleAdminAction(item.id, 'delete')}
-                        className="p-2 rounded-xl text-red-600 hover:bg-red-50 transition-colors"
-                        title="Delete Product Listing"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-
-      {/* TAB 3: PROJECT AUDIT & CODE EVALUATION WORKBENCH (ADMIN LMS) */}
-      {activeTab === 'audits' && (
-        <div className="space-y-6">
-          <div className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div>
-              <span className="text-xs text-indigo-600 font-mono font-bold uppercase tracking-widest bg-indigo-50 border border-indigo-200 px-2.5 py-0.5 rounded-full">
-                Admin LMS & 4-File Parity Inspector
-              </span>
-              <h2 className="text-xl font-extrabold text-slate-900 mt-2">Submitted Product Audit Queue</h2>
-              <p className="text-xs text-slate-500 mt-1">Review student & founder projects, inspect 4-file parity baseline, and issue verified builder scores.</p>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-sm">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 border-b border-slate-200 text-slate-500 font-mono uppercase text-[10px]">
-                <tr>
-                  <th className="py-3.5 px-4">Project & Builder</th>
-                  <th className="py-3.5 px-4">Persona</th>
-                  <th className="py-3.5 px-4">4-File Parity Baseline</th>
-                  <th className="py-3.5 px-4">Audit Score</th>
-                  <th className="py-3.5 px-4">Status</th>
-                  <th className="py-3.5 px-4 text-right">Audit Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 text-slate-700">
-                {auditsList.map((audit) => (
-                  <tr key={audit.id} className="hover:bg-slate-50/50">
-                    <td className="py-4 px-4">
-                      <div className="font-bold text-slate-900 text-xs">{audit.projectName}</div>
-                      <div className="text-[11px] text-slate-500">{audit.builderName}</div>
-                      <a href={audit.githubUrl} target="_blank" rel="noreferrer" className="text-[10px] text-indigo-600 hover:underline flex items-center gap-0.5 mt-0.5">
-                        GitHub Repo <ExternalLink className="w-2.5 h-2.5" />
-                      </a>
-                    </td>
-                    <td className="py-4 px-4">
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200 capitalize">
-                        {audit.persona || 'founder'}
-                      </span>
-                    </td>
-                    <td className="py-4 px-4">
-                      <div className="flex items-center gap-1 font-mono text-[10px]">
-                        <span className={`px-1.5 py-0.5 rounded ${audit.hasAgents ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-700'}`}>AGENTS</span>
-                        <span className={`px-1.5 py-0.5 rounded ${audit.hasRoadmap ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-700'}`}>ROADMAP</span>
-                        <span className={`px-1.5 py-0.5 rounded ${audit.hasClaude ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-700'}`}>CLAUDE</span>
-                        <span className={`px-1.5 py-0.5 rounded ${audit.hasContributing ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-700'}`}>CONTRIBUTING</span>
-                      </div>
-                    </td>
-                    <td className="py-4 px-4 font-mono font-extrabold text-slate-900 text-sm">
-                      {audit.score}/100
-                    </td>
-                    <td className="py-4 px-4">
-                      <span className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full capitalize ${
-                        audit.status === 'verified' ? 'bg-emerald-100 text-emerald-800 border border-emerald-300' : 'bg-amber-100 text-amber-800 border border-amber-300'
-                      }`}>
-                        {audit.status}
-                      </span>
-                    </td>
-                    <td className="py-4 px-4 text-right">
-                      <button
-                        onClick={() => {
-                          setSelectedAudit(audit);
-                          setAuditScoreInput(audit.score || 95);
-                          setAuditFeedbackInput(audit.examinerFeedback || '');
-                        }}
-                        className="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition-all shadow-xs"
-                      >
-                        Audit Product
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          {/* EVALUATION DRAWER MODAL */}
-          {selectedAudit && (
-            <div className="fixed inset-0 bg-slate-950/70 backdrop-blur-md z-50 flex items-center justify-center p-4">
-              <div className="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 space-y-6 shadow-2xl border border-slate-100">
-                <div className="flex justify-between items-center border-b border-slate-200 pb-4">
-                  <div>
-                    <span className="text-[10px] font-mono font-bold uppercase text-indigo-600 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded">
-                      Admin Code Examiner
-                    </span>
-                    <h3 className="text-xl font-extrabold text-slate-900 mt-1">Audit {selectedAudit.projectName}</h3>
+        {/* View Contents */}
+        <main className="p-6 sm:p-8 space-y-8 flex-1 max-w-7xl w-full mx-auto">
+          {/* TAB 1: DASHBOARD OVERVIEW */}
+          {activeTab === 'overview' && (
+            <div className="space-y-8">
+              {/* Executive Metrics Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-2">
+                  <div className="flex items-center justify-between text-xs text-slate-400 font-medium">
+                    <span>Registered Builders</span>
+                    <Users className="w-4 h-4 text-indigo-400" />
                   </div>
-                  <button onClick={() => setSelectedAudit(null)} className="text-slate-400 hover:text-slate-700 text-sm font-bold">✕</button>
+                  <div className="text-3xl font-extrabold text-white">{usersList.length}</div>
+                  <div className="text-[11px] text-slate-400 font-medium">
+                    <span className="text-indigo-400 font-bold">{founderCount} Founders</span> • <span className="text-emerald-400 font-bold">{studentCount} Students</span>
+                  </div>
                 </div>
 
-                <form onSubmit={handleReviewAudit} className="space-y-4">
-                  <div>
-                    <label className="block text-xs font-bold uppercase text-slate-700 mb-1 font-mono">Assign Audit Score (0 - 100) *</label>
-                    <input
-                      type="number"
-                      min="0"
-                      max="100"
-                      required
-                      value={auditScoreInput}
-                      onChange={(e) => setAuditScoreInput(e.target.value)}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm font-mono font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                    />
+                <div className="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-2">
+                  <div className="flex items-center justify-between text-xs text-slate-400 font-medium">
+                    <span>Products Shipped</span>
+                    <Flame className="w-4 h-4 text-amber-400" />
                   </div>
+                  <div className="text-3xl font-extrabold text-white">{launches.length}</div>
+                  <div className="text-[11px] text-slate-400 font-medium">
+                    <span className="text-amber-400 font-bold">{featuredCount} Featured</span> Product of the Day
+                  </div>
+                </div>
 
-                  <div>
-                    <label className="block text-xs font-bold uppercase text-slate-700 mb-1 font-mono">Examiner Feedback & Audit Notes *</label>
-                    <textarea
-                      rows={3}
-                      required
-                      value={auditFeedbackInput}
-                      onChange={(e) => setAuditFeedbackInput(e.target.value)}
-                      placeholder="Add evaluation notes on 4-file parity, code quality, and architecture..."
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                    />
+                <div className="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-2">
+                  <div className="flex items-center justify-between text-xs text-slate-400 font-medium">
+                    <span>Project Audits</span>
+                    <ShieldCheck className="w-4 h-4 text-indigo-400" />
                   </div>
+                  <div className="text-3xl font-extrabold text-white">{auditsList.length}</div>
+                  <div className="text-[11px] text-slate-400 font-medium">
+                    {auditsList.filter(a => a.status === 'pending').length} Pending Examiner Review
+                  </div>
+                </div>
 
-                  <div className="flex justify-end gap-2 pt-2">
-                    <button
-                      type="button"
-                      onClick={() => setSelectedAudit(null)}
-                      className="px-4 py-2.5 rounded-xl bg-slate-100 text-slate-700 font-bold text-xs"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-md shadow-indigo-600/20"
-                    >
-                      Verify Audit & Grant Certificate
-                    </button>
+                <div className="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-2">
+                  <div className="flex items-center justify-between text-xs text-slate-400 font-medium">
+                    <span>4-File Parity Baseline</span>
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                   </div>
-                </form>
+                  <div className="text-3xl font-extrabold text-emerald-400">100%</div>
+                  <div className="text-[11px] text-slate-400 font-medium">
+                    AGENTS, ROADMAP, CLAUDE & CONTRIBUTING
+                  </div>
+                </div>
+              </div>
+
+              {/* Persona Distribution Showcase */}
+              <div className="bg-slate-900 rounded-2xl border border-slate-800 p-6 space-y-4">
+                <h3 className="text-sm font-extrabold text-white tracking-wide uppercase font-mono">User Personas Breakdown</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-1">
+                    <div className="flex justify-between text-xs text-slate-400 font-medium">
+                      <span className="flex items-center gap-1.5"><Rocket className="w-3.5 h-3.5 text-indigo-400" /> Founders</span>
+                      <span className="font-bold text-white">{founderCount}</span>
+                    </div>
+                    <p className="text-[11px] text-slate-400">Building 0-to-1 startups on StartupOS</p>
+                  </div>
+                  <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-1">
+                    <div className="flex justify-between text-xs text-slate-400 font-medium">
+                      <span className="flex items-center gap-1.5"><GraduationCap className="w-3.5 h-3.5 text-emerald-400" /> College Students</span>
+                      <span className="font-bold text-white">{studentCount}</span>
+                    </div>
+                    <p className="text-[11px] text-slate-400">Creating resume projects & learning AI</p>
+                  </div>
+                  <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-1">
+                    <div className="flex justify-between text-xs text-slate-400 font-medium">
+                      <span className="flex items-center gap-1.5"><Code2 className="w-3.5 h-3.5 text-amber-400" /> Developers</span>
+                      <span className="font-bold text-white">{devCount}</span>
+                    </div>
+                    <p className="text-[11px] text-slate-400">Architecting full-stack AI applications</p>
+                  </div>
+                </div>
               </div>
             </div>
           )}
-        </div>
-      )}
-      </main>
-      <footer className="border-t border-slate-800 py-6 text-center text-xs text-slate-500 bg-slate-900/60 mt-auto">
-        StartupOS Team Command Center — 1-Stop Admin Ops, User Telemetry, Moderation & 4-File Parity Audits.
-      </footer>
+
+          {/* TAB 2: USERS DIRECTORY */}
+          {activeTab === 'users' && (
+            <div className="space-y-4">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="flex items-center gap-2 overflow-x-auto w-full sm:w-auto">
+                  <span className="text-xs font-bold text-slate-400 shrink-0 uppercase font-mono">Filter Persona:</span>
+                  {['all', 'student', 'founder', 'developer'].map((p) => (
+                    <button
+                      key={p}
+                      onClick={() => setPersonaFilter(p)}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold capitalize transition-all shrink-0 ${
+                        personaFilter === p
+                          ? 'bg-indigo-600 text-white'
+                          : 'bg-slate-900 text-slate-400 border border-slate-800 hover:bg-slate-800'
+                      }`}
+                    >
+                      {p}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden shadow-xl">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-slate-950 border-b border-slate-800 text-slate-400 font-mono uppercase text-[10px]">
+                    <tr>
+                      <th className="py-3.5 px-4">User</th>
+                      <th className="py-3.5 px-4">Work Email</th>
+                      <th className="py-3.5 px-4">Persona</th>
+                      <th className="py-3.5 px-4">Workspace Studio</th>
+                      <th className="py-3.5 px-4">Badge</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-800/60 text-slate-300">
+                    {filteredUsers.map((u) => (
+                      <tr key={u.id} className="hover:bg-slate-800/40 transition-colors">
+                        <td className="py-3.5 px-4">
+                          <div className="flex items-center gap-3">
+                            <span className="w-9 h-9 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-center text-lg shrink-0">
+                              {u.avatar || '👩‍💻'}
+                            </span>
+                            <div>
+                              <span className="font-bold text-white block text-xs">{u.name}</span>
+                              <span className="text-[10px] text-slate-500 font-mono">ID: {u.id}</span>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="py-3.5 px-4 font-mono text-slate-400">{u.email}</td>
+                        <td className="py-3.5 px-4">
+                          <span className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider ${
+                            u.persona === 'student' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' :
+                            'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30'
+                          }`}>
+                            {u.persona || 'founder'}
+                          </span>
+                        </td>
+                        <td className="py-3.5 px-4 font-medium text-slate-300">
+                          {u.workspaceName || `${u.name}'s Studio`}
+                        </td>
+                        <td className="py-3.5 px-4">
+                          <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                            {u.badge || 'Pro Builder'}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 3: PRODUCT LAUNCHES (CMS) */}
+          {activeTab === 'moderation' && (
+            <div className="space-y-4">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="flex gap-2 w-full sm:w-auto overflow-x-auto">
+                  <button
+                    onClick={() => setStatusFilter('all')}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold ${statusFilter === 'all' ? 'bg-indigo-600 text-white' : 'bg-slate-900 text-slate-400 border border-slate-800'}`}
+                  >
+                    All ({launches.length})
+                  </button>
+                  <button
+                    onClick={() => setStatusFilter('featured')}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold ${statusFilter === 'featured' ? 'bg-amber-500 text-slate-950 font-extrabold' : 'bg-slate-900 text-slate-400 border border-slate-800'}`}
+                  >
+                    ★ Product of the Day ({featuredCount})
+                  </button>
+                </div>
+              </div>
+
+              <div className="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden shadow-xl">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-slate-950 border-b border-slate-800 text-slate-400 font-mono uppercase text-[10px]">
+                    <tr>
+                      <th className="py-3.5 px-4">Product Details</th>
+                      <th className="py-3.5 px-4">Category</th>
+                      <th className="py-3.5 px-4">Upvotes</th>
+                      <th className="py-3.5 px-4">Featured Status</th>
+                      <th className="py-3.5 px-4 text-right">CMS Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-800/60 text-slate-300">
+                    {filteredLaunches.map((item) => (
+                      <tr key={item.id} className="hover:bg-slate-800/40 transition-colors">
+                        <td className="py-4 px-4">
+                          <div className="font-bold text-white text-xs">{item.title}</div>
+                          <div className="text-slate-400 font-medium line-clamp-1 mt-0.5">{item.tagline}</div>
+                          <div className="text-[11px] text-indigo-400 font-bold mt-0.5">Maker: {item.maker.name}</div>
+                        </td>
+                        <td className="py-4 px-4 font-medium text-slate-300">{item.category}</td>
+                        <td className="py-4 px-4 font-mono font-bold text-white">{item.upvotes}</td>
+                        <td className="py-4 px-4">
+                          {item.isFeatured ? (
+                            <span className="text-[10px] font-extrabold px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                              ★ #1 Product of Day
+                            </span>
+                          ) : (
+                            <span className="text-[10px] font-semibold text-slate-400 bg-slate-950 px-2 py-0.5 rounded border border-slate-800">
+                              Approved
+                            </span>
+                          )}
+                        </td>
+                        <td className="py-4 px-4 text-right space-x-2">
+                          <button
+                            onClick={() => handleAdminAction(item.id, 'feature')}
+                            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                              item.isFeatured ? 'bg-slate-800 text-slate-300' : 'bg-amber-500 hover:bg-amber-400 text-slate-950 shadow-xs'
+                            }`}
+                          >
+                            {item.isFeatured ? 'Unfeature' : 'Set #1 Featured'}
+                          </button>
+                          <button
+                            onClick={() => handleAdminAction(item.id, 'delete')}
+                            className="p-2 rounded-xl text-red-400 hover:bg-red-950/40 transition-colors"
+                            title="Delete Product Listing"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 4: PROJECT AUDITS (LMS) */}
+          {activeTab === 'audits' && (
+            <div className="space-y-6">
+              <div className="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden shadow-xl">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-slate-950 border-b border-slate-800 text-slate-400 font-mono uppercase text-[10px]">
+                    <tr>
+                      <th className="py-3.5 px-4">Project & Builder</th>
+                      <th className="py-3.5 px-4">Persona</th>
+                      <th className="py-3.5 px-4">4-File Parity Baseline</th>
+                      <th className="py-3.5 px-4">Audit Score</th>
+                      <th className="py-3.5 px-4">Status</th>
+                      <th className="py-3.5 px-4 text-right">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-800/60 text-slate-300">
+                    {auditsList.map((audit) => (
+                      <tr key={audit.id} className="hover:bg-slate-800/40 transition-colors">
+                        <td className="py-4 px-4">
+                          <div className="font-bold text-white text-xs">{audit.projectName}</div>
+                          <div className="text-[11px] text-slate-400">{audit.builderName}</div>
+                          <a href={audit.githubUrl} target="_blank" rel="noreferrer" className="text-[10px] text-indigo-400 hover:underline flex items-center gap-0.5 mt-0.5">
+                            GitHub Repo <ExternalLink className="w-2.5 h-2.5" />
+                          </a>
+                        </td>
+                        <td className="py-4 px-4">
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-950 text-indigo-300 border border-slate-800 capitalize">
+                            {audit.persona || 'founder'}
+                          </span>
+                        </td>
+                        <td className="py-4 px-4">
+                          <div className="flex items-center gap-1 font-mono text-[10px]">
+                            <span className={`px-1.5 py-0.5 rounded ${audit.hasAgents ? 'bg-emerald-500/20 text-emerald-300' : 'bg-red-500/20 text-red-400'}`}>AGENTS</span>
+                            <span className={`px-1.5 py-0.5 rounded ${audit.hasRoadmap ? 'bg-emerald-500/20 text-emerald-300' : 'bg-red-500/20 text-red-400'}`}>ROADMAP</span>
+                            <span className={`px-1.5 py-0.5 rounded ${audit.hasClaude ? 'bg-emerald-500/20 text-emerald-300' : 'bg-red-500/20 text-red-400'}`}>CLAUDE</span>
+                            <span className={`px-1.5 py-0.5 rounded ${audit.hasContributing ? 'bg-emerald-500/20 text-emerald-300' : 'bg-red-500/20 text-red-400'}`}>CONTRIBUTING</span>
+                          </div>
+                        </td>
+                        <td className="py-4 px-4 font-mono font-extrabold text-white text-sm">
+                          {audit.score}/100
+                        </td>
+                        <td className="py-4 px-4">
+                          <span className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-full capitalize ${
+                            audit.status === 'verified' ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' : 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
+                          }`}>
+                            {audit.status}
+                          </span>
+                        </td>
+                        <td className="py-4 px-4 text-right">
+                          <button
+                            onClick={() => {
+                              setSelectedAudit(audit);
+                              setAuditScoreInput(audit.score || 95);
+                              setAuditFeedbackInput(audit.examinerFeedback || '');
+                            }}
+                            className="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all shadow-xs"
+                          >
+                            Audit Product
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* EVALUATION DRAWER MODAL */}
+              {selectedAudit && (
+                <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+                  <div className="bg-slate-900 rounded-3xl max-w-xl w-full p-6 sm:p-8 space-y-6 shadow-2xl border border-slate-800 text-white">
+                    <div className="flex justify-between items-center border-b border-slate-800 pb-4">
+                      <div>
+                        <span className="text-[10px] font-mono font-bold uppercase text-indigo-400 bg-indigo-500/20 border border-indigo-500/30 px-2 py-0.5 rounded">
+                          Admin Code Examiner
+                        </span>
+                        <h3 className="text-xl font-extrabold text-white mt-1">Audit {selectedAudit.projectName}</h3>
+                      </div>
+                      <button onClick={() => setSelectedAudit(null)} className="text-slate-400 hover:text-white text-sm font-bold">✕</button>
+                    </div>
+
+                    <form onSubmit={handleReviewAudit} className="space-y-4">
+                      <div>
+                        <label className="block text-xs font-bold uppercase text-slate-400 mb-1 font-mono">Assign Audit Score (0 - 100) *</label>
+                        <input
+                          type="number"
+                          min="0"
+                          max="100"
+                          required
+                          value={auditScoreInput}
+                          onChange={(e) => setAuditScoreInput(e.target.value)}
+                          className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm font-mono font-bold text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold uppercase text-slate-400 mb-1 font-mono">Examiner Feedback & Audit Notes *</label>
+                        <textarea
+                          rows={3}
+                          required
+                          value={auditFeedbackInput}
+                          onChange={(e) => setAuditFeedbackInput(e.target.value)}
+                          placeholder="Add evaluation notes on 4-file parity, code quality, and architecture..."
+                          className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        />
+                      </div>
+
+                      <div className="flex justify-end gap-2 pt-2">
+                        <button
+                          type="button"
+                          onClick={() => setSelectedAudit(null)}
+                          className="px-4 py-2.5 rounded-xl bg-slate-800 text-slate-300 font-bold text-xs"
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          type="submit"
+                          className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md shadow-indigo-600/20"
+                        >
+                          Verify Audit & Grant Certificate
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* TAB 5: SYSTEM SETTINGS */}
+          {activeTab === 'settings' && (
+            <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-4">
+              <h3 className="text-sm font-bold uppercase text-white font-mono">Backend API Infrastructure</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
+                <div className="p-4 rounded-xl bg-slate-950 border border-slate-800">
+                  <span className="text-slate-400 block">Server Status:</span>
+                  <span className="text-emerald-400 font-bold">🟢 Running on Port 8081</span>
+                </div>
+                <div className="p-4 rounded-xl bg-slate-950 border border-slate-800">
+                  <span className="text-slate-400 block">Data Repositories:</span>
+                  <span className="text-white font-bold">ideas.json, users.json, audits.json</span>
+                </div>
+              </div>
+            </div>
+          )}
+        </main>
+
+        <footer className="border-t border-slate-800/80 py-4 text-center text-xs text-slate-500 bg-slate-950 mt-auto">
+          StartupOS Internal Management CMS — 1-Stop Admin Platform.
+        </footer>
+      </div>
     </div>
   );
 }

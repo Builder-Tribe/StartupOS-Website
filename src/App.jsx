@@ -120,13 +120,12 @@ export default function App() {
     );
   }
 
-  // 2. IF VIEW MODE IS 'ADMIN': Render Standalone Full-Screen Admin Command Center
+  // 2. IF VIEW MODE IS 'ADMIN': Render Standalone Full-Screen Admin CMS Portal
   if (viewMode === 'admin') {
     return (
       <>
         <AdminConsole
           currentUser={currentUser}
-          onExitToPortal={() => setViewMode('portal')}
           onExitToWebsite={() => {
             setViewMode('website');
             setIsLoggedIn(false);

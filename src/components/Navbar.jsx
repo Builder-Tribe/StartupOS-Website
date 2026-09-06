@@ -59,18 +59,6 @@ export default function Navbar({ activeTab, setActiveTab, currentUser, isLoggedI
             <Plus className="w-4 h-4" /> Launch Product
           </button>
 
-          {/* Admin Command Center Switch Button (Visible to Admin Users) */}
-          {currentUser.role === 'admin' && (
-            <button
-              onClick={onOpenCommandCenter}
-              className="hidden sm:flex items-center gap-1.5 text-xs font-bold text-amber-800 bg-amber-100 hover:bg-amber-200 px-3 py-2 rounded-xl border border-amber-300 transition-all shadow-xs"
-              title="Open Team Command Center"
-            >
-              <Crown className="w-3.5 h-3.5 text-amber-600" />
-              <span>Command Center</span>
-            </button>
-          )}
-
           {/* Exit to Marketing Website button (ONLY SHOWN TO GUEST DEMO VISITORS) */}
           {!isLoggedIn && (
             <button
