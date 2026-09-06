@@ -11,7 +11,10 @@ import MarketingLander from './components/MarketingLander';
 import AuthModal from './components/AuthModal';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('launchpad'); // 'launchpad' | 'blueprints' | 'idealab' | 'lms' | 'admin' | 'landing'
+  // Top-level View Mode: 'website' (Standalone Marketing Lander) | 'portal' (StartupOS Builder Workspace)
+  const [viewMode, setViewMode] = useState('website');
+  const [activeTab, setActiveTab] = useState('launchpad'); // 'launchpad' | 'blueprints' | 'idealab' | 'academy' | 'admin'
+  
   const [ideas, setIdeas] = useState([]);
   const [activeIdea, setActiveIdea] = useState(null);
   const [showLaunchModal, setShowLaunchModal] = useState(false);
@@ -68,11 +71,32 @@ export default function App() {
 
   const handleLoginSuccess = (userData) => {
     setCurrentUser(userData);
+    setViewMode('portal'); // Transition directly to portal upon login
     if (userData.role === 'admin') {
       setActiveTab('admin');
     }
   };
 
+  // IF VIEW MODE IS 'WEBSITE': Render Standalone Marketing Landing Page
+  if (viewMode === 'website') {
+    return (
+      <>
+        <MarketingLander
+          onEnterPortal={() => setViewMode('portal')}
+          onOpenAuthModal={() => setShowAuthModal(true)}
+        />
+
+        {/* Auth Modal overlay accessible from website */}
+        <AuthModal
+          isOpen={showAuthModal}
+          onClose={() => setShowAuthModal(false)}
+          onLoginSuccess={handleLoginSuccess}
+        />
+      </>
+    );
+  }
+
+  // IF VIEW MODE IS 'PORTAL': Render Dedicated Builder Workspace Layout
   return (
     <div className="min-h-screen bg-slate-50/80 text-slate-900 font-sans selection:bg-indigo-600 selection:text-white relative overflow-x-hidden flex">
       {/* Ambient Floating Background Mesh Orbs */}
@@ -88,6 +112,7 @@ export default function App() {
         setActiveTab={setActiveTab}
         currentUser={currentUser}
         onOpenLaunchModal={() => setShowLaunchModal(true)}
+        onExitToWebsite={() => setViewMode('website')}
       />
 
       {/* Main Layout Container */}
@@ -100,6 +125,7 @@ export default function App() {
           onOpenAuthModal={() => setShowAuthModal(true)}
           mobileMenuOpen={mobileMenuOpen}
           setMobileMenuOpen={setMobileMenuOpen}
+          onExitToWebsite={() => setViewMode('website')}
         />
 
         {/* Mobile Navigation Drawer Overlay */}
@@ -118,6 +144,10 @@ export default function App() {
                 currentUser={currentUser}
                 onOpenLaunchModal={() => {
                   setShowLaunchModal(true);
+                  setMobileMenuOpen(false);
+                }}
+                onExitToWebsite={() => {
+                  setViewMode('website');
                   setMobileMenuOpen(false);
                 }}
               />
@@ -157,13 +187,6 @@ export default function App() {
 
           {activeTab === 'admin' && (
             <AdminConsole currentUser={currentUser} />
-          )}
-
-          {activeTab === 'landing' && (
-            <MarketingLander
-              onGetStarted={() => setActiveTab('launchpad')}
-              onOpenLms={() => setActiveTab('academy')}
-            />
           )}
         </main>
 

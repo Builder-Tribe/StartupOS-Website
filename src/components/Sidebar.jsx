@@ -1,10 +1,10 @@
 import React from 'react';
 import { 
   Trophy, FolderGit2, Sparkles, GraduationCap, ShieldCheck, Plus, User, Crown, 
-  Globe, HelpCircle, ArrowUpRight, CheckCircle2, Layout
+  Globe, HelpCircle, ArrowUpRight, CheckCircle2, ArrowLeftRight, LogOut
 } from 'lucide-react';
 
-export default function Sidebar({ activeTab, setActiveTab, currentUser, onOpenLaunchModal }) {
+export default function Sidebar({ activeTab, setActiveTab, currentUser, onOpenLaunchModal, onExitToWebsite }) {
   const mainNav = [
     { id: 'launchpad', label: 'Launchpad Feed', icon: Trophy, badge: 'Live' },
     { id: 'blueprints', label: 'My Projects', icon: FolderGit2 },
@@ -48,7 +48,7 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser, onOpenLa
           {/* Main Workspace Section */}
           <div className="space-y-1">
             <span className="text-[10px] font-bold tracking-wider text-slate-400 uppercase px-3 block mb-2">
-              StartupOS Portal
+              StartupOS Modules
             </span>
             {mainNav.map((item) => {
               const Icon = item.icon;
@@ -79,29 +79,6 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser, onOpenLa
             })}
           </div>
 
-          {/* External Website Section */}
-          <div className="space-y-1 border-t border-slate-800/80 pt-3">
-            <span className="text-[10px] font-bold tracking-wider text-slate-400 uppercase px-3 block mb-2">
-              Public Website
-            </span>
-            <button
-              onClick={() => setActiveTab('landing')}
-              className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
-                activeTab === 'landing'
-                  ? 'bg-indigo-600/20 text-white border border-indigo-500/40 font-bold'
-                  : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/60'
-              }`}
-            >
-              <div className="flex items-center gap-2.5">
-                <Globe className="w-4 h-4 text-indigo-400" />
-                <span>Marketing Website</span>
-              </div>
-              <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">
-                Landing
-              </span>
-            </button>
-          </div>
-
           {/* Admin Governance Section */}
           {currentUser.role === 'admin' && (
             <div className="space-y-1 border-t border-slate-800/80 pt-3">
@@ -129,7 +106,7 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser, onOpenLa
         </div>
       </div>
 
-      {/* Bottom Footer Section: "How We Can Help" & User Profile */}
+      {/* Bottom Footer Section: "How We Can Help", Health & Exit Link */}
       <div className="p-4 border-t border-slate-800/80 space-y-3 bg-slate-900/90">
         {/* "How We Can Help" Feature Card */}
         <div 
@@ -157,8 +134,17 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser, onOpenLa
           </span>
         </div>
 
+        {/* Exit to Marketing Website */}
+        <button
+          onClick={onExitToWebsite}
+          className="w-full text-[11px] font-semibold text-slate-400 hover:text-white flex items-center justify-center gap-1.5 py-1.5 rounded-lg hover:bg-slate-800 transition-colors"
+        >
+          <Globe className="w-3.5 h-3.5 text-indigo-400" />
+          <span>Exit to Marketing Website</span>
+        </button>
+
         {/* User Mini Profile */}
-        <div className="flex items-center justify-between pt-1">
+        <div className="flex items-center justify-between pt-1 border-t border-slate-800/60">
           <div className="flex items-center gap-2.5 overflow-hidden">
             <span className="w-8 h-8 rounded-lg bg-indigo-950 border border-indigo-700/60 flex items-center justify-center text-sm shrink-0">
               {currentUser.avatar}
