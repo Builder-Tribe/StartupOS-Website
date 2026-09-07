@@ -67,7 +67,7 @@ StartupOS is architected into **three completely decoupled applications**, ensur
 
 ```bash
 # Clone the repository
-git clone https://github.com/1997agarwal/StartupOS.git
+git clone https://github.com/Builder-Tribe/StartupOS.git
 cd StartupOS
 
 # Install dependencies
