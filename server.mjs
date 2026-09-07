@@ -161,25 +161,57 @@ const INITIAL_AUDITS = [
   }
 ];
 
+const backupFile = join(dataDirectory, "backup_sync.json");
+
+async function writeAutoBackup() {
+  try {
+    const ideas = await readIdeas().catch(() => []);
+    const launches = await readLaunches().catch(() => []);
+    const users = await readUsers().catch(() => []);
+    const audits = await readAudits().catch(() => []);
+    const backupData = {
+      lastSyncedAt: new Date().toISOString(),
+      counts: { ideas: ideas.length, launches: launches.length, users: users.length, audits: audits.length },
+      ideas, launches, users, audits
+    };
+    await writeFile(backupFile, `${JSON.stringify(backupData, null, 2)}\n`, "utf8");
+  } catch (err) {
+    console.error("Auto backup update failed:", err);
+  }
+}
+
 async function initializeDatabase() {
   await mkdir(dataDirectory, { recursive: true });
   try { await readFile(databaseFile, "utf8"); } catch { await writeFile(databaseFile, "[]\n", "utf8"); }
   try { await readFile(launchesFile, "utf8"); } catch { await writeFile(launchesFile, `${JSON.stringify(INITIAL_LAUNCHES, null, 2)}\n`, "utf8"); }
   try { await readFile(usersFile, "utf8"); } catch { await writeFile(usersFile, `${JSON.stringify(INITIAL_USERS, null, 2)}\n`, "utf8"); }
   try { await readFile(auditsFile, "utf8"); } catch { await writeFile(auditsFile, `${JSON.stringify(INITIAL_AUDITS, null, 2)}\n`, "utf8"); }
+  await writeAutoBackup();
 }
 
 async function readIdeas() { return JSON.parse(await readFile(databaseFile, "utf8")); }
-async function writeIdeas(ideas) { await writeFile(databaseFile, `${JSON.stringify(ideas, null, 2)}\n`, "utf8"); }
+async function writeIdeas(ideas) { 
+  await writeFile(databaseFile, `${JSON.stringify(ideas, null, 2)}\n`, "utf8");
+  await writeAutoBackup();
+}
 
 async function readLaunches() { return JSON.parse(await readFile(launchesFile, "utf8")); }
-async function writeLaunches(launches) { await writeFile(launchesFile, `${JSON.stringify(launches, null, 2)}\n`, "utf8"); }
+async function writeLaunches(launches) { 
+  await writeFile(launchesFile, `${JSON.stringify(launches, null, 2)}\n`, "utf8");
+  await writeAutoBackup();
+}
 
 async function readUsers() { return JSON.parse(await readFile(usersFile, "utf8")); }
-async function writeUsers(users) { await writeFile(usersFile, `${JSON.stringify(users, null, 2)}\n`, "utf8"); }
+async function writeUsers(users) { 
+  await writeFile(usersFile, `${JSON.stringify(users, null, 2)}\n`, "utf8");
+  await writeAutoBackup();
+}
 
 async function readAudits() { return JSON.parse(await readFile(auditsFile, "utf8")); }
-async function writeAudits(audits) { await writeFile(auditsFile, `${JSON.stringify(audits, null, 2)}\n`, "utf8"); }
+async function writeAudits(audits) { 
+  await writeFile(auditsFile, `${JSON.stringify(audits, null, 2)}\n`, "utf8");
+  await writeAutoBackup();
+}
 
 const clean = (value, limit = 1200) => String(value || "").trim().slice(0, limit);
 
