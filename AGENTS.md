@@ -91,7 +91,8 @@ StartupOS/                                 ← Git Root (https://github.com/1997
 
 ## 6. Working Agreements for AI Assistants
 
+- **Mandatory UI Design Standard:** Every user interface and feature must adhere to the **Clean, Intuitive & Modern 2026 Light Theme** (zinc/slate-50 canvas, crisp `#ffffff` cards, subtle borders, high-contrast typography `#0f172a`, and purposeful accent colors). Avoid cramped, dark, or cluttered single-screen info dumps; prefer guided, step-by-step workflows with generous whitespace.
 - Prefer small, high-confidence diffs over broad speculative refactors.
 - Match surrounding code style and design system tokens.
 - Maintain documentation integrity and update `ROADMAP.md` on feature completion.
-- Verify runtime execution on `http://localhost:8081` before declaring done.
+- Verify runtime execution before declaring done.
