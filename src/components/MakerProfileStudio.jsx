@@ -738,7 +738,7 @@ export default function MakerProfileStudio({ currentUser, ideas = [] }) {
                   <div className="flex gap-2">
                     <input
                       type="text"
-                      placeholder="e.g. harshit-agarwal-pm or https://linkedin.com/in/..."
+                      placeholder="e.g. 1997agarwal or https://linkedin.com/in/..."
                       value={linkedinInput}
                       onChange={(e) => setLinkedinInput(e.target.value)}
                       className="flex-1 bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-medium outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500"

@@ -55,7 +55,7 @@ export default function LMSHub() {
   const [readmeName, setReadmeName] = useState('Harshit Agarwal');
   const [readmeRole, setReadmeRole] = useState('AI Product Manager & 0-to-1 Systems Builder');
   const [readmeGithub, setReadmeGithub] = useState('1997agarwal');
-  const [readmeLinkedin, setReadmeLinkedin] = useState('harshit-agarwal-pm');
+  const [readmeLinkedin, setReadmeLinkedin] = useState('1997agarwal');
   const [readmeEmail, setReadmeEmail] = useState('agarwal.harshit97@gmail.com');
   const [copiedReadme, setCopiedReadme] = useState(false);
 

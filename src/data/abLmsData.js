@@ -458,7 +458,7 @@ export function generateAiEvaluatorReport(sub) {
   };
 }
 
-export function generateProfileReadmeMarkdown({ name = 'AI Product Builder', role = 'AI Product Manager & 0-to-1 Systems Builder', github = '1997agarwal', linkedin = 'harshit-agarwal-pm', email = 'agarwal.harshit97@gmail.com', projects = [] }) {
+export function generateProfileReadmeMarkdown({ name = 'AI Product Builder', role = 'AI Product Manager & 0-to-1 Systems Builder', github = '1997agarwal', linkedin = '1997agarwal', email = 'agarwal.harshit97@gmail.com', projects = [] }) {
   const projectRows = projects.length > 0
     ? projects.map(p => `| **[${p.title}](${p.githubUrl})** | **${p.tagline || 'AI SaaS Application'}** | Solves core target user workflow friction with automated AI agent execution. | ${p.tools?.join(', ') || 'React 18, Node.js, AI Agents'} |`).join('\n')
     : `| **[StartupOS](https://github.com/${github}/StartupOS)** | **360° AI Product Incubator & Operating System** | Democratizes product creation for founders and students. | React 18, Vite, Node.js API, AntiGravity orchestration |

@@ -156,7 +156,7 @@ export const PRIMARY_MAKER_PROFILE = {
   location: 'Bangalore, India • Global Remote',
   email: 'agarwal.harshit97@gmail.com',
   github: 'https://github.com/1997agarwal',
-  linkedin: 'https://www.linkedin.com/in/harshit-agarwal-pm',
+  linkedin: 'https://www.linkedin.com/in/1997agarwal',
   x: 'https://x.com/1997agarwal',
   xp: 18450,
   rankLevel: 5,

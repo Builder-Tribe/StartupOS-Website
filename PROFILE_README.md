@@ -3,7 +3,7 @@
 **AI Product Manager & 0-to-1 Systems Builder**  
 I build and ship production-grade AI platforms, multi-agent workflows, and venture products from scratch. Combining rigorous product strategy (master PRDs, GTM, unit economics) with high-velocity full-stack AI engineering.
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-181717?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/harshit-agarwal-pm)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-181717?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/1997agarwal)
 [![X](https://img.shields.io/badge/X-Follow_%401997agarwal-181717?style=flat-square&logo=x&logoColor=white)](https://x.com/1997agarwal)
 [![Email](https://img.shields.io/badge/Email-Get_in_Touch-181717?style=flat-square&logo=gmail&logoColor=white)](mailto:agarwal.harshit97@gmail.com)
 [![GitHub](https://img.shields.io/badge/GitHub-Explore_Repos-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/1997agarwal)
@@ -72,7 +72,7 @@ I don't just write PRDs—I ship complete, multi-surface platforms with producti
 Looking for an **AI Product Manager** who can navigate ambiguity, design scalable systems, and ship relentlessly?
 
 <p align="left">
-  <a href="https://www.linkedin.com/in/harshit-agarwal-pm" target="_blank">
+  <a href="https://www.linkedin.com/in/1997agarwal" target="_blank">
     <img src="https://img.shields.io/badge/LinkedIn-Connect-181717?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn" />
   </a>
   <a href="https://x.com/1997agarwal" target="_blank">
