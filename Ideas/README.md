@@ -6,12 +6,19 @@ This directory contains the full documentation suites, PRDs, technical architect
 
 ## Project Inventory
 
+### 🏢 Commercial Flagship Ventures
 | Product Name | Directory | Category | Status |
 |---|---|---|---|
 | **CollabKaro (Let's Collab)** | `Ideas/CollabKaro/` | Creator Economy & Marketplace | PRD, Market Research & Architecture Specs Complete |
 | **BusinessPay** | `Ideas/BusinessPay/` | FinTech & B2B Payments | Full Codebase, SmartCollect AI Docs & DB Schemas |
 | **DupeScout (Duke Scout)** | `Ideas/DupeScout/` | AI E-Commerce & Consumer SaaS | 6-Volume Master PRD & AI Architecture Design |
 | **Trippy (Tripe)** | `Ideas/Trippy/` | AI Travel & Social Matchmaking | Full Codebase, SoloTravel PRD & Design System |
+
+### 🌐 Open Source Developer Tools
+| Product Name | Repo / Path | Category | Status |
+|---|---|---|---|
+| **SpecForge** | [github.com/1997agarwal/SpecForge](https://github.com/1997agarwal/SpecForge) | Developer Tooling & Discovery AI | Live Open Source Repo • 3-Agent Pipeline & Linear Sync |
+| **ContextPrism** | [github.com/1997agarwal/ContextPrism](https://github.com/1997agarwal/ContextPrism) | AI Infra & Token FinOps | Live Open Source Repo • Port 4200 FinOps Gateway & AST Pruner |
 
 ## Document Structure Guidelines
 

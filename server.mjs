@@ -215,8 +215,10 @@ async function writeAudits(audits) {
 
 const clean = (value, limit = 1200) => String(value || "").trim().slice(0, limit);
 
-async function checkProjectHealth(projName) {
-  const projPath = join(root, "Ideas", projName);
+async function checkProjectHealth(proj) {
+  const projName = typeof proj === "string" ? proj : proj.name;
+  const category = typeof proj === "object" ? (proj.category || "commercial") : "commercial";
+  const projPath = typeof proj === "object" && proj.path ? proj.path : join(root, "Ideas", projName);
   try {
     await stat(projPath);
     const files = ["AGENTS.md", "ROADMAP.md", "CLAUDE.md", "CONTRIBUTING.md"];
@@ -228,6 +230,7 @@ async function checkProjectHealth(projName) {
     const score = Math.round((presentCount / 4) * 100);
     return {
       name: projName,
+      category,
       path: projPath,
       healthScore: score,
       hasAgents: results[0],
@@ -236,7 +239,7 @@ async function checkProjectHealth(projName) {
       hasContributing: results[3]
     };
   } catch {
-    return { name: projName, path: projPath, healthScore: 0, error: "Directory not found" };
+    return { name: projName, category, path: projPath, healthScore: 0, error: "Directory not found" };
   }
 }
 
@@ -455,7 +458,14 @@ async function handleRequest(req, res) {
 
     // PROJECTS HEALTH API
     if (req.method === "GET" && url.pathname === "/api/projects/health") {
-      const projects = ["Trippy", "DupeScout", "BusinessPay", "CollabKaro"];
+      const projects = [
+        { name: "Trippy", category: "commercial", path: join(root, "Ideas", "Trippy") },
+        { name: "DupeScout", category: "commercial", path: join(root, "Ideas", "DupeScout") },
+        { name: "BusinessPay", category: "commercial", path: join(root, "Ideas", "BusinessPay") },
+        { name: "CollabKaro", category: "commercial", path: join(root, "Ideas", "CollabKaro") },
+        { name: "SpecForge", category: "open_source", path: join(root, "Ideas", "SpecForge") },
+        { name: "ContextPrism", category: "open_source", path: join(root, "Ideas", "ContextPrism") }
+      ];
       const healthData = await Promise.all(projects.map(checkProjectHealth));
       return json(res, 200, healthData);
     }

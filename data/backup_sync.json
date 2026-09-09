@@ -1,0 +1,284 @@
+{
+  "lastSyncedAt": "2026-09-09T07:31:23.507Z",
+  "counts": {
+    "ideas": 1,
+    "launches": 4,
+    "users": 5,
+    "audits": 3
+  },
+  "ideas": [
+    {
+      "id": "0a93c10a-1c8e-4ee3-9d00-29b7395e04e5",
+      "idea": "Create a social media app for travellers",
+      "audience": "Travellers",
+      "budget": "10000",
+      "problem": "Finding people to travel with",
+      "alternatives": "Group Travel pages from instagram",
+      "advantage": "One stop sollution like Instagram where people can match make on the basis of vive and travel with",
+      "name": "Create A Social Media App",
+      "score": 75,
+      "verdict": "Promising — validate before scaling",
+      "scoreBreakdown": [
+        {
+          "label": "Problem clarity",
+          "score": 16,
+          "reason": "You named a concrete pain worth testing."
+        },
+        {
+          "label": "Customer focus",
+          "score": 16,
+          "reason": "The first customer is defined as Travellers."
+        },
+        {
+          "label": "Differentiation",
+          "score": 15,
+          "reason": "You identified a starting point for differentiation."
+        },
+        {
+          "label": "Market awareness",
+          "score": 14,
+          "reason": "You recognize the alternatives people already use."
+        },
+        {
+          "label": "Build feasibility",
+          "score": 14,
+          "reason": "A test budget (10000) creates a practical constraint."
+        }
+      ],
+      "summary": "Create a social media app for travellers is aimed at Travellers. Its key assumption is that finding people to travel with.",
+      "nextSteps": [
+        "Interview five Travellers and ask how they solve this problem today.",
+        "Test the smallest useful promise: One stop sollution like Instagram where people can match make on the basis of vive and travel with.",
+        "Set a validation boundary of 10000 before building more.",
+        "Turn repeated customer language into a narrow MVP workflow."
+      ],
+      "buildPrompt": "Build a full-stack MVP for: Create a social media app for travellers\n\nFirst customer: Travellers\nProblem: Finding people to travel with\nExisting alternatives: Group Travel pages from instagram\nDifferentiator: One stop sollution like Instagram where people can match make on the basis of vive and travel with\nTest budget: 10000\n\nUse a persistent database, authenticated workspaces, server-side validation, responsive UI, and clear empty/error states. Do not create a front-end-only mockup.",
+      "createdAt": "2026-09-05T11:18:01.601Z",
+      "updatedAt": "2026-09-05T11:18:01.601Z"
+    }
+  ],
+  "launches": [
+    {
+      "id": "launch-dupescout",
+      "title": "DupeScout",
+      "tagline": "Shop the Look. Not the Markup. AI Visual Similarity & Dupes Engine.",
+      "description": "Upload any photo or paste a link — AI finds visually similar fashion products across the internet ranked by similarity score with price-quality explanations.",
+      "category": "AI Vision",
+      "upvotes": 342,
+      "upvotedBy": [
+        "user-harshita"
+      ],
+      "maker": {
+        "name": "Harshita G",
+        "avatar": "👩‍💻",
+        "title": "Founder"
+      },
+      "demoUrl": "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/DupeScout",
+      "tags": [
+        "CLIP Vision",
+        "FastAPI",
+        "Next.js 14",
+        "pgvector"
+      ],
+      "comments": [
+        {
+          "id": "c1",
+          "author": "Aman Gupta",
+          "avatar": "👨‍💼",
+          "text": "Incredible visual search accuracy! Perfect for Gen Z shoppers.",
+          "timestamp": "2 hours ago"
+        },
+        {
+          "id": "c2",
+          "author": "Priya Sharma",
+          "avatar": "👩‍🎨",
+          "text": "Love the honest similarity percentage scores.",
+          "timestamp": "5 hours ago"
+        }
+      ],
+      "createdAt": "2026-09-04T06:18:59.504Z"
+    },
+    {
+      "id": "launch-trippy",
+      "title": "Trippy",
+      "tagline": "AI Solo-Travel Group Matching & Community Trip Host Platform.",
+      "description": "Connect with compatible solo travelers on overlapping dates, build group itineraries, and book hosted trips directly from travel communities.",
+      "category": "Solo Travel AI",
+      "upvotes": 289,
+      "upvotedBy": [],
+      "maker": {
+        "name": "Harshita G",
+        "avatar": "👩‍💻",
+        "title": "Founder"
+      },
+      "demoUrl": "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/Trippy",
+      "tags": [
+        "React 18",
+        "Express",
+        "SQLite",
+        "Node 22"
+      ],
+      "comments": [
+        {
+          "id": "c3",
+          "author": "Rohan V",
+          "avatar": "🎒",
+          "text": "Finally an app that makes solo travel group matching safe and easy!",
+          "timestamp": "1 day ago"
+        }
+      ],
+      "createdAt": "2026-09-03T06:18:59.505Z"
+    },
+    {
+      "id": "launch-businesspay",
+      "title": "BusinessPay",
+      "tagline": "B2B Accounts Receivable Collections & Early Payment Cash Accelerator.",
+      "description": "Reduce DSO and accelerate cash flow with dynamic discounting, collector workqueues, buyer portal simulation, and dispute SLA tracking.",
+      "category": "B2B Fintech",
+      "upvotes": 215,
+      "upvotedBy": [],
+      "maker": {
+        "name": "Harshita G",
+        "avatar": "👩‍💻",
+        "title": "Founder"
+      },
+      "demoUrl": "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/BusinessPay",
+      "tags": [
+        "React 19",
+        "Express 5",
+        "Dynamic Discounts",
+        "SQLite"
+      ],
+      "comments": [],
+      "createdAt": "2026-09-02T06:18:59.505Z"
+    },
+    {
+      "id": "launch-collabkaro",
+      "title": "CollabKaro",
+      "tagline": "India-First Creator Marketplace & Escrow Milestone Operating System.",
+      "description": "Connect brands with influencers and UGC creators using secure milestone escrow funding, campaign briefs, and proof-of-delivery payouts.",
+      "category": "Creator Marketplace",
+      "upvotes": 198,
+      "upvotedBy": [],
+      "maker": {
+        "name": "Harshita G",
+        "avatar": "👩‍💻",
+        "title": "Founder"
+      },
+      "demoUrl": "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/CollabKaro",
+      "tags": [
+        "React TS",
+        "Escrow API",
+        "UGC Media Kit",
+        "SQLite"
+      ],
+      "comments": [],
+      "createdAt": "2026-09-01T06:18:59.505Z"
+    }
+  ],
+  "users": [
+    {
+      "id": "user-harshita",
+      "name": "Harshita G",
+      "email": "harshita@vibe-coding.io",
+      "role": "user",
+      "avatar": "👩‍💻",
+      "badge": "Pro Builder",
+      "token": "token-harshita-12345",
+      "createdAt": "2026-09-06T06:35:00.912Z"
+    },
+    {
+      "id": "user-admin",
+      "name": "Platform Admin Ops",
+      "email": "admin@startupos.io",
+      "role": "admin",
+      "avatar": "👑",
+      "badge": "Super Admin",
+      "token": "token-admin-99999",
+      "createdAt": "2026-09-06T06:35:00.913Z"
+    },
+    {
+      "id": "user-35f8e56e",
+      "name": "Aman Gupta",
+      "email": "aman@boat.io",
+      "role": "user",
+      "persona": "founder",
+      "workspaceName": "boAt Studio",
+      "avatar": "🚀",
+      "badge": "Startup Founder",
+      "token": "token-4570d479-0",
+      "createdAt": "2026-09-06T06:42:20.000Z"
+    },
+    {
+      "id": "user-318bf2d5",
+      "name": "Dev User",
+      "email": "dev@startupos.io",
+      "role": "user",
+      "persona": "developer",
+      "workspaceName": "Dev Lab",
+      "avatar": "💻",
+      "badge": "Full-Stack Dev",
+      "token": "token-bebed92f-b",
+      "createdAt": "2026-09-06T06:51:13.582Z"
+    },
+    {
+      "id": "user-8371be9a",
+      "name": "Test",
+      "email": "test@gmail.com",
+      "role": "user",
+      "persona": "student",
+      "workspaceName": "Building New",
+      "avatar": "🎓",
+      "badge": "Student Builder",
+      "token": "token-46c0d8c4-b",
+      "createdAt": "2026-09-06T09:10:27.501Z"
+    }
+  ],
+  "audits": [
+    {
+      "id": "audit-dupescout",
+      "projectName": "DupeScout",
+      "builderName": "Harshita G",
+      "persona": "founder",
+      "githubUrl": "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/DupeScout",
+      "hasAgents": true,
+      "hasRoadmap": true,
+      "hasClaude": true,
+      "hasContributing": true,
+      "score": 98,
+      "status": "verified",
+      "examinerFeedback": "100% 4-File Parity score achieved. Clean modular FastAPI/Next.js visual similarity architecture.",
+      "createdAt": "2026-09-04T07:23:23.266Z"
+    },
+    {
+      "id": "audit-trippy",
+      "projectName": "Trippy",
+      "builderName": "Harshita G",
+      "persona": "founder",
+      "githubUrl": "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/Trippy",
+      "hasAgents": true,
+      "hasRoadmap": true,
+      "hasClaude": true,
+      "hasContributing": true,
+      "score": 95,
+      "status": "verified",
+      "examinerFeedback": "Full 4-File Parity compliance. Great solo-travel group matching schema.",
+      "createdAt": "2026-09-03T07:23:23.266Z"
+    },
+    {
+      "id": "audit-businesspay",
+      "projectName": "BusinessPay",
+      "builderName": "Harshita G",
+      "persona": "founder",
+      "githubUrl": "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/BusinessPay",
+      "hasAgents": true,
+      "hasRoadmap": true,
+      "hasClaude": true,
+      "hasContributing": true,
+      "score": 94,
+      "status": "pending",
+      "examinerFeedback": "Audit requested by founder. Pending final code quality & dynamic discounting SLA verification.",
+      "createdAt": "2026-09-05T07:23:23.266Z"
+    }
+  ]
+}

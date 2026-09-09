@@ -142,6 +142,33 @@ export const HARSHIT_FLAGSHIP_PROJECTS = [
     repoUrl: 'https://github.com/1997agarwal/StartupOS/tree/main/Ideas/CollabKaro',
     demoUrl: 'https://collabkaro.in',
     badge: 'Creator Marketplace',
+    category: 'commercial',
+    source: 'native'
+  },
+  {
+    id: 'spec-forge',
+    name: 'SpecForge',
+    tagline: 'Autonomous Discovery-to-Spec Engine with 3-Agent Pipeline & Linear Sync',
+    problem: 'Converts unstructured discovery calls and voice transcripts into production PRDs, technical architectural RFCs, and bidirectional Linear tickets.',
+    stack: ['React 18', 'TypeScript', 'Node.js', 'Linear SDK', 'SQLite', 'Agentic Pipeline'],
+    impact: '3-stage agent pipeline automating 8+ hours of technical PM discovery-to-spec drafting per sprint.',
+    repoUrl: 'https://github.com/1997agarwal/SpecForge',
+    demoUrl: 'https://github.com/1997agarwal/SpecForge',
+    badge: 'Open Source Engine',
+    category: 'open_source',
+    source: 'native'
+  },
+  {
+    id: 'context-prism',
+    name: 'ContextPrism',
+    tagline: 'Enterprise Token FinOps Gateway & AST Context Pruner (3 Golden Rules)',
+    problem: 'Cuts LLM API token costs by up to 90% via task-aware dynamic routing, zero-cost semantic embedding cache, and AST context pruning.',
+    stack: ['Node.js', 'Express', 'TypeScript', 'Vite', 'AST Parser', 'SQLite'],
+    impact: 'Drop-in OpenAI/Anthropic FinOps reverse proxy with budget circuit breaker and real-time savings studio.',
+    repoUrl: 'https://github.com/1997agarwal/ContextPrism',
+    demoUrl: 'https://github.com/1997agarwal/ContextPrism',
+    badge: 'Open Source Gateway',
+    category: 'open_source',
     source: 'native'
   }
 ];
