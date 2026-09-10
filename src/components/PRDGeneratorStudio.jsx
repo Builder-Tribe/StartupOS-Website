@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { 
   FileCode, Copy, Check, Sparkles, Folder, Layers, ShieldCheck, 
-  Download, Archive, ArrowRight, ExternalLink, CheckCircle2, Terminal
+  Download, Archive, ArrowRight, ExternalLink, CheckCircle2, Terminal,
+  Sliders, Settings, Wrench, RefreshCw, ChevronDown, ChevronUp, Cpu, Lock
 } from 'lucide-react';
 import { downloadMarkdownFile, downloadZipBundle } from '../utils/zipExport';
 
@@ -9,6 +10,14 @@ export default function PRDGeneratorStudio({ ideas = [], activeIdea, setActiveId
   const [activeDoc, setActiveDoc] = useState('AGENTS');
   const [copied, setCopied] = useState(false);
   const [filterType, setFilterType] = useState('all'); // 'all' | 'governance' | 'specs'
+
+  // Interactive Constitution & Agent Customizer State
+  const [agentTarget, setAgentTarget] = useState('universal'); // 'universal' | 'antigravity' | 'claude' | 'cursor'
+  const [stackPreset, setStackPreset] = useState('vite-react'); // 'vite-react' | 'nextjs' | 'node-express' | 'fastapi'
+  const [sandboxPolicy, setSandboxPolicy] = useState('safe-sandbox'); // 'safe-sandbox' | 'strict-approval'
+  const [qaGate, setQaGate] = useState('strict'); // 'strict' | 'lean'
+  const [architectureModel, setArchitectureModel] = useState('monorepo-satellites'); // 'monorepo-satellites' | 'single-repo'
+  const [showConfigDrawer, setShowConfigDrawer] = useState(true);
 
   const currentWorkspace = activeIdea || ideas[0] || {
     id: 'demo-app',
@@ -27,7 +36,88 @@ export default function PRDGeneratorStudio({ ideas = [], activeIdea, setActiveId
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)/g, '');
 
-  // Complete 8-Document Specification & Constitution Suite
+  const resetConfig = () => {
+    setAgentTarget('universal');
+    setStackPreset('vite-react');
+    setSandboxPolicy('safe-sandbox');
+    setQaGate('strict');
+    setArchitectureModel('monorepo-satellites');
+  };
+
+  // Stack Metadata Dictionary
+  const stackConfigs = {
+    'vite-react': {
+      name: 'React 18 + Vite + Tailwind CSS v4',
+      devCmd: 'npm run dev',
+      buildCmd: 'npm run build',
+      testCmd: 'npm test (Vitest)',
+      lintCmd: 'npm run lint',
+      port: '5173',
+      runtime: 'Node.js 20+ / Browser',
+      folderLayout: `├── src/
+│   ├── components/
+│   ├── utils/
+│   ├── App.jsx
+│   └── main.jsx
+├── public/
+├── package.json
+└── vite.config.js`
+    },
+    'nextjs': {
+      name: 'Next.js 15 (App Router) + TypeScript + Tailwind',
+      devCmd: 'npm run dev',
+      buildCmd: 'npm run build',
+      testCmd: 'npm test (Jest)',
+      lintCmd: 'npm run lint && npm run typecheck (tsc --noEmit)',
+      port: '3000',
+      runtime: 'Node.js 20+ / Edge / Serverless',
+      folderLayout: `├── app/
+│   ├── layout.tsx
+│   ├── page.tsx
+│   └── api/
+├── components/
+├── lib/
+├── package.json
+└── next.config.ts`
+    },
+    'node-express': {
+      name: 'Node.js (Express) + SQLite / PostgreSQL',
+      devCmd: 'npm run dev (nodemon server.mjs)',
+      buildCmd: 'npm run build',
+      testCmd: 'npm test (Supertest / Vitest)',
+      lintCmd: 'npm run lint',
+      port: '3001',
+      runtime: 'Node.js 20+',
+      folderLayout: `├── src/
+│   ├── routes/
+│   ├── controllers/
+│   ├── models/
+│   └── server.mjs
+├── db/
+│   └── migrations/
+└── package.json`
+    },
+    'fastapi': {
+      name: 'FastAPI + Python 3.12 + Pydantic + Uvicorn',
+      devCmd: 'uvicorn app.main:app --reload',
+      buildCmd: 'uv pip install -e .',
+      testCmd: 'pytest',
+      lintCmd: 'ruff check . && mypy .',
+      port: '8000',
+      runtime: 'Python 3.12+ (uv)',
+      folderLayout: `├── app/
+│   ├── api/
+│   ├── models/
+│   ├── schemas/
+│   └── main.py
+├── tests/
+└── pyproject.toml`
+    }
+  };
+
+  const currentStack = stackConfigs[stackPreset] || stackConfigs['vite-react'];
+
+  // Complete Reactive 8-Document Specification & Constitution Suite
   const generatedDocs = {
     // === GOVERNANCE / 4-FILE PARITY SUITE ===
     'AGENTS': {
@@ -38,7 +128,15 @@ export default function PRDGeneratorStudio({ ideas = [], activeIdea, setActiveId
       content: `# AGENTS.md — Constitution of ${currentWorkspace.name}
 
 > **Read this first.** This file is the constitution of the \`${currentWorkspace.name}\` repository. 
-> It applies to every developer and every AI coding assistant (AntiGravity, Claude Code, Codex, Cursor, Windsurf, Copilot).
+> It applies to every developer and every AI coding assistant (${
+  agentTarget === 'antigravity'
+    ? 'Google AntiGravity 2.0 Priority'
+    : agentTarget === 'claude'
+    ? 'Claude Code CLI Priority'
+    : agentTarget === 'cursor'
+    ? 'Cursor & Windsurf IDE Priority'
+    : 'AntiGravity, Claude Code, Codex, Cursor, Windsurf, Copilot'
+}).
 
 ---
 
@@ -47,7 +145,9 @@ export default function PRDGeneratorStudio({ ideas = [], activeIdea, setActiveId
 **Product Name:** ${currentWorkspace.name}  
 **Primary Audience:** ${currentWorkspace.audience}  
 **Core Problem Solved:** ${currentWorkspace.problem}  
-**Unfair Advantage:** ${currentWorkspace.advantage || 'AI-native streamlined execution'}
+**Unfair Advantage:** ${currentWorkspace.advantage || 'AI-native streamlined execution'}  
+**Stack Preset:** ${currentStack.name}  
+**Architecture Model:** ${architectureModel === 'monorepo-satellites' ? 'Parent Monorepo + Satellites' : 'Standalone Single Repository'}
 
 ---
 
@@ -57,12 +157,23 @@ export default function PRDGeneratorStudio({ ideas = [], activeIdea, setActiveId
 2. **Clean 2026 Light UI Standard:** Every user interface must adhere to the 2026 Light Modern Standard (zinc-50/slate-50 canvas, crisp \`#ffffff\` cards, subtle borders, high-contrast typography \`#0f172a\`, and purposeful brand accents). Avoid cluttered, dark, or cramped layouts.
 3. **Non-Destructive Database Migrations:** All schema changes must be additive (\`CREATE TABLE IF NOT EXISTS\`, additive columns). Never run destructive migrations without explicit human confirmation.
 4. **Documentation Covenant:** Any commit modifying core features, APIs, or data schemas MUST update \`ROADMAP.md\` and relevant documentation in the same commit.
+5. **Sandbox & Safety Policy (${sandboxPolicy === 'strict-approval' ? 'Strict Approval' : 'Standard Sandboxed'}):** ${
+  sandboxPolicy === 'strict-approval'
+    ? 'All filesystem writes, package installations, and system commands REQUIRE explicit human approval before execution.'
+    : 'Normal builds, tests, and reads run securely inside standard sandboxed execution; prompt human only when bypassing sandbox or executing destructive commands.'
+}
 
 ---
 
-## 3. Parent Monorepo & Satellite Architecture Standard
+## 3. ${
+  architectureModel === 'monorepo-satellites'
+    ? 'Parent Monorepo & Satellite Architecture Standard'
+    : 'Standalone Repository Architecture'
+}
 
-To preserve clean Git hygiene and enable independent production deployments, this project adheres to the **Parent Monorepo + Satellite Repositories** model:
+${
+  architectureModel === 'monorepo-satellites'
+    ? `To preserve clean Git hygiene and enable independent production deployments, this project adheres to the **Parent Monorepo + Satellite Repositories** model:
 
 1. **Parent Monorepo is Authoritative:** Contains 100% of the project's source code across all surfaces (server, web app, marketing website, mobile specs).
 2. **Never Nest \`.git\` Folders:** Surfaces (\`website/\`, \`mobile/\`) live as normal tracked directories inside the monorepo.
@@ -70,15 +181,48 @@ To preserve clean Git hygiene and enable independent production deployments, thi
    \`\`\`bash
    # Sync website surface to standalone satellite deployment repo
    git subtree push --prefix website <satellite-remote-name> main
-   \`\`\`
+   \`\`\``
+    : `This project is structured as a **Standalone Single Repository**:
+1. All client, server, and asset code live directly within this repository.
+2. Root directory maintains core scripts, configurations, and the 4-file parity constitution.
+3. Keep dependency manifests unified and avoid unnecessary nested package boundaries.`
+}
 
 ---
 
 ## 4. Working Agreements for AI Assistants
 
-- Prefer small, high-confidence diffs over broad speculative refactors.
-- Match existing naming conventions (\`camelCase\` TS/JS, \`snake_case\` SQL).
+${
+  agentTarget === 'antigravity'
+    ? `- **Planning Mode:** For non-trivial architectural changes, enter Planning Mode and create an \`implementation_plan.md\` artifact with request_feedback=true before modifying files.
+- **Artifacts:** Present multi-step walkthroughs and design documents in dedicated artifacts rather than dumping raw markdown walls in chat.
+- **Subagents:** Delegate deep research and codebase exploration to research subagents to keep context clean.
+- **Terminal Sandbox:** Execute commands sandboxed by default. Use BypassSandbox only when network or outside-workspace access is strictly necessary.`
+    : agentTarget === 'claude'
+    ? `- **CLAUDE.md as Thin Pointer:** Keep \`CLAUDE.md\` lean (<100 lines); defer all constitutional and architecture details to this \`AGENTS.md\`.
+- **Zero Loop Scripts:** Do not install automated turn-end backup or git commit hooks that cause execution loops.
+- **Targeted Diffs:** Perform single contiguous block edits and verify builds before declaring tasks done.`
+    : agentTarget === 'cursor'
+    ? `- **Context Precision:** Reference files directly with \`@filename\` and avoid scanning entire vendor directories.
+- **Cursor Rules Alignment:** Adhere to project guidelines defined in \`.cursorrules\` which mirrors this \`AGENTS.md\`.
+- **Atomic Edits:** Keep modifications focused on the specific requested components.`
+    : `- Prefer small, high-confidence diffs over broad speculative refactors.
+- Match existing naming conventions (\`camelCase\` TS/JS, \`snake_case\` Python/SQL).
 - Always verify runtime builds and tests before declaring tasks complete.`
+}
+
+---
+
+## 5. Quality Assurance Gate (${qaGate === 'strict' ? 'Strict Parity' : 'Lean Velocity'})
+
+${
+  qaGate === 'strict'
+    ? `- **Zero Warnings Policy:** Lint and typecheck must pass with 0 errors and 0 warnings before merge.
+- **Mandatory 4-File Parity:** \`AGENTS.md\`, \`ROADMAP.md\`, \`CLAUDE.md\`, and \`CONTRIBUTING.md\` must exist and be kept synchronized.
+- **Verification Command:** \`${currentStack.lintCmd} && ${currentStack.testCmd}\` must succeed.`
+    : `- **Lean Velocity Mode:** Focus on rapid functional validation.
+- **Verification Command:** \`${currentStack.buildCmd}\` must compile successfully without breaking runtime.`
+}`
     },
 
     'CLAUDE': {
@@ -94,16 +238,18 @@ Read [\`AGENTS.md\`](AGENTS.md) first — it is the master constitution of this 
 
 ## Quick Reference Commands
 
-- **Start Dev Server:** \`npm run dev\`
-- **Production Build:** \`npm run build\`
-- **Run Tests:** \`npm test\`
-- **Lint / Typecheck:** \`npm run typecheck\`
+- **Tech Stack:** ${currentStack.name}
+- **Start Dev Server:** \`${currentStack.devCmd}\` (Port ${currentStack.port})
+- **Production Build:** \`${currentStack.buildCmd}\`
+- **Run Tests:** \`${currentStack.testCmd}\`
+- **Lint / Quality Check:** \`${currentStack.lintCmd}\`
 
 ---
 
 ## Operational Agreements
 
 - **Single Source of Truth:** Code logic is governed by \`AGENTS.md\`; feature status is tracked in \`ROADMAP.md\`.
+- **Quality Gate:** ${qaGate === 'strict' ? 'Strict parity gate: run lint and tests before commit.' : 'Lean mode: verify build succeeds before commit.'}
 - **Git Hygiene:** Commit with clear Conventional Commit messages (\`feat:\`, \`fix:\`, \`docs:\`, \`chore:\`). Automated blind auto-backup scripts on turn-end are disabled.
 - **Verification Bar:** Verify UI and API responses before committing.`
     },
@@ -121,6 +267,7 @@ Read [\`AGENTS.md\`](AGENTS.md) first — it is the master constitution of this 
 
 ## 🟢 Phase 1: MVP Core Foundation (In Progress)
 - [x] Project scaffolding and constitutional governance setup (\`AGENTS.md\`, \`CLAUDE.md\`, \`ROADMAP.md\`, \`CONTRIBUTING.md\`).
+- [x] Tech stack initialized: **${currentStack.name}**.
 - [ ] User intake and authentication flow for ${currentWorkspace.audience}.
 - [ ] Core execution engine: ${currentWorkspace.advantage || 'primary automated outcome'}.
 - [ ] Responsive modern 2026 Light UI dashboard.
@@ -131,9 +278,9 @@ Read [\`AGENTS.md\`](AGENTS.md) first — it is the master constitution of this 
 - [ ] Automated third-party API webhook integrations.
 
 ## 🔵 Phase 3: Scale, Intelligence & Production Hardening
-- [ ] Automated rate limiting, security auditing, and compliance checks.
+- [ ] Automated rate limiting, security auditing, and compliance checks (${sandboxPolicy === 'strict-approval' ? 'Strict Audit Enabled' : 'Standard'}).
 - [ ] Advanced AI-driven personalized recommendations.
-- [ ] Standalone satellite deployments for marketing landing and mobile surfaces.`
+${architectureModel === 'monorepo-satellites' ? '- [ ] Standalone satellite deployments for marketing landing and mobile surfaces.' : '- [ ] Production CDN and containerized deployment setup.'}`
     },
 
     'CONTRIBUTING': {
@@ -161,7 +308,22 @@ Thank you for contributing to **${currentWorkspace.name}**! To maintain software
 
 ---
 
-## 2. Documentation Covenant
+## 2. Quality Bar (${qaGate === 'strict' ? 'Strict' : 'Lean'})
+
+${
+  qaGate === 'strict'
+    ? `Before opening a pull request or submitting code, ensure:
+1. \`${currentStack.lintCmd}\` completes with 0 errors and 0 warnings.
+2. \`${currentStack.testCmd}\` passes 100% of test suites.
+3. \`${currentStack.buildCmd}\` builds cleanly.`
+    : `Before submitting code:
+1. Ensure \`${currentStack.buildCmd}\` succeeds cleanly.
+2. Manually verify the user journey meets requirements.`
+}
+
+---
+
+## 3. Documentation Covenant
 
 Every pull request or commit that changes business logic, API schemas, or UI states **MUST** update \`ROADMAP.md\` and corresponding documentation files in the exact same commit.`
     },
@@ -187,6 +349,7 @@ ${currentWorkspace.summary || `${currentWorkspace.name} is an AI-powered solutio
 ### 3. Solution & Strategic Differentiation
 - **Core Value Proposition:** ${currentWorkspace.advantage || 'AI-native automated workflow'}
 - **Validation Constraint / Budget:** ${currentWorkspace.budget || 'Bootstrapped validation stage'}
+- **Selected Tech Stack:** ${currentStack.name}
 
 ### 4. Functional Requirements (MVP Scope)
 1. **Intake & Onboarding:** Collect user parameters and validate inputs against persona constraints.
@@ -226,14 +389,21 @@ ${currentWorkspace.alternatives ? `- **Existing Alternative:** ${currentWorkspac
       desc: 'System architecture, API contracts, and database schema design',
       content: `# 03 — Technical Architecture & Data Design for ${currentWorkspace.name}
 
-## 1. System Topology
+## 1. System Topology & Technology Stack
 
-- **Frontend Surface:** React 18 / Vite / Tailwind CSS modern responsive client.
-- **Backend API Layer:** Node.js Express REST API (or FastAPI Python).
-- **Persistent Data Store:** SQLite / PostgreSQL relational schema.
-- **AI Processing Layer:** Structured prompt pipeline with deterministic JSON schemas.
+- **Stack Preset:** ${currentStack.name}
+- **Runtime Environment:** ${currentStack.runtime}
+- **Architecture Model:** ${architectureModel === 'monorepo-satellites' ? 'Parent Monorepo + Satellites' : 'Standalone Single Repository'}
+- **Dev Server Command:** \`${currentStack.devCmd}\`
+- **Build Output:** \`${currentStack.buildCmd}\`
 
-## 2. Primary Data Schema (JSON Entity)
+## 2. Suggested Directory Structure
+
+\`\`\`
+${currentStack.folderLayout}
+\`\`\`
+
+## 3. Primary Data Schema (JSON Entity)
 
 \`\`\`json
 {
@@ -247,7 +417,7 @@ ${currentWorkspace.alternatives ? `- **Existing Alternative:** ${currentWorkspac
 }
 \`\`\`
 
-## 3. Key API Endpoints
+## 4. Key API Endpoints
 - \`GET /api/health\` — Service uptime and version check.
 - \`POST /api/items\` — Create new workspace item.
 - \`GET /api/items\` — Retrieve user dashboard data.`
@@ -262,18 +432,20 @@ ${currentWorkspace.alternatives ? `- **Existing Alternative:** ${currentWorkspac
 
 ## Milestone 1: Constitutional Setup & Scaffolding
 - Drop \`AGENTS.md\`, \`CLAUDE.md\`, \`ROADMAP.md\`, and \`CONTRIBUTING.md\` into repository root.
-- Initialize React + Vite + Tailwind CSS project with modern 2026 Light design tokens.
+- Initialize project with **${currentStack.name}**.
+- Verify dev server: \`${currentStack.devCmd}\`.
 
 ## Milestone 2: Backend API & Data Persistence
-- Setup Express or FastAPI service with structured REST endpoints.
-- Establish relational database schemas with non-destructive migrations.
+- Setup service endpoints and data models according to \`03-technical-architecture.md\`.
+- Establish database schemas with non-destructive migrations.
 
 ## Milestone 3: Core User Experience
 - Build intake form, scoring/processing views, and real-time dashboard.
-- Wire frontend state management to backend endpoints.
+- Adhere to the 2026 Clean Light UI standard.
 
 ## Milestone 4: Verification & Public Launch
-- Run build tests, typechecks, and verify mobile viewport responsiveness.
+- Run quality checks: \`${currentStack.lintCmd}\` and \`${currentStack.buildCmd}\`.
+- Verify mobile viewport responsiveness.
 - Submit live project to StartupOS Launchpad.`
     }
   };
@@ -382,6 +554,169 @@ ${currentWorkspace.alternatives ? `- **Existing Alternative:** ${currentWorkspac
         )}
       </div>
 
+      {/* Interactive Constitution & Architecture Customizer Drawer */}
+      <div className="bg-white/90 backdrop-blur-md rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden transition-all">
+        {/* Toggle Bar */}
+        <div 
+          onClick={() => setShowConfigDrawer(!showConfigDrawer)}
+          className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 cursor-pointer hover:bg-slate-50/70 transition-colors border-b border-slate-100"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-indigo-600/10 text-indigo-600 flex items-center justify-center font-bold">
+              <Sliders className="w-4 h-4" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold text-slate-900 tracking-tight">
+                  Constitution & Tech Stack Configurator
+                </span>
+                <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  Live Sync
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-500 font-medium">
+                Customize AI target rules, stack commands, quality gates, and architecture before exporting.
+              </p>
+            </div>
+          </div>
+
+          {/* Applied Badges Summary & Toggle Chevron */}
+          <div className="flex items-center gap-2 flex-wrap text-[10px] font-bold">
+            <span className="px-2 py-1 rounded-md bg-slate-100 text-slate-700 border border-slate-200">
+              🤖 {agentTarget.toUpperCase()}
+            </span>
+            <span className="px-2 py-1 rounded-md bg-indigo-50 text-indigo-700 border border-indigo-200">
+              ⚡ {currentStack.name.split('+')[0].trim()}
+            </span>
+            <span className="px-2 py-1 rounded-md bg-purple-50 text-purple-700 border border-purple-200">
+              🛡️ {sandboxPolicy === 'strict-approval' ? 'Strict Safety' : 'Sandboxed'}
+            </span>
+            <button className="p-1 rounded-md text-slate-400 hover:text-slate-600 ml-1">
+              {showConfigDrawer ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Collapsible Options Body */}
+        {showConfigDrawer && (
+          <div className="p-5 bg-slate-50/50 space-y-5 border-t border-slate-100 text-xs">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* Option 1: AI Assistant Target */}
+              <div className="space-y-1.5 bg-white p-3.5 rounded-xl border border-slate-200/80 shadow-2xs">
+                <label className="text-[11px] font-extrabold text-slate-700 flex items-center gap-1.5">
+                  <Cpu className="w-3.5 h-3.5 text-indigo-600" /> Primary AI Agent Target
+                </label>
+                <select
+                  value={agentTarget}
+                  onChange={(e) => setAgentTarget(e.target.value)}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 cursor-pointer"
+                >
+                  <option value="universal">Universal (All Models)</option>
+                  <option value="antigravity">Google AntiGravity 2.0</option>
+                  <option value="claude">Claude Code CLI</option>
+                  <option value="cursor">Cursor / Windsurf IDE</option>
+                </select>
+                <span className="text-[10px] text-slate-400 block">
+                  Tailors Working Agreements in AGENTS.md
+                </span>
+              </div>
+
+              {/* Option 2: Tech Stack Preset */}
+              <div className="space-y-1.5 bg-white p-3.5 rounded-xl border border-slate-200/80 shadow-2xs">
+                <label className="text-[11px] font-extrabold text-slate-700 flex items-center gap-1.5">
+                  <Wrench className="w-3.5 h-3.5 text-indigo-600" /> Tech Stack Preset
+                </label>
+                <select
+                  value={stackPreset}
+                  onChange={(e) => setStackPreset(e.target.value)}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 cursor-pointer"
+                >
+                  <option value="vite-react">React 18 + Vite + Tailwind v4</option>
+                  <option value="nextjs">Next.js 15 (App Router) + TS</option>
+                  <option value="node-express">Node.js + Express + SQLite</option>
+                  <option value="fastapi">FastAPI + Python 3.12</option>
+                </select>
+                <span className="text-[10px] text-slate-400 block">
+                  Injects dev & build commands in CLAUDE.md
+                </span>
+              </div>
+
+              {/* Option 3: Sandbox & Safety Policy */}
+              <div className="space-y-1.5 bg-white p-3.5 rounded-xl border border-slate-200/80 shadow-2xs">
+                <label className="text-[11px] font-extrabold text-slate-700 flex items-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-indigo-600" /> Sandbox & Safety Policy
+                </label>
+                <select
+                  value={sandboxPolicy}
+                  onChange={(e) => setSandboxPolicy(e.target.value)}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 cursor-pointer"
+                >
+                  <option value="safe-sandbox">Standard Sandbox (Auto-run Safe)</option>
+                  <option value="strict-approval">Strict Approval (Prompt on all writes)</option>
+                </select>
+                <span className="text-[10px] text-slate-400 block">
+                  Specifies safety boundaries in AGENTS.md
+                </span>
+              </div>
+
+              {/* Option 4: QA Gate & Architecture Model */}
+              <div className="space-y-1.5 bg-white p-3.5 rounded-xl border border-slate-200/80 shadow-2xs">
+                <label className="text-[11px] font-extrabold text-slate-700 flex items-center gap-1.5">
+                  <Layers className="w-3.5 h-3.5 text-indigo-600" /> Architecture Model
+                </label>
+                <select
+                  value={architectureModel}
+                  onChange={(e) => setArchitectureModel(e.target.value)}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 cursor-pointer"
+                >
+                  <option value="monorepo-satellites">Monorepo + Satellites (Subtrees)</option>
+                  <option value="single-repo">Standalone Single Repo</option>
+                </select>
+                <span className="text-[10px] text-slate-400 block">
+                  Defines multi-surface sync workflow
+                </span>
+              </div>
+            </div>
+
+            {/* Quick Reset & Secondary Toggles */}
+            <div className="flex items-center justify-between pt-1 border-t border-slate-200/60 text-[11px]">
+              <div className="flex items-center gap-4">
+                <span className="font-bold text-slate-600">QA Gate Standard:</span>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setQaGate('strict')}
+                    className={`px-2.5 py-1 rounded-md font-bold transition-all cursor-pointer ${
+                      qaGate === 'strict'
+                        ? 'bg-indigo-600 text-white shadow-2xs'
+                        : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100'
+                    }`}
+                  >
+                    Strict Parity (0 warnings)
+                  </button>
+                  <button
+                    onClick={() => setQaGate('lean')}
+                    className={`px-2.5 py-1 rounded-md font-bold transition-all cursor-pointer ${
+                      qaGate === 'lean'
+                        ? 'bg-indigo-600 text-white shadow-2xs'
+                        : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100'
+                    }`}
+                  >
+                    Lean MVP Velocity
+                  </button>
+                </div>
+              </div>
+
+              <button
+                onClick={resetConfig}
+                className="text-slate-500 hover:text-indigo-600 font-bold flex items-center gap-1 transition-colors cursor-pointer"
+              >
+                <RefreshCw className="w-3 h-3" /> Reset to Defaults
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
       {/* Filter Tabs (All / Governance / Specs) */}
       <div className="flex flex-wrap items-center gap-2">
         <button
@@ -464,7 +799,7 @@ ${currentWorkspace.alternatives ? `- **Existing Alternative:** ${currentWorkspac
                   {selectedDocObj.filename}
                 </h3>
                 <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
-                  Ready to Deploy
+                  Configured: {currentStack.name.split('+')[0].trim()}
                 </span>
               </div>
               <p className="text-xs text-slate-500 mt-0.5">
