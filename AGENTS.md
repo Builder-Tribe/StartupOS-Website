@@ -96,3 +96,30 @@ StartupOS/                                 ← Git Root (https://github.com/1997
 - Match surrounding code style and design system tokens.
 - Maintain documentation integrity and update `ROADMAP.md` on feature completion.
 - Verify runtime execution before declaring done.
+
+---
+
+## 7. Universal Parent Monorepo & Satellite Architecture Standard
+
+To preserve clean Git hygiene, ensure full codebase visibility for AI assistants, and enable isolated production deployments, all ventures adhere to the **Parent Monorepo + Satellite Repositories** model:
+
+1. **Parent Monorepo is Authoritative Single Source of Truth:**
+   - The primary venture repository (e.g., `Nomad-Tribe/Trippy`, `Business-Tribe/BusinessPay`, `Collab-Tribe/CollabKaro`, `Trend-Tribe/DupeScout`) contains 100% of the project's source code across all surfaces.
+   - Dedicated surfaces live in designated subdirectories inside the parent repository (e.g. `website/`, `mobile/`, `data/`, `server/`, `web/`).
+   - Every file must be tracked directly by the parent Git repository so cloning the monorepo provides the complete product.
+
+2. **Satellite Repositories for Independent Deployment Boundaries:**
+   - Separate repositories (e.g., `<Project>-Website`, `<Project>-Mobile`, `<Project>-Data`) exist solely to provide dedicated deployment targets (e.g. Vercel/Cloudflare Pages for landing pages, Expo/EAS for mobile builds, isolated DB/ML runners).
+   - **Never embed a `.git` folder inside the monorepo working tree:** Never clone a satellite repo with its own `.git` directly inside the parent repo unless formally configured in `.gitmodules`. Doing so causes Git submodule confusion, ignored code, and detached pointer issues.
+   - **Subtree Push Workflow:** Sync code from the parent monorepo to the satellite repo using `git subtree push`:
+     ```bash
+     # Example: Syncing marketing website from parent monorepo to satellite
+     git subtree push --prefix website <satellite-remote-name> main
+     ```
+
+3. **Future Extension Rule (Mobile & Database Management):**
+   - When building mobile apps (React Native / Flutter) or dedicated database/pipeline services:
+     - Develop the surface directly within the parent monorepo under `mobile/` or `data/`.
+     - Create a satellite repo under the corresponding GitHub organization (`<Tribe>/<Project>-Mobile`).
+     - Register the remote in the parent repository and mirror commits via Git subtree sync.
+

@@ -19,6 +19,7 @@ This directory contains the full documentation suites, PRDs, technical architect
 |---|---|---|---|
 | **SpecForge** | [github.com/1997agarwal/SpecForge](https://github.com/1997agarwal/SpecForge) | Developer Tooling & Discovery AI | Live Open Source Repo • 3-Agent Pipeline & Linear Sync |
 | **ContextPrism** | [github.com/1997agarwal/ContextPrism](https://github.com/1997agarwal/ContextPrism) | AI Infra & Token FinOps | Live Open Source Repo • Port 4200 FinOps Gateway & AST Pruner |
+| **PromptCourt** | [github.com/1997agarwal/PromptCourt](https://github.com/1997agarwal/PromptCourt) | AI Prompt Evaluation & Elo Arena | Live Open Source Repo • Multi-Model Scoring & Leaderboard |
 
 ## Document Structure Guidelines
 

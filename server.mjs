@@ -218,7 +218,23 @@ const clean = (value, limit = 1200) => String(value || "").trim().slice(0, limit
 async function checkProjectHealth(proj) {
   const projName = typeof proj === "string" ? proj : proj.name;
   const category = typeof proj === "object" ? (proj.category || "commercial") : "commercial";
-  const projPath = typeof proj === "object" && proj.path ? proj.path : join(root, "Ideas", projName);
+  let projPath = typeof proj === "object" && proj.path ? proj.path : join(root, "Ideas", projName);
+  try {
+    await stat(projPath);
+  } catch {
+    const candidatePaths = [
+      join(root, "..", "Projects", "Open Source", projName),
+      join(root, "..", "Projects", projName),
+      join(root, "Ideas", projName)
+    ];
+    for (const cp of candidatePaths) {
+      try {
+        await stat(cp);
+        projPath = cp;
+        break;
+      } catch {}
+    }
+  }
   try {
     await stat(projPath);
     const files = ["AGENTS.md", "ROADMAP.md", "CLAUDE.md", "CONTRIBUTING.md"];
@@ -464,7 +480,8 @@ async function handleRequest(req, res) {
         { name: "BusinessPay", category: "commercial", path: join(root, "Ideas", "BusinessPay") },
         { name: "CollabKaro", category: "commercial", path: join(root, "Ideas", "CollabKaro") },
         { name: "SpecForge", category: "open_source", path: join(root, "Ideas", "SpecForge") },
-        { name: "ContextPrism", category: "open_source", path: join(root, "Ideas", "ContextPrism") }
+        { name: "ContextPrism", category: "open_source", path: join(root, "Ideas", "ContextPrism") },
+        { name: "PromptCourt", category: "open_source", path: join(root, "..", "Projects", "Open Source", "PromptCourt") }
       ];
       const healthData = await Promise.all(projects.map(checkProjectHealth));
       return json(res, 200, healthData);
