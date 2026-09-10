@@ -101,7 +101,7 @@ export default function BlueprintStudio({ currentUser, userIdeas = [], onNavigat
       tagline: "Automated Multi-Model LLM Prompt Evaluation, Scoring & Elo Arena",
       stack: ["React 18", "TypeScript", "Vite", "Tailwind CSS", "Elo Engine"],
       repoUrl: "https://github.com/1997agarwal/PromptCourt",
-      localPath: "../Projects/Open Source/PromptCourt",
+      localPath: "../Open Source/PromptCourt",
       category: "open_source",
       badge: "Open Source Arena",
       surfaces: ["Prompt Arena", "Elo Leaderboard", "Test Case Matrix", "Export Studio"]

@@ -61,7 +61,7 @@ StartupOS guides builders through the entire 360° product creation lifecycle:
 ## 5. Repository Map
 
 ```
-StartupOS/                                 ← Git Root (https://github.com/1997agarwal/StartupOS)
+Projects/StartupOS/                        ← Git Root (https://github.com/Builder-Tribe/StartupOS)
 ├── AGENTS.md                              ← You are here (StartupOS Constitution)
 ├── CLAUDE.md                              ← Thin pointer for CLI agents
 ├── README.md                              ← Master project overview & quickstart

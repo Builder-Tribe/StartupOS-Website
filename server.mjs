@@ -223,6 +223,8 @@ async function checkProjectHealth(proj) {
     await stat(projPath);
   } catch {
     const candidatePaths = [
+      join(root, "..", "Open Source", projName),
+      join(root, "..", projName),
       join(root, "..", "Projects", "Open Source", projName),
       join(root, "..", "Projects", projName),
       join(root, "Ideas", projName)
@@ -481,7 +483,7 @@ async function handleRequest(req, res) {
         { name: "CollabKaro", category: "commercial", path: join(root, "Ideas", "CollabKaro") },
         { name: "SpecForge", category: "open_source", path: join(root, "Ideas", "SpecForge") },
         { name: "ContextPrism", category: "open_source", path: join(root, "Ideas", "ContextPrism") },
-        { name: "PromptCourt", category: "open_source", path: join(root, "..", "Projects", "Open Source", "PromptCourt") }
+        { name: "PromptCourt", category: "open_source", path: join(root, "..", "Open Source", "PromptCourt") }
       ];
       const healthData = await Promise.all(projects.map(checkProjectHealth));
       return json(res, 200, healthData);
