@@ -2,7 +2,8 @@
 // Battle-Tested AI Prompt Vault & Dynamic Spec Generator
 
 export const PROMPT_CATEGORIES = [
-  { id: 'all', label: 'All Prompts', count: 12 },
+  { id: 'all', label: 'All Prompts', count: 16 },
+  { id: 'autonomous-pipeline', label: '🚀 Autonomous 0-to-1 Pipeline', count: 4 },
   { id: 'prd', label: '01. PRD & Ideation', count: 3 },
   { id: 'architecture', label: '02. Architecture & DB', count: 3 },
   { id: 'agent-coding', label: '03. Agent Code Generation', count: 2 },
@@ -11,6 +12,126 @@ export const PROMPT_CATEGORIES = [
 ];
 
 export const PROMPT_TEMPLATES = [
+  {
+    id: 'auto-01-scaffold',
+    title: 'Phase 1: Constitutional Scaffolding & Clean Dev Server',
+    category: 'autonomous-pipeline',
+    stepNumber: 1,
+    targetTools: ['AntiGravity', 'Claude Code', 'Cursor'],
+    badge: 'Step 1 of 4',
+    description: 'Initializes repository structure, establishes 4-file parity constitution, installs dependencies, and boots clean dev server.',
+    template: `You are an autonomous AI staff engineer pairing with a founder to build "{{PRODUCT_NAME}}".
+
+PRODUCT BRIEF:
+- Product: {{PRODUCT_NAME}}
+- Audience: {{TARGET_AUDIENCE}}
+- Core Problem: {{CORE_PROBLEM}}
+- Unfair Advantage: {{CORE_ADVANTAGE}}
+- Tech Stack: {{TECH_STACK}}
+
+TASK: Phase 1 — Project Scaffolding & 4-File Parity Governance
+1. Create the repository root directory structure for {{TECH_STACK}}.
+2. Ensure the 4 core baseline constitutional files exist in repository root:
+   - AGENTS.md (Rules for AI coding agents, sandbox policy, and Clean 2026 Light UI standards)
+   - ROADMAP.md (Phase 1, 2, and 3 milestone tracker with active checklist)
+   - CLAUDE.md (Dev commands: start dev server, build, lint, and test)
+   - CONTRIBUTING.md (Conventional Commits, branch conventions, and documentation covenants)
+3. Initialize the package manifest, dev server, and Tailwind CSS configuration.
+4. Verify the dev server boots cleanly with zero console errors or warnings.
+
+DO NOT write backend endpoints or database queries yet. Keep this commit strictly focused on scaffolding and governance parity. Report back with the exact commands run and the live dev server URL.`,
+    tags: ['Autonomous Pipeline', 'Scaffolding', 'AGENTS.md', 'Vite', 'Dev Server']
+  },
+  {
+    id: 'auto-02-backend',
+    title: 'Phase 2: Additive Database Schemas & REST APIs',
+    category: 'autonomous-pipeline',
+    stepNumber: 2,
+    targetTools: ['AntiGravity', 'Claude Code', 'Cursor'],
+    badge: 'Step 2 of 4',
+    description: 'Implements non-destructive database schemas, seed data, and robust CRUD REST API endpoints with request validation.',
+    template: `You are continuing development on "{{PRODUCT_NAME}}". Phase 1 (scaffolding and constitutional governance) is complete.
+
+PRODUCT CONTEXT:
+- Product: {{PRODUCT_NAME}}
+- Problem to Solve: {{CORE_PROBLEM}}
+- Tech Stack: {{TECH_STACK}}
+
+TASK: Phase 2 — Database Architecture, Migrations & REST API Layer
+1. Adhere strictly to the Non-Destructive Database Covenant in AGENTS.md:
+   - All migrations must be additive (use CREATE TABLE IF NOT EXISTS, ALTER TABLE ADD COLUMN).
+   - Never run destructive DROPs or TRUNCATEs.
+2. Define the core entity schema for {{PRODUCT_NAME}} to handle:
+   - User identity / workspace context
+   - Primary data entities needed to solve: {{CORE_PROBLEM}}
+3. Implement structured REST API endpoints:
+   - GET /api/health (Service status and version check)
+   - GET /api/items (List with filtering/sorting)
+   - POST /api/items (Create with strict input validation)
+   - GET /api/items/:id (Single entity detail)
+4. Seed mock data representing realistic {{TARGET_AUDIENCE}} workloads.
+5. Verify all endpoints via automated tests or curl assertions. Update ROADMAP.md checking off Milestone 2.`,
+    tags: ['Autonomous Pipeline', 'Backend', 'REST API', 'Database', 'Migrations']
+  },
+  {
+    id: 'auto-03-frontend',
+    title: 'Phase 3: Clean 2026 Light UI & Interactive Experience',
+    category: 'autonomous-pipeline',
+    stepNumber: 3,
+    targetTools: ['AntiGravity', 'Claude Code', 'Cursor'],
+    badge: 'Step 3 of 4',
+    description: 'Builds high-contrast, responsive 2026 Light Modern UI components, user flows, error boundaries, and state management.',
+    template: `You are continuing development on "{{PRODUCT_NAME}}". Phases 1 & 2 are complete and verified.
+
+PRODUCT CONTEXT:
+- Product: {{PRODUCT_NAME}}
+- Target Persona: {{TARGET_AUDIENCE}}
+- Core Value Proposition: {{CORE_ADVANTAGE}}
+- Tech Stack: {{TECH_STACK}}
+
+TASK: Phase 3 — 2026 Light Modern User Experience & Frontend Surface
+1. Adhere strictly to the Clean 2026 Light UI Standard:
+   - Canvas: zinc-50 or slate-50 background (NOT dark/pitch-black).
+   - Surfaces: Crisp #ffffff cards with subtle border (border-slate-200/80) and soft drop shadows (shadow-xs/shadow-sm).
+   - Typography: High-contrast slate-900 / slate-800 headings with clear typographic hierarchy.
+   - Accents: Purposeful brand color tokens with soft pill badges.
+2. Build the primary user interface surfaces:
+   - Intake / configuration form with client-side validation and helpful error feedback.
+   - Interactive dashboard displaying real-time outputs and metrics.
+   - Empty-slate states with clear CTAs for first-time builders.
+3. Wire frontend state to the Phase 2 backend REST API.
+4. Add loading states, toast feedback, and responsive layout for mobile and desktop viewports.
+5. Update ROADMAP.md checking off Milestone 3.`,
+    tags: ['Autonomous Pipeline', 'Frontend', '2026 Light UI', 'React', 'Tailwind']
+  },
+  {
+    id: 'auto-04-qa-launch',
+    title: 'Phase 4: QA Gate, Parity Verification & Launchpad Entry',
+    category: 'autonomous-pipeline',
+    stepNumber: 4,
+    targetTools: ['AntiGravity', 'Claude Code', 'Cursor'],
+    badge: 'Step 4 of 4',
+    description: 'Executes production build, enforces 0-warning lint/typecheck, audits 4-file parity, and formats public Launchpad payload.',
+    template: `You are finalizing "{{PRODUCT_NAME}}" for production release and public launch on StartupOS Launchpad.
+
+TASK: Phase 4 — Quality Gate Hardening, Parity Audit & Launch Submission
+1. Verification Checks:
+   - Run production build command: verify 0 errors.
+   - Run linter / typecheck: verify 0 warnings and 0 errors.
+   - Run test suites: verify 100% passing rate.
+2. 4-File Parity Audit:
+   - Confirm AGENTS.md, ROADMAP.md, CLAUDE.md, and CONTRIBUTING.md all reflect the current v1.0 release.
+   - Ensure all completed items in ROADMAP.md are checked [x].
+3. Prepare StartupOS Launchpad Payload:
+   - Product Name: {{PRODUCT_NAME}}
+   - Tagline: (1-line punchy value proposition for {{TARGET_AUDIENCE}})
+   - Category: (Select: Developer Tools, AI / Automation, SaaS, Open Source)
+   - Key Features: (Bullet list of 3-4 validated capabilities)
+   - Tech Stack: {{TECH_STACK}}
+   - GitHub Repository URL & Live Demo Link
+4. Commit all changes with Conventional Commits: 'feat(core): complete v1.0 MVP build and launch preparation'.`,
+    tags: ['Autonomous Pipeline', 'QA Gate', 'Audit', 'Launchpad', 'Parity']
+  },
   {
     id: 'prd-master-generator',
     title: '1-Sentence Idea to 10-Part Production PRD',

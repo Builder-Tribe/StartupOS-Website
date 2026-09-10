@@ -23,6 +23,8 @@ export default function App() {
   
   const [ideas, setIdeas] = useState([]);
   const [activeIdea, setActiveIdea] = useState(null);
+  const [promptVaultInitialCategory, setPromptVaultInitialCategory] = useState('all');
+  const [promptVaultConfiguredStack, setPromptVaultConfiguredStack] = useState(null);
   const [showLaunchModal, setShowLaunchModal] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showHelpCenter, setShowHelpCenter] = useState(false);
@@ -266,6 +268,12 @@ export default function App() {
               activeIdea={activeIdea}
               setActiveIdea={setActiveIdea}
               onNavigateToIdeaLab={() => setActiveTab('idealab')}
+              onNavigateToPromptVault={(idea, stackName) => {
+                if (idea) setActiveIdea(idea);
+                setPromptVaultInitialCategory('autonomous-pipeline');
+                setPromptVaultConfiguredStack(stackName);
+                setActiveTab('promptvault');
+              }}
             />
           )}
 
@@ -274,6 +282,8 @@ export default function App() {
               ideas={ideas}
               activeIdea={activeIdea}
               setActiveIdea={setActiveIdea}
+              initialCategory={promptVaultInitialCategory}
+              configuredStack={promptVaultConfiguredStack}
             />
           )}
 

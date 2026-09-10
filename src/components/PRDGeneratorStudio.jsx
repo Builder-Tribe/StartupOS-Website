@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import { downloadMarkdownFile, downloadZipBundle } from '../utils/zipExport';
 
-export default function PRDGeneratorStudio({ ideas = [], activeIdea, setActiveIdea, onNavigateToIdeaLab }) {
+export default function PRDGeneratorStudio({ ideas = [], activeIdea, setActiveIdea, onNavigateToIdeaLab, onNavigateToPromptVault }) {
   const [activeDoc, setActiveDoc] = useState('AGENTS');
   const [copied, setCopied] = useState(false);
   const [filterType, setFilterType] = useState('all'); // 'all' | 'governance' | 'specs'
@@ -500,17 +500,28 @@ ${currentStack.folderLayout}
             </p>
           </div>
 
-          {/* Master 1-Click ZIP Download Action */}
-          <div className="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0">
+          {/* Master Actions: ZIP Download & Autonomous Prompts */}
+          <div className="flex flex-col sm:flex-row lg:flex-col gap-2.5 shrink-0">
             <button
               onClick={handleDownloadAllZip}
-              className="bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 text-white font-bold text-xs px-5 py-3.5 rounded-2xl shadow-lg shadow-indigo-500/30 transition-all flex items-center justify-center gap-2.5 active:scale-95 group"
+              className="bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-600 hover:to-violet-700 text-white font-bold text-xs px-5 py-3 rounded-2xl shadow-lg shadow-indigo-500/30 transition-all flex items-center justify-center gap-2 active:scale-95 group cursor-pointer"
             >
               <Archive className="w-4 h-4 text-amber-300 group-hover:scale-110 transition-transform" />
               <span>Download Scaffold (.ZIP)</span>
             </button>
-            <div className="text-[11px] text-slate-400 text-center font-medium">
-              Bundles all 8 Markdown files cleanly
+
+            {onNavigateToPromptVault && (
+              <button
+                onClick={() => onNavigateToPromptVault(currentWorkspace, currentStack.name)}
+                className="bg-purple-600/90 hover:bg-purple-600 text-white font-bold text-xs px-5 py-2.5 rounded-2xl border border-purple-400/40 shadow-md shadow-purple-900/40 transition-all flex items-center justify-center gap-2 active:scale-95 cursor-pointer"
+              >
+                <Terminal className="w-3.5 h-3.5 text-purple-200" />
+                <span>Autonomous Prompts →</span>
+              </button>
+            )}
+
+            <div className="text-[10px] text-slate-400 text-center font-medium">
+              8 files bundled with live config
             </div>
           </div>
         </div>
