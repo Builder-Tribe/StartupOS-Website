@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
   Trophy, FolderGit2, Sparkles, GraduationCap, ShieldCheck, Plus, User, Crown, 
-  Globe, HelpCircle, ArrowUpRight, CheckCircle2, ArrowLeftRight, LogOut, Cpu, Terminal, UserCheck
+  Globe, HelpCircle, ArrowUpRight, CheckCircle2, ArrowLeftRight, LogOut, Cpu, Terminal, UserCheck, FileCode
 } from 'lucide-react';
 
 export default function Sidebar({ activeTab, setActiveTab, currentUser, isLoggedIn, onOpenLaunchModal, onExitToWebsite, onOpenHelpCenter, onOpenCommandCenter }) {
@@ -9,6 +9,7 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser, isLogged
     { id: 'launchpad', label: 'Launchpad Feed', icon: Trophy, badge: 'Live' },
     { id: 'blueprints', label: 'My Projects', icon: FolderGit2 },
     { id: 'idealab', label: 'AI Builder Studio', icon: Sparkles, badge: 'AGY AI' },
+    { id: 'specstudio', label: 'Specs & Constitution', icon: FileCode, badge: '4-File' },
     { id: 'promptvault', label: 'Prompt Vault', icon: Terminal, badge: 'Tested' },
     { id: 'toolmatrix', label: 'Tool Matrix & Arch', icon: Cpu, badge: '2026' },
     { id: 'academy', label: 'AI Academy', icon: GraduationCap },

@@ -13,6 +13,7 @@ import AdminConsole from './components/AdminConsole';
 import MarketingLander from './components/MarketingLander';
 import AuthModal from './components/AuthModal';
 import HelpCenterModal from './components/HelpCenterModal';
+import PRDGeneratorStudio from './components/PRDGeneratorStudio';
 
 export default function App() {
   // Top-level View Mode: 'website' (Standalone Marketing Lander) | 'portal' (StartupOS Builder Workspace) | 'admin' (Standalone Team Command Center)
@@ -238,6 +239,10 @@ export default function App() {
               currentUser={currentUser}
               userIdeas={ideas}
               onNavigateToIdeaLab={() => setActiveTab('idealab')}
+              onNavigateToSpecStudio={(idea) => {
+                if (idea) setActiveIdea(idea);
+                setActiveTab('specstudio');
+              }}
             />
           )}
 
@@ -248,6 +253,19 @@ export default function App() {
               setActiveIdea={setActiveIdea}
               onSaveIdea={handleSaveIdea}
               onNewIdea={handleNewIdea}
+              onOpenSpecStudio={(idea) => {
+                if (idea) setActiveIdea(idea);
+                setActiveTab('specstudio');
+              }}
+            />
+          )}
+
+          {activeTab === 'specstudio' && (
+            <PRDGeneratorStudio
+              ideas={ideas}
+              activeIdea={activeIdea}
+              setActiveIdea={setActiveIdea}
+              onNavigateToIdeaLab={() => setActiveTab('idealab')}
             />
           )}
 

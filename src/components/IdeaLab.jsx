@@ -290,6 +290,33 @@ export default function IdeaLab({ ideas, activeIdea, setActiveIdea, onSaveIdea, 
                   {activeIdea.buildPrompt}
                 </pre>
               </div>
+
+              {/* Next Phase CTA Banner: Spec & Constitution Studio */}
+              <div className="mt-6 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-indigo-50 via-violet-50 to-indigo-50 border border-indigo-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-indigo-600" />
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-indigo-900 font-mono">
+                      Phase 2 • AI Specifications & Constitution Suite
+                    </span>
+                  </div>
+                  <h4 className="text-sm sm:text-base font-extrabold text-slate-900">
+                    Ready to generate your PRD, Architecture & 4-File Parity Constitution?
+                  </h4>
+                  <p className="text-xs text-slate-600 font-medium">
+                    Instantly preview, copy, or 1-click download all 8 documentation files (<code className="text-indigo-700 font-bold">AGENTS.md</code>, <code className="text-indigo-700 font-bold">ROADMAP.md</code>, <code className="text-indigo-700 font-bold">CLAUDE.md</code>, <code className="text-indigo-700 font-bold">CONTRIBUTING.md</code>, and PRDs) as a complete ZIP scaffold.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => onOpenSpecStudio && onOpenSpecStudio(activeIdea)}
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold px-5 py-3 rounded-xl transition-all shadow-md shadow-indigo-500/20 active:scale-95 shrink-0 flex items-center justify-center gap-2 group"
+                >
+                  <span>Open Specs & Governance Studio</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+              </div>
             </div>
           </div>
         )}

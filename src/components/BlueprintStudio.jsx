@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { 
   FolderGit2, CheckCircle2, AlertTriangle, ShieldCheck, ExternalLink, 
-  Terminal, Sparkles, Rocket, RefreshCw, Lock, Eye, ChevronRight, Plus
+  Terminal, Sparkles, Rocket, RefreshCw, Lock, Eye, ChevronRight, Plus, FileCode
 } from 'lucide-react';
 
-export default function BlueprintStudio({ currentUser, userIdeas = [], onNavigateToIdeaLab }) {
+export default function BlueprintStudio({ currentUser, userIdeas = [], onNavigateToIdeaLab, onNavigateToSpecStudio }) {
   const [healthData, setHealthData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState('building'); // 'building' | 'launch'
@@ -322,6 +322,15 @@ export default function BlueprintStudio({ currentUser, userIdeas = [], onNavigat
                       </a>
 
                       <div className="flex items-center gap-2">
+                        {onNavigateToSpecStudio && (
+                          <button
+                            onClick={() => onNavigateToSpecStudio({ name: proj.name, category: meta.category, summary: meta.tagline })}
+                            className="text-[11px] text-indigo-600 hover:text-indigo-800 font-bold bg-indigo-50 hover:bg-indigo-100/80 px-2.5 py-1 rounded-xl border border-indigo-200/60 transition-colors flex items-center gap-1 cursor-pointer"
+                          >
+                            <FileCode className="w-3 h-3" />
+                            <span>Constitution</span>
+                          </button>
+                        )}
                         <span className="text-[11px] text-emerald-600 font-bold bg-emerald-50 px-2.5 py-1 rounded-xl border border-emerald-200">
                           ✓ Parity Verified
                         </span>
@@ -438,13 +447,24 @@ export default function BlueprintStudio({ currentUser, userIdeas = [], onNavigat
 
                   {/* Actions */}
                   <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
-                    <button
-                      onClick={onNavigateToIdeaLab}
-                      className="inline-flex items-center gap-1 text-xs font-bold text-indigo-600 hover:underline"
-                    >
-                      <span>Open in AI Builder Studio</span>
-                      <ChevronRight className="w-3.5 h-3.5" />
-                    </button>
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={onNavigateToIdeaLab}
+                        className="inline-flex items-center gap-1 text-xs font-bold text-indigo-600 hover:underline"
+                      >
+                        <span>Open in Builder Studio</span>
+                        <ChevronRight className="w-3.5 h-3.5" />
+                      </button>
+                      {onNavigateToSpecStudio && (
+                        <button
+                          onClick={() => onNavigateToSpecStudio(idea)}
+                          className="inline-flex items-center gap-1 text-xs font-bold text-slate-600 hover:text-indigo-600 hover:underline"
+                        >
+                          <FileCode className="w-3.5 h-3.5" />
+                          <span>Specs & Constitution</span>
+                        </button>
+                      )}
+                    </div>
                     <span className="text-[11px] text-emerald-600 font-bold bg-emerald-50 px-2.5 py-1 rounded-xl border border-emerald-200">
                       ✓ Active Workspace
                     </span>
