@@ -310,6 +310,7 @@ export default function App() {
         onClose={() => setShowLaunchModal(false)}
         onLaunchSubmitted={handleLaunchSubmitted}
         currentUser={currentUser}
+        ideas={ideas}
       />
 
       {/* Auth Modal */}

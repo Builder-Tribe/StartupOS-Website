@@ -75,10 +75,14 @@ export default function LaunchpadFeed({ currentUser, onOpenLaunchModal }) {
     }
   };
 
-  const categories = ['All', 'AI Vision', 'Solo Travel AI', 'B2B Fintech', 'Creator Marketplace', 'Developer Tool'];
+  const categories = ['All', '🏆 Certified (4-File Parity)', 'AI Vision', 'Solo Travel AI', 'B2B Fintech', 'Creator Marketplace', 'Developer Tool'];
 
   const filteredLaunches = launches.filter(l => {
-    const matchesCat = activeCategory === 'All' || l.category === activeCategory;
+    const matchesCat = activeCategory === 'All'
+      ? true
+      : activeCategory === '🏆 Certified (4-File Parity)'
+      ? (l.isCertified || l.readinessScore >= 75)
+      : l.category === activeCategory;
     const matchesSearch = l.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           l.tagline.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCat && matchesSearch;
@@ -224,6 +228,12 @@ export default function LaunchpadFeed({ currentUser, onOpenLaunchModal }) {
                     <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
                       {item.category}
                     </span>
+                    {(item.isCertified || item.readinessScore >= 75) && (
+                      <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-300 flex items-center gap-1">
+                        <Award className="w-3 h-3 text-emerald-600" />
+                        <span>🏆 Certified ({item.readinessScore || 100} PTS)</span>
+                      </span>
+                    )}
                   </div>
                   
                   <p className="text-slate-600 text-sm font-medium line-clamp-1">
@@ -292,10 +302,16 @@ export default function LaunchpadFeed({ currentUser, onOpenLaunchModal }) {
                 {selectedLaunch.title[0]}
               </div>
               <div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">
                     {selectedLaunch.category}
                   </span>
+                  {(selectedLaunch.isCertified || selectedLaunch.readinessScore >= 75) && (
+                    <span className="text-xs font-black px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-300 flex items-center gap-1">
+                      <Award className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>🏆 Certified Launch ({selectedLaunch.readinessScore || 100}/100 PTS)</span>
+                    </span>
+                  )}
                 </div>
                 <h2 className="text-2xl font-bold text-slate-900 mt-1">{selectedLaunch.title}</h2>
                 <p className="text-sm text-slate-600 font-medium mt-0.5">{selectedLaunch.tagline}</p>

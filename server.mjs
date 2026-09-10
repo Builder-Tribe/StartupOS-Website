@@ -55,6 +55,8 @@ const INITIAL_LAUNCHES = [
     maker: { name: "Harshita G", avatar: "👩‍💻", title: "Founder" },
     demoUrl: "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/DupeScout",
     tags: ["CLIP Vision", "FastAPI", "Next.js 14", "pgvector"],
+    readinessScore: 100,
+    isCertified: true,
     comments: [
       { id: "c1", author: "Aman Gupta", avatar: "👨‍💼", text: "Incredible visual search accuracy! Perfect for Gen Z shoppers.", timestamp: "2 hours ago" },
       { id: "c2", author: "Priya Sharma", avatar: "👩‍🎨", text: "Love the honest similarity percentage scores.", timestamp: "5 hours ago" }
@@ -74,6 +76,8 @@ const INITIAL_LAUNCHES = [
     maker: { name: "Harshita G", avatar: "👩‍💻", title: "Founder" },
     demoUrl: "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/Trippy",
     tags: ["React 18", "Express", "SQLite", "Node 22"],
+    readinessScore: 100,
+    isCertified: true,
     comments: [
       { id: "c3", author: "Rohan V", avatar: "🎒", text: "Finally an app that makes solo travel group matching safe and easy!", timestamp: "1 day ago" }
     ],
@@ -92,6 +96,8 @@ const INITIAL_LAUNCHES = [
     maker: { name: "Harshita G", avatar: "👩‍💻", title: "Founder" },
     demoUrl: "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/BusinessPay",
     tags: ["React 19", "Express 5", "Dynamic Discounts", "SQLite"],
+    readinessScore: 100,
+    isCertified: true,
     comments: [],
     createdAt: new Date(Date.now() - 86400000 * 4).toISOString()
   },
@@ -108,6 +114,8 @@ const INITIAL_LAUNCHES = [
     maker: { name: "Harshita G", avatar: "👩‍💻", title: "Founder" },
     demoUrl: "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/CollabKaro",
     tags: ["React TS", "Escrow API", "UGC Media Kit", "SQLite"],
+    readinessScore: 100,
+    isCertified: true,
     comments: [],
     createdAt: new Date(Date.now() - 86400000 * 5).toISOString()
   }
@@ -377,6 +385,8 @@ async function handleRequest(req, res) {
         maker: input.maker || { name: "Harshita G", avatar: "👩‍💻", title: "Maker" },
         demoUrl: input.demoUrl || "",
         tags: input.tags || ["AI", "StartupOS"],
+        readinessScore: Number(input.readinessScore) || 100,
+        isCertified: input.isCertified !== undefined ? Boolean(input.isCertified) : (Number(input.readinessScore) === 100),
         comments: [],
         createdAt: new Date().toISOString()
       };
