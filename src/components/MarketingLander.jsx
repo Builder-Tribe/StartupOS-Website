@@ -4,7 +4,8 @@ import {
   Terminal, Code2, Users, Flame, BookOpen, Layers, Cpu, Compass,
   UserCheck, LogIn, ChevronRight, ChevronDown, ChevronUp, HelpCircle,
   Archive, Download, Copy, Check, Sliders, ExternalLink, Zap, Clock,
-  DollarSign, Award, Star, CheckCheck, PlayCircle, Folder, FileCode, CheckCircle
+  DollarSign, Award, Star, CheckCheck, PlayCircle, Folder, FileCode, CheckCircle,
+  GraduationCap, Video, FileText, CheckSquare, GitBranch, Linkedin
 } from 'lucide-react';
 
 export default function MarketingLander({ onEnterPortal, onOpenAuthModal }) {
@@ -12,10 +13,47 @@ export default function MarketingLander({ onEnterPortal, onOpenAuthModal }) {
   const [activeDeliverableTab, setActiveDeliverableTab] = useState('constitution'); // 'constitution' | 'prd' | 'scaffold' | 'pipeline'
   const [previewStack, setPreviewStack] = useState('vite-react'); // 'vite-react' | 'nextjs' | 'fastapi'
   const [activeHowStep, setActiveHowStep] = useState(0); // 0 | 1 | 2 | 3
+  const [activeCourseTab, setActiveCourseTab] = useState('course-branding'); // 'course-branding' | 'course-saas'
   const [calcHours, setCalcHours] = useState(25); // Hours spent per month on specs/prompts
   const [billingCycle, setBillingCycle] = useState('annual'); // 'monthly' | 'annual'
   const [openFaq, setOpenFaq] = useState(0);
   const [copiedCode, setCopiedCode] = useState(false);
+
+  // Free AI Academy Highlight Courses Mock Data
+  const academyCourses = {
+    'course-branding': {
+      id: 'course-branding',
+      title: 'Developer Branding & GitHub Launchpad Masterclass',
+      subtitle: 'Push Code, 4-File Parity & Catch Eyeballs on LinkedIn',
+      instructor: 'Harshit Agarwal & Marcus Chen',
+      duration: '45 mins • 4 Modules',
+      enrolled: '2,840+ enrolled',
+      level: 'All Levels (PMs & Founders)',
+      badge: 'Bestseller • 100% Free',
+      description: 'Master clean git hygiene, build an irresistible username/username GitHub Profile README with monochrome CTAs, establish 4-file parity governance, and use a 5-part LinkedIn Build-in-Public launch formula.',
+      modules: [
+        { title: 'Module 1: Git Push Workflows & 4-File Parity Standard', lessons: '2 step-by-step lessons with pre-flight hygiene scripts' },
+        { title: 'Module 2: Building a Recruiter-Converting GitHub Profile', lessons: 'Irresistible README markdown with live badges & stats' },
+        { title: 'Module 3: Catching Eyeballs on LinkedIn: Build-in-Public Launch Formula', lessons: '5-part post structure that generates recruiter DMs & cofounder reachouts' }
+      ]
+    },
+    'course-saas': {
+      id: 'course-saas',
+      title: 'Build a Full-Stack AI SaaS in 60 Mins with AntiGravity & Supabase',
+      subtitle: 'Turn a simple PRD into a production-ready AI product with zero manual boilerplate',
+      instructor: 'Dr. Evelyn Vance',
+      duration: '60 mins • 3 Modules',
+      enrolled: '1,420+ enrolled',
+      level: 'Beginner Non-Coder',
+      badge: 'Zero-to-One • 100% Free',
+      description: 'Learn how non-technical founders use AntiGravity, Claude Code, and Supabase to define deterministic schemas, generate additive PostgreSQL tables, wire auth, and ship live on Vercel.',
+      modules: [
+        { title: 'Module 1: Defining PRD & Database Schema', lessons: 'Deterministic prompting for Supabase migrations' },
+        { title: 'Module 2: Tool-Calling Backend & Gemini Integration', lessons: 'Extracting pain points and sentiment with LLM functions' },
+        { title: 'Module 3: Frontend Deployment & GitHub CI/CD', lessons: 'Connecting responsive UI to live database & Vercel' }
+      ]
+    }
+  };
 
   // Deliverables Mock Data based on previewStack
   const stackLabels = {
@@ -180,6 +218,10 @@ Format payload for StartupOS Launchpad and commit with Conventional Commits."`
       a: 'The Launchpad is a curated community product exchange visited by thousands of AI founders, vibe coders, and early adopters daily. Products with verified 4-file parity receive the exclusive 🏆 Certified Launch badge, earning higher visibility, upvotes, and honest feedback from fellow builders.'
     },
     {
+      q: 'Is the AI Builder Academy really 100% free forever?',
+      a: 'Yes! All core courses, including the Developer Branding & GitHub Launchpad Masterclass and Full-Stack AI SaaS in 60 Mins, are completely free to all builders with zero paywall or credit card required. We provide copyable prompt blueprints for Google AntiGravity, Claude Code, Cursor, Replit, and Emergent, plus an interactive AI tutor.'
+    },
+    {
       q: 'Can I cancel or change my subscription plan anytime?',
       a: 'Yes, absolutely. You can upgrade, downgrade, or cancel your Pro Builder or Studio subscription at any time with a single click. You retain permanent access to all downloaded scaffolds, PRDs, and constitutions.'
     }
@@ -215,8 +257,15 @@ Format payload for StartupOS Launchpad and commit with Conventional Commits."`
             </div>
 
             {/* Middle Nav Links */}
-            <nav className="hidden lg:flex items-center gap-8 text-xs font-bold text-slate-600">
+            <nav className="hidden lg:flex items-center gap-7 text-xs font-bold text-slate-600">
               <a href="#deliverables" className="hover:text-indigo-600 transition-colors">Deliverables</a>
+              <a href="#academy" className="hover:text-indigo-600 transition-colors flex items-center gap-1.5 text-indigo-600 font-extrabold">
+                <GraduationCap className="w-3.5 h-3.5 text-indigo-600" />
+                <span>AI Academy</span>
+                <span className="text-[9px] font-black bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded-full uppercase tracking-wider">
+                  100% Free
+                </span>
+              </a>
               <a href="#why-startupos" className="hover:text-indigo-600 transition-colors">Why StartupOS</a>
               <a href="#how-it-works" className="hover:text-indigo-600 transition-colors">How It Works</a>
               <a href="#roi-calculator" className="hover:text-indigo-600 transition-colors">ROI Calculator</a>
@@ -271,12 +320,23 @@ Format payload for StartupOS Launchpad and commit with Conventional Commits."`
           {/* Primary Action Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <button
-              onClick={onEnterPortal}
+              onClick={() => onEnterPortal('launchpad')}
               className="w-full sm:w-auto bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-700 hover:from-indigo-700 hover:to-purple-800 text-white font-extrabold text-sm px-8 py-4 rounded-2xl shadow-xl shadow-indigo-600/30 transition-all flex items-center justify-center gap-2.5 active:scale-95 group cursor-pointer"
             >
               <Rocket className="w-4 h-4 text-amber-300 group-hover:rotate-12 transition-transform" />
               <span>Start Building Free in Studio</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+
+            <button
+              onClick={() => onEnterPortal('academy')}
+              className="w-full sm:w-auto bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-extrabold text-sm px-7 py-4 rounded-2xl shadow-lg shadow-emerald-600/25 transition-all flex items-center justify-center gap-2 active:scale-95 group cursor-pointer"
+            >
+              <GraduationCap className="w-4 h-4 text-emerald-200" />
+              <span>Explore Free AI Academy</span>
+              <span className="text-[10px] font-black bg-white/20 text-white px-2 py-0.5 rounded-full uppercase">
+                100% Free
+              </span>
             </button>
 
             <a
@@ -289,10 +349,14 @@ Format payload for StartupOS Launchpad and commit with Conventional Commits."`
           </div>
 
           {/* Social Proof & Trust Metrics Ticker */}
-          <div className="pt-8 border-t border-slate-200/70 max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          <div className="pt-8 border-t border-slate-200/70 max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div className="space-y-0.5">
               <div className="text-2xl sm:text-3xl font-black text-slate-900">1,400+</div>
               <div className="text-xs text-slate-500 font-semibold">AI Products Incubated</div>
+            </div>
+            <div className="space-y-0.5">
+              <div className="text-2xl sm:text-3xl font-black text-emerald-600">FREE</div>
+              <div className="text-xs text-slate-500 font-semibold">AI Academy & Courses</div>
             </div>
             <div className="space-y-0.5">
               <div className="text-2xl sm:text-3xl font-black text-indigo-600">100%</div>
@@ -301,10 +365,6 @@ Format payload for StartupOS Launchpad and commit with Conventional Commits."`
             <div className="space-y-0.5">
               <div className="text-2xl sm:text-3xl font-black text-slate-900">82%</div>
               <div className="text-xs text-slate-500 font-semibold">Dev Time Saved</div>
-            </div>
-            <div className="space-y-0.5">
-              <div className="text-2xl sm:text-3xl font-black text-emerald-600">0%</div>
-              <div className="text-xs text-slate-500 font-semibold">Vendor Lock-In</div>
             </div>
           </div>
         </section>
@@ -633,7 +693,151 @@ Format payload for StartupOS Launchpad and commit with Conventional Commits."`
           </div>
         </section>
 
-        {/* SECTION 4: INTERACTIVE BUILDER ROI CALCULATOR */}
+        {/* SECTION 4: FREE AI ACADEMY & COURSES (THE FREE VALUE MAGNET) */}
+        <section id="academy" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12">
+          <div className="text-center space-y-3 max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/80 text-xs font-bold uppercase tracking-wider">
+              <GraduationCap className="w-4 h-4 text-emerald-600" />
+              <span>100% Free Public Resource</span>
+            </div>
+            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
+              The AI Builder Academy — <span className="bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">Free Forever</span>
+            </h2>
+            <p className="text-slate-600 text-sm sm:text-base font-medium">
+              We believe every builder deserves world-class AI engineering education. Explore complete masterclasses on 4-file parity, developer branding, and prompt architecture at zero cost.
+            </p>
+          </div>
+
+          {/* Interactive Course Showcase Card */}
+          <div className="bg-white rounded-3xl border border-slate-200/90 shadow-xl overflow-hidden">
+            {/* Course Selector Tabs */}
+            <div className="p-4 sm:p-6 bg-slate-50 border-b border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => setActiveCourseTab('course-branding')}
+                  className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                    activeCourseTab === 'course-branding'
+                      ? 'bg-emerald-600 text-white shadow-xs'
+                      : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'
+                  }`}
+                >
+                  <Award className="w-4 h-4" />
+                  <span>Developer Branding & GitHub Launchpad</span>
+                  <span className="text-[9px] bg-white/20 text-white font-extrabold px-1.5 py-0.5 rounded-full">FREE</span>
+                </button>
+
+                <button
+                  onClick={() => setActiveCourseTab('course-saas')}
+                  className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
+                    activeCourseTab === 'course-saas'
+                      ? 'bg-emerald-600 text-white shadow-xs'
+                      : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'
+                  }`}
+                >
+                  <Rocket className="w-4 h-4" />
+                  <span>Build Full-Stack AI SaaS in 60 Mins</span>
+                  <span className="text-[9px] bg-white/20 text-white font-extrabold px-1.5 py-0.5 rounded-full">FREE</span>
+                </button>
+              </div>
+
+              <div className="flex items-center gap-2 text-xs font-bold text-slate-500">
+                <Users className="w-4 h-4 text-indigo-600" />
+                <span>Over 4,200+ active learners enrolled</span>
+              </div>
+            </div>
+
+            {/* Course Details & Interactive Module Inspector */}
+            <div className="p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              {/* Left Column: Course Overview */}
+              <div className="lg:col-span-6 space-y-5">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-extrabold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 uppercase tracking-widest">
+                      {academyCourses[activeCourseTab].badge}
+                    </span>
+                    <span className="text-xs text-slate-400 font-semibold">• {academyCourses[activeCourseTab].duration}</span>
+                  </div>
+                  <h3 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight">
+                    {academyCourses[activeCourseTab].title}
+                  </h3>
+                  <p className="text-xs sm:text-sm font-semibold text-emerald-700">
+                    {academyCourses[activeCourseTab].subtitle}
+                  </p>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
+                    {academyCourses[activeCourseTab].description}
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2">
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="font-bold text-slate-700">Lead Instructor:</span>
+                    <span className="font-extrabold text-slate-900">{academyCourses[activeCourseTab].instructor}</span>
+                  </div>
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="font-bold text-slate-700">Target Audience:</span>
+                    <span className="font-medium text-slate-600">{academyCourses[activeCourseTab].level}</span>
+                  </div>
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="font-bold text-slate-700">Tuition:</span>
+                    <span className="font-black text-emerald-600 uppercase">$0 (Completely Free)</span>
+                  </div>
+                </div>
+
+                <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
+                  <button
+                    onClick={() => onEnterPortal('academy')}
+                    className="w-full sm:w-auto bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-extrabold text-xs px-6 py-3.5 rounded-xl shadow-lg shadow-emerald-600/30 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95"
+                  >
+                    <GraduationCap className="w-4 h-4" />
+                    <span>Start Free Course in Portal</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+
+                  <span className="text-[11px] text-slate-400 font-medium">
+                    Instant access • No credit card required
+                  </span>
+                </div>
+              </div>
+
+              {/* Right Column: Interactive Curriculum Module Cards */}
+              <div className="lg:col-span-6 space-y-4">
+                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+                  <BookOpen className="w-4 h-4 text-indigo-600" />
+                  <span>Curriculum Breakdown</span>
+                </div>
+
+                {academyCourses[activeCourseTab].modules.map((m, idx) => (
+                  <div
+                    key={idx}
+                    className="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-slate-50 to-white border border-slate-200/80 hover:border-emerald-300 transition-all shadow-xs space-y-1.5"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-extrabold text-slate-900 flex items-center gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                        {m.title}
+                      </span>
+                      <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                        FREE
+                      </span>
+                    </div>
+                    <p className="text-xs text-slate-500 font-medium pl-6">
+                      {m.lessons}
+                    </p>
+                  </div>
+                ))}
+
+                <div className="p-4 rounded-2xl bg-indigo-50/70 border border-indigo-200/70 flex items-center gap-3">
+                  <Sparkles className="w-5 h-5 text-indigo-600 shrink-0" />
+                  <p className="text-xs text-indigo-900 font-medium leading-relaxed">
+                    <strong>Interactive AI Tutor Included:</strong> In-course AI assistant answers any questions, debugs your prompts, and scores your project submission.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 5: INTERACTIVE BUILDER ROI CALCULATOR */}
         <section id="roi-calculator" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12">
           <div className="text-center space-y-3 max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/60 text-xs font-bold uppercase tracking-wider">
@@ -768,6 +972,10 @@ Format payload for StartupOS Launchpad and commit with Conventional Commits."`
                 <div className="text-[11px] text-emerald-600 font-bold">Free forever • No credit card required</div>
 
                 <div className="border-t border-slate-100 pt-4 space-y-3 text-xs text-slate-600 font-medium">
+                  <div className="flex items-center gap-2">
+                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span><strong>100% Free AI Academy:</strong> Unlimited access to all masterclasses</span>
+                  </div>
                   <div className="flex items-center gap-2">
                     <Check className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>3 Scaffolds & PRD exports per month</span>

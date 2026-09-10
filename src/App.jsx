@@ -109,9 +109,10 @@ export default function App() {
     return (
       <>
         <MarketingLander
-          onEnterPortal={() => {
+          onEnterPortal={(targetTab = 'launchpad') => {
             setIsLoggedIn(false); // Entering via demo CTA set as guest
             setViewMode('portal');
+            setActiveTab(targetTab);
           }}
           onOpenAuthModal={() => setShowAuthModal(true)}
         />
