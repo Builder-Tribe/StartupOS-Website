@@ -52,7 +52,7 @@ StartupOS guides builders through the entire 360° product creation lifecycle:
 - **AntiGravity:** Lead architectural design, multi-agent orchestration, full-stack implementation, and local runtime verification (`http://localhost:8081`).
 - **Emergent:** Autonomous full-stack feature generation respecting security boundaries and component reuse.
 - **Replit:** Cloud prototyping, live webview previews, dynamic `process.env.PORT` binding.
-- **Claude Code:** Terminal automation and CLI refactoring. Auto-backup hook on exit.
+- **Claude Code:** Terminal automation, CLI refactoring, and code reviews.
 - **Codex & Copilot:** Inline code autocomplete governed by `tsconfig.json`.
 - **Cursor & Windsurf:** Multi-file indexing and semantic search.
 
