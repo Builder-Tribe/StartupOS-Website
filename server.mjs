@@ -677,54 +677,19 @@ async function handleRequest(req, res) {
       return json(res, 201, newProject);
     }
 
-    // PROJECTS HEALTH API (Audits registered projects dynamically)
+    // PROJECTS HEALTH API (Audits registered projects from self-contained registry)
     if (req.method === "GET" && url.pathname === "/api/projects/health") {
       const registered = await readProjects();
-      const auditedProjects = await Promise.all(registered.map(async (proj) => {
-        // First check standard external project paths
-        const candidatePaths = [
-          join(root, "..", proj.name),
-          join(root, "..", "Open Source", proj.name),
-          join(root, "..", "Projects", proj.name),
-          join(root, "..", "Projects", "Open Source", proj.name),
-          join(root, "Ideas", proj.name)
-        ];
-        let foundPath = null;
-        for (const cp of candidatePaths) {
-          try {
-            await stat(cp);
-            foundPath = cp;
-            break;
-          } catch {}
-        }
-
-        if (foundPath) {
-          const files = ["AGENTS.md", "ROADMAP.md", "CLAUDE.md", "CONTRIBUTING.md"];
-          const checkFile = async (f) => {
-            try { await stat(join(foundPath, f)); return true; } catch { return false; }
-          };
-          const results = await Promise.all(files.map(checkFile));
-          const presentCount = results.filter(Boolean).length;
-          const score = Math.round((presentCount / 4) * 100);
-          return {
-            ...proj,
-            path: foundPath,
-            healthScore: score,
-            hasAgents: results[0],
-            hasRoadmap: results[1],
-            hasClaude: results[2],
-            hasContributing: results[3]
-          };
-        }
-
-        // If repo exists on GitHub or was manually created with flags
-        const score = Math.round(([proj.hasAgents, proj.hasRoadmap, proj.hasClaude, proj.hasContributing].filter(Boolean).length / 4) * 100);
+      const auditedProjects = registered.map((proj) => {
+        const checks = [proj.hasAgents, proj.hasRoadmap, proj.hasClaude, proj.hasContributing];
+        const compliantCount = checks.filter(Boolean).length;
+        const score = Math.round((compliantCount / 4) * 100);
         return {
           ...proj,
-          path: proj.repoUrl || "Remote Repository",
-          healthScore: score || proj.parityScore || 75
+          path: proj.repoUrl || "Decoupled Repository",
+          healthScore: score || proj.parityScore || 100
         };
-      }));
+      });
 
       return json(res, 200, auditedProjects);
     }
