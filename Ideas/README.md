@@ -1,29 +1,65 @@
-# StartupOS — Product & Idea Documentation Inventory
+# StartupOS — Decoupled Product Registry & Architecture
 
-## Overview
+## Architectural Model: Decoupled Governance Governor
+In **StartupOS**, product source code does **not** live inside the StartupOS codebase. 
+StartupOS acts as the **Autonomous Product Incubator & Governance Governor**:
+- **Project Registry (`data/registered_projects.json`)**: Tracks product metadata, category, tech stack, surfaces, and live endpoints.
+- **4-File Operational Constitution (`AGENTS.md`, `ROADMAP.md`, `CLAUDE.md`, `CONTRIBUTING.md`)**: Dynamic health audits inspect and verify governance compliance across independent repositories without copying raw source trees.
+- **Spec Studio & AI Builder Studio**: Allows builders to incubate new ventures from scratch, generate constitution baselines, and sync PRD/specifications.
 
-This directory contains the full documentation suites, PRDs, technical architecture designs, and codebase assets for products managed within **StartupOS**.
+---
 
-## Project Inventory
+## Registered Showcase Portfolio
 
 ### 🏢 Commercial Flagship Ventures
-| Product Name | Directory | Category | Status |
-|---|---|---|---|
-| **CollabKaro (Let's Collab)** | `Ideas/CollabKaro/` | Creator Economy & Marketplace | PRD, Market Research & Architecture Specs Complete |
-| **BusinessPay** | `Ideas/BusinessPay/` | FinTech & B2B Payments | Full Codebase, SmartCollect AI Docs & DB Schemas |
-| **DupeScout (Duke Scout)** | `Ideas/DupeScout/` | AI E-Commerce & Consumer SaaS | 6-Volume Master PRD & AI Architecture Design |
-| **Trippy (Tripe)** | `Ideas/Trippy/` | AI Travel & Social Matchmaking | Full Codebase, SoloTravel PRD & Design System |
+1. **CollabKaro** (`/Projects/CollabKaro`)
+   - *Tagline*: India-First Creator Marketplace & Escrow Milestone Operating System
+   - *Stack*: React TS, Express, Escrow API, SQLite
+   - *Repo*: [github.com/1997agarwal/CollabKaro](https://github.com/1997agarwal/CollabKaro)
+   - *Governance*: 100% 4-File Parity Verified
+
+2. **BusinessPay** (`/Projects/BusinessPay`)
+   - *Tagline*: B2B Accounts Receivable Collections & Early Payment Cash Accelerator
+   - *Stack*: React 19, Express 5, Dynamic Discounts, SQLite
+   - *Repo*: [github.com/1997agarwal/BusinessPay](https://github.com/1997agarwal/BusinessPay)
+   - *Governance*: 100% 4-File Parity Verified
+
+3. **DupeScout** (`/Projects/DupeScout`)
+   - *Tagline*: Shop the Look. Not the Markup. AI Visual Similarity & Dupes Engine
+   - *Stack*: FastAPI, Next.js 14, PostgreSQL, pgvector
+   - *Repo*: [github.com/1997agarwal/DupeScout](https://github.com/1997agarwal/DupeScout)
+   - *Governance*: 100% 4-File Parity Verified
+
+4. **Trippy** (`/Projects/Trippy`)
+   - *Tagline*: AI Solo Travel Group Matching & Community Trip Host Platform
+   - *Stack*: React 18, Express, SQLite, Node 22
+   - *Repo*: [github.com/1997agarwal/Trippy](https://github.com/1997agarwal/Trippy)
+   - *Governance*: 100% 4-File Parity Verified
 
 ### 🌐 Open Source Developer Tools
-| Product Name | Repo / Path | Category | Status |
-|---|---|---|---|
-| **SpecForge** | [github.com/1997agarwal/SpecForge](https://github.com/1997agarwal/SpecForge) | Developer Tooling & Discovery AI | Live Open Source Repo • 3-Agent Pipeline & Linear Sync |
-| **ContextPrism** | [github.com/1997agarwal/ContextPrism](https://github.com/1997agarwal/ContextPrism) | AI Infra & Token FinOps | Live Open Source Repo • Port 4200 FinOps Gateway & AST Pruner |
-| **PromptCourt** | [github.com/1997agarwal/PromptCourt](https://github.com/1997agarwal/PromptCourt) | AI Prompt Evaluation & Elo Arena | Live Open Source Repo • Multi-Model Scoring & Leaderboard |
+1. **SpecForge** (`/Projects/Open Source/SpecForge`)
+   - *Tagline*: Autonomous Discovery-to-Spec Engine with 3-Agent Pipeline & Linear Sync
+   - *Stack*: React 18, TypeScript, Node.js, Linear SDK, SQLite
+   - *Repo*: [github.com/1997agarwal/SpecForge](https://github.com/1997agarwal/SpecForge)
+   - *Governance*: 100% 4-File Parity Verified
 
-## Document Structure Guidelines
+2. **ContextPrism** (`/Projects/Open Source/ContextPrism`)
+   - *Tagline*: Enterprise Token FinOps Gateway & AST Context Pruner (3 Golden Rules)
+   - *Stack*: Node.js, Express, TypeScript, Vite, AST Parser, SQLite
+   - *Repo*: [github.com/1997agarwal/ContextPrism](https://github.com/1997agarwal/ContextPrism)
+   - *Governance*: 100% 4-File Parity Verified
 
-1. `01-master-prd.md` — Product Requirements Document (Problem, Solution, Persona, Specs).
-2. `02-competitor-research.md` — Market Analysis & Competitive Landscape.
-3. `03-technical-architecture.md` — Database Schema, API Contracts, Vector Search & AI Integrations.
-4. `04-build-plan.md` — Staged AI Build Instructions for Antigravity, Claude Code, and Cursor.
+3. **PromptCourt** (`/Projects/Open Source/PromptCourt`)
+   - *Tagline*: Automated Multi-Model LLM Prompt Evaluation, Scoring & Elo Arena
+   - *Stack*: React 18, TypeScript, Vite, Tailwind CSS, Elo Engine
+   - *Repo*: [github.com/1997agarwal/PromptCourt](https://github.com/1997agarwal/PromptCourt)
+   - *Governance*: 100% 4-File Parity Verified
+
+---
+
+## 4-File Constitution Standard
+Every project tracked in StartupOS enforces four essential constitutional files:
+- `AGENTS.md` — Autonomous agent rules, prompt guardrails, and role definitions.
+- `ROADMAP.md` — Strategic milestones, MVP criteria, and release plan.
+- `CLAUDE.md` — Engineering guidelines, architecture decisions, and coding standards.
+- `CONTRIBUTING.md` — Open-source guidelines, PR workflow, and branch naming conventions.

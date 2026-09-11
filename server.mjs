@@ -10,9 +10,153 @@ const databaseFile = join(dataDirectory, "ideas.json");
 const launchesFile = join(dataDirectory, "launches.json");
 const usersFile = join(dataDirectory, "users.json");
 const auditsFile = join(dataDirectory, "audits.json");
+const projectsFile = join(dataDirectory, "registered_projects.json");
 
 const types = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8" };
 const json = (res, status, body) => { res.writeHead(status, { "content-type": "application/json; charset=utf-8" }); res.end(JSON.stringify(body)); };
+
+const INITIAL_PROJECTS = [
+  {
+    id: "proj-collabkaro",
+    name: "CollabKaro",
+    tagline: "India-First Creator Marketplace & Escrow Milestone Operating System",
+    category: "commercial",
+    badge: "Commercial Venture",
+    sourceType: "github_connected",
+    repoUrl: "https://github.com/Collab-Tribe/CollabKaro",
+    demoUrl: "https://collabkaro.in",
+    stack: ["React TS", "Express", "Escrow API", "SQLite"],
+    surfaces: ["Brand & Agency Portal", "Creator Media Kit Hub", "Escrow Admin Console"],
+    readinessScore: 100,
+    hasAgents: true,
+    hasRoadmap: true,
+    hasClaude: true,
+    hasContributing: true,
+    parityScore: 100,
+    isFeatured: true,
+    createdAt: "2026-09-01T00:00:00.000Z"
+  },
+  {
+    id: "proj-businesspay",
+    name: "BusinessPay",
+    tagline: "B2B Accounts Receivable Collections & Early Payment Cash Accelerator",
+    category: "commercial",
+    badge: "Commercial Venture",
+    sourceType: "github_connected",
+    repoUrl: "https://github.com/Business-Tribe/BusinessPay",
+    demoUrl: "https://businesspay.fintech",
+    stack: ["React 19", "Express 5", "Dynamic Discounts", "SQLite"],
+    surfaces: ["Collector Workqueue", "Buyer Portal Simulation", "Admin Console"],
+    readinessScore: 94,
+    hasAgents: true,
+    hasRoadmap: true,
+    hasClaude: true,
+    hasContributing: true,
+    parityScore: 100,
+    isFeatured: false,
+    createdAt: "2026-09-02T00:00:00.000Z"
+  },
+  {
+    id: "proj-dupescout",
+    name: "DupeScout",
+    tagline: "Shop the Look. Not the Markup. AI Visual Similarity & Dupes Engine",
+    category: "commercial",
+    badge: "Commercial Venture",
+    sourceType: "github_connected",
+    repoUrl: "https://github.com/1997agarwal/DupeScout",
+    demoUrl: "https://dupescout.shop",
+    stack: ["FastAPI", "Next.js 14", "PostgreSQL", "pgvector"],
+    surfaces: ["Consumer App", "Seller Portal", "Admin Console", "Chrome Extension"],
+    readinessScore: 98,
+    hasAgents: true,
+    hasRoadmap: true,
+    hasClaude: true,
+    hasContributing: true,
+    parityScore: 100,
+    isFeatured: true,
+    createdAt: "2026-09-03T00:00:00.000Z"
+  },
+  {
+    id: "proj-trippy",
+    name: "Trippy",
+    tagline: "AI Solo Travel Group Matching & Community Trip Host Platform",
+    category: "commercial",
+    badge: "Commercial Venture",
+    sourceType: "github_connected",
+    repoUrl: "https://github.com/1997agarwal/Trippy",
+    demoUrl: "https://trippy-travel.dev",
+    stack: ["React 18", "Express", "SQLite", "Node 22"],
+    surfaces: ["Consumer Web", "Partner CRM", "Admin Console", "Marketing Website"],
+    readinessScore: 95,
+    hasAgents: true,
+    hasRoadmap: true,
+    hasClaude: true,
+    hasContributing: true,
+    parityScore: 100,
+    isFeatured: false,
+    createdAt: "2026-09-04T00:00:00.000Z"
+  },
+  {
+    id: "proj-specforge",
+    name: "SpecForge",
+    tagline: "Autonomous Discovery-to-Spec Engine with 3-Agent Pipeline & Linear Sync",
+    category: "open_source",
+    badge: "Open Source Engine",
+    sourceType: "github_connected",
+    repoUrl: "https://github.com/1997agarwal/SpecForge",
+    demoUrl: "https://github.com/1997agarwal/SpecForge",
+    stack: ["React 18", "TypeScript", "Node.js", "Linear SDK", "SQLite"],
+    surfaces: ["Discovery Agent", "Architect Engine", "Linear Sync Studio"],
+    readinessScore: 92,
+    hasAgents: true,
+    hasRoadmap: true,
+    hasClaude: true,
+    hasContributing: true,
+    parityScore: 100,
+    isFeatured: false,
+    createdAt: "2026-09-05T00:00:00.000Z"
+  },
+  {
+    id: "proj-contextprism",
+    name: "ContextPrism",
+    tagline: "Enterprise Token FinOps Gateway & AST Context Pruner (3 Golden Rules)",
+    category: "open_source",
+    badge: "Open Source Gateway",
+    sourceType: "github_connected",
+    repoUrl: "https://github.com/1997agarwal/ContextPrism",
+    demoUrl: "https://github.com/1997agarwal/ContextPrism",
+    stack: ["Node.js", "Express", "TypeScript", "Vite", "AST Parser", "SQLite"],
+    surfaces: ["Token FinOps Gateway", "AST Context Compressor", "Semantic Cache", "Analytics Studio"],
+    readinessScore: 90,
+    hasAgents: true,
+    hasRoadmap: true,
+    hasClaude: true,
+    hasContributing: true,
+    parityScore: 100,
+    isFeatured: false,
+    createdAt: "2026-09-06T00:00:00.000Z"
+  },
+  {
+    id: "proj-promptcourt",
+    name: "PromptCourt",
+    tagline: "Automated Multi-Model LLM Prompt Evaluation, Scoring & Elo Arena",
+    category: "open_source",
+    badge: "Open Source Arena",
+    sourceType: "github_connected",
+    repoUrl: "https://github.com/1997agarwal/PromptCourt",
+    demoUrl: "https://github.com/1997agarwal/PromptCourt",
+    stack: ["React 18", "TypeScript", "Vite", "Tailwind CSS", "Elo Engine"],
+    surfaces: ["Prompt Arena", "Elo Leaderboard", "Test Case Matrix", "Export Studio"],
+    readinessScore: 88,
+    hasAgents: true,
+    hasRoadmap: true,
+    hasClaude: true,
+    hasContributing: true,
+    parityScore: 100,
+    isFeatured: false,
+    createdAt: "2026-09-07T00:00:00.000Z"
+  }
+];
 
 const INITIAL_USERS = [
   {
@@ -53,7 +197,7 @@ const INITIAL_LAUNCHES = [
     upvotes: 342,
     upvotedBy: ["user-harshita"],
     maker: { name: "Harshita G", avatar: "👩‍💻", title: "Founder" },
-    demoUrl: "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/DupeScout",
+    demoUrl: "https://dupescout.shop",
     tags: ["CLIP Vision", "FastAPI", "Next.js 14", "pgvector"],
     readinessScore: 100,
     isCertified: true,
@@ -74,7 +218,7 @@ const INITIAL_LAUNCHES = [
     upvotes: 289,
     upvotedBy: [],
     maker: { name: "Harshita G", avatar: "👩‍💻", title: "Founder" },
-    demoUrl: "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/Trippy",
+    demoUrl: "https://trippy-travel.dev",
     tags: ["React 18", "Express", "SQLite", "Node 22"],
     readinessScore: 100,
     isCertified: true,
@@ -94,7 +238,7 @@ const INITIAL_LAUNCHES = [
     upvotes: 215,
     upvotedBy: [],
     maker: { name: "Harshita G", avatar: "👩‍💻", title: "Founder" },
-    demoUrl: "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/BusinessPay",
+    demoUrl: "https://businesspay.fintech",
     tags: ["React 19", "Express 5", "Dynamic Discounts", "SQLite"],
     readinessScore: 100,
     isCertified: true,
@@ -112,7 +256,7 @@ const INITIAL_LAUNCHES = [
     upvotes: 198,
     upvotedBy: [],
     maker: { name: "Harshita G", avatar: "👩‍💻", title: "Founder" },
-    demoUrl: "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/CollabKaro",
+    demoUrl: "https://collabkaro.in",
     tags: ["React TS", "Escrow API", "UGC Media Kit", "SQLite"],
     readinessScore: 100,
     isCertified: true,
@@ -127,7 +271,7 @@ const INITIAL_AUDITS = [
     projectName: "DupeScout",
     builderName: "Harshita G",
     persona: "founder",
-    githubUrl: "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/DupeScout",
+    githubUrl: "https://github.com/1997agarwal/DupeScout",
     hasAgents: true,
     hasRoadmap: true,
     hasClaude: true,
@@ -142,7 +286,7 @@ const INITIAL_AUDITS = [
     projectName: "Trippy",
     builderName: "Harshita G",
     persona: "founder",
-    githubUrl: "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/Trippy",
+    githubUrl: "https://github.com/1997agarwal/Trippy",
     hasAgents: true,
     hasRoadmap: true,
     hasClaude: true,
@@ -157,7 +301,7 @@ const INITIAL_AUDITS = [
     projectName: "BusinessPay",
     builderName: "Harshita G",
     persona: "founder",
-    githubUrl: "https://github.com/1997agarwal/StartupOS/tree/main/Ideas/BusinessPay",
+    githubUrl: "https://github.com/Business-Tribe/BusinessPay",
     hasAgents: true,
     hasRoadmap: true,
     hasClaude: true,
@@ -177,10 +321,11 @@ async function writeAutoBackup() {
     const launches = await readLaunches().catch(() => []);
     const users = await readUsers().catch(() => []);
     const audits = await readAudits().catch(() => []);
+    const projects = await readProjects().catch(() => []);
     const backupData = {
       lastSyncedAt: new Date().toISOString(),
-      counts: { ideas: ideas.length, launches: launches.length, users: users.length, audits: audits.length },
-      ideas, launches, users, audits
+      counts: { ideas: ideas.length, launches: launches.length, users: users.length, audits: audits.length, projects: projects.length },
+      ideas, launches, users, audits, projects
     };
     await writeFile(backupFile, `${JSON.stringify(backupData, null, 2)}\n`, "utf8");
   } catch (err) {
@@ -194,6 +339,7 @@ async function initializeDatabase() {
   try { await readFile(launchesFile, "utf8"); } catch { await writeFile(launchesFile, `${JSON.stringify(INITIAL_LAUNCHES, null, 2)}\n`, "utf8"); }
   try { await readFile(usersFile, "utf8"); } catch { await writeFile(usersFile, `${JSON.stringify(INITIAL_USERS, null, 2)}\n`, "utf8"); }
   try { await readFile(auditsFile, "utf8"); } catch { await writeFile(auditsFile, `${JSON.stringify(INITIAL_AUDITS, null, 2)}\n`, "utf8"); }
+  try { await readFile(projectsFile, "utf8"); } catch { await writeFile(projectsFile, `${JSON.stringify(INITIAL_PROJECTS, null, 2)}\n`, "utf8"); }
   await writeAutoBackup();
 }
 
@@ -218,6 +364,12 @@ async function writeUsers(users) {
 async function readAudits() { return JSON.parse(await readFile(auditsFile, "utf8")); }
 async function writeAudits(audits) { 
   await writeFile(auditsFile, `${JSON.stringify(audits, null, 2)}\n`, "utf8");
+  await writeAutoBackup();
+}
+
+async function readProjects() { return JSON.parse(await readFile(projectsFile, "utf8")); }
+async function writeProjects(projects) { 
+  await writeFile(projectsFile, `${JSON.stringify(projects, null, 2)}\n`, "utf8");
   await writeAutoBackup();
 }
 
@@ -484,19 +636,97 @@ async function handleRequest(req, res) {
       return json(res, 200, { success: true, audit });
     }
 
-    // PROJECTS HEALTH API
+    // REGISTERED PROJECTS REST API
+    if (req.method === "GET" && url.pathname === "/api/projects") {
+      const projects = await readProjects();
+      return json(res, 200, projects);
+    }
+
+    if (req.method === "POST" && url.pathname === "/api/projects") {
+      const payload = await body(req);
+      const name = clean(payload.name, 100);
+      if (!name) return json(res, 400, { error: "Project name is required." });
+
+      const projects = await readProjects();
+      const newProject = {
+        id: `proj-${Date.now()}`,
+        name,
+        tagline: clean(payload.tagline || `${name} application`, 200),
+        category: payload.category || "commercial",
+        badge: payload.category === "open_source" ? "Open Source Engine" : "Commercial Venture",
+        sourceType: payload.sourceType || "manual_import",
+        repoUrl: clean(payload.repoUrl || "", 300),
+        demoUrl: clean(payload.demoUrl || "", 300),
+        stack: Array.isArray(payload.stack) ? payload.stack : (payload.stack ? String(payload.stack).split(",").map(s => s.trim()).filter(Boolean) : ["React", "Node.js"]),
+        surfaces: Array.isArray(payload.surfaces) ? payload.surfaces : ["Web Application", "Admin Console"],
+        readinessScore: Number(payload.readinessScore) || 75,
+        hasAgents: Boolean(payload.hasAgents ?? false),
+        hasRoadmap: Boolean(payload.hasRoadmap ?? false),
+        hasClaude: Boolean(payload.hasClaude ?? false),
+        hasContributing: Boolean(payload.hasContributing ?? false),
+        parityScore: 0,
+        isFeatured: false,
+        createdAt: new Date().toISOString()
+      };
+
+      const checks = [newProject.hasAgents, newProject.hasRoadmap, newProject.hasClaude, newProject.hasContributing];
+      newProject.parityScore = Math.round((checks.filter(Boolean).length / 4) * 100);
+
+      projects.unshift(newProject);
+      await writeProjects(projects);
+      return json(res, 201, newProject);
+    }
+
+    // PROJECTS HEALTH API (Audits registered projects dynamically)
     if (req.method === "GET" && url.pathname === "/api/projects/health") {
-      const projects = [
-        { name: "Trippy", category: "commercial", path: join(root, "Ideas", "Trippy") },
-        { name: "DupeScout", category: "commercial", path: join(root, "Ideas", "DupeScout") },
-        { name: "BusinessPay", category: "commercial", path: join(root, "Ideas", "BusinessPay") },
-        { name: "CollabKaro", category: "commercial", path: join(root, "Ideas", "CollabKaro") },
-        { name: "SpecForge", category: "open_source", path: join(root, "Ideas", "SpecForge") },
-        { name: "ContextPrism", category: "open_source", path: join(root, "Ideas", "ContextPrism") },
-        { name: "PromptCourt", category: "open_source", path: join(root, "..", "Open Source", "PromptCourt") }
-      ];
-      const healthData = await Promise.all(projects.map(checkProjectHealth));
-      return json(res, 200, healthData);
+      const registered = await readProjects();
+      const auditedProjects = await Promise.all(registered.map(async (proj) => {
+        // First check standard external project paths
+        const candidatePaths = [
+          join(root, "..", proj.name),
+          join(root, "..", "Open Source", proj.name),
+          join(root, "..", "Projects", proj.name),
+          join(root, "..", "Projects", "Open Source", proj.name),
+          join(root, "Ideas", proj.name)
+        ];
+        let foundPath = null;
+        for (const cp of candidatePaths) {
+          try {
+            await stat(cp);
+            foundPath = cp;
+            break;
+          } catch {}
+        }
+
+        if (foundPath) {
+          const files = ["AGENTS.md", "ROADMAP.md", "CLAUDE.md", "CONTRIBUTING.md"];
+          const checkFile = async (f) => {
+            try { await stat(join(foundPath, f)); return true; } catch { return false; }
+          };
+          const results = await Promise.all(files.map(checkFile));
+          const presentCount = results.filter(Boolean).length;
+          const score = Math.round((presentCount / 4) * 100);
+          return {
+            ...proj,
+            path: foundPath,
+            healthScore: score,
+            hasAgents: results[0],
+            hasRoadmap: results[1],
+            hasClaude: results[2],
+            hasContributing: results[3]
+          };
+        }
+
+        // If repo exists on GitHub or was manually created with flags
+        const score = Math.round(([proj.hasAgents, proj.hasRoadmap, proj.hasClaude, proj.hasContributing].filter(Boolean).length / 4) * 100);
+        return {
+          ...proj,
+          path: proj.repoUrl || "Remote Repository",
+          healthScore: score || proj.parityScore || 75
+        };
+      }));
+
+      return json(res, 200, auditedProjects);
     }
 
     // STATIC FILE SERVING

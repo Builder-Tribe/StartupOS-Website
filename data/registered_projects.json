@@ -1,0 +1,213 @@
+[
+  {
+    "id": "proj-collabkaro",
+    "name": "CollabKaro",
+    "tagline": "India-First Creator Marketplace & Escrow Milestone Operating System",
+    "category": "commercial",
+    "badge": "Commercial Venture",
+    "sourceType": "github_connected",
+    "repoUrl": "https://github.com/Collab-Tribe/CollabKaro",
+    "demoUrl": "https://collabkaro.in",
+    "stack": [
+      "React TS",
+      "Express",
+      "Escrow API",
+      "SQLite"
+    ],
+    "surfaces": [
+      "Brand & Agency Portal",
+      "Creator Media Kit Hub",
+      "Escrow Admin Console"
+    ],
+    "readinessScore": 100,
+    "hasAgents": true,
+    "hasRoadmap": true,
+    "hasClaude": true,
+    "hasContributing": true,
+    "parityScore": 100,
+    "isFeatured": true,
+    "createdAt": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "proj-businesspay",
+    "name": "BusinessPay",
+    "tagline": "B2B Accounts Receivable Collections & Early Payment Cash Accelerator",
+    "category": "commercial",
+    "badge": "Commercial Venture",
+    "sourceType": "github_connected",
+    "repoUrl": "https://github.com/Business-Tribe/BusinessPay",
+    "demoUrl": "https://businesspay.fintech",
+    "stack": [
+      "React 19",
+      "Express 5",
+      "Dynamic Discounts",
+      "SQLite"
+    ],
+    "surfaces": [
+      "Collector Workqueue",
+      "Buyer Portal Simulation",
+      "Admin Console"
+    ],
+    "readinessScore": 94,
+    "hasAgents": true,
+    "hasRoadmap": true,
+    "hasClaude": true,
+    "hasContributing": true,
+    "parityScore": 100,
+    "isFeatured": false,
+    "createdAt": "2026-09-02T00:00:00.000Z"
+  },
+  {
+    "id": "proj-dupescout",
+    "name": "DupeScout",
+    "tagline": "Shop the Look. Not the Markup. AI Visual Similarity & Dupes Engine",
+    "category": "commercial",
+    "badge": "Commercial Venture",
+    "sourceType": "github_connected",
+    "repoUrl": "https://github.com/1997agarwal/DupeScout",
+    "demoUrl": "https://dupescout.shop",
+    "stack": [
+      "FastAPI",
+      "Next.js 14",
+      "PostgreSQL",
+      "pgvector"
+    ],
+    "surfaces": [
+      "Consumer App",
+      "Seller Portal",
+      "Admin Console",
+      "Chrome Extension"
+    ],
+    "readinessScore": 98,
+    "hasAgents": true,
+    "hasRoadmap": true,
+    "hasClaude": true,
+    "hasContributing": true,
+    "parityScore": 100,
+    "isFeatured": true,
+    "createdAt": "2026-09-03T00:00:00.000Z"
+  },
+  {
+    "id": "proj-trippy",
+    "name": "Trippy",
+    "tagline": "AI Solo Travel Group Matching & Community Trip Host Platform",
+    "category": "commercial",
+    "badge": "Commercial Venture",
+    "sourceType": "github_connected",
+    "repoUrl": "https://github.com/1997agarwal/Trippy",
+    "demoUrl": "https://trippy-travel.dev",
+    "stack": [
+      "React 18",
+      "Express",
+      "SQLite",
+      "Node 22"
+    ],
+    "surfaces": [
+      "Consumer Web",
+      "Partner CRM",
+      "Admin Console",
+      "Marketing Website"
+    ],
+    "readinessScore": 95,
+    "hasAgents": true,
+    "hasRoadmap": true,
+    "hasClaude": true,
+    "hasContributing": true,
+    "parityScore": 100,
+    "isFeatured": false,
+    "createdAt": "2026-09-04T00:00:00.000Z"
+  },
+  {
+    "id": "proj-specforge",
+    "name": "SpecForge",
+    "tagline": "Autonomous Discovery-to-Spec Engine with 3-Agent Pipeline & Linear Sync",
+    "category": "open_source",
+    "badge": "Open Source Engine",
+    "sourceType": "github_connected",
+    "repoUrl": "https://github.com/1997agarwal/SpecForge",
+    "demoUrl": "https://github.com/1997agarwal/SpecForge",
+    "stack": [
+      "React 18",
+      "TypeScript",
+      "Node.js",
+      "Linear SDK",
+      "SQLite"
+    ],
+    "surfaces": [
+      "Discovery Agent",
+      "Architect Engine",
+      "Linear Sync Studio"
+    ],
+    "readinessScore": 92,
+    "hasAgents": true,
+    "hasRoadmap": true,
+    "hasClaude": true,
+    "hasContributing": true,
+    "parityScore": 100,
+    "isFeatured": false,
+    "createdAt": "2026-09-05T00:00:00.000Z"
+  },
+  {
+    "id": "proj-contextprism",
+    "name": "ContextPrism",
+    "tagline": "Enterprise Token FinOps Gateway & AST Context Pruner (3 Golden Rules)",
+    "category": "open_source",
+    "badge": "Open Source Gateway",
+    "sourceType": "github_connected",
+    "repoUrl": "https://github.com/1997agarwal/ContextPrism",
+    "demoUrl": "https://github.com/1997agarwal/ContextPrism",
+    "stack": [
+      "Node.js",
+      "Express",
+      "TypeScript",
+      "Vite",
+      "AST Parser",
+      "SQLite"
+    ],
+    "surfaces": [
+      "Token FinOps Gateway",
+      "AST Context Compressor",
+      "Semantic Cache",
+      "Analytics Studio"
+    ],
+    "readinessScore": 90,
+    "hasAgents": true,
+    "hasRoadmap": true,
+    "hasClaude": true,
+    "hasContributing": true,
+    "parityScore": 100,
+    "isFeatured": false,
+    "createdAt": "2026-09-06T00:00:00.000Z"
+  },
+  {
+    "id": "proj-promptcourt",
+    "name": "PromptCourt",
+    "tagline": "Automated Multi-Model LLM Prompt Evaluation, Scoring & Elo Arena",
+    "category": "open_source",
+    "badge": "Open Source Arena",
+    "sourceType": "github_connected",
+    "repoUrl": "https://github.com/1997agarwal/PromptCourt",
+    "demoUrl": "https://github.com/1997agarwal/PromptCourt",
+    "stack": [
+      "React 18",
+      "TypeScript",
+      "Vite",
+      "Tailwind CSS",
+      "Elo Engine"
+    ],
+    "surfaces": [
+      "Prompt Arena",
+      "Elo Leaderboard",
+      "Test Case Matrix",
+      "Export Studio"
+    ],
+    "readinessScore": 88,
+    "hasAgents": true,
+    "hasRoadmap": true,
+    "hasClaude": true,
+    "hasContributing": true,
+    "parityScore": 100,
+    "isFeatured": false,
+    "createdAt": "2026-09-07T00:00:00.000Z"
+  }
+]

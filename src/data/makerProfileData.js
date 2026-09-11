@@ -103,7 +103,7 @@ export const HARSHIT_FLAGSHIP_PROJECTS = [
     problem: '"Travel solo, never alone." Solves solo traveler safety, group matching, and community host monetization across 4 dedicated surfaces.',
     stack: ['React 18', 'Node Express', 'SQLite', 'Matching Engine'],
     impact: 'Multi-surface ecosystem spanning Consumer Web, Partner CRM, and Admin Console.',
-    repoUrl: 'https://github.com/1997agarwal/StartupOS/tree/main/Ideas/Trippy',
+    repoUrl: 'https://github.com/1997agarwal/Trippy',
     demoUrl: 'https://trippy-travel.dev',
     badge: 'Solo Travel AI',
     source: 'native'
@@ -115,7 +115,7 @@ export const HARSHIT_FLAGSHIP_PROJECTS = [
     problem: '"Shop the Look. Not the Markup." Multimodal visual search discovering affordable fashion alternatives with transparent quality scores.',
     stack: ['FastAPI', 'Next.js 14', 'PostgreSQL', 'pgvector', 'Chrome Extension'],
     impact: 'Multimodal Vision RAG search engine with sub-second vector cosine similarity.',
-    repoUrl: 'https://github.com/1997agarwal/StartupOS/tree/main/Ideas/DupeScout',
+    repoUrl: 'https://github.com/1997agarwal/DupeScout',
     demoUrl: 'https://dupescout.shop',
     badge: 'AI Vision',
     source: 'native'
@@ -127,7 +127,7 @@ export const HARSHIT_FLAGSHIP_PROJECTS = [
     problem: 'Compresses Days Sales Outstanding (DSO) and accelerates cash flow via dynamic delinquency discounting and Promise to Pay (PTP) workflows.',
     stack: ['React 19', 'Express 5', 'Dynamic Discounts', 'SQLite'],
     impact: 'Automated dispute resolution SLAs and collections workqueue simulation.',
-    repoUrl: 'https://github.com/1997agarwal/StartupOS/tree/main/Ideas/BusinessPay',
+    repoUrl: 'https://github.com/Business-Tribe/BusinessPay',
     demoUrl: 'https://businesspay.fintech',
     badge: 'B2B Fintech',
     source: 'native'
@@ -139,7 +139,7 @@ export const HARSHIT_FLAGSHIP_PROJECTS = [
     problem: 'India-first two-sided marketplace streamlining deal discovery, brief delivery, creator verification, and escrow payouts.',
     stack: ['React TS', 'React Native (Expo)', 'Node 22 API', 'Escrow System'],
     impact: 'Two-sided ecosystem powering brand briefs, creator media kits, and milestone escrow.',
-    repoUrl: 'https://github.com/1997agarwal/StartupOS/tree/main/Ideas/CollabKaro',
+    repoUrl: 'https://github.com/Collab-Tribe/CollabKaro',
     demoUrl: 'https://collabkaro.in',
     badge: 'Creator Marketplace',
     category: 'commercial',
