@@ -153,12 +153,8 @@ export default function App() {
   // 3. IF VIEW MODE IS 'PORTAL': Render Dedicated Builder Workspace Layout
   return (
     <div className="min-h-screen bg-slate-50/80 text-slate-900 font-sans selection:bg-indigo-600 selection:text-white relative overflow-x-hidden flex">
-      {/* Ambient Floating Background Mesh Orbs */}
-      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="animate-orb-1 absolute -top-40 -left-20 w-[550px] h-[550px] bg-gradient-to-tr from-indigo-300/30 to-violet-300/30 rounded-full blur-3xl opacity-70"></div>
-        <div className="animate-orb-2 absolute top-1/3 -right-20 w-[600px] h-[600px] bg-gradient-to-br from-blue-200/40 to-sky-300/30 rounded-full blur-3xl opacity-60"></div>
-        <div className="animate-orb-3 absolute -bottom-40 left-1/4 w-[500px] h-[500px] bg-gradient-to-tr from-purple-200/30 to-indigo-200/40 rounded-full blur-3xl opacity-60"></div>
-      </div>
+      {/* Subtle clean background tint */}
+      <div className="pointer-events-none fixed inset-0 z-0 bg-gradient-to-b from-slate-50 via-white to-slate-50"></div>
 
       {/* Desktop Left Sidebar */}
       <Sidebar
