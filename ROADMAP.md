@@ -1,100 +1,113 @@
-# StartupOS — Master Product Roadmap & Implementation Tracker
+# StartupOS — Master Development Tracking Checklist
 
-> **Based on:** [AI Builder LMS – Product Requirements Document (PRD v1)](./AI%20Builder%20LMS%20%E2%80%93%20Product%20Requirements%20Document%20(PRD%20v1).md)  
-> **Status:** Active SaaS Architecture & Multi-Phase Operating System  
+> **Tracking Standard:** Update this checklist after every development sprint, feature release, or bug fix.  
+> **Source PRD:** [AI Builder LMS – Master PRD v1](./AI%20Builder%20LMS%20%E2%80%93%20Product%20Requirements%20Document%20(PRD%20v1).md)  
 > **Repository:** https://github.com/Builder-Tribe/StartupOS  
 
 ---
 
-## 📊 Executive Progress Dashboard
+## 📈 Status Overview
 
-| Phase | PRD Objective | Total Tasks | Completed (✅) | Remaining (⏳) | Completion % |
-|---|---|:---:|:---:|:---:|:---:|
-| **Phase 1** | Core AI-Powered LMS Platform | 10 | 10 | 0 | **100%** |
-| **Phase 2** | AI Product Building Curriculum | 8 | 8 | 0 | **100%** |
-| **Phase 3** | Project Submission & Parity Governance | 7 | 7 | 0 | **100%** |
-| **Phase 4** | Creator Platform & AI Review System | 6 | 5 | 1 | **83%** |
-| **Phase 5** | Showcase, Launchpad & Builder Ecosystem | 7 | 7 | 0 | **100%** |
-| **Phase 6** | Startup Growth & Distribution Layer | 7 | 4 | 3 | **57%** |
-| **TOTAL** | **Full End-to-End Vision** | **45** | **41** | **4** | **91.1%** |
+| Status Tag | Meaning | Task Count | Percentage |
+|:---:|:---|:---:|:---:|
+| 🟢 `[x] DONE` | Fully implemented, tested, and shipped | **41** | **91.1%** |
+| 🟡 `[-] IN PROGRESS` | Actively in development or partial implementation | **1** | **2.2%** |
+| ⚪ `[ ] TO-DO` | Backlog task scheduled for upcoming sprints | **3** | **6.7%** |
+| **TOTAL** | **Full PRD Scope** | **45** | **100%** |
 
 ---
 
-## 🟢 Phase 1: Core AI-Powered LMS Platform (100% Complete)
-**Objective (PRD §7.1):** Build the foundational learning environment where users learn by building practical AI products.
+## Phase 1: Core AI-Powered LMS Platform (10/10 Complete — 100%)
 
-- [x] **1.1 Authentication & Session Management**: Built-in modal login/signup, multi-user simulation, and role-based access (`AuthModal.jsx`, `server.mjs`).
-- [x] **1.2 Learner Dashboard & Navigation**: Unified top navigation, sidebar, and workspace view switcher (`Navbar.jsx`, `Sidebar.jsx`).
-- [x] **1.3 Interactive Course Catalog**: Dynamic curriculum browser categorizing courses by experience and tool stack (`LMSHub.jsx`).
-- [x] **1.4 Module & Lesson Viewer**: Structured step-by-step lesson navigation with practical outputs (`LMSHub.jsx`).
-- [x] **1.5 Granular Progress Tracking**: Real-time completion checkboxes, percentage indicators, and persistent state (`LMSHub.jsx`).
-- [x] **1.6 AI Tutor Assistant**: Slide-out intelligent mentor providing concept explanations, hints, and debugging assistance (`LMSHub.jsx`).
-- [x] **1.7 Interactive Learning Playground**: Copy-pasteable prompt runbooks, code snippets, and execution blocks for AI tools (`LMSHub.jsx`).
-- [x] **1.8 Omnisearch & Filtering**: Instant search across modules, lessons, tech stacks, and tools (`LMSHub.jsx`, `LaunchpadFeed.jsx`).
-- [x] **1.9 2026 Light Modern Theme**: OpenAI Astra ambient mesh gradients, border-subtle glassmorphism cards, and responsive mobile layouts (`index.css`).
-- [x] **1.10 Self-Contained Backend API**: Lightweight Node.js REST API with file-backed JSON persistence and zero external DB lag (`server.mjs`).
-
----
-
-## 🟢 Phase 2: AI Product Building Courses & Tool Matrix (100% Complete)
-**Objective (PRD §7.2):** Deliver tool-agnostic, execution-first learning content covering every stage of AI product creation.
-
-- [x] **2.1 Course 1 — AI Product Thinking & PM Foundations**: Problem statement formulation, persona mapping, and feature prioritization (`src/data/abLmsData.js`).
-- [x] **2.2 Course 2 — Prompt Engineering & Context Architecture**: System prompts, negative constraints, and few-shot calibration for LLMs (`abLmsData.js`).
-- [x] **2.3 Course 3 — PRD & Specification Mastery**: Automated 6-part PRDs, Gherkin acceptance criteria, and non-goals (`PRDGeneratorStudio.jsx`).
-- [x] **2.4 Course 4 — Multi-Tool AI Workflows**: Execution guides for Google AntiGravity, Claude Code CLI, Cursor Composer, and Replit Agent (`abLmsData.js`).
-- [x] **2.5 Course 5 — Developer Branding & GitHub Launchpad**: Profile READMEs, push hygiene, and build-in-public growth loops (`abLmsData.js`, `MakerProfileStudio.jsx`).
-- [x] **2.6 Interactive AI Tool Matrix Studio**: Side-by-side comparison matrix and quiz recommending paired AI IDEs and deployment stacks (`ToolMatrixStudio.jsx`).
-- [x] **2.7 Battle-Tested Prompt Vault**: 5-stage prompt library with dynamic template variables (`{{PRODUCT_NAME}}`, `{{TECH_STACK}}`) (`PromptVaultStudio.jsx`).
-- [x] **2.8 Architecture Canvas Visualizer**: Multi-tier visual node diagrams with 1-click Mermaid.js and ASCII schema exports (`ToolMatrixStudio.jsx`).
+| Task ID | Task Description | Target Component / File | Status | Verification Criteria |
+|:---:|:---|:---|:---:|:---|
+| **TSK-1.1** | Authentication & Session Simulation | `AuthModal.jsx`, `server.mjs` | 🟢 `[x] DONE` | User login/signup modal, guest mode, session persistence |
+| **TSK-1.2** | Unified Navigation & Layout Shell | `Navbar.jsx`, `Sidebar.jsx` | 🟢 `[x] DONE` | Sticky 2026 header, responsive sidebar, mode switcher |
+| **TSK-1.3** | Interactive Course Catalog | `LMSHub.jsx` | 🟢 `[x] DONE` | Filterable course grid, level tags, tool badges |
+| **TSK-1.4** | Structured Module & Lesson Viewer | `LMSHub.jsx` | 🟢 `[x] DONE` | Sequential lesson progression with practical build prompts |
+| **TSK-1.5** | Granular Progress Tracker | `LMSHub.jsx` | 🟢 `[x] DONE` | Real-time checkboxes, % indicators, local/server persistence |
+| **TSK-1.6** | AI Tutor Drawer (Interactive Mentor) | `LMSHub.jsx` | 🟢 `[x] DONE` | Slide-out AI mentor explaining concepts & debugging |
+| **TSK-1.7** | Interactive Learning Playground | `LMSHub.jsx` | 🟢 `[x] DONE` | 1-click copy prompt runbooks for AntiGravity, Claude, Cursor |
+| **TSK-1.8** | Omnisearch & Content Filtering | `LMSHub.jsx`, `LaunchpadFeed.jsx` | 🟢 `[x] DONE` | Instant search across modules, lessons, and tech stacks |
+| **TSK-1.9** | 2026 Light Modern UI Theme | `index.css`, Tailwind v4 | 🟢 `[x] DONE` | Astra ambient mesh orbs, glassmorphism cards, mobile-first |
+| **TSK-1.10**| Self-Contained Node.js REST API | `server.mjs` (Port 8081) | 🟢 `[x] DONE` | Instant-boot API, file-backed JSON persistence, zero setup |
 
 ---
 
-## 🟢 Phase 3: Project Submission & Parity Governance (100% Complete)
-**Objective (PRD §7.3):** Enable builders to register and submit real applications built with StartupOS guidance.
+## Phase 2: AI Product Building Curriculum & Tool Matrix (8/8 Complete — 100%)
 
-- [x] **3.1 Project Submission Workflow**: Self-serve submission capturing name, tagline, problem solved, screenshots, and live URLs (`LaunchSubmissionModal.jsx`).
-- [x] **3.2 External Git Repository Integration**: Direct GitHub repository linking with zero raw code bloat inside StartupOS (`BlueprintStudio.jsx`, `data/registered_projects.json`).
-- [x] **3.3 4-File Constitution Parity Auditor**: Automated checks verifying `AGENTS.md`, `ROADMAP.md`, `CLAUDE.md`, and `CONTRIBUTING.md` (`BlueprintStudio.jsx`, `server.mjs`).
-- [x] **3.4 "+ Register / Import Project" Modal**: Multi-source registration supporting GitHub connected repos, imported folders, and native scaffolds (`BlueprintStudio.jsx`).
-- [x] **3.5 Decoupled Metadata Registry**: High-performance JSON registry (`data/registered_projects.json`) tracking live endpoints and health scores.
-- [x] **3.6 Dynamic Health Auditing API**: `GET /api/projects/health` and `POST /api/projects` endpoints with automatic parity scoring (`server.mjs`).
-- [x] **3.7 Version & Metadata Updates**: Real-time updates to project profiles, tech stack tags, and surface definitions over time (`BlueprintStudio.jsx`).
-
----
-
-## 🟡 Phase 4: Creator Platform & AI Review System (83% Complete — 1 Remaining)
-**Objective (PRD §7.4):** Provide structured evaluation, AI examiner feedback, and standardized course authoring tools.
-
-- [x] **4.1 AI Examiner & Review Engine**: Automated rubric evaluating product completeness, UX quality, and documentation clarity (`LMSHub.jsx`).
-- [x] **4.2 Comprehensive 100-Point Audit Matrix**: Deep assessment scoring across Problem Validation, Architecture, UI/UX, and Governance (`AdminConsole.jsx`, `data/audits.json`).
-- [x] **4.3 Creator & Admin Review Dashboard**: Management queue to inspect submitted projects, verify demo URLs, and approve audits (`AdminConsole.jsx`).
-- [x] **4.4 Standardized Course Framework**: Uniform 11-step pedagogical structure ensuring predictable quality across modules (`AI Builder LMS PRD v1.md`).
-- [x] **4.5 Actionable Feedback Delivery**: Contextual improvement recommendations and grading notifications for builders (`AdminConsole.jsx`, `LMSHub.jsx`).
-- [ ] **4.6 AI Course Outline Generator for Creators** *(Next Up)*: Self-serve interface allowing external educators to generate new curriculum outlines and exercises using AI templates.
+| Task ID | Task Description | Target Component / File | Status | Verification Criteria |
+|:---:|:---|:---|:---:|:---|
+| **TSK-2.1** | Course 1: AI Product Thinking & PM | `src/data/abLmsData.js` | 🟢 `[x] DONE` | Problem statements, persona mapping, opportunity scoring |
+| **TSK-2.2** | Course 2: Prompt Engineering & Context | `src/data/abLmsData.js` | 🟢 `[x] DONE` | System prompts, negative constraints, few-shot calibration |
+| **TSK-2.3** | Course 3: PRD & Specification Mastery | `PRDGeneratorStudio.jsx` | 🟢 `[x] DONE` | 6-part automated PRD generator with Gherkin specs |
+| **TSK-2.4** | Course 4: Multi-Tool AI Workflows | `src/data/abLmsData.js` | 🟢 `[x] DONE` | Tool-agnostic execution for AntiGravity, Claude, Cursor, Replit |
+| **TSK-2.5** | Course 5: Developer Branding & GitHub | `MakerProfileStudio.jsx` | 🟢 `[x] DONE` | Push hygiene, 4-file parity governance, build-in-public loops |
+| **TSK-2.6** | Interactive AI Tool Matrix & Quiz | `ToolMatrixStudio.jsx` | 🟢 `[x] DONE` | Tool comparison matrix + interactive builder pairing quiz |
+| **TSK-2.7** | Battle-Tested Prompt Vault Studio | `PromptVaultStudio.jsx` | 🟢 `[x] DONE` | 5-stage prompts with dynamic `{{VARS}}` and 1-click copy |
+| **TSK-2.8** | Architecture Canvas Visualizer | `ToolMatrixStudio.jsx` | 🟢 `[x] DONE` | Multi-tier visual nodes + 1-click Mermaid.js & ASCII exports |
 
 ---
 
-## 🟢 Phase 5: Showcase, Launchpad & Builder Ecosystem (100% Complete)
-**Objective (PRD §7.5):** Transform the LMS into an active public builder community with discovery and social proof.
+## Phase 3: Project Submission & Parity Governance (7/7 Complete — 100%)
 
-- [x] **5.1 Product Hunt-Style Launchpad Feed**: Public showcase displaying daily featured products with rich previews (`LaunchpadFeed.jsx`).
-- [x] **5.2 Community Upvoting Engine**: Real-time upvoting counters with persistent backend storage and ranking algorithms (`LaunchpadFeed.jsx`, `server.mjs`).
-- [x] **5.3 In-App Live Demo Webview**: Modal browser allowing visitors to experience live web applications without leaving the platform (`LaunchpadFeed.jsx`).
-- [x] **5.4 Maker Discussions & Feedback Threads**: Community comment streams for bug reports, praise, and product critiques (`LaunchpadFeed.jsx`).
-- [x] **5.5 Public Maker Profiles & XP Rankings**: Builder scores, active build streaks, launched app histories, and 5-tier rank progression (`MakerProfileStudio.jsx`).
-- [x] **5.6 One-Click Recruiter Portfolio Exports**: Automated generation of ATS-friendly resume bullets with real metrics (`MakerProfileStudio.jsx`).
-- [x] **5.7 GitHub Profile README Generator**: One-click export of dark-mode, recruiter-ready profile READMEs with monochrome CTAs (`MakerProfileStudio.jsx`).
+| Task ID | Task Description | Target Component / File | Status | Verification Criteria |
+|:---:|:---|:---|:---:|:---|
+| **TSK-3.1** | Project Launch Submission Workflow | `LaunchSubmissionModal.jsx` | 🟢 `[x] DONE` | Captures name, tagline, problem, stack, demo & repo links |
+| **TSK-3.2** | Decoupled GitHub Repository Pointers| `BlueprintStudio.jsx` | 🟢 `[x] DONE` | Connects remote GitHub repos without code duplication |
+| **TSK-3.3** | Automated 4-File Parity Auditor | `server.mjs`, `BlueprintStudio.jsx` | 🟢 `[x] DONE` | Verifies `AGENTS.md`, `ROADMAP.md`, `CLAUDE.md`, `CONTRIBUTING.md` |
+| **TSK-3.4** | "+ Register / Import Project" Modal | `BlueprintStudio.jsx` | 🟢 `[x] DONE` | Supports GitHub connected, imported, and native scaffolds |
+| **TSK-3.5** | High-Performance Project Registry | `data/registered_projects.json` | 🟢 `[x] DONE` | Lightweight JSON registry tracking live status and parity |
+| **TSK-3.6** | Dynamic Health & Parity Audit REST API | `GET /api/projects/health` | 🟢 `[x] DONE` | Dynamic parity score calculation (0–100%) on API call |
+| **TSK-3.7** | Submission Editing & Updates | `BlueprintStudio.jsx` | 🟢 `[x] DONE` | Live updates to tech stack, surfaces, and links over time |
 
 ---
 
-## 🟡 Phase 6: Startup Growth & Distribution Layer (57% Complete — 3 Remaining)
-**Objective (PRD §7.6):** Help standout builders transition their projects from learning exercises into scalable commercial startups.
+## Phase 4: Creator Platform & AI Review System (5/6 Complete — 83.3%)
 
-- [x] **6.1 Commercial Launch Command Center**: Dedicated workspace view tracking launch readiness, surfaces, and security governance (`BlueprintStudio.jsx`).
-- [x] **6.2 Build-in-Public Viral Playbooks**: Ready-to-use launch hooks and social announcement templates for LinkedIn and X (`abLmsData.js`, `MakerProfileStudio.jsx`).
-- [x] **6.3 0-to-1 Startup Scaffolding System**: Interactive specifications and prompt runbooks to spin up new ventures in minutes (`PRDGeneratorStudio.jsx`, `MarketingLander.jsx`).
-- [x] **6.4 Commercial Marketing Website**: Full interactive landing page with Deliverables Inspector, ROI calculator, and transparent pricing (`MarketingLander.jsx`).
-- [ ] **6.5 One-Click 1-Command Cloud Deployment Recipes** *(In Progress)*: Ready-to-run deployment guides and scripts for Vercel, Railway, Render, and Cloudflare Workers.
-- [ ] **6.6 Founder & Co-Builder Directory** *(Planned)*: Peer discovery directory to connect technical builders with designers, growth marketers, and co-founders.
-- [ ] **6.7 Investor Pitch Deck & Demo Day Pipeline** *(Planned / Deferred per PRD §13)*: Curated deal-flow package for micro-funds and angel investors showcasing top 5% verified builders.
+| Task ID | Task Description | Target Component / File | Status | Verification Criteria |
+|:---:|:---|:---|:---:|:---|
+| **TSK-4.1** | AI Examiner & Automated Review Engine| `LMSHub.jsx` | 🟢 `[x] DONE` | Automated grading on completeness, UX, and architecture |
+| **TSK-4.2** | 100-Point Audit Rubric Matrix | `AdminConsole.jsx`, `data/audits.json` | 🟢 `[x] DONE` | Detailed scoring across Problem, Tech, UX, and Governance |
+| **TSK-4.3** | Creator & Admin Review Dashboard | `AdminConsole.jsx` | 🟢 `[x] DONE` | Queue to inspect submissions, verify demos, approve audits |
+| **TSK-4.4** | Standardized 11-Step Course Framework| `AI Builder LMS PRD v1.md` | 🟢 `[x] DONE` | Predictable pedagogical flow from Problem to Deployment |
+| **TSK-4.5** | Actionable Feedback Delivery | `AdminConsole.jsx`, `LMSHub.jsx` | 🟢 `[x] DONE` | Actionable revision notes delivered directly to learners |
+| **TSK-4.6** | AI Course Outline Generator for Creators| `src/components/CreatorStudio.jsx` | ⚪ `[ ] TO-DO` | Self-serve tool for creators to generate courses from AI prompts |
+
+---
+
+## Phase 5: Showcase, Launchpad & Builder Ecosystem (7/7 Complete — 100%)
+
+| Task ID | Task Description | Target Component / File | Status | Verification Criteria |
+|:---:|:---|:---|:---:|:---|
+| **TSK-5.1** | Product Hunt-Style Launchpad Feed | `LaunchpadFeed.jsx` | 🟢 `[x] DONE` | Daily featured products, category pills, high-contrast badges |
+| **TSK-5.2** | Community Upvoting Engine | `LaunchpadFeed.jsx`, `server.mjs` | 🟢 `[x] DONE` | Real-time upvoting counters with persistent backend storage |
+| **TSK-5.3** | In-App Live Demo Webview | `LaunchpadFeed.jsx` | 🟢 `[x] DONE` | Modal iframe previewing live web apps inside StartupOS |
+| **TSK-5.4** | Maker Discussions & Community Feedback| `LaunchpadFeed.jsx` | 🟢 `[x] DONE` | Threaded comments, bug reports, and community praise |
+| **TSK-5.5** | Public Maker Profiles & XP Rankings | `MakerProfileStudio.jsx` | 🟢 `[x] DONE` | Builder XP, streak counter, 5-tier rank progression |
+| **TSK-5.6** | One-Click ATS Resume Bullet Generator| `MakerProfileStudio.jsx` | 🟢 `[x] DONE` | Automated metric-driven resume bullets export |
+| **TSK-5.7** | Dark-Mode GitHub Profile README Export| `MakerProfileStudio.jsx` | 🟢 `[x] DONE` | Monochrome `#181717` recruiter README generator |
+
+---
+
+## Phase 6: Startup Growth & Distribution Layer (4/7 Complete — 57.1%)
+
+| Task ID | Task Description | Target Component / File | Status | Verification Criteria |
+|:---:|:---|:---|:---:|:---|
+| **TSK-6.1** | Commercial Launch Command Center | `BlueprintStudio.jsx` | 🟢 `[x] DONE` | Dual-mode view tracking launch readiness & surfaces |
+| **TSK-6.2** | Build-in-Public Viral Playbooks | `MakerProfileStudio.jsx` | 🟢 `[x] DONE` | Pre-written social launch copy for LinkedIn and X |
+| **TSK-6.3** | 0-to-1 Startup Scaffolding System | `PRDGeneratorStudio.jsx` | 🟢 `[x] DONE` | Complete prompt runbook and architectural spec generator |
+| **TSK-6.4** | Interactive Commercial Marketing Lander| `MarketingLander.jsx` | 🟢 `[x] DONE` | Deliverables inspector, ROI calculator, and pricing tiers |
+| **TSK-6.5** | 1-Click Cloud Deployment Recipes | `src/components/DeployStudio.jsx` | 🟡 `[-] IN PROGRESS` | One-click recipes for Vercel, Railway, Render, Cloudflare |
+| **TSK-6.6** | Founder & Co-Builder Match Directory | `src/components/NetworkHub.jsx` | ⚪ `[ ] TO-DO` | Matchmaking directory for technical & non-technical builders |
+| **TSK-6.7** | Investor Pitch Deck & Demo Day Pipeline| `src/components/DemoDayStudio.jsx` | ⚪ `[ ] TO-DO` | Curated deal-flow package showcasing top 5% verified makers |
+
+---
+
+## 🔄 Tracking Protocol for Every Development Session
+
+When completing work in future chats or sprints:
+1. **Identify the Task ID** (e.g. `TSK-6.5`).
+2. **Flip Status** from `⚪ [ ] TO-DO` or `🟡 [-] IN PROGRESS` to `🟢 [x] DONE`.
+3. **Record Component/Commit**: Note the file modified and git commit hash in the verification notes.
+4. **Update Executive Dashboard**: Update the task count numbers and completion percentage.
