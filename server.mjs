@@ -11,9 +11,161 @@ const launchesFile = join(dataDirectory, "launches.json");
 const usersFile = join(dataDirectory, "users.json");
 const auditsFile = join(dataDirectory, "audits.json");
 const projectsFile = join(dataDirectory, "registered_projects.json");
+const cobuildersFile = join(dataDirectory, "cobuilders.json");
+const connectionsFile = join(dataDirectory, "cobuilder_connections.json");
 
 const types = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8" };
 const json = (res, status, body) => { res.writeHead(status, { "content-type": "application/json; charset=utf-8" }); res.end(JSON.stringify(body)); };
+
+const INITIAL_COBUILDERS = [
+  {
+    id: "cobuilder-harshita",
+    name: "Harshita Agarwal",
+    avatar: "👩‍💻",
+    role: "AI Systems Architect & Full-Stack Engineer",
+    category: "technical",
+    headline: "Building multi-agent reasoning systems & 4-file parity governance platforms",
+    bio: "Founding engineer experienced in React 19, Node.js, FastAPI, and autonomous agent workflows. Architected StartupOS, SpecForge, and ContextPrism.",
+    skills: ["React 19", "Node.js", "FastAPI", "Vector DB", "LLM Workflows", "TypeScript"],
+    primaryStack: "AntiGravity / Claude Code",
+    seekingRole: "Product Co-Founder / B2B GTM Lead",
+    seekingDescription: "Looking for an energetic growth and enterprise sales co-founder to scale autonomous developer tooling and enterprise token finops gateways.",
+    commitment: "full_time",
+    commitmentLabel: "Full-Time (40h/wk)",
+    stage: "parity_verified",
+    stageLabel: "Parity-Verified MVP",
+    projects: [
+      { name: "ContextPrism", role: "Architect", url: "https://github.com/1997agarwal/ContextPrism" },
+      { name: "SpecForge", role: "Creator", url: "https://github.com/1997agarwal/SpecForge" }
+    ],
+    equityExpectation: "Equal 50/50 Equity",
+    location: "Bengaluru, India / Remote",
+    githubUrl: "https://github.com/1997agarwal",
+    linkedinUrl: "https://linkedin.com/in/harshit-agarwal",
+    twitterUrl: "https://x.com/harshit_builds",
+    badge: "1% Elite Maker",
+    verifiedParity: true,
+    compatibilityScore: 98,
+    createdAt: "2026-09-01T00:00:00.000Z"
+  },
+  {
+    id: "cobuilder-arjun",
+    name: "Arjun Mehta",
+    avatar: "🚀",
+    role: "B2B SaaS Growth & Enterprise GTM Lead",
+    category: "growth",
+    headline: "Ex-FinTech VP Sales | 0 to $2M ARR Specialist seeking Technical Co-Founder",
+    bio: "Scaled two B2B SaaS ventures across SEA and US markets. Passionate about automated collections, cash flow accelerators, and agentic workflows for CFOs.",
+    skills: ["B2B Enterprise Sales", "GTM Playbooks", "Product-Led Growth", "FinTech Regulation", "Pitch Decks"],
+    primaryStack: "HubSpot / Linear / Stripe",
+    seekingRole: "Technical AI Co-Founder / Lead Agent Architect",
+    seekingDescription: "Need a high-velocity full-stack AI builder to build an autonomous accounts receivable collections platform with voice agents.",
+    commitment: "full_time",
+    commitmentLabel: "Full-Time (40h/wk)",
+    stage: "prototype",
+    stageLabel: "Prototype / Customer Validation",
+    projects: [
+      { name: "BusinessPay", role: "GTM Lead", url: "https://github.com/Business-Tribe/BusinessPay" }
+    ],
+    equityExpectation: "40-50% Co-Founder Equity",
+    location: "Mumbai, India / Remote",
+    githubUrl: "https://github.com",
+    linkedinUrl: "https://linkedin.com",
+    twitterUrl: "https://x.com",
+    badge: "Verified Founder",
+    verifiedParity: true,
+    compatibilityScore: 96,
+    createdAt: "2026-09-02T00:00:00.000Z"
+  },
+  {
+    id: "cobuilder-sophia",
+    name: "Sophia Chen",
+    avatar: "🎨",
+    role: "Senior AI UX Architect & Product Designer",
+    category: "design",
+    headline: "Design Systems & Glassmorphism Specialist. Crafting high-converting 2026 Web UIs",
+    bio: "10+ years designing consumer and developer tooling. Obsessed with micro-interactions, responsive CSS, design tokens, and human-in-the-loop AI interfaces.",
+    skills: ["Figma Design Systems", "Tailwind CSS", "Design Tokens", "User Research", "Prototyping"],
+    primaryStack: "Figma / React / Framer",
+    seekingRole: "AI Engineer / Full-Stack Co-Founder",
+    seekingDescription: "Partnering with technical builders creating solo travel AI matching, social commerce, or visual search tools.",
+    commitment: "part_time",
+    commitmentLabel: "Part-Time (20h/wk)",
+    stage: "ideation",
+    stageLabel: "Early Ideation & Concept",
+    projects: [
+      { name: "Trippy", role: "Design Lead", url: "https://github.com/1997agarwal/Trippy" },
+      { name: "DupeScout", role: "UX Designer", url: "https://github.com/1997agarwal/DupeScout" }
+    ],
+    equityExpectation: "20-30% Co-Founder Equity",
+    location: "Singapore / Remote",
+    githubUrl: "https://github.com",
+    linkedinUrl: "https://linkedin.com",
+    twitterUrl: "https://x.com",
+    badge: "Design Fellow",
+    verifiedParity: true,
+    compatibilityScore: 94,
+    createdAt: "2026-09-03T00:00:00.000Z"
+  },
+  {
+    id: "cobuilder-rohan",
+    name: "Rohan Varma",
+    avatar: "🧠",
+    role: "Creator Economy & Marketplace Operator",
+    category: "domain",
+    headline: "Founder with access to 4,000+ Indian creators and agency networks",
+    bio: "Spent 6 years managing top tier YouTube and Instagram creators. Deep domain expertise in brand deal negotiations, escrow milestones, and influencer payments.",
+    skills: ["Creator Economy", "Brand Partnerships", "Escrow Logistics", "Operations", "Contracts"],
+    primaryStack: "Notion / WhatsApp API / Stripe",
+    seekingRole: "Full-Stack AI Builder (React TS + Express)",
+    seekingDescription: "Looking for a full-stack engineer to build India's premier creator escrow and media kit operating system with instant milestone payouts.",
+    commitment: "full_time",
+    commitmentLabel: "Full-Time (40h/wk)",
+    stage: "scaling",
+    stageLabel: "Scaling / Live with Users",
+    projects: [
+      { name: "CollabKaro", role: "Co-Founder", url: "https://github.com/Collab-Tribe/CollabKaro" }
+    ],
+    equityExpectation: "Equal 50/50 Equity",
+    location: "Delhi NCR / Remote",
+    githubUrl: "https://github.com",
+    linkedinUrl: "https://linkedin.com",
+    twitterUrl: "https://x.com",
+    badge: "Domain Expert",
+    verifiedParity: true,
+    compatibilityScore: 95,
+    createdAt: "2026-09-04T00:00:00.000Z"
+  },
+  {
+    id: "cobuilder-elena",
+    name: "Elena Rostova",
+    avatar: "⚡",
+    role: "LLM Evaluation & NLP Research Engineer",
+    category: "technical",
+    headline: "Building multi-model LLM benchmark arenas and automated evaluation rubrics",
+    bio: "M.S. in Machine Learning. Passionate about automated prompt testing, Elo ranking arenas, and eliminating hallucinations in production agents.",
+    skills: ["Python", "PyTorch", "Prompt Engineering", "Elo Systems", "FastAPI", "Docker"],
+    primaryStack: "Cursor / Python / LangChain",
+    seekingRole: "Product Manager / Frontend Engineer",
+    seekingDescription: "Seeking a product-minded engineer or PM to turn our open-source prompt court engine into an enterprise prompt evaluation SaaS.",
+    commitment: "part_time",
+    commitmentLabel: "Nights & Weekends (15h/wk)",
+    stage: "parity_verified",
+    stageLabel: "Parity-Verified Open Source",
+    projects: [
+      { name: "PromptCourt", role: "ML Engineer", url: "https://github.com/1997agarwal/PromptCourt" }
+    ],
+    equityExpectation: "Equal Co-Founder Split",
+    location: "Berlin, Germany / Remote",
+    githubUrl: "https://github.com",
+    linkedinUrl: "https://linkedin.com",
+    twitterUrl: "https://x.com",
+    badge: "Verified AI Engineer",
+    verifiedParity: true,
+    compatibilityScore: 92,
+    createdAt: "2026-09-05T00:00:00.000Z"
+  }
+];
 
 const INITIAL_PROJECTS = [
   {
@@ -340,6 +492,8 @@ async function initializeDatabase() {
   try { await readFile(usersFile, "utf8"); } catch { await writeFile(usersFile, `${JSON.stringify(INITIAL_USERS, null, 2)}\n`, "utf8"); }
   try { await readFile(auditsFile, "utf8"); } catch { await writeFile(auditsFile, `${JSON.stringify(INITIAL_AUDITS, null, 2)}\n`, "utf8"); }
   try { await readFile(projectsFile, "utf8"); } catch { await writeFile(projectsFile, `${JSON.stringify(INITIAL_PROJECTS, null, 2)}\n`, "utf8"); }
+  try { await readFile(cobuildersFile, "utf8"); } catch { await writeFile(cobuildersFile, `${JSON.stringify(INITIAL_COBUILDERS, null, 2)}\n`, "utf8"); }
+  try { await readFile(connectionsFile, "utf8"); } catch { await writeFile(connectionsFile, "[]\n", "utf8"); }
   await writeAutoBackup();
 }
 
@@ -370,6 +524,18 @@ async function writeAudits(audits) {
 async function readProjects() { return JSON.parse(await readFile(projectsFile, "utf8")); }
 async function writeProjects(projects) { 
   await writeFile(projectsFile, `${JSON.stringify(projects, null, 2)}\n`, "utf8");
+  await writeAutoBackup();
+}
+
+async function readCobuilders() { return JSON.parse(await readFile(cobuildersFile, "utf8")); }
+async function writeCobuilders(cobuilders) { 
+  await writeFile(cobuildersFile, `${JSON.stringify(cobuilders, null, 2)}\n`, "utf8");
+  await writeAutoBackup();
+}
+
+async function readConnections() { return JSON.parse(await readFile(connectionsFile, "utf8")); }
+async function writeConnections(connections) { 
+  await writeFile(connectionsFile, `${JSON.stringify(connections, null, 2)}\n`, "utf8");
   await writeAutoBackup();
 }
 
@@ -692,6 +858,109 @@ async function handleRequest(req, res) {
       });
 
       return json(res, 200, auditedProjects);
+    }
+
+    // CO-BUILDER MATCH DIRECTORY REST APIS
+    if (req.method === "GET" && url.pathname === "/api/cobuilders") {
+      const cobuilders = await readCobuilders();
+      const roleFilter = url.searchParams.get("role");
+      const searchQuery = (url.searchParams.get("q") || "").toLowerCase().trim();
+
+      let filtered = cobuilders;
+      if (roleFilter && roleFilter !== "all") {
+        filtered = filtered.filter(c => c.category === roleFilter);
+      }
+      if (searchQuery) {
+        filtered = filtered.filter(c => 
+          c.name.toLowerCase().includes(searchQuery) ||
+          c.role.toLowerCase().includes(searchQuery) ||
+          c.headline.toLowerCase().includes(searchQuery) ||
+          (c.skills && c.skills.some(s => s.toLowerCase().includes(searchQuery)))
+        );
+      }
+      return json(res, 200, filtered);
+    }
+
+    if (req.method === "POST" && url.pathname === "/api/cobuilders") {
+      const payload = await body(req);
+      const name = clean(payload.name, 100);
+      if (!name) return json(res, 400, { error: "Name is required." });
+
+      const cobuilders = await readCobuilders();
+      const existingIdx = cobuilders.findIndex(c => c.id === payload.id || (payload.email && c.email === payload.email));
+
+      const entry = {
+        id: payload.id || `cobuilder-${Date.now()}`,
+        name,
+        avatar: payload.avatar || "👩‍💻",
+        role: clean(payload.role || "AI Product Builder", 120),
+        category: payload.category || "technical",
+        headline: clean(payload.headline || "Building next-generation AI products", 250),
+        bio: clean(payload.bio || "", 1000),
+        skills: Array.isArray(payload.skills) ? payload.skills : (payload.skills ? String(payload.skills).split(",").map(s => s.trim()).filter(Boolean) : ["React", "FastAPI"]),
+        primaryStack: clean(payload.primaryStack || "AntiGravity / Claude Code", 100),
+        seekingRole: clean(payload.seekingRole || "Co-Founder", 150),
+        seekingDescription: clean(payload.seekingDescription || "", 500),
+        commitment: payload.commitment || "full_time",
+        commitmentLabel: payload.commitment === "part_time" ? "Part-Time (20h/wk)" : (payload.commitment === "hackathons" ? "Nights & Weekends" : "Full-Time (40h/wk)"),
+        stage: payload.stage || "parity_verified",
+        stageLabel: payload.stage === "ideation" ? "Early Ideation" : (payload.stage === "prototype" ? "Prototype" : "Parity-Verified MVP"),
+        projects: Array.isArray(payload.projects) ? payload.projects : [],
+        equityExpectation: clean(payload.equityExpectation || "Equal Split / Negotiable", 100),
+        location: clean(payload.location || "Remote", 100),
+        githubUrl: clean(payload.githubUrl || "", 200),
+        linkedinUrl: clean(payload.linkedinUrl || "", 200),
+        twitterUrl: clean(payload.twitterUrl || "", 200),
+        badge: payload.badge || "Verified Builder",
+        verifiedParity: Boolean(payload.verifiedParity ?? true),
+        compatibilityScore: Number(payload.compatibilityScore) || 95,
+        updatedAt: new Date().toISOString()
+      };
+
+      if (existingIdx >= 0) {
+        cobuilders[existingIdx] = { ...cobuilders[existingIdx], ...entry };
+      } else {
+        entry.createdAt = new Date().toISOString();
+        cobuilders.unshift(entry);
+      }
+
+      await writeCobuilders(cobuilders);
+      return json(res, 201, entry);
+    }
+
+    if (req.method === "POST" && url.pathname === "/api/cobuilders/connect") {
+      const payload = await body(req);
+      const recipientId = clean(payload.recipientId, 100);
+      const senderName = clean(payload.senderName, 100);
+      if (!recipientId || !senderName) {
+        return json(res, 400, { error: "Recipient ID and sender name are required." });
+      }
+
+      const connections = await readConnections();
+      const proposal = {
+        id: `conn-${Date.now()}`,
+        recipientId,
+        recipientName: clean(payload.recipientName, 100),
+        senderId: clean(payload.senderId || "user-guest", 100),
+        senderName,
+        senderEmail: clean(payload.senderEmail || "", 150),
+        projectName: clean(payload.projectName || "New AI Venture", 120),
+        roleOffered: clean(payload.roleOffered || "Technical Co-Founder", 100),
+        equityOffered: clean(payload.equityOffered || "Equal 50/50 Equity", 80),
+        pitchMessage: clean(payload.pitchMessage || "", 1000),
+        projectUrl: clean(payload.projectUrl || "", 200),
+        status: "pending",
+        createdAt: new Date().toISOString()
+      };
+
+      connections.unshift(proposal);
+      await writeConnections(connections);
+      return json(res, 201, { success: true, proposal });
+    }
+
+    if (req.method === "GET" && url.pathname === "/api/cobuilders/connections") {
+      const connections = await readConnections();
+      return json(res, 200, connections);
     }
 
     // STATIC FILE SERVING

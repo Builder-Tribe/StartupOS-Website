@@ -1,11 +1,11 @@
 {
-  "lastSyncedAt": "2026-09-11T06:29:03.248Z",
+  "lastSyncedAt": "2026-09-12T05:02:08.389Z",
   "counts": {
     "ideas": 1,
     "launches": 4,
     "users": 5,
     "audits": 3,
-    "projects": 8
+    "projects": 7
   },
   "ideas": [
     {
@@ -283,32 +283,6 @@
     }
   ],
   "projects": [
-    {
-      "id": "proj-1789108143247",
-      "name": "TestProject",
-      "tagline": "Test autonomous engine",
-      "category": "commercial",
-      "badge": "Commercial Venture",
-      "sourceType": "github_connected",
-      "repoUrl": "https://github.com/1997agarwal/TestProject",
-      "demoUrl": "https://testproject.dev",
-      "stack": [
-        "React",
-        "FastAPI"
-      ],
-      "surfaces": [
-        "Web Application",
-        "Admin Console"
-      ],
-      "readinessScore": 75,
-      "hasAgents": true,
-      "hasRoadmap": true,
-      "hasClaude": true,
-      "hasContributing": true,
-      "parityScore": 100,
-      "isFeatured": false,
-      "createdAt": "2026-09-11T06:29:03.247Z"
-    },
     {
       "id": "proj-collabkaro",
       "name": "CollabKaro",

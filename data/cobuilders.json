@@ -1,0 +1,209 @@
+[
+  {
+    "id": "cobuilder-harshita",
+    "name": "Harshita Agarwal",
+    "avatar": "👩‍💻",
+    "role": "AI Systems Architect & Full-Stack Engineer",
+    "category": "technical",
+    "headline": "Building multi-agent reasoning systems & 4-file parity governance platforms",
+    "bio": "Founding engineer experienced in React 19, Node.js, FastAPI, and autonomous agent workflows. Architected StartupOS, SpecForge, and ContextPrism.",
+    "skills": [
+      "React 19",
+      "Node.js",
+      "FastAPI",
+      "Vector DB",
+      "LLM Workflows",
+      "TypeScript"
+    ],
+    "primaryStack": "AntiGravity / Claude Code",
+    "seekingRole": "Product Co-Founder / B2B GTM Lead",
+    "seekingDescription": "Looking for an energetic growth and enterprise sales co-founder to scale autonomous developer tooling and enterprise token finops gateways.",
+    "commitment": "full_time",
+    "commitmentLabel": "Full-Time (40h/wk)",
+    "stage": "parity_verified",
+    "stageLabel": "Parity-Verified MVP",
+    "projects": [
+      {
+        "name": "ContextPrism",
+        "role": "Architect",
+        "url": "https://github.com/1997agarwal/ContextPrism"
+      },
+      {
+        "name": "SpecForge",
+        "role": "Creator",
+        "url": "https://github.com/1997agarwal/SpecForge"
+      }
+    ],
+    "equityExpectation": "Equal 50/50 Equity",
+    "location": "Bengaluru, India / Remote",
+    "githubUrl": "https://github.com/1997agarwal",
+    "linkedinUrl": "https://linkedin.com/in/harshit-agarwal",
+    "twitterUrl": "https://x.com/harshit_builds",
+    "badge": "1% Elite Maker",
+    "verifiedParity": true,
+    "compatibilityScore": 98,
+    "createdAt": "2026-09-01T00:00:00.000Z"
+  },
+  {
+    "id": "cobuilder-arjun",
+    "name": "Arjun Mehta",
+    "avatar": "🚀",
+    "role": "B2B SaaS Growth & Enterprise GTM Lead",
+    "category": "growth",
+    "headline": "Ex-FinTech VP Sales | 0 to $2M ARR Specialist seeking Technical Co-Founder",
+    "bio": "Scaled two B2B SaaS ventures across SEA and US markets. Passionate about automated collections, cash flow accelerators, and agentic workflows for CFOs.",
+    "skills": [
+      "B2B Enterprise Sales",
+      "GTM Playbooks",
+      "Product-Led Growth",
+      "FinTech Regulation",
+      "Pitch Decks"
+    ],
+    "primaryStack": "HubSpot / Linear / Stripe",
+    "seekingRole": "Technical AI Co-Founder / Lead Agent Architect",
+    "seekingDescription": "Need a high-velocity full-stack AI builder to build an autonomous accounts receivable collections platform with voice agents.",
+    "commitment": "full_time",
+    "commitmentLabel": "Full-Time (40h/wk)",
+    "stage": "prototype",
+    "stageLabel": "Prototype / Customer Validation",
+    "projects": [
+      {
+        "name": "BusinessPay",
+        "role": "GTM Lead",
+        "url": "https://github.com/Business-Tribe/BusinessPay"
+      }
+    ],
+    "equityExpectation": "40-50% Co-Founder Equity",
+    "location": "Mumbai, India / Remote",
+    "githubUrl": "https://github.com",
+    "linkedinUrl": "https://linkedin.com",
+    "twitterUrl": "https://x.com",
+    "badge": "Verified Founder",
+    "verifiedParity": true,
+    "compatibilityScore": 96,
+    "createdAt": "2026-09-02T00:00:00.000Z"
+  },
+  {
+    "id": "cobuilder-sophia",
+    "name": "Sophia Chen",
+    "avatar": "🎨",
+    "role": "Senior AI UX Architect & Product Designer",
+    "category": "design",
+    "headline": "Design Systems & Glassmorphism Specialist. Crafting high-converting 2026 Web UIs",
+    "bio": "10+ years designing consumer and developer tooling. Obsessed with micro-interactions, responsive CSS, design tokens, and human-in-the-loop AI interfaces.",
+    "skills": [
+      "Figma Design Systems",
+      "Tailwind CSS",
+      "Design Tokens",
+      "User Research",
+      "Prototyping"
+    ],
+    "primaryStack": "Figma / React / Framer",
+    "seekingRole": "AI Engineer / Full-Stack Co-Founder",
+    "seekingDescription": "Partnering with technical builders creating solo travel AI matching, social commerce, or visual search tools.",
+    "commitment": "part_time",
+    "commitmentLabel": "Part-Time (20h/wk)",
+    "stage": "ideation",
+    "stageLabel": "Early Ideation & Concept",
+    "projects": [
+      {
+        "name": "Trippy",
+        "role": "Design Lead",
+        "url": "https://github.com/1997agarwal/Trippy"
+      },
+      {
+        "name": "DupeScout",
+        "role": "UX Designer",
+        "url": "https://github.com/1997agarwal/DupeScout"
+      }
+    ],
+    "equityExpectation": "20-30% Co-Founder Equity",
+    "location": "Singapore / Remote",
+    "githubUrl": "https://github.com",
+    "linkedinUrl": "https://linkedin.com",
+    "twitterUrl": "https://x.com",
+    "badge": "Design Fellow",
+    "verifiedParity": true,
+    "compatibilityScore": 94,
+    "createdAt": "2026-09-03T00:00:00.000Z"
+  },
+  {
+    "id": "cobuilder-rohan",
+    "name": "Rohan Varma",
+    "avatar": "🧠",
+    "role": "Creator Economy & Marketplace Operator",
+    "category": "domain",
+    "headline": "Founder with access to 4,000+ Indian creators and agency networks",
+    "bio": "Spent 6 years managing top tier YouTube and Instagram creators. Deep domain expertise in brand deal negotiations, escrow milestones, and influencer payments.",
+    "skills": [
+      "Creator Economy",
+      "Brand Partnerships",
+      "Escrow Logistics",
+      "Operations",
+      "Contracts"
+    ],
+    "primaryStack": "Notion / WhatsApp API / Stripe",
+    "seekingRole": "Full-Stack AI Builder (React TS + Express)",
+    "seekingDescription": "Looking for a full-stack engineer to build India's premier creator escrow and media kit operating system with instant milestone payouts.",
+    "commitment": "full_time",
+    "commitmentLabel": "Full-Time (40h/wk)",
+    "stage": "scaling",
+    "stageLabel": "Scaling / Live with Users",
+    "projects": [
+      {
+        "name": "CollabKaro",
+        "role": "Co-Founder",
+        "url": "https://github.com/Collab-Tribe/CollabKaro"
+      }
+    ],
+    "equityExpectation": "Equal 50/50 Equity",
+    "location": "Delhi NCR / Remote",
+    "githubUrl": "https://github.com",
+    "linkedinUrl": "https://linkedin.com",
+    "twitterUrl": "https://x.com",
+    "badge": "Domain Expert",
+    "verifiedParity": true,
+    "compatibilityScore": 95,
+    "createdAt": "2026-09-04T00:00:00.000Z"
+  },
+  {
+    "id": "cobuilder-elena",
+    "name": "Elena Rostova",
+    "avatar": "⚡",
+    "role": "LLM Evaluation & NLP Research Engineer",
+    "category": "technical",
+    "headline": "Building multi-model LLM benchmark arenas and automated evaluation rubrics",
+    "bio": "M.S. in Machine Learning. Passionate about automated prompt testing, Elo ranking arenas, and eliminating hallucinations in production agents.",
+    "skills": [
+      "Python",
+      "PyTorch",
+      "Prompt Engineering",
+      "Elo Systems",
+      "FastAPI",
+      "Docker"
+    ],
+    "primaryStack": "Cursor / Python / LangChain",
+    "seekingRole": "Product Manager / Frontend Engineer",
+    "seekingDescription": "Seeking a product-minded engineer or PM to turn our open-source prompt court engine into an enterprise prompt evaluation SaaS.",
+    "commitment": "part_time",
+    "commitmentLabel": "Nights & Weekends (15h/wk)",
+    "stage": "parity_verified",
+    "stageLabel": "Parity-Verified Open Source",
+    "projects": [
+      {
+        "name": "PromptCourt",
+        "role": "ML Engineer",
+        "url": "https://github.com/1997agarwal/PromptCourt"
+      }
+    ],
+    "equityExpectation": "Equal Co-Founder Split",
+    "location": "Berlin, Germany / Remote",
+    "githubUrl": "https://github.com",
+    "linkedinUrl": "https://linkedin.com",
+    "twitterUrl": "https://x.com",
+    "badge": "Verified AI Engineer",
+    "verifiedParity": true,
+    "compatibilityScore": 92,
+    "createdAt": "2026-09-05T00:00:00.000Z"
+  }
+]

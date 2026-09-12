@@ -10,9 +10,9 @@
 
 | Status Tag | Meaning | Task Count | Percentage |
 |:---:|:---|:---:|:---:|
-| 🟢 `[x] DONE` | Fully implemented, tested, and shipped | **41** | **91.1%** |
+| 🟢 `[x] DONE` | Fully implemented, tested, and shipped | **42** | **93.3%** |
 | 🟡 `[-] IN PROGRESS` | Actively in development or partial implementation | **1** | **2.2%** |
-| ⚪ `[ ] TO-DO` | Backlog task scheduled for upcoming sprints | **3** | **6.7%** |
+| ⚪ `[ ] TO-DO` | Backlog task scheduled for upcoming sprints | **2** | **4.4%** |
 | **TOTAL** | **Full PRD Scope** | **45** | **100%** |
 
 ---
@@ -99,7 +99,7 @@
 | **TSK-6.3** | 0-to-1 Startup Scaffolding System | `PRDGeneratorStudio.jsx` | 🟢 `[x] DONE` | Complete prompt runbook and architectural spec generator |
 | **TSK-6.4** | Interactive Commercial Marketing Lander| `MarketingLander.jsx` | 🟢 `[x] DONE` | Deliverables inspector, ROI calculator, and pricing tiers |
 | **TSK-6.5** | 1-Click Cloud Deployment Recipes | `src/components/DeployStudio.jsx` | 🟡 `[-] IN PROGRESS` | One-click recipes for Vercel, Railway, Render, Cloudflare |
-| **TSK-6.6** | Founder & Co-Builder Match Directory | `src/components/NetworkHub.jsx` | ⚪ `[ ] TO-DO` | Matchmaking directory for technical & non-technical builders |
+| **TSK-6.6** | Founder & Co-Builder Match Directory | `CoBuilderStudio.jsx`, `server.mjs` | 🟢 `[x] DONE` | Multi-role matchmaking, skill filters, pitch connection modal, REST APIs |
 | **TSK-6.7** | Investor Pitch Deck & Demo Day Pipeline| `src/components/DemoDayStudio.jsx` | ⚪ `[ ] TO-DO` | Curated deal-flow package showcasing top 5% verified makers |
 
 ---
