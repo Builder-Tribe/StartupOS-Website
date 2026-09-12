@@ -13,9 +13,83 @@ const auditsFile = join(dataDirectory, "audits.json");
 const projectsFile = join(dataDirectory, "registered_projects.json");
 const cobuildersFile = join(dataDirectory, "cobuilders.json");
 const connectionsFile = join(dataDirectory, "cobuilder_connections.json");
+const feedFile = join(dataDirectory, "cobuilder_feed.json");
 
 const types = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8" };
 const json = (res, status, body) => { res.writeHead(status, { "content-type": "application/json; charset=utf-8" }); res.end(JSON.stringify(body)); };
+
+const INITIAL_FEED_POSTS = [
+  {
+    id: "post-1",
+    authorId: "cobuilder-harshita",
+    authorName: "Harshita Agarwal",
+    authorAvatar: "👩‍💻",
+    authorRole: "AI Systems Architect & Full-Stack Engineer",
+    authorBadge: "1% Elite Maker",
+    timeAgo: "2 hours ago",
+    content: "🚀 Thrilled to announce that ContextPrism just achieved 100% 4-File Constitution Parity on StartupOS!\n\nBy implementing AST tree-shaking and dynamic semantic caching, we're cutting enterprise LLM inference tokens by 62% without losing context.\n\nNow actively looking for a B2B GTM / Enterprise Sales Co-Founder to help lead customer development with AI engineering teams. 50/50 Equity split. Pitch me directly through my profile below!",
+    projectMention: {
+      name: "ContextPrism",
+      tagline: "Enterprise Token FinOps Gateway & AST Pruner",
+      url: "https://github.com/1997agarwal/ContextPrism",
+      parityScore: 100
+    },
+    likes: 24,
+    likedBy: [],
+    comments: [
+      { id: "c-1", author: "Arjun Mehta", avatar: "🚀", text: "Huge milestone Harshita! The AST token pruner solves a massive pain point for high-volume agent pipelines.", time: "1h ago" }
+    ],
+    shares: 6,
+    tags: ["#OpenToCoFound", "#TokenFinOps", "#AgenticAI", "#B2BGrowth"],
+    createdAt: new Date(Date.now() - 7200000).toISOString()
+  },
+  {
+    id: "post-2",
+    authorId: "cobuilder-arjun",
+    authorName: "Arjun Mehta",
+    authorAvatar: "🚀",
+    authorRole: "B2B SaaS Growth & Enterprise GTM Lead",
+    authorBadge: "Verified Founder",
+    timeAgo: "5 hours ago",
+    content: "B2B Accounts Receivable collections is ready for an agentic AI overhaul. Invoices take 45+ days to settle, costing suppliers millions in trapped working capital.\n\nWe built BusinessPay to automate early payment discounts and reconciliation. Validated with 8 mid-market distributors.\n\nSeeking a Technical Co-Founder / Lead AI Engineer (FastAPI + React 19) to lead the core platform. Equal equity. Let's talk!",
+    projectMention: {
+      name: "BusinessPay",
+      tagline: "B2B AR Collections & Dynamic Discounting Engine",
+      url: "https://github.com/Business-Tribe/BusinessPay",
+      parityScore: 100
+    },
+    likes: 19,
+    likedBy: [],
+    comments: [],
+    shares: 4,
+    tags: ["#CoFounderSearch", "#FinTech", "#FastAPI", "#B2BEnterprise"],
+    createdAt: new Date(Date.now() - 18000000).toISOString()
+  },
+  {
+    id: "post-3",
+    authorId: "cobuilder-sophia",
+    authorName: "Sophia Chen",
+    authorAvatar: "🎨",
+    authorRole: "Senior AI UX Architect & Product Designer",
+    authorBadge: "Design Fellow",
+    timeAgo: "1 day ago",
+    content: "Design systems in 2026 must be built for human-in-the-loop AI workflows. Excited to unveil the visual architecture tokens for Trippy & DupeScout on StartupOS.\n\nAvailable for part-time / equity co-founder collaboration on consumer AI apps, visual similarity engines, or creator platforms. Send me a pitch!",
+    projectMention: {
+      name: "Trippy",
+      tagline: "AI Solo Travel Group Matching & Host Platform",
+      url: "https://github.com/1997agarwal/Trippy",
+      parityScore: 100
+    },
+    likes: 31,
+    likedBy: [],
+    comments: [
+      { id: "c-2", author: "Rohan Varma", avatar: "🧠", text: "The glassmorphism cards and token typography look stunning Sophia!", time: "18h ago" }
+    ],
+    shares: 9,
+    tags: ["#DesignSystems", "#AIUX", "#Glassmorphism", "#OpenToCoFound"],
+    createdAt: new Date(Date.now() - 86400000).toISOString()
+  }
+];
 
 const INITIAL_COBUILDERS = [
   {
@@ -494,6 +568,7 @@ async function initializeDatabase() {
   try { await readFile(projectsFile, "utf8"); } catch { await writeFile(projectsFile, `${JSON.stringify(INITIAL_PROJECTS, null, 2)}\n`, "utf8"); }
   try { await readFile(cobuildersFile, "utf8"); } catch { await writeFile(cobuildersFile, `${JSON.stringify(INITIAL_COBUILDERS, null, 2)}\n`, "utf8"); }
   try { await readFile(connectionsFile, "utf8"); } catch { await writeFile(connectionsFile, "[]\n", "utf8"); }
+  try { await readFile(feedFile, "utf8"); } catch { await writeFile(feedFile, `${JSON.stringify(INITIAL_FEED_POSTS, null, 2)}\n`, "utf8"); }
   await writeAutoBackup();
 }
 
@@ -530,6 +605,12 @@ async function writeProjects(projects) {
 async function readCobuilders() { return JSON.parse(await readFile(cobuildersFile, "utf8")); }
 async function writeCobuilders(cobuilders) { 
   await writeFile(cobuildersFile, `${JSON.stringify(cobuilders, null, 2)}\n`, "utf8");
+  await writeAutoBackup();
+}
+
+async function readFeed() { return JSON.parse(await readFile(feedFile, "utf8")); }
+async function writeFeed(feed) { 
+  await writeFile(feedFile, `${JSON.stringify(feed, null, 2)}\n`, "utf8");
   await writeAutoBackup();
 }
 
@@ -858,6 +939,85 @@ async function handleRequest(req, res) {
       });
 
       return json(res, 200, auditedProjects);
+    }
+
+        // CO-BUILDER FEED REST APIS
+    if (req.method === "GET" && url.pathname === "/api/cobuilders/feed") {
+      const feed = await readFeed();
+      return json(res, 200, feed);
+    }
+
+    if (req.method === "POST" && url.pathname === "/api/cobuilders/feed") {
+      const payload = await body(req);
+      const content = clean(payload.content, 2000);
+      if (!content) return json(res, 400, { error: "Post content is required." });
+
+      const feed = await readFeed();
+      const newPost = {
+        id: `post-${Date.now()}`,
+        authorId: clean(payload.authorId || "user-harshita", 100),
+        authorName: clean(payload.authorName || "Harshita Agarwal", 100),
+        authorAvatar: payload.authorAvatar || "👩‍💻",
+        authorRole: clean(payload.authorRole || "AI Systems Architect", 120),
+        authorBadge: clean(payload.authorBadge || "Pro Builder", 50),
+        timeAgo: "Just now",
+        content,
+        projectMention: payload.projectMention || null,
+        likes: 1,
+        likedBy: [payload.authorId || "user-harshita"],
+        comments: [],
+        shares: 0,
+        tags: Array.isArray(payload.tags) ? payload.tags : ["#OpenToCoFound", "#AIBuilder"],
+        createdAt: new Date().toISOString()
+      };
+
+      feed.unshift(newPost);
+      await writeFeed(feed);
+      return json(res, 201, newPost);
+    }
+
+    const feedLikeMatch = url.pathname.match(/^\/api\/cobuilders\/feed\/([a-z0-9-]+)\/like$/i);
+    if (req.method === "POST" && feedLikeMatch) {
+      const postId = feedLikeMatch[1];
+      const { userId = "user-harshita" } = await body(req);
+      const feed = await readFeed();
+      const post = feed.find(p => p.id === postId);
+      if (!post) return json(res, 404, { error: "Post not found." });
+
+      post.likedBy = post.likedBy || [];
+      const idx = post.likedBy.indexOf(userId);
+      if (idx >= 0) {
+        post.likedBy.splice(idx, 1);
+        post.likes = Math.max(0, (post.likes || 1) - 1);
+      } else {
+        post.likedBy.push(userId);
+        post.likes = (post.likes || 0) + 1;
+      }
+      await writeFeed(feed);
+      return json(res, 200, post);
+    }
+
+    const feedCommentMatch = url.pathname.match(/^\/api\/cobuilders\/feed\/([a-z0-9-]+)\/comment$/i);
+    if (req.method === "POST" && feedCommentMatch) {
+      const postId = feedCommentMatch[1];
+      const { text, author = "Harshita Agarwal", avatar = "👩‍💻" } = await body(req);
+      if (!text) return json(res, 400, { error: "Comment text required." });
+
+      const feed = await readFeed();
+      const post = feed.find(p => p.id === postId);
+      if (!post) return json(res, 404, { error: "Post not found." });
+
+      post.comments = post.comments || [];
+      const comment = {
+        id: `c-${Date.now()}`,
+        author: clean(author, 100),
+        avatar,
+        text: clean(text, 500),
+        time: "Just now"
+      };
+      post.comments.push(comment);
+      await writeFeed(feed);
+      return json(res, 201, comment);
     }
 
     // CO-BUILDER MATCH DIRECTORY REST APIS

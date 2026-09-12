@@ -1,0 +1,99 @@
+[
+  {
+    "id": "post-1",
+    "authorId": "cobuilder-harshita",
+    "authorName": "Harshita Agarwal",
+    "authorAvatar": "👩‍💻",
+    "authorRole": "AI Systems Architect & Full-Stack Engineer",
+    "authorBadge": "1% Elite Maker",
+    "timeAgo": "2 hours ago",
+    "content": "🚀 Thrilled to announce that ContextPrism just achieved 100% 4-File Constitution Parity on StartupOS!\n\nBy implementing AST tree-shaking and dynamic semantic caching, we're cutting enterprise LLM inference tokens by 62% without losing context.\n\nNow actively looking for a B2B GTM / Enterprise Sales Co-Founder to help lead customer development with AI engineering teams. 50/50 Equity split. Pitch me directly through my profile below!",
+    "projectMention": {
+      "name": "ContextPrism",
+      "tagline": "Enterprise Token FinOps Gateway & AST Pruner",
+      "url": "https://github.com/1997agarwal/ContextPrism",
+      "parityScore": 100
+    },
+    "likes": 24,
+    "likedBy": [],
+    "comments": [
+      {
+        "id": "c-1",
+        "author": "Arjun Mehta",
+        "avatar": "🚀",
+        "text": "Huge milestone Harshita! The AST token pruner solves a massive pain point for high-volume agent pipelines.",
+        "time": "1h ago"
+      }
+    ],
+    "shares": 6,
+    "tags": [
+      "#OpenToCoFound",
+      "#TokenFinOps",
+      "#AgenticAI",
+      "#B2BGrowth"
+    ],
+    "createdAt": "2026-09-12T03:20:36.677Z"
+  },
+  {
+    "id": "post-2",
+    "authorId": "cobuilder-arjun",
+    "authorName": "Arjun Mehta",
+    "authorAvatar": "🚀",
+    "authorRole": "B2B SaaS Growth & Enterprise GTM Lead",
+    "authorBadge": "Verified Founder",
+    "timeAgo": "5 hours ago",
+    "content": "B2B Accounts Receivable collections is ready for an agentic AI overhaul. Invoices take 45+ days to settle, costing suppliers millions in trapped working capital.\n\nWe built BusinessPay to automate early payment discounts and reconciliation. Validated with 8 mid-market distributors.\n\nSeeking a Technical Co-Founder / Lead AI Engineer (FastAPI + React 19) to lead the core platform. Equal equity. Let's talk!",
+    "projectMention": {
+      "name": "BusinessPay",
+      "tagline": "B2B AR Collections & Dynamic Discounting Engine",
+      "url": "https://github.com/Business-Tribe/BusinessPay",
+      "parityScore": 100
+    },
+    "likes": 19,
+    "likedBy": [],
+    "comments": [],
+    "shares": 4,
+    "tags": [
+      "#CoFounderSearch",
+      "#FinTech",
+      "#FastAPI",
+      "#B2BEnterprise"
+    ],
+    "createdAt": "2026-09-12T00:20:36.679Z"
+  },
+  {
+    "id": "post-3",
+    "authorId": "cobuilder-sophia",
+    "authorName": "Sophia Chen",
+    "authorAvatar": "🎨",
+    "authorRole": "Senior AI UX Architect & Product Designer",
+    "authorBadge": "Design Fellow",
+    "timeAgo": "1 day ago",
+    "content": "Design systems in 2026 must be built for human-in-the-loop AI workflows. Excited to unveil the visual architecture tokens for Trippy & DupeScout on StartupOS.\n\nAvailable for part-time / equity co-founder collaboration on consumer AI apps, visual similarity engines, or creator platforms. Send me a pitch!",
+    "projectMention": {
+      "name": "Trippy",
+      "tagline": "AI Solo Travel Group Matching & Host Platform",
+      "url": "https://github.com/1997agarwal/Trippy",
+      "parityScore": 100
+    },
+    "likes": 31,
+    "likedBy": [],
+    "comments": [
+      {
+        "id": "c-2",
+        "author": "Rohan Varma",
+        "avatar": "🧠",
+        "text": "The glassmorphism cards and token typography look stunning Sophia!",
+        "time": "18h ago"
+      }
+    ],
+    "shares": 9,
+    "tags": [
+      "#DesignSystems",
+      "#AIUX",
+      "#Glassmorphism",
+      "#OpenToCoFound"
+    ],
+    "createdAt": "2026-09-11T05:20:36.679Z"
+  }
+]
