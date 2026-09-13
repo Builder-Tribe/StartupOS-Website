@@ -1,26 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
-import LaunchpadFeed from './components/LaunchpadFeed';
 import LaunchSubmissionModal from './components/LaunchSubmissionModal';
 import BlueprintStudio from './components/BlueprintStudio';
 import MakerProfileStudio from './components/MakerProfileStudio';
-import IdeaLab from './components/IdeaLab';
-import ToolMatrixStudio from './components/ToolMatrixStudio';
-import PromptVaultStudio from './components/PromptVaultStudio';
-import LMSHub from './components/LMSHub';
 import AdminConsole from './components/AdminConsole';
 import MarketingLander from './components/MarketingLander';
 import AuthModal from './components/AuthModal';
 import HelpCenterModal from './components/HelpCenterModal';
-import PRDGeneratorStudio from './components/PRDGeneratorStudio';
 import CoBuilderStudio from './components/CoBuilderStudio';
+import TestStudio from './components/TestStudio';
+import Phase1Wrapper from './components/Phase1Wrapper';
+import Phase4Wrapper from './components/Phase4Wrapper';
 
 export default function App() {
-  // Top-level View Mode: 'website' (Standalone Marketing Lander) | 'portal' (StartupOS Builder Workspace) | 'admin' (Standalone Team Command Center)
+  // Top-level View Mode: 'website' | 'portal' | 'admin'
   const [viewMode, setViewMode] = useState('website');
-  const [activeTab, setActiveTab] = useState('launchpad'); // 'launchpad' | 'blueprints' | 'idealab' | 'academy'
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // Tracks logged-in vs guest demo mode
+  
+  // 5 Master Founder Phases: 'idealab' (1) | 'blueprints' (2) | 'testing' (3) | 'launchpad' (4) | 'cobuilders' (5)
+  const [activeTab, setActiveTab] = useState('idealab');
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   
   const [ideas, setIdeas] = useState([]);
   const [activeIdea, setActiveIdea] = useState(null);
@@ -61,7 +60,7 @@ export default function App() {
     const viewParam = params.get('view');
     if (viewParam === 'portal') {
       setViewMode('portal');
-      setActiveTab('launchpad');
+      setActiveTab('idealab');
       setIsLoggedIn(true);
     } else if (viewParam === 'admin') {
       setViewMode('admin');
@@ -101,7 +100,7 @@ export default function App() {
       setViewMode('admin');
     } else {
       setViewMode('portal');
-      setActiveTab('launchpad');
+      setActiveTab('idealab');
     }
   };
 
@@ -110,15 +109,14 @@ export default function App() {
     return (
       <>
         <MarketingLander
-          onEnterPortal={(targetTab = 'launchpad') => {
-            setIsLoggedIn(false); // Entering via demo CTA set as guest
+          onEnterPortal={(targetTab = 'idealab') => {
+            setIsLoggedIn(false);
             setViewMode('portal');
             setActiveTab(targetTab);
           }}
           onOpenAuthModal={() => setShowAuthModal(true)}
         />
 
-        {/* Auth Modal overlay accessible from website */}
         <AuthModal
           isOpen={showAuthModal}
           onClose={() => setShowAuthModal(false)}
@@ -128,29 +126,19 @@ export default function App() {
     );
   }
 
-  // 2. IF VIEW MODE IS 'ADMIN': Render Standalone Full-Screen Admin CMS Portal
+  // 2. IF VIEW MODE IS 'ADMIN': Render Dedicated Admin & Team Command Center
   if (viewMode === 'admin') {
     return (
-      <>
+      <div className="min-h-screen bg-slate-900 text-slate-100 font-sans">
         <AdminConsole
           currentUser={currentUser}
-          onExitToWebsite={() => {
-            setViewMode('website');
-            setIsLoggedIn(false);
-          }}
-          onOpenAuthModal={() => setShowAuthModal(true)}
+          onExitToUserPortal={() => setViewMode('portal')}
         />
-
-        <AuthModal
-          isOpen={showAuthModal}
-          onClose={() => setShowAuthModal(false)}
-          onLoginSuccess={handleLoginSuccess}
-        />
-      </>
+      </div>
     );
   }
 
-  // 3. IF VIEW MODE IS 'PORTAL': Render Dedicated Builder Workspace Layout
+  // 3. IF VIEW MODE IS 'PORTAL': Render Dedicated 5-Phase Builder Workspace Layout
   return (
     <div className="min-h-screen bg-slate-50/80 text-slate-900 font-sans selection:bg-indigo-600 selection:text-white relative overflow-x-hidden flex">
       {/* Subtle clean background tint */}
@@ -220,20 +208,22 @@ export default function App() {
         )}
 
         <main className="flex-1 pb-16 px-4 sm:px-6 lg:px-8 pt-6 max-w-7xl w-full mx-auto">
-          {activeTab === 'launchpad' && (
-            <LaunchpadFeed
-              currentUser={currentUser}
-              onOpenLaunchModal={() => setShowLaunchModal(true)}
-            />
-          )}
-
-          {activeTab === 'makerprofile' && (
-            <MakerProfileStudio
-              currentUser={currentUser}
+          {/* PHASE 1: IDEATE & LEARN (Idea Lab, PRD Generator, Prompt Vault, Academy) */}
+          {(activeTab === 'idealab' || activeTab === 'specstudio' || activeTab === 'promptvault' || activeTab === 'academy' || activeTab === 'lms') && (
+            <Phase1Wrapper
               ideas={ideas}
+              activeIdea={activeIdea}
+              setActiveIdea={setActiveIdea}
+              onSaveIdea={handleSaveIdea}
+              onNewIdea={handleNewIdea}
+              promptVaultInitialCategory={promptVaultInitialCategory}
+              promptVaultConfiguredStack={promptVaultConfiguredStack}
+              setPromptVaultInitialCategory={setPromptVaultInitialCategory}
+              setPromptVaultConfiguredStack={setPromptVaultConfiguredStack}
             />
           )}
 
+          {/* PHASE 2: BUILD & SCAFFOLD (My Projects Blueprints, Parity Governance) */}
           {activeTab === 'blueprints' && (
             <BlueprintStudio
               currentUser={currentUser}
@@ -241,75 +231,51 @@ export default function App() {
               onNavigateToIdeaLab={() => setActiveTab('idealab')}
               onNavigateToSpecStudio={(idea) => {
                 if (idea) setActiveIdea(idea);
-                setActiveTab('specstudio');
+                setActiveTab('idealab');
               }}
             />
           )}
 
+          {/* PHASE 3: TEST & AUDIT (Pre-Flight Sandbox QA, 100-Point Audit Rubric, API Contract Tester) */}
+          {activeTab === 'testing' && (
+            <TestStudio
+              currentUser={currentUser}
+              ideas={ideas}
+            />
+          )}
+
+          {/* PHASE 4: SHIP & LAUNCH (1-Click Cloud Deploy Recipes & Product Hunt Launchpad) */}
+          {activeTab === 'launchpad' && (
+            <Phase4Wrapper
+              currentUser={currentUser}
+              onOpenLaunchModal={() => setShowLaunchModal(true)}
+              ideas={ideas}
+            />
+          )}
+
+          {/* PHASE 5: CO-BUILDERS & SCALE (3-Column LinkedIn Match Network & Maker Profiles) */}
           {activeTab === 'cobuilders' && (
             <CoBuilderStudio
               currentUser={currentUser}
               onNavigateToIdeaLab={() => setActiveTab('idealab')}
               onOpenSpecStudio={(idea) => {
                 if (idea) setActiveIdea(idea);
-                setActiveTab('specstudio');
+                setActiveTab('idealab');
               }}
             />
           )}
 
-          {activeTab === 'idealab' && (
-            <IdeaLab
+          {/* Standalone Maker Profile */}
+          {activeTab === 'makerprofile' && (
+            <MakerProfileStudio
+              currentUser={currentUser}
               ideas={ideas}
-              activeIdea={activeIdea}
-              setActiveIdea={setActiveIdea}
-              onSaveIdea={handleSaveIdea}
-              onNewIdea={handleNewIdea}
-              onOpenSpecStudio={(idea) => {
-                if (idea) setActiveIdea(idea);
-                setActiveTab('specstudio');
-              }}
             />
-          )}
-
-          {activeTab === 'specstudio' && (
-            <PRDGeneratorStudio
-              ideas={ideas}
-              activeIdea={activeIdea}
-              setActiveIdea={setActiveIdea}
-              onNavigateToIdeaLab={() => setActiveTab('idealab')}
-              onNavigateToPromptVault={(idea, stackName) => {
-                if (idea) setActiveIdea(idea);
-                setPromptVaultInitialCategory('autonomous-pipeline');
-                setPromptVaultConfiguredStack(stackName);
-                setActiveTab('promptvault');
-              }}
-            />
-          )}
-
-          {activeTab === 'promptvault' && (
-            <PromptVaultStudio
-              ideas={ideas}
-              activeIdea={activeIdea}
-              setActiveIdea={setActiveIdea}
-              initialCategory={promptVaultInitialCategory}
-              configuredStack={promptVaultConfiguredStack}
-            />
-          )}
-
-          {activeTab === 'toolmatrix' && (
-            <ToolMatrixStudio
-              ideas={ideas}
-              activeIdea={activeIdea}
-            />
-          )}
-
-          {(activeTab === 'academy' || activeTab === 'lms') && (
-            <LMSHub />
           )}
         </main>
 
         <footer className="border-t border-slate-200/80 py-6 text-center text-xs text-slate-500 bg-white/60 backdrop-blur-sm mt-auto">
-          StartupOS 2026 — Universal Launchpad, My Projects Workspace, AI Builder Studio & AI Academy.
+          StartupOS 2026 — The All-in-One AI Founder Operating System (Learn • Build • Test • Ship • Scale).
         </footer>
       </div>
 
@@ -333,7 +299,7 @@ export default function App() {
       <HelpCenterModal
         isOpen={showHelpCenter}
         onClose={() => setShowHelpCenter(false)}
-        onNavigateToAcademy={() => setActiveTab('academy')}
+        onNavigateToAcademy={() => setActiveTab('idealab')}
         currentUser={currentUser}
       />
     </div>

@@ -1,19 +1,47 @@
 import React from 'react';
 import { 
-  Trophy, FolderGit2, Sparkles, GraduationCap, ShieldCheck, Plus, User, Crown, 
-  Globe, HelpCircle, ArrowUpRight, CheckCircle2, ArrowLeftRight, LogOut, Cpu, Terminal, UserCheck, FileCode, Users
+  Sparkles, FolderGit2, ShieldCheck, Rocket, Users, 
+  HelpCircle, ArrowUpRight, CheckCircle2, Plus, Terminal, GraduationCap
 } from 'lucide-react';
 
 export default function Sidebar({ activeTab, setActiveTab, currentUser, isLoggedIn, onOpenLaunchModal, onExitToWebsite, onOpenHelpCenter, onOpenCommandCenter }) {
-  const mainNav = [
-    { id: 'launchpad', label: 'Launchpad Feed', icon: Trophy, badge: 'Live' },
-    { id: 'blueprints', label: 'My Projects', icon: FolderGit2 },
-    { id: 'cobuilders', label: 'Co-Builder Match', icon: Users, badge: 'New' },
-    { id: 'idealab', label: 'AI Builder Studio', icon: Sparkles, badge: 'AGY AI' },
-    { id: 'specstudio', label: 'Specs & Constitution', icon: FileCode, badge: '4-File' },
-    { id: 'promptvault', label: 'Prompt Vault', icon: Terminal, badge: 'Tested' },
-    { id: 'toolmatrix', label: 'Tool Matrix & Arch', icon: Cpu, badge: '2026' },
-    { id: 'academy', label: 'AI Academy', icon: GraduationCap },
+  // 5 Master Founder Phases
+  const founderStages = [
+    { 
+      id: 'idealab', 
+      label: '1. Ideate & Learn', 
+      icon: Sparkles, 
+      badge: 'Phase 1',
+      subtitle: 'Idea Lab, PRD & Academy' 
+    },
+    { 
+      id: 'blueprints', 
+      label: '2. Build & Scaffold', 
+      icon: FolderGit2, 
+      badge: 'Phase 2',
+      subtitle: 'Projects & Constitutions' 
+    },
+    { 
+      id: 'testing', 
+      label: '3. Test & Audit', 
+      icon: ShieldCheck, 
+      badge: 'Phase 3',
+      subtitle: 'Sandbox QA & 100-pt Audit' 
+    },
+    { 
+      id: 'launchpad', 
+      label: '4. Ship & Launch', 
+      icon: Rocket, 
+      badge: 'Phase 4',
+      subtitle: 'Deploy Recipes & Product Hunt' 
+    },
+    { 
+      id: 'cobuilders', 
+      label: '5. Co-Builders & Scale', 
+      icon: Users, 
+      badge: 'Phase 5',
+      subtitle: 'LinkedIn Network & Milestones' 
+    },
   ];
 
   return (
@@ -34,48 +62,61 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser, isLogged
                 Portal
               </span>
             </div>
-            <span className="text-[11px] text-slate-400 font-medium block">AI Product OS & Incubator</span>
+            <span className="text-[11px] text-slate-400 font-medium block">AI Founder Operating System</span>
           </div>
         </div>
 
         {/* Primary Action Button */}
         <button
           onClick={onOpenLaunchModal}
-          className="w-full bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-bold text-xs py-3 px-4 rounded-xl shadow-lg shadow-indigo-600/30 transition-all flex items-center justify-center gap-2 group active:scale-98"
+          className="w-full bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-bold text-xs py-3 px-4 rounded-xl shadow-lg shadow-indigo-600/30 transition-all flex items-center justify-center gap-2 group active:scale-98 cursor-pointer"
         >
           <Plus className="w-4 h-4 text-amber-300 group-hover:rotate-90 transition-transform" />
           <span>Launch Product</span>
         </button>
 
-        {/* Navigation Categories */}
-        <div className="space-y-5 pt-1">
-          {/* Main Workspace Section */}
-          <div className="space-y-1">
+        {/* Navigation Categories: 5-Phase Founder Journey */}
+        <div className="space-y-4 pt-1">
+          <div className="space-y-1.5">
             <span className="text-[10px] font-bold tracking-wider text-slate-400 uppercase px-3 block mb-2">
-              StartupOS Modules
+              Founder Journey (5 Phases)
             </span>
-            {mainNav.map((item) => {
-              const Icon = item.icon;
-              const isActive = activeTab === item.id;
+            {founderStages.map((stage) => {
+              const Icon = stage.icon;
+              // Map related sub-tabs to active primary stage
+              const isStageActive = 
+                activeTab === stage.id ||
+                (stage.id === 'idealab' && (activeTab === 'specstudio' || activeTab === 'promptvault' || activeTab === 'toolmatrix' || activeTab === 'academy' || activeTab === 'lms')) ||
+                (stage.id === 'launchpad' && activeTab === 'deploy') ||
+                (stage.id === 'testing' && activeTab === 'audit') ||
+                (stage.id === 'cobuilders' && activeTab === 'makerprofile');
+
               return (
                 <button
-                  key={item.id}
-                  onClick={() => setActiveTab(item.id)}
-                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
-                    isActive
+                  key={stage.id}
+                  onClick={() => setActiveTab(stage.id)}
+                  className={`w-full flex items-start justify-between p-2.5 rounded-xl text-xs transition-all text-left cursor-pointer ${
+                    isStageActive
                       ? 'bg-indigo-600/20 text-white border border-indigo-500/40 shadow-xs font-bold'
                       : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/60'
                   }`}
                 >
-                  <div className="flex items-center gap-2.5">
-                    <Icon className={`w-4 h-4 ${isActive ? 'text-indigo-400' : 'text-slate-400'}`} />
-                    <span>{item.label}</span>
+                  <div className="flex items-start gap-2.5">
+                    <Icon className={`w-4 h-4 mt-0.5 shrink-0 ${isStageActive ? 'text-indigo-400' : 'text-slate-400'}`} />
+                    <div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="leading-tight">{stage.label}</span>
+                      </div>
+                      <span className="text-[10px] text-slate-500 font-normal block leading-tight mt-0.5">
+                        {stage.subtitle}
+                      </span>
+                    </div>
                   </div>
-                  {item.badge && (
-                    <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded ${
-                      isActive ? 'bg-indigo-500 text-white' : 'bg-slate-800 text-slate-400 border border-slate-700'
+                  {stage.badge && (
+                    <span className={`text-[8px] font-extrabold px-1.5 py-0.5 rounded shrink-0 ${
+                      isStageActive ? 'bg-indigo-500 text-white' : 'bg-slate-800 text-slate-400 border border-slate-700'
                     }`}>
-                      {item.badge}
+                      {stage.badge}
                     </span>
                   )}
                 </button>
@@ -85,9 +126,8 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser, isLogged
         </div>
       </div>
 
-      {/* Bottom Footer Section: "How We Can Help", Health & Exit Link */}
+      {/* Bottom Footer Section: "How We Can Help" & Exit Link */}
       <div className="p-4 border-t border-slate-800/80 space-y-3 bg-slate-900/90">
-        {/* Dedicated "How We Can Help?" Trigger Card */}
         <div 
           onClick={onOpenHelpCenter}
           className="p-3 rounded-xl bg-gradient-to-br from-indigo-950/80 to-slate-800 border border-indigo-500/30 hover:border-indigo-400 transition-all cursor-pointer group shadow-xs"
@@ -108,47 +148,9 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser, isLogged
           <span className="text-slate-300 font-semibold flex items-center gap-1.5 text-[10px]">
             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" /> 4-File Parity
           </span>
-          <span className="text-emerald-400 font-extrabold text-[9px] bg-emerald-400/10 px-1.5 py-0.5 rounded border border-emerald-400/20">
-            100% Health
+          <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+            100% Audited
           </span>
-        </div>
-
-        {/* Exit to Marketing Website (ONLY SHOWN TO GUEST DEMO VISITORS) */}
-        {!isLoggedIn && (
-          <button
-            onClick={onExitToWebsite}
-            className="w-full text-[11px] font-semibold text-slate-400 hover:text-white flex items-center justify-center gap-1.5 py-1.5 rounded-lg hover:bg-slate-800 transition-colors"
-          >
-            <Globe className="w-3.5 h-3.5 text-indigo-400" />
-            <span>Exit Demo to Marketing Website</span>
-          </button>
-        )}
-
-        {/* User Mini Profile (Clickable -> Opens Maker Profile) */}
-        <div 
-          onClick={() => setActiveTab('makerprofile')}
-          className={`flex items-center justify-between p-2 rounded-xl transition-all cursor-pointer border ${
-            activeTab === 'makerprofile' 
-              ? 'bg-indigo-950/90 border-indigo-500/50 shadow-xs' 
-              : 'hover:bg-slate-800/80 border-transparent'
-          }`}
-          title="View & Export Your Maker Profile"
-        >
-          <div className="flex items-center gap-2.5 overflow-hidden">
-            <span className="w-8 h-8 rounded-lg bg-indigo-600 border border-indigo-400/40 flex items-center justify-center text-sm shrink-0 shadow-xs">
-              {currentUser.avatar}
-            </span>
-            <div className="truncate text-left">
-              <div className="flex items-center gap-1.5">
-                <span className="text-xs font-bold text-slate-200 block truncate">{currentUser.name}</span>
-                <span className="text-[9px] font-extrabold px-1.5 py-0.2 rounded bg-amber-400/20 text-amber-300 border border-amber-400/30">
-                  L5
-                </span>
-              </div>
-              <span className="text-[10px] text-slate-400 block truncate">{currentUser.badge} • Profile</span>
-            </div>
-          </div>
-          <ArrowUpRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-white" />
         </div>
       </div>
     </aside>
