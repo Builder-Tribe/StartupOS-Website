@@ -1438,7 +1438,7 @@ async function handleRequest(req, res) {
       return json(res, 200, { success: true, audit: existing[projectId] });
     }
 
-    // STATIC FILE SERVING
+    // STATIC FILE SERVING & SPA ROUTING FALLBACK
     if (req.method === "GET" || req.method === "HEAD") {
       const distDir = join(root, "dist");
       let file = url.pathname === "/" ? join(distDir, "index.html") : normalize(join(distDir, url.pathname));
@@ -1448,9 +1448,16 @@ async function handleRequest(req, res) {
         res.writeHead(200, { "content-type": types[extname(file)] || "application/octet-stream" });
         return res.end(content);
       } catch {
-        const fallback = await readFile(join(root, "index.html"));
-        res.writeHead(200, { "content-type": "text/html; charset=utf-8" });
-        return res.end(fallback);
+        // SPA Fallback for routes like /builder and /admin
+        try {
+          const distIndex = await readFile(join(distDir, "index.html"));
+          res.writeHead(200, { "content-type": "text/html; charset=utf-8" });
+          return res.end(distIndex);
+        } catch {
+          const rootIndex = await readFile(join(root, "index.html"));
+          res.writeHead(200, { "content-type": "text/html; charset=utf-8" });
+          return res.end(rootIndex);
+        }
       }
     }
 

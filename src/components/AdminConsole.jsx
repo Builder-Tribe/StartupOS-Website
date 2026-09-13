@@ -4,11 +4,12 @@ import {
   AlertTriangle, RefreshCw, Search, Filter, Activity, Zap, LayoutDashboard,
   GraduationCap, Rocket, Code2, Building2, Check, FileText, ExternalLink,
   MessageSquare, Star, Sliders, Layers, ChevronRight, LogOut, Settings,
-  Lightbulb, FolderGit2, Sparkles, Send, Presentation, TrendingUp, GitBranch
+  Lightbulb, FolderGit2, Sparkles, Send, Presentation, TrendingUp, GitBranch,
+  Globe
 } from 'lucide-react';
 import AcademyLmsStudio from './AcademyLmsStudio';
 
-export default function AdminConsole({ currentUser, onExitToWebsite, onOpenAuthModal }) {
+export default function AdminConsole({ currentUser, onExitToWebsite, onOpenAuthModal, onLogout }) {
   const [launches, setLaunches] = useState([]);
   const [usersList, setUsersList] = useState([]);
   const [auditsList, setAuditsList] = useState([]);
@@ -245,15 +246,27 @@ export default function AdminConsole({ currentUser, onExitToWebsite, onOpenAuthM
               </div>
             </div>
 
-            {onExitToWebsite && (
-              <button
-                onClick={onExitToWebsite}
-                className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
-                title="Exit to Website"
-              >
-                <LogOut className="w-4 h-4" />
-              </button>
-            )}
+            <div className="flex items-center gap-1.5 shrink-0">
+              {onLogout && (
+                <button
+                  onClick={onLogout}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-red-500/20 text-slate-300 hover:text-red-400 text-xs font-bold transition-all cursor-pointer border border-slate-700 hover:border-red-500/30"
+                  title="Log Out from Admin Console"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span>Logout</span>
+                </button>
+              )}
+              {onExitToWebsite && (
+                <button
+                  onClick={onExitToWebsite}
+                  className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer border border-slate-800"
+                  title="Exit to Website"
+                >
+                  <Globe className="w-4 h-4" />
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </aside>

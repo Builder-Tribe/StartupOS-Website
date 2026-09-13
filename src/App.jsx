@@ -15,13 +15,51 @@ import Phase4Wrapper from './components/Phase4Wrapper';
 import Phase5Wrapper from './components/Phase5Wrapper';
 import LMSHub from './components/LMSHub';
 
+// Route Parsing Helper: extracts 'website' | 'builder' | 'admin'
+const parseRouteFromLocation = () => {
+  if (typeof window === 'undefined') return 'website';
+  const pathname = (window.location.pathname || '/').replace(/\/+$/, '') || '/';
+  if (pathname === '/admin') return 'admin';
+  if (pathname === '/builder' || pathname === '/portal') return 'builder';
+  const params = new URLSearchParams(window.location.search);
+  const viewParam = params.get('view');
+  if (viewParam === 'admin') return 'admin';
+  if (viewParam === 'portal' || viewParam === 'builder') return 'builder';
+  return 'website';
+};
+
+// Safe LocalStorage User Loader
+const getStoredUser = () => {
+  try {
+    const raw = localStorage.getItem('startup_os_user');
+    if (raw) return JSON.parse(raw);
+  } catch (e) {
+    console.error('Failed to parse stored user:', e);
+  }
+  return null;
+};
+
 export default function App() {
-  // Top-level View Mode: 'website' | 'portal' | 'admin'
-  const [viewMode, setViewMode] = useState('website');
+  // Top-level View Mode: 'website' | 'builder' | 'admin'
+  const [viewMode, setViewMode] = useState(parseRouteFromLocation);
   
   // 5 Master Founder Phases: 'idealab' (1) | 'blueprints' (2) | 'testing' (3) | 'launchpad' (4) | 'cobuilders' (5)
   const [activeTab, setActiveTab] = useState('idealab');
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+
+  // Auth session initialization with LocalStorage persistence
+  const initialUser = getStoredUser();
+  const [currentUser, setCurrentUser] = useState(
+    initialUser || {
+      id: 'user-harshita',
+      name: 'Harshita G',
+      email: 'harshita@vibe-coding.io',
+      role: 'user',
+      avatar: '👩‍💻',
+      badge: 'Pro Builder',
+      workspaceName: "Harshita's Studio"
+    }
+  );
+  const [isLoggedIn, setIsLoggedIn] = useState(Boolean(initialUser));
   
   const [ideas, setIdeas] = useState([]);
   const [activeIdea, setActiveIdea] = useState(null);
@@ -31,16 +69,6 @@ export default function App() {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showHelpCenter, setShowHelpCenter] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const [currentUser, setCurrentUser] = useState({
-    id: 'user-harshita',
-    name: 'Harshita G',
-    email: 'harshita@vibe-coding.io',
-    role: 'user',
-    avatar: '👩‍💻',
-    badge: 'Pro Builder',
-    workspaceName: "Harshita's Studio"
-  });
 
   const fetchIdeas = async () => {
     try {
@@ -54,23 +82,39 @@ export default function App() {
     }
   };
 
+  // Coordinated Routing Navigator: keeps viewMode and browser URL in sync
+  const navigateTo = (targetMode, targetTab = null) => {
+    setViewMode(targetMode);
+    if (targetTab) {
+      setActiveTab(targetTab);
+    }
+    const targetPath = targetMode === 'admin' ? '/admin' : targetMode === 'builder' ? '/builder' : '/';
+    if (window.location.pathname !== targetPath) {
+      window.history.pushState({ mode: targetMode, tab: targetTab || activeTab }, '', targetPath);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   useEffect(() => {
     fetchIdeas();
     
-    // Parse URL query parameter ?view=website | portal | admin
-    const params = new URLSearchParams(window.location.search);
-    const viewParam = params.get('view');
-    if (viewParam === 'portal') {
-      setViewMode('portal');
-      setActiveTab('idealab');
-      setIsLoggedIn(true);
-    } else if (viewParam === 'admin') {
-      setViewMode('admin');
-      setIsLoggedIn(true);
-      setCurrentUser((prev) => ({ ...prev, role: 'admin', badge: 'Super Admin' }));
-    } else if (viewParam === 'website') {
-      setViewMode('website');
+    // Browser Back / Forward button navigation
+    const handlePopState = () => {
+      const route = parseRouteFromLocation();
+      setViewMode(route);
+    };
+    window.addEventListener('popstate', handlePopState);
+
+    // Normalize legacy query param ?view= to clean paths
+    const initialMode = parseRouteFromLocation();
+    const cleanPath = initialMode === 'admin' ? '/admin' : initialMode === 'builder' ? '/builder' : '/';
+    if (window.location.search && (window.location.pathname === '/' || window.location.pathname === '')) {
+      window.history.replaceState({ mode: initialMode }, '', cleanPath);
     }
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
   }, []);
 
   const handleSaveIdea = async (formData) => {
@@ -98,12 +142,36 @@ export default function App() {
   const handleLoginSuccess = (userData) => {
     setCurrentUser(userData);
     setIsLoggedIn(true);
-    if (userData.role === 'admin') {
-      setViewMode('admin');
-    } else {
-      setViewMode('portal');
-      setActiveTab('idealab');
+    try {
+      localStorage.setItem('startup_os_user', JSON.stringify(userData));
+    } catch (e) {
+      console.error('Failed to store user session:', e);
     }
+    setShowAuthModal(false);
+    if (userData?.role === 'admin') {
+      navigateTo('admin');
+    } else {
+      navigateTo('builder', 'idealab');
+    }
+  };
+
+  const handleLogout = () => {
+    try {
+      localStorage.removeItem('startup_os_user');
+    } catch (e) {
+      console.error('Failed to clear user session:', e);
+    }
+    setIsLoggedIn(false);
+    setCurrentUser({
+      id: 'guest',
+      name: 'Guest Builder',
+      email: '',
+      role: 'user',
+      avatar: '🚀',
+      badge: 'Visitor',
+      workspaceName: 'Guest Studio'
+    });
+    navigateTo('website');
   };
 
   // 1. IF VIEW MODE IS 'WEBSITE': Render Standalone Marketing Landing Page
@@ -111,12 +179,12 @@ export default function App() {
     return (
       <>
         <MarketingLander
-          onEnterPortal={(targetTab = 'idealab') => {
-            setIsLoggedIn(false);
-            setViewMode('portal');
-            setActiveTab(targetTab);
-          }}
+          onEnterPortal={(targetTab = 'idealab') => navigateTo('builder', targetTab)}
           onOpenAuthModal={() => setShowAuthModal(true)}
+          currentUser={currentUser}
+          isLoggedIn={isLoggedIn}
+          onLogout={handleLogout}
+          onOpenCommandCenter={() => navigateTo('admin')}
         />
 
         <AuthModal
@@ -134,13 +202,20 @@ export default function App() {
       <div className="min-h-screen bg-slate-900 text-slate-100 font-sans">
         <AdminConsole
           currentUser={currentUser}
-          onExitToUserPortal={() => setViewMode('portal')}
+          onExitToWebsite={() => navigateTo('website')}
+          onOpenAuthModal={() => setShowAuthModal(true)}
+          onLogout={handleLogout}
+        />
+        <AuthModal
+          isOpen={showAuthModal}
+          onClose={() => setShowAuthModal(false)}
+          onLoginSuccess={handleLoginSuccess}
         />
       </div>
     );
   }
 
-  // 3. IF VIEW MODE IS 'PORTAL': Render Dedicated 5-Phase Builder Workspace Layout
+  // 3. IF VIEW MODE IS 'BUILDER' (or legacy 'portal'): Render Dedicated 5-Phase Builder Workspace Layout
   return (
     <div className="min-h-screen bg-slate-50/80 text-slate-900 font-sans selection:bg-indigo-600 selection:text-white relative overflow-x-hidden flex">
       {/* Subtle clean background tint */}
@@ -153,9 +228,11 @@ export default function App() {
         currentUser={currentUser}
         isLoggedIn={isLoggedIn}
         onOpenLaunchModal={() => setShowLaunchModal(true)}
-        onExitToWebsite={() => setViewMode('website')}
+        onExitToWebsite={() => navigateTo('website')}
         onOpenHelpCenter={() => setShowHelpCenter(true)}
-        onOpenCommandCenter={() => setViewMode('admin')}
+        onOpenCommandCenter={() => navigateTo('admin')}
+        onLogout={handleLogout}
+        onOpenAuthModal={() => setShowAuthModal(true)}
       />
 
       {/* Main Layout Container */}
@@ -169,8 +246,9 @@ export default function App() {
           onOpenAuthModal={() => setShowAuthModal(true)}
           mobileMenuOpen={mobileMenuOpen}
           setMobileMenuOpen={setMobileMenuOpen}
-          onExitToWebsite={() => setViewMode('website')}
-          onOpenCommandCenter={() => setViewMode('admin')}
+          onExitToWebsite={() => navigateTo('website')}
+          onOpenCommandCenter={() => navigateTo('admin')}
+          onLogout={handleLogout}
         />
 
         {/* Mobile Navigation Drawer Overlay */}
@@ -193,7 +271,7 @@ export default function App() {
                   setMobileMenuOpen(false);
                 }}
                 onExitToWebsite={() => {
-                  setViewMode('website');
+                  navigateTo('website');
                   setMobileMenuOpen(false);
                 }}
                 onOpenHelpCenter={() => {
@@ -201,7 +279,15 @@ export default function App() {
                   setMobileMenuOpen(false);
                 }}
                 onOpenCommandCenter={() => {
-                  setViewMode('admin');
+                  navigateTo('admin');
+                  setMobileMenuOpen(false);
+                }}
+                onLogout={() => {
+                  handleLogout();
+                  setMobileMenuOpen(false);
+                }}
+                onOpenAuthModal={() => {
+                  setShowAuthModal(true);
                   setMobileMenuOpen(false);
                 }}
               />

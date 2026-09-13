@@ -2,14 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { 
   Sparkles, Trophy, Rocket, ShieldCheck, CheckCircle2, ArrowRight, 
   Terminal, Code2, Users, Flame, BookOpen, Layers, Cpu, Compass,
-  UserCheck, LogIn, ChevronRight, ChevronDown, ChevronUp, HelpCircle,
+  UserCheck, LogIn, LogOut, ChevronRight, ChevronDown, ChevronUp, HelpCircle,
   Archive, Download, Copy, Check, Sliders, ExternalLink, Zap, Clock,
   DollarSign, Award, Star, CheckCheck, PlayCircle, Folder, FileCode, CheckCircle,
   GraduationCap, Video, FileText, CheckSquare, GitBranch, Linkedin,
   Presentation
 } from 'lucide-react';
 
-export default function MarketingLander({ onEnterPortal, onOpenAuthModal }) {
+export default function MarketingLander({ 
+  onEnterPortal, 
+  onOpenAuthModal, 
+  currentUser, 
+  isLoggedIn, 
+  onLogout, 
+  onOpenCommandCenter 
+}) {
   // Interactive Showcase State
   const [activeDeliverableTab, setActiveDeliverableTab] = useState('constitution'); // 'constitution' | 'prd' | 'scaffold' | 'pipeline'
   const [previewStack, setPreviewStack] = useState('vite-react'); // 'vite-react' | 'nextjs' | 'fastapi'
@@ -394,21 +401,59 @@ Format payload for StartupOS Launchpad and commit with Conventional Commits."`
 
             {/* Right Quick Actions */}
             <div className="flex items-center gap-2.5">
-              <button
-                onClick={onOpenAuthModal}
-                className="text-xs font-bold text-slate-700 hover:text-indigo-600 px-3 py-2 rounded-xl hover:bg-slate-100 transition-all flex items-center gap-1.5 cursor-pointer"
-              >
-                <LogIn className="w-3.5 h-3.5 text-slate-500" />
-                <span>Sign In</span>
-              </button>
+              {isLoggedIn && currentUser ? (
+                <>
+                  <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-slate-100 border border-slate-200 text-xs font-bold text-slate-800">
+                    <span>{currentUser.avatar || '👩‍💻'}</span>
+                    <span className="hidden sm:inline">{currentUser.name}</span>
+                  </div>
 
-              <button
-                onClick={() => onEnterPortal('launchpad')}
-                className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-md shadow-indigo-600/25 transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer"
-              >
-                <Rocket className="w-3.5 h-3.5 text-amber-300" />
-                <span>Launch Studio</span>
-              </button>
+                  {currentUser.role === 'admin' && onOpenCommandCenter && (
+                    <button
+                      onClick={onOpenCommandCenter}
+                      className="text-xs font-bold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-300 px-3 py-1.5 rounded-xl transition-all cursor-pointer"
+                    >
+                      Admin
+                    </button>
+                  )}
+
+                  <button
+                    onClick={() => onEnterPortal('idealab')}
+                    className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-3.5 py-2 rounded-xl shadow-md shadow-indigo-600/25 transition-all flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <Rocket className="w-3.5 h-3.5 text-amber-300" />
+                    <span>Go to Builder</span>
+                  </button>
+
+                  {onLogout && (
+                    <button
+                      onClick={onLogout}
+                      className="text-xs font-semibold text-slate-500 hover:text-red-600 p-2 rounded-xl hover:bg-red-50 transition-all cursor-pointer"
+                      title="Log Out"
+                    >
+                      <LogOut className="w-4 h-4 text-red-500" />
+                    </button>
+                  )}
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={onOpenAuthModal}
+                    className="text-xs font-bold text-slate-700 hover:text-indigo-600 px-3 py-2 rounded-xl hover:bg-slate-100 transition-all flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <LogIn className="w-3.5 h-3.5 text-slate-500" />
+                    <span>Sign In</span>
+                  </button>
+
+                  <button
+                    onClick={() => onEnterPortal('launchpad')}
+                    className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-md shadow-indigo-600/25 transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer"
+                  >
+                    <Rocket className="w-3.5 h-3.5 text-amber-300" />
+                    <span>Launch Studio</span>
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </header>
