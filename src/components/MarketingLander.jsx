@@ -5,7 +5,8 @@ import {
   UserCheck, LogIn, ChevronRight, ChevronDown, ChevronUp, HelpCircle,
   Archive, Download, Copy, Check, Sliders, ExternalLink, Zap, Clock,
   DollarSign, Award, Star, CheckCheck, PlayCircle, Folder, FileCode, CheckCircle,
-  GraduationCap, Video, FileText, CheckSquare, GitBranch, Linkedin
+  GraduationCap, Video, FileText, CheckSquare, GitBranch, Linkedin,
+  Presentation
 } from 'lucide-react';
 
 export default function MarketingLander({ onEnterPortal, onOpenAuthModal }) {
