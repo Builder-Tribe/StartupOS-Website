@@ -24,7 +24,7 @@ export default function Navbar({ activeTab, setActiveTab, currentUser, isLoggedI
             </div>
             <div>
               <span className="font-extrabold text-base tracking-tight text-slate-900 block leading-tight">StartupOS</span>
-              <span className="text-[10px] text-indigo-600 font-semibold block">Builder Portal</span>
+              <span className="text-[10px] text-indigo-600 font-semibold block">Founder OS</span>
             </div>
           </div>
 

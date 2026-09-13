@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Sparkles, FileCode, Terminal, GraduationCap } from 'lucide-react';
+import { Sparkles, FileCode, Terminal, GraduationCap, Cpu } from 'lucide-react';
 import IdeaLab from './IdeaLab';
 import PRDGeneratorStudio from './PRDGeneratorStudio';
 import PromptVaultStudio from './PromptVaultStudio';
 import LMSHub from './LMSHub';
+import ToolMatrixStudio from './ToolMatrixStudio';
 
 export default function Phase1Wrapper({
   ideas,
@@ -16,7 +17,7 @@ export default function Phase1Wrapper({
   setPromptVaultInitialCategory,
   setPromptVaultConfiguredStack
 }) {
-  const [subTab, setSubTab] = useState('idealab'); // 'idealab' | 'prd' | 'vault' | 'academy'
+  const [subTab, setSubTab] = useState('idealab'); // 'idealab' | 'prd' | 'vault' | 'academy' | 'toolmatrix'
 
   return (
     <div className="space-y-5 animate-fade-in">
@@ -61,6 +62,16 @@ export default function Phase1Wrapper({
           >
             <GraduationCap className="w-3.5 h-3.5" />
             <span>AI Builder Academy</span>
+          </button>
+
+          <button
+            onClick={() => setSubTab('toolmatrix')}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
+              subTab === 'toolmatrix' ? 'bg-indigo-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+          >
+            <Cpu className="w-3.5 h-3.5" />
+            <span>Tool Matrix & Architecture</span>
           </button>
         </div>
 
@@ -111,6 +122,14 @@ export default function Phase1Wrapper({
 
       {subTab === 'academy' && (
         <LMSHub />
+      )}
+
+      {subTab === 'toolmatrix' && (
+        <ToolMatrixStudio
+          ideas={ideas}
+          activeIdea={activeIdea}
+          setActiveIdea={setActiveIdea}
+        />
       )}
     </div>
   );
