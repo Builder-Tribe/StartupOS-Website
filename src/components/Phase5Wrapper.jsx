@@ -33,7 +33,7 @@ export default function Phase5Wrapper({ currentUser, onNavigateToIdeaLab, onOpen
         </div>
 
         <span className="hidden md:inline-block text-[10px] font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">
-          Phase 5: Co-Builders & Scale
+          Co-Builders & Scale
         </span>
       </div>
 

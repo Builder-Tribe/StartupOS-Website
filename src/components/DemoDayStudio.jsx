@@ -495,7 +495,7 @@ export default function DemoDayStudio({ currentUser }) {
               <Presentation className="w-5 h-5 text-white" />
             </div>
             <h1 className="text-xl font-black text-slate-900">Demo Day Studio</h1>
-            <span className="text-[10px] font-extrabold px-2 py-0.5 bg-amber-100 text-amber-700 border border-amber-200 rounded-full uppercase tracking-wider">Phase 5</span>
+            <span className="text-[10px] font-extrabold px-2 py-0.5 bg-amber-100 text-amber-700 border border-amber-200 rounded-full uppercase tracking-wider">Investor Deck & CRM</span>
           </div>
           <p className="text-xs text-slate-500 ml-11">Build your pitch deck, manage your investor pipeline, and crush demo day.</p>
         </div>

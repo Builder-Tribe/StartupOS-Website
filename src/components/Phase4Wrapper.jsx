@@ -33,7 +33,7 @@ export default function Phase4Wrapper({ currentUser, onOpenLaunchModal, ideas = 
         </div>
 
         <span className="hidden md:inline-block text-[10px] font-bold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
-          Phase 4: Ship & Launch
+          Ship & Deploy
         </span>
       </div>
 

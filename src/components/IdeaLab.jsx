@@ -98,7 +98,7 @@ export default function IdeaLab({ ideas, activeIdea, setActiveIdea, onSaveIdea, 
           <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-sm">
             <div className="mb-6">
               <span className="text-xs text-indigo-600 uppercase tracking-widest font-mono font-bold bg-indigo-50 border border-indigo-200 px-2.5 py-0.5 rounded-full">
-                Phase 1: Idea Intake & Viability Engine
+                Idea Intake & Viability Engine
               </span>
               <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2 tracking-tight">
                 What startup concept do you want to build?

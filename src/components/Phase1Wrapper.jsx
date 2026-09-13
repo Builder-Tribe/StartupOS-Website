@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Sparkles, FileCode, Terminal, GraduationCap, Cpu, Wand2 } from 'lucide-react';
+import { Sparkles, FileCode, Terminal, Cpu, Wand2 } from 'lucide-react';
 import IdeaLab from './IdeaLab';
 import PRDGeneratorStudio from './PRDGeneratorStudio';
 import PromptVaultStudio from './PromptVaultStudio';
-import LMSHub from './LMSHub';
 import ToolMatrixStudio from './ToolMatrixStudio';
 import CreatorStudio from './CreatorStudio';
 
@@ -56,19 +55,9 @@ export default function Phase1Wrapper({
           </button>
 
           <button
-            onClick={() => setSubTab('academy')}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
-              subTab === 'academy' ? 'bg-indigo-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-            }`}
-          >
-            <GraduationCap className="w-3.5 h-3.5" />
-            <span>AI Builder Academy</span>
-          </button>
-
-          <button
             onClick={() => setSubTab('creator')}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
-              subTab === 'creator' ? 'bg-violet-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+              subTab === 'creator' ? 'bg-indigo-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
             }`}
           >
             <Wand2 className="w-3.5 h-3.5" />
@@ -87,7 +76,7 @@ export default function Phase1Wrapper({
         </div>
 
         <span className="hidden md:inline-block text-[10px] font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">
-          Phase 1: Founder Foundation
+          Ideate & Validate
         </span>
       </div>
 
@@ -129,10 +118,6 @@ export default function Phase1Wrapper({
           initialCategory={promptVaultInitialCategory}
           configuredStack={promptVaultConfiguredStack}
         />
-      )}
-
-      {subTab === 'academy' && (
-        <LMSHub />
       )}
 
       {subTab === 'creator' && (

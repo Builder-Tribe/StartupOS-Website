@@ -145,7 +145,7 @@ export default function TestStudio({ currentUser, ideas = [] }) {
               <span>Automated QA, Testing & Parity Audit Engine</span>
             </h1>
             <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">
-              Phase 3 • Pre-Flight Gate
+              Pre-Flight Quality Gate
             </span>
           </div>
           <p className="text-xs text-slate-500 font-medium mt-1">

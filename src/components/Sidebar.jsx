@@ -5,49 +5,44 @@ import {
 } from 'lucide-react';
 
 export default function Sidebar({ activeTab, setActiveTab, currentUser, isLoggedIn, onOpenLaunchModal, onExitToWebsite, onOpenHelpCenter, onOpenCommandCenter }) {
-  // 5 Master Founder Phases
+  // Founder Workspace Stages (Clean, de-phased navigation)
   const founderStages = [
     { 
       id: 'idealab', 
-      label: '1. Ideate & Learn', 
+      label: 'Ideate & Validate', 
       icon: Sparkles, 
-      badge: 'Phase 1',
-      subtitle: 'Idea Lab, PRD & Academy' 
+      subtitle: 'Idea Lab, PRDs & Prompts' 
     },
     { 
       id: 'blueprints', 
-      label: '2. Build & Scaffold', 
+      label: 'Build & Scaffold', 
       icon: FolderGit2, 
-      badge: 'Phase 2',
-      subtitle: 'Projects & Constitutions' 
+      subtitle: 'Projects & 4-File Parity' 
     },
     { 
       id: 'testing', 
-      label: '3. Test & Audit', 
+      label: 'Test & Pre-Flight QA', 
       icon: ShieldCheck, 
-      badge: 'Phase 3',
-      subtitle: 'Sandbox QA & 100-pt Audit' 
+      subtitle: 'Sandbox Runner & 100-pt Audit' 
     },
     { 
       id: 'launchpad', 
-      label: '4. Ship & Launch', 
+      label: 'Ship & Deploy', 
       icon: Rocket, 
-      badge: 'Phase 4',
-      subtitle: 'Deploy Recipes & Product Hunt' 
+      subtitle: 'Deploy Recipes & Launchpad' 
     },
     { 
       id: 'cobuilders', 
-      label: '5. Co-Builders & Scale', 
+      label: 'Co-Builders & Demo Day', 
       icon: Users, 
-      badge: 'Phase 5',
-      subtitle: 'LinkedIn Network & Milestones' 
+      subtitle: 'Co-Founder Match & Pitch Deck' 
     },
   ];
 
   return (
     <aside className="w-64 bg-slate-900 text-slate-300 flex flex-col justify-between shrink-0 border-r border-slate-800 hidden md:flex sticky top-0 h-screen select-none z-30">
       {/* Top Branding Section */}
-      <div className="p-5 space-y-5 overflow-y-auto">
+      <div className="p-5 space-y-4 overflow-y-auto">
         <div 
           onClick={() => setActiveTab('launchpad')}
           className="flex items-center gap-3 cursor-pointer group"
@@ -66,27 +61,49 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser, isLogged
           </div>
         </div>
 
-        {/* Primary Action Button */}
-        <button
-          onClick={onOpenLaunchModal}
-          className="w-full bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-bold text-xs py-3 px-4 rounded-xl shadow-lg shadow-indigo-600/30 transition-all flex items-center justify-center gap-2 group active:scale-98 cursor-pointer"
-        >
-          <Plus className="w-4 h-4 text-amber-300 group-hover:rotate-90 transition-transform" />
-          <span>Launch Product</span>
-        </button>
+        {/* Top Global Quick Actions: Launch Product & AI Academy */}
+        <div className="space-y-2">
+          <button
+            onClick={onOpenLaunchModal}
+            className="w-full bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-bold text-xs py-3 px-4 rounded-xl shadow-lg shadow-indigo-600/30 transition-all flex items-center justify-center gap-2 group active:scale-98 cursor-pointer"
+          >
+            <Plus className="w-4 h-4 text-amber-300 group-hover:rotate-90 transition-transform" />
+            <span>Launch Product</span>
+          </button>
 
-        {/* Navigation Categories: 5-Phase Founder Journey */}
-        <div className="space-y-4 pt-1">
-          <div className="space-y-1.5">
+          <button
+            onClick={() => setActiveTab('academy')}
+            className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all border cursor-pointer ${
+              activeTab === 'academy' || activeTab === 'lms'
+                ? 'bg-indigo-600/30 text-white border-indigo-500/60 shadow-xs ring-1 ring-indigo-500/40'
+                : 'bg-slate-800/80 hover:bg-slate-800 text-slate-300 hover:text-white border-slate-700/70 hover:border-slate-600'
+            }`}
+          >
+            <div className="flex items-center gap-2.5">
+              <GraduationCap className="w-4 h-4 text-amber-400 shrink-0" />
+              <div className="text-left">
+                <span className="block leading-tight text-white">AI Builder Academy</span>
+                <span className="text-[10px] text-slate-400 font-normal">Cross-Stage Playbooks</span>
+              </div>
+            </div>
+            <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+              Courses
+            </span>
+          </button>
+        </div>
+
+        {/* Navigation Categories */}
+        <div className="space-y-3 pt-1">
+          <div className="space-y-1">
             <span className="text-[10px] font-bold tracking-wider text-slate-400 uppercase px-3 block mb-2">
-              Founder Journey (5 Phases)
+              Founder Workspace
             </span>
             {founderStages.map((stage) => {
               const Icon = stage.icon;
               // Map related sub-tabs to active primary stage
               const isStageActive = 
                 activeTab === stage.id ||
-                (stage.id === 'idealab' && (activeTab === 'specstudio' || activeTab === 'promptvault' || activeTab === 'toolmatrix' || activeTab === 'academy' || activeTab === 'lms' || activeTab === 'creator')) ||
+                (stage.id === 'idealab' && (activeTab === 'specstudio' || activeTab === 'promptvault' || activeTab === 'toolmatrix' || activeTab === 'creator')) ||
                 (stage.id === 'launchpad' && activeTab === 'deploy') ||
                 (stage.id === 'testing' && activeTab === 'audit') ||
                 (stage.id === 'cobuilders' && activeTab === 'makerprofile');
@@ -112,13 +129,6 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser, isLogged
                       </span>
                     </div>
                   </div>
-                  {stage.badge && (
-                    <span className={`text-[8px] font-extrabold px-1.5 py-0.5 rounded shrink-0 ${
-                      isStageActive ? 'bg-indigo-500 text-white' : 'bg-slate-800 text-slate-400 border border-slate-700'
-                    }`}>
-                      {stage.badge}
-                    </span>
-                  )}
                 </button>
               );
             })}

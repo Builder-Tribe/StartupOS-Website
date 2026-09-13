@@ -13,6 +13,7 @@ import TestStudio from './components/TestStudio';
 import Phase1Wrapper from './components/Phase1Wrapper';
 import Phase4Wrapper from './components/Phase4Wrapper';
 import Phase5Wrapper from './components/Phase5Wrapper';
+import LMSHub from './components/LMSHub';
 
 export default function App() {
   // Top-level View Mode: 'website' | 'portal' | 'admin'
@@ -209,8 +210,13 @@ export default function App() {
         )}
 
         <main className="flex-1 pb-16 px-4 sm:px-6 lg:px-8 pt-6 max-w-7xl w-full mx-auto">
-          {/* PHASE 1: IDEATE & LEARN (Idea Lab, PRD Generator, Prompt Vault, Academy, Creator, Tool Matrix) */}
-          {(activeTab === 'idealab' || activeTab === 'specstudio' || activeTab === 'promptvault' || activeTab === 'academy' || activeTab === 'lms' || activeTab === 'creator' || activeTab === 'toolmatrix') && (
+          {/* AI BUILDER ACADEMY (Cross-Stage Global Learning Hub) */}
+          {(activeTab === 'academy' || activeTab === 'lms') && (
+            <LMSHub />
+          )}
+
+          {/* IDEATE & VALIDATE (Idea Lab, PRD Generator, Prompt Vault, Creator Studio, Tool Matrix) */}
+          {(activeTab === 'idealab' || activeTab === 'specstudio' || activeTab === 'promptvault' || activeTab === 'creator' || activeTab === 'toolmatrix') && (
             <Phase1Wrapper
               ideas={ideas}
               activeIdea={activeIdea}
@@ -224,7 +230,7 @@ export default function App() {
             />
           )}
 
-          {/* PHASE 2: BUILD & SCAFFOLD (My Projects Blueprints, Parity Governance) */}
+          {/* BUILD & SCAFFOLD (My Projects Blueprints, Parity Governance) */}
           {activeTab === 'blueprints' && (
             <BlueprintStudio
               currentUser={currentUser}
@@ -237,7 +243,7 @@ export default function App() {
             />
           )}
 
-          {/* PHASE 3: TEST & AUDIT (Pre-Flight Sandbox QA, 100-Point Audit Rubric, API Contract Tester) */}
+          {/* TEST & PRE-FLIGHT QA (Pre-Flight Sandbox QA, 100-Point Audit Rubric, API Contract Tester) */}
           {activeTab === 'testing' && (
             <TestStudio
               currentUser={currentUser}
@@ -245,7 +251,7 @@ export default function App() {
             />
           )}
 
-          {/* PHASE 4: SHIP & LAUNCH (1-Click Cloud Deploy Recipes & Product Hunt Launchpad) */}
+          {/* SHIP & DEPLOY (1-Click Cloud Deploy Recipes & Product Hunt Launchpad) */}
           {activeTab === 'launchpad' && (
             <Phase4Wrapper
               currentUser={currentUser}
@@ -254,7 +260,7 @@ export default function App() {
             />
           )}
 
-          {/* PHASE 5: CO-BUILDERS & SCALE (Co-Builder Network + Demo Day Studio) */}
+          {/* CO-BUILDERS & DEMO DAY (Co-Builder Network + Demo Day Studio) */}
           {activeTab === 'cobuilders' && (
             <Phase5Wrapper
               currentUser={currentUser}
