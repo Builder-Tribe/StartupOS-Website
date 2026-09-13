@@ -61,3 +61,5 @@
 - [x] **TSK-5.5**: Floating bottom-right collapsible messaging widget
 - [x] **TSK-5.6**: Public Maker Profiles with XP streak counter (`MakerProfileStudio.jsx`)
 - [x] **TSK-5.7**: ATS Resume bullet & dark-mode GitHub profile README exporters
+- [x] **TSK-5.8**: Demo Day Studio with 12-slide Pitch Deck Builder, Investor CRM & Pitch Timer (`DemoDayStudio.jsx`)
+

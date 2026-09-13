@@ -209,8 +209,8 @@ export default function App() {
         )}
 
         <main className="flex-1 pb-16 px-4 sm:px-6 lg:px-8 pt-6 max-w-7xl w-full mx-auto">
-          {/* PHASE 1: IDEATE & LEARN (Idea Lab, PRD Generator, Prompt Vault, Academy) */}
-          {(activeTab === 'idealab' || activeTab === 'specstudio' || activeTab === 'promptvault' || activeTab === 'academy' || activeTab === 'lms') && (
+          {/* PHASE 1: IDEATE & LEARN (Idea Lab, PRD Generator, Prompt Vault, Academy, Creator, Tool Matrix) */}
+          {(activeTab === 'idealab' || activeTab === 'specstudio' || activeTab === 'promptvault' || activeTab === 'academy' || activeTab === 'lms' || activeTab === 'creator' || activeTab === 'toolmatrix') && (
             <Phase1Wrapper
               ideas={ideas}
               activeIdea={activeIdea}

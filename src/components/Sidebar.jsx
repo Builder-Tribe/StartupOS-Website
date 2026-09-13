@@ -86,7 +86,7 @@ export default function Sidebar({ activeTab, setActiveTab, currentUser, isLogged
               // Map related sub-tabs to active primary stage
               const isStageActive = 
                 activeTab === stage.id ||
-                (stage.id === 'idealab' && (activeTab === 'specstudio' || activeTab === 'promptvault' || activeTab === 'toolmatrix' || activeTab === 'academy' || activeTab === 'lms')) ||
+                (stage.id === 'idealab' && (activeTab === 'specstudio' || activeTab === 'promptvault' || activeTab === 'toolmatrix' || activeTab === 'academy' || activeTab === 'lms' || activeTab === 'creator')) ||
                 (stage.id === 'launchpad' && activeTab === 'deploy') ||
                 (stage.id === 'testing' && activeTab === 'audit') ||
                 (stage.id === 'cobuilders' && activeTab === 'makerprofile');

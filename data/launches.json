@@ -1,5 +1,34 @@
 [
   {
+    "id": "launch-ce0eb4db",
+    "title": "Create A Social Media App",
+    "tagline": "One stop sollution like Instagram where people can match make on the basis of vive and travel with",
+    "description": "Finding people to travel with\n\nTarget Audience: Travellers",
+    "category": "Developer Tool",
+    "status": "approved",
+    "isFeatured": false,
+    "upvotes": 1,
+    "upvotedBy": [
+      "user-harshita"
+    ],
+    "maker": {
+      "name": "Harshita G",
+      "avatar": "👩‍💻",
+      "title": "Maker"
+    },
+    "demoUrl": "https://github.com/Builder-Tribe/StartupOS",
+    "tags": [
+      "React 18",
+      "Vite",
+      "Tailwind v4",
+      "AI Agent"
+    ],
+    "readinessScore": 100,
+    "isCertified": true,
+    "comments": [],
+    "createdAt": "2026-09-13T11:38:24.850Z"
+  },
+  {
     "id": "launch-dupescout",
     "title": "DupeScout",
     "tagline": "Shop the Look. Not the Markup. AI Visual Similarity & Dupes Engine.",
@@ -92,28 +121,5 @@
     ],
     "comments": [],
     "createdAt": "2026-09-02T06:18:59.505Z"
-  },
-  {
-    "id": "launch-collabkaro",
-    "title": "CollabKaro",
-    "tagline": "India-First Creator Marketplace & Escrow Milestone Operating System.",
-    "description": "Connect brands with influencers and UGC creators using secure milestone escrow funding, campaign briefs, and proof-of-delivery payouts.",
-    "category": "Creator Marketplace",
-    "upvotes": 198,
-    "upvotedBy": [],
-    "maker": {
-      "name": "Harshita G",
-      "avatar": "👩‍💻",
-      "title": "Founder"
-    },
-    "demoUrl": "https://collabkaro.in",
-    "tags": [
-      "React TS",
-      "Escrow API",
-      "UGC Media Kit",
-      "SQLite"
-    ],
-    "comments": [],
-    "createdAt": "2026-09-01T06:18:59.505Z"
   }
 ]
