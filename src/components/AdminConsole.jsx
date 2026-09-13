@@ -6,6 +6,7 @@ import {
   MessageSquare, Star, Sliders, Layers, ChevronRight, LogOut, Settings,
   Lightbulb, FolderGit2, Sparkles, Send, Presentation, TrendingUp, GitBranch
 } from 'lucide-react';
+import AcademyLmsStudio from './AcademyLmsStudio';
 
 export default function AdminConsole({ currentUser, onExitToWebsite, onOpenAuthModal }) {
   const [launches, setLaunches] = useState([]);
@@ -15,6 +16,7 @@ export default function AdminConsole({ currentUser, onExitToWebsite, onOpenAuthM
   const [projectsList, setProjectsList] = useState([]);
   const [cobuildersList, setCobuildersList] = useState([]);
   const [connectionsList, setConnectionsList] = useState([]);
+  const [coursesList, setCoursesList] = useState([]);
   
   // Navigation & Filter states
   const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'ideas' | 'blueprints' | 'cobuilders' | 'moderation' | 'users' | 'settings'
@@ -32,14 +34,15 @@ export default function AdminConsole({ currentUser, onExitToWebsite, onOpenAuthM
   const fetchAdminData = async () => {
     setLoading(true);
     try {
-      const [resL, resU, resA, resIdeas, resProj, resCobuilders, resConn] = await Promise.all([
+      const [resL, resU, resA, resIdeas, resProj, resCobuilders, resConn, resCourses] = await Promise.all([
         fetch('/api/launches').then(r => r.json()).catch(() => []),
         fetch('/api/auth/users').then(r => r.json()).catch(() => []),
         fetch('/api/admin/audits').then(r => r.json()).catch(() => []),
         fetch('/api/ideas').then(r => r.json()).catch(() => []),
         fetch('/api/projects').then(r => r.json()).catch(() => []),
         fetch('/api/cobuilders').then(r => r.json()).catch(() => []),
-        fetch('/api/cobuilders/connections').then(r => r.json()).catch(() => [])
+        fetch('/api/cobuilders/connections').then(r => r.json()).catch(() => []),
+        fetch('/api/admin/courses').then(r => r.json()).catch(() => [])
       ]);
       setLaunches(Array.isArray(resL) ? resL : []);
       setUsersList(Array.isArray(resU) ? resU : []);
@@ -48,6 +51,7 @@ export default function AdminConsole({ currentUser, onExitToWebsite, onOpenAuthM
       setProjectsList(Array.isArray(resProj) ? resProj : []);
       setCobuildersList(Array.isArray(resCobuilders) ? resCobuilders : []);
       setConnectionsList(Array.isArray(resConn) ? resConn : []);
+      setCoursesList(Array.isArray(resCourses) ? resCourses : []);
     } catch (e) {
       console.error('Failed to load admin data', e);
     } finally {
@@ -163,6 +167,7 @@ export default function AdminConsole({ currentUser, onExitToWebsite, onOpenAuthM
 
   const adminNavItems = [
     { id: 'overview', label: 'Founder Telemetry Pulse', icon: LayoutDashboard },
+    { id: 'academy_cms', label: 'Academy LMS Studio', icon: GraduationCap, badge: `${coursesList.length}` },
     { id: 'ideas', label: 'Idea Lab Tracker', icon: Lightbulb, badge: `${ideasList.length}` },
     { id: 'blueprints', label: 'Repos & 4-File Parity', icon: FolderGit2, badge: `${projectsList.length}` },
     { id: 'cobuilders', label: 'Co-Builders & Pitches', icon: Users, badge: `${connectionsList.length}` },
@@ -260,6 +265,7 @@ export default function AdminConsole({ currentUser, onExitToWebsite, onOpenAuthM
           <div>
             <h1 className="text-lg font-extrabold text-white capitalize flex items-center gap-2">
               {activeTab === 'overview' && '📊 Founder Activity Telemetry Pulse'}
+              {activeTab === 'academy_cms' && '🎓 Academy LMS Studio: Course Creator & Publisher'}
               {activeTab === 'ideas' && '💡 Idea Lab Concepts & Market Demand'}
               {activeTab === 'blueprints' && '🛠️ Connected Repos & 4-File Parity Governance'}
               {activeTab === 'cobuilders' && '🤝 Co-Founder Matching Radar & Pitch Proposals'}
@@ -295,9 +301,9 @@ export default function AdminConsole({ currentUser, onExitToWebsite, onOpenAuthM
           {/* TAB 1: 360° FOUNDER TELEMETRY PULSE */}
           {activeTab === 'overview' && (
             <div className="space-y-8">
-              {/* Executive Metrics Cards: Full 5-Stage Pulse */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-                <div className="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-2">
+              {/* Executive Metrics Cards: Full 6-Pillar Pulse */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3.5">
+                <div className="bg-slate-900 p-4.5 rounded-2xl border border-slate-800 space-y-2">
                   <div className="flex items-center justify-between text-xs text-slate-400 font-medium">
                     <span>Active Builders</span>
                     <Users className="w-4 h-4 text-indigo-400" />
@@ -308,47 +314,61 @@ export default function AdminConsole({ currentUser, onExitToWebsite, onOpenAuthM
                   </div>
                 </div>
 
-                <div className="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-2">
+                <div className="bg-slate-900 p-4.5 rounded-2xl border border-slate-800 space-y-2">
                   <div className="flex items-center justify-between text-xs text-slate-400 font-medium">
                     <span>Ideas Ingested</span>
                     <Lightbulb className="w-4 h-4 text-amber-400" />
                   </div>
                   <div className="text-2xl font-extrabold text-amber-400">{ideasList.length}</div>
                   <div className="text-[11px] text-slate-400 font-medium">
-                    Avg Viability Score: <span className="text-white font-bold">{avgIdeaScore}/100</span>
+                    Avg Viability: <span className="text-white font-bold">{avgIdeaScore}/100</span>
                   </div>
                 </div>
 
-                <div className="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-2">
+                <div className="bg-slate-900 p-4.5 rounded-2xl border border-slate-800 space-y-2">
                   <div className="flex items-center justify-between text-xs text-slate-400 font-medium">
                     <span>Connected Repos</span>
                     <FolderGit2 className="w-4 h-4 text-indigo-400" />
                   </div>
                   <div className="text-2xl font-extrabold text-white">{projectsList.length}</div>
                   <div className="text-[11px] text-slate-400 font-medium">
-                    Avg Parity Health: <span className="text-emerald-400 font-bold">{avgParityScore}%</span>
+                    Parity Health: <span className="text-emerald-400 font-bold">{avgParityScore}%</span>
                   </div>
                 </div>
 
-                <div className="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-2">
+                <div className="bg-slate-900 p-4.5 rounded-2xl border border-slate-800 space-y-2">
                   <div className="flex items-center justify-between text-xs text-slate-400 font-medium">
                     <span>Products Shipped</span>
                     <Rocket className="w-4 h-4 text-purple-400" />
                   </div>
                   <div className="text-2xl font-extrabold text-purple-400">{launches.length}</div>
                   <div className="text-[11px] text-slate-400 font-medium">
-                    <span className="text-white font-bold">{launches.reduce((acc, l) => acc + (l.upvotes || 0), 0)}</span> Total Upvotes
+                    <span className="text-white font-bold">{launches.reduce((acc, l) => acc + (l.upvotes || 0), 0)}</span> Upvotes
                   </div>
                 </div>
 
-                <div className="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-2">
+                <div className="bg-slate-900 p-4.5 rounded-2xl border border-slate-800 space-y-2">
                   <div className="flex items-center justify-between text-xs text-slate-400 font-medium">
                     <span>Pitches Exchanged</span>
                     <Send className="w-4 h-4 text-emerald-400" />
                   </div>
                   <div className="text-2xl font-extrabold text-emerald-400">{connectionsList.length}</div>
                   <div className="text-[11px] text-slate-400 font-medium">
-                    Co-Founder Match Proposals
+                    Match Proposals
+                  </div>
+                </div>
+
+                <div 
+                  onClick={() => setActiveTab('academy_cms')}
+                  className="bg-slate-900 p-4.5 rounded-2xl border border-slate-800 space-y-2 hover:border-indigo-500/50 cursor-pointer transition-all group"
+                >
+                  <div className="flex items-center justify-between text-xs text-slate-400 font-medium">
+                    <span>Academy LMS</span>
+                    <GraduationCap className="w-4 h-4 text-indigo-400 group-hover:scale-110 transition-transform" />
+                  </div>
+                  <div className="text-2xl font-extrabold text-indigo-400">{coursesList.length}</div>
+                  <div className="text-[11px] text-slate-400 font-medium">
+                    <span className="text-emerald-400 font-bold">{coursesList.filter(c => c.status === 'LIVE').length} Live</span> • Studio CMS →
                   </div>
                 </div>
               </div>
@@ -443,6 +463,15 @@ export default function AdminConsole({ currentUser, onExitToWebsite, onOpenAuthM
                 </div>
               </div>
             </div>
+          )}
+
+          {/* TAB: ACADEMY LMS STUDIO (COURSE CREATOR & PUBLISHER) */}
+          {activeTab === 'academy_cms' && (
+            <AcademyLmsStudio
+              courses={coursesList}
+              onRefresh={fetchAdminData}
+              currentUser={currentUser}
+            />
           )}
 
           {/* TAB 2: IDEA LAB TRACKER */}

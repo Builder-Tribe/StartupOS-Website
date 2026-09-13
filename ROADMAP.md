@@ -63,6 +63,7 @@
 | P.3.2 | Project Moderation Queue | Admin queue to inspect, verify live demos, and approve pending launchpad submissions | ✅ Done | Accept/reject actions with status updates |
 | P.3.3 | Parity Audit Score Overrides | Administrative interface to review and update 100-pt rubric scores | ✅ Done | Read/write access to `data/audits.json` |
 | P.3.4 | User & Maker Directory Table | Table view of all registered platform users, roles, and maker badges | ✅ Done | Role elevation (User → Admin) capability |
+| P.3.5 | Academy LMS Studio (Course Creator & Publisher) | Comprehensive LMS course creator and publisher suite for StartupOS team to author, edit, draft, and publish/unpublish AI Academy tracks with 1-click AI outline generator, multi-agent prompt blueprints (Antigravity, Claude Code, Cursor, Replit, Emergent), and 100-pt capstone rubrics | ✅ Done | Backed by `data/courses.json` and REST API, auto-synced with learner `LMSHub` |
 
 ---
 

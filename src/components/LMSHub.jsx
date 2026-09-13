@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Lightweight fallback confetti to ensure zero external dependency failure
 const triggerConfetti = (opts = {}) => {
@@ -37,6 +37,18 @@ export default function LMSHub() {
   const [selectedTool, setSelectedTool] = useState('Antigravity'); // 'Antigravity' | 'Claude Code' | 'Cursor' | 'Replit' | 'Emergent'
   const [copiedPrompt, setCopiedPrompt] = useState(false);
   const [isAITutorOpen, setIsAITutorOpen] = useState(false);
+
+  // Sync courses with backend CMS
+  useEffect(() => {
+    fetch('/api/courses')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setCourses(data);
+        }
+      })
+      .catch(err => console.log('Using local fallback courses:', err));
+  }, []);
 
   // Stepper & Gamification State (PRD §7 & §9)
   const [activeStep, setActiveStep] = useState(1); // 1 to 8

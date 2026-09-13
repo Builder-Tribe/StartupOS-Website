@@ -1,0 +1,382 @@
+[
+  {
+    "id": "course-saas-101",
+    "title": "Build a Full-Stack AI SaaS in 60 Mins with Antigravity & Supabase",
+    "slug": "build-ai-saas-antigravity",
+    "subtitle": "Learn how to transform a simple PRD into a production-ready AI product without manual coding.",
+    "creatorId": "creator-1",
+    "creatorName": "Dr. Evelyn Vance",
+    "category": "Full-Stack AI SaaS",
+    "level": "Beginner Non-Coder",
+    "duration": "60 mins",
+    "status": "LIVE",
+    "enrolledCount": 1420,
+    "toolsSupported": [
+      "Antigravity",
+      "Claude Code",
+      "Cursor",
+      "Replit",
+      "Emergent"
+    ],
+    "structure": {
+      "problem": "Non-technical founders struggle to rapidly prototype AI SaaS applications because backend DB and LLM APIs require complex boilerplate.",
+      "useCase": "An AI-powered Customer Insight Repurposer SaaS that extracts pain points using Gemini 2.0.",
+      "prd": {
+        "targetUser": "Product Managers, Solo Founders, Growth Marketers",
+        "coreFeatures": [
+          "Multi-format feedback ingestion (Text, CSV, URL)",
+          "AI sentiment & feature extraction via LLM tool calling",
+          "Supabase PostgreSQL storage for customer insights",
+          "One-click export to GitHub & Vercel deployment"
+        ]
+      }
+    },
+    "modules": [
+      {
+        "id": "mod-1",
+        "title": "Module 1: Defining PRD & Database Schema",
+        "lessons": [
+          {
+            "id": "les-1-1",
+            "title": "Lesson 1.1: Drafting the AI Prompt Architecture",
+            "lessonType": "STEP_BUILDER",
+            "description": "Learn how to write deterministic prompts for AI coding agents to generate database schemas.",
+            "tools": {
+              "Antigravity": {
+                "promptToCopy": "Act as a senior software architect. Generate a Supabase PostgreSQL migration file for a Customer Insights SaaS with tables: 'insights' (id, user_id, raw_feedback, sentiment, key_pain_points JSONB, created_at). Include Row Level Security (RLS) policies.",
+                "expectedOutput": "migration.sql file generated with CREATE TABLE insights and RLS policies for auth.uid() = user_id.",
+                "validationHint": "Verify that the migration file contains valid SQL syntax and JSONB data types."
+              },
+              "Claude Code": {
+                "promptToCopy": "claude \"Create a Supabase SQL schema in /supabase/migrations for customer feedback processing with JSONB column for key_pain_points and RLS setup.\"",
+                "expectedOutput": "Supabase CLI migration script created in supabase/migrations directory.",
+                "validationHint": "Check that the CLI migration command completes cleanly without syntax warnings."
+              },
+              "Cursor": {
+                "promptToCopy": "Generate a Supabase database client configuration file in src/lib/supabase.js using process.env.VITE_SUPABASE_URL and process.env.VITE_SUPABASE_ANON_KEY.",
+                "expectedOutput": "Supabase JS client exported from src/lib/supabase.js.",
+                "validationHint": "Ensure environment variable fallbacks are handled gracefully."
+              },
+              "Replit": {
+                "promptToCopy": "Set up a Node.js Express server with Supabase client connection in index.js and create POST endpoint /api/feedback.",
+                "expectedOutput": "Express server running on port 3000 with /api/feedback route handling JSON payloads.",
+                "validationHint": "Test the endpoint with curl or Postman to confirm 200 OK response."
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "course-branding-github-101",
+    "title": "Developer Branding & GitHub Launchpad: Push Code, 4-File Parity & Catch Eyeballs on LinkedIn",
+    "slug": "github-launchpad-personal-branding",
+    "subtitle": "Learn how to push production code cleanly, architect an irresistible GitHub profile with 4-file parity, and write high-converting LinkedIn launch posts to attract recruiters and co-founders.",
+    "creatorId": "creator-2",
+    "creatorName": "Harshit Agarwal & Marcus Chen",
+    "category": "Personal Branding & Launch",
+    "level": "All Levels (PMs & Founders)",
+    "duration": "45 mins",
+    "status": "LIVE",
+    "enrolledCount": 2840,
+    "toolsSupported": [
+      "Antigravity",
+      "Claude Code",
+      "Cursor",
+      "Replit",
+      "Emergent"
+    ],
+    "structure": {
+      "problem": "Brilliant builders ship incredible software, but have empty GitHub profiles, messy git histories, zero PRD documentation, and no inbound recruiter or user traction.",
+      "useCase": "Transform your projects into a recognized personal brand with recruiter-converting GitHub profile READMEs, 4-file repository parity, and viral LinkedIn launch loops.",
+      "prd": {
+        "targetUser": "Product Managers, Full-Stack Founders, AI Engineers, Student Builders",
+        "coreFeatures": [
+          "Safe Git push workflows and credential leak prevention (.gitignore)",
+          "The 4-File Code Parity Standard (AGENTS.md, ROADMAP.md, CLAUDE.md, CONTRIBUTING.md)",
+          "The special username/username GitHub Profile README architecture with monochrome CTAs",
+          "A 5-part LinkedIn Build-in-Public Launch formula that drives recruiter DMs & investor interest"
+        ]
+      }
+    },
+    "modules": [
+      {
+        "id": "mod-brand-1",
+        "title": "Module 1: Git Push Workflows & 4-File Parity Standard",
+        "lessons": [
+          {
+            "id": "les-brand-1-1",
+            "title": "Lesson 1.1: Pre-Flight Hygiene & Pushing Code to GitHub",
+            "lessonType": "STEP_BUILDER",
+            "description": "Master clean Git commits, secret isolation (.env in .gitignore), and linking local code to a GitHub remote repository.",
+            "tools": {
+              "Antigravity": {
+                "promptToCopy": "Act as a senior DevOps engineer. Generate a comprehensive .gitignore file for a modern React + Vite + Node.js full-stack app, and provide the exact step-by-step terminal commands to initialize git, commit, link to https://github.com/USERNAME/REPO.git on the main branch, and push cleanly.",
+                "expectedOutput": ".gitignore file created and validated + bash sequence (git init, git add, git commit -m, git branch -M main, git push -u origin main).",
+                "validationHint": "Ensure no API keys, .env, or node_modules are tracked by running 'git status --ignored'."
+              },
+              "Claude Code": {
+                "promptToCopy": "claude \"Inspect the current repo. Ensure all sensitive files (.env, credentials) are gitignored. Stage only source code and documentation, and generate a commit message following the Conventional Commits specification.\"",
+                "expectedOutput": "Clean git staging area with zero sensitive files and standard conventional commit message.",
+                "validationHint": "Confirm 'git diff --staged' shows no credentials or temporary build artifacts."
+              },
+              "Cursor": {
+                "promptToCopy": "Write a pre-push verification script in bash that checks: 1) npm run build passes, 2) no console.log statements in production routes, 3) 4 core governance files exist before allowing git push.",
+                "expectedOutput": "Executable script in scripts/verify-before-push.sh with exit codes.",
+                "validationHint": "Run 'chmod +x scripts/verify-before-push.sh && ./scripts/verify-before-push.sh'."
+              },
+              "Replit": {
+                "promptToCopy": "Configure GitHub remote origin inside Replit shell, set up Personal Access Token (PAT) authentication safely, and push the active workspace branch to GitHub.",
+                "expectedOutput": "Remote repository connected and branch synchronized with GitHub.",
+                "validationHint": "Verify remote repository commit history shows the latest Replit workspace changes."
+              },
+              "Emergent": {
+                "promptToCopy": "Generate automated GitHub Actions workflow in .github/workflows/deploy.yml that builds the project, runs lint checks, and deploys to production upon push to main.",
+                "expectedOutput": "Valid GitHub Actions CI/CD YAML configuration.",
+                "validationHint": "Check GitHub Actions tab on push to confirm green build status."
+              }
+            }
+          },
+          {
+            "id": "les-brand-1-2",
+            "title": "Lesson 1.2: The 4-File Code Parity Standard",
+            "lessonType": "STEP_BUILDER",
+            "description": "Establish the 4 constitutional files (AGENTS.md, ROADMAP.md, CLAUDE.md, CONTRIBUTING.md) that turn hobby repositories into top 1% enterprise-grade projects.",
+            "tools": {
+              "Antigravity": {
+                "promptToCopy": "Generate the 4-File Parity Standard for my AI project:\n1. AGENTS.md (System constitution, strict project isolation rules, security boundaries)\n2. ROADMAP.md (Phase-by-phase completion status with checked and upcoming milestones)\n3. CLAUDE.md (Concise pointer for CLI agents and coding standards)\n4. CONTRIBUTING.md (Branching model, PR review checklist, code quality rules)",
+                "expectedOutput": "All 4 standardized markdown files created in the project root adhering to StartupOS governance.",
+                "validationHint": "Verify that AGENTS.md contains clear security boundaries and zero destructive commands."
+              },
+              "Claude Code": {
+                "promptToCopy": "claude \"Generate a living ROADMAP.md and AGENTS.md for this codebase summarizing the architecture, key product pillars, and development protocol.\"",
+                "expectedOutput": "Detailed AGENTS.md and ROADMAP.md generated reflecting the exact codebase structure.",
+                "validationHint": "Confirm milestones accurately reflect current progress."
+              },
+              "Cursor": {
+                "promptToCopy": "Generate a CONTRIBUTING.md and CLAUDE.md file tailored to our TypeScript/Node/React stack with exact coding conventions and test run instructions.",
+                "expectedOutput": "Developer onboarding documentation with local environment setup guide.",
+                "validationHint": "Verify that setup commands match package.json scripts."
+              },
+              "Replit": {
+                "promptToCopy": "Create a comprehensive README.md and replit.md documentation guide explaining port bindings (process.env.PORT) and cloud preview instructions.",
+                "expectedOutput": "Complete markdown setup guide for cloud development.",
+                "validationHint": "Test Replit live webview with configured port."
+              },
+              "Emergent": {
+                "promptToCopy": "Audit the repository root for 4-file parity compliance and generate any missing governance files automatically.",
+                "expectedOutput": "Automated audit report confirming 100% 4-file parity score.",
+                "validationHint": "Check that all 4 files exist in the repository root."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "mod-brand-2",
+        "title": "Module 2: Building a Recruiter-Converting GitHub Profile",
+        "lessons": [
+          {
+            "id": "les-brand-2-1",
+            "title": "Lesson 2.1: The Special username/username Profile README Secret",
+            "lessonType": "STEP_BUILDER",
+            "description": "Learn how GitHub profile rendering works, why the repo MUST match your username exactly, and how to structure a senior AI PM / Founder layout.",
+            "tools": {
+              "Antigravity": {
+                "promptToCopy": "Act as a tech branding strategist and executive headhunter. Review my background and flagship products (StartupOS, Trippy, DupeScout, BusinessPay, CollabKaro). Generate a recruiter-converting GitHub Profile README for https://github.com/USERNAME/USERNAME. Include:\n1. High-impact headline positioning me as an AI Product Manager & 0-to-1 Systems Builder\n2. Minimalist dark monochrome CTAs (#181717) for LinkedIn, X, Email, and GitHub\n3. A structured 5-project portfolio matrix (Domain, PM Problem Solved, Metrics/Impact, Architecture)\n4. My 0-to-1 PM philosophy and 4-File Parity Governance standard\n5. Categorized Product & Technical toolkit",
+                "expectedOutput": "Complete, pristine README.md ready to paste into your username/username repository.",
+                "validationHint": "Ensure the repository name is identical to your GitHub username and set to Public."
+              },
+              "Claude Code": {
+                "promptToCopy": "claude \"Draft an executive summary table for my GitHub profile README that compares 4 flagship projects on problem statement, PM metrics (DSO, retention, conversion), and multi-surface tech stack.\"",
+                "expectedOutput": "High-density Markdown table formatted for maximum mobile and desktop readability.",
+                "validationHint": "Check markdown rendering to ensure table columns do not wrap awkwardly."
+              },
+              "Cursor": {
+                "promptToCopy": "Format monochrome Shields.io badges for LinkedIn, X/Twitter, Email, and GitHub with #181717 background, flat-square style, and official SVG white logos.",
+                "expectedOutput": "Copyable Markdown badge row with verified destination URLs.",
+                "validationHint": "Click each badge preview in markdown to confirm links open correctly."
+              },
+              "Replit": {
+                "promptToCopy": "Create an interactive web preview of my GitHub Profile README to test layout, typography, and contrast on desktop and mobile viewports.",
+                "expectedOutput": "Live rendered HTML preview of the profile README.",
+                "validationHint": "Verify mobile responsive alignment."
+              },
+              "Emergent": {
+                "promptToCopy": "Analyze top tech profile READMEs (e.g. Shubham Saboo, Aakash Gupta) and optimize my profile copy to target AI Product Lead and Founding Engineer roles.",
+                "expectedOutput": "Bullet points rewritten with quantified impact metrics and leadership keywords.",
+                "validationHint": "Check that copy highlights 0-to-1 execution rather than passive task management."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "mod-brand-3",
+        "title": "Module 3: LinkedIn Eyeball Engine & Viral Launch Framework",
+        "lessons": [
+          {
+            "id": "les-brand-3-1",
+            "title": "Lesson 3.1: The 0-to-1 Build-in-Public Launch Post Formula",
+            "lessonType": "STEP_BUILDER",
+            "description": "Master the exact storytelling formula that turns technical GitHub commits into 50k+ impression LinkedIn posts that attract recruiters and users.",
+            "tools": {
+              "Antigravity": {
+                "promptToCopy": "Act as a viral tech writer and product marketer. Turn my recent project build into a compelling LinkedIn launch post using the 5-part Viral Hook framework:\n1. The Contrarian Hook: Challenge a common industry assumption (e.g., 'Most PMs think you need a 10-person dev team to ship multi-surface AI apps...')\n2. The Real Problem & Villain: Why existing solutions fail users\n3. The 0-to-1 Solution: What I built, why it's different, and how AI coding agents accelerated execution\n4. The 3 Key Technical/Product Lessons Learned\n5. Call to Action: Link to live demo, GitHub repo, and invitation to connect / share feedback",
+                "expectedOutput": "Ready-to-post LinkedIn text draft formatted with clean line breaks, zero cringe fluff, and a 30-second screen demo outline.",
+                "validationHint": "Read aloud to ensure the tone is authoritative, humble, and value-dense."
+              },
+              "Claude Code": {
+                "promptToCopy": "claude \"Extract the top 3 architectural breakthroughs and 2 user friction points from our recent commit history and summarize them into a LinkedIn engineering story.\"",
+                "expectedOutput": "Punchy technical breakdown ready to adapt for LinkedIn or Substack.",
+                "validationHint": "Check that all numbers and architectural facts align with the codebase."
+              },
+              "Cursor": {
+                "promptToCopy": "Draft a concise 2-minute video demo script showcasing the core user journey: problem -> AI transformation -> result, with timestamps and screen recordings.",
+                "expectedOutput": "Audio-visual demo storyboard for LinkedIn video uploads.",
+                "validationHint": "Keep the first 5 seconds focused entirely on the core problem hook."
+              },
+              "Replit": {
+                "promptToCopy": "Generate OpenGraph social preview metadata (og:title, og:description, og:image) for my project to ensure rich preview cards when sharing links on LinkedIn and X.",
+                "expectedOutput": "HTML meta tags ready to paste into index.html <head>.",
+                "validationHint": "Test with LinkedIn Post Inspector (linkedin.com/post-inspector)."
+              },
+              "Emergent": {
+                "promptToCopy": "Generate 5 alternative opening hooks for a LinkedIn launch post targeting VC investors, startup founders, and Head of Product recruiters.",
+                "expectedOutput": "5 distinct hook angles (Data-driven, Story-driven, Metric-driven, Contrarian, Visual).",
+                "validationHint": "Select the hook with the highest emotional resonance and curiosity gap."
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "updatedAt": "2026-09-13T12:20:05.351Z"
+  },
+  {
+    "id": "course-ai-products-2026",
+    "title": "Building AI Products from Idea to MVP (2026)",
+    "slug": "ai-products-idea-to-mvp",
+    "subtitle": "Learn how to validate startup ideas, write AI-builder-ready PRDs, choose vector databases, and launch full-stack AI MVPs.",
+    "creatorId": "creator-admin",
+    "creatorName": "StartupOS Core Team",
+    "creatorRole": "Platform Architects",
+    "category": "Startup & AI",
+    "level": "All Levels (PMs & Founders)",
+    "duration": "4 hrs",
+    "status": "LIVE",
+    "enrolledCount": 18400,
+    "rating": 4.95,
+    "badge": "Essential",
+    "toolsSupported": [
+      "Antigravity",
+      "Claude Code",
+      "Cursor",
+      "Replit",
+      "Emergent"
+    ],
+    "structure": {
+      "problem": "Founders spend months building features nobody wants before validating real user pain points.",
+      "useCase": "End-to-end idea intake, competitive moat evaluation, and 4-file parity MVPs.",
+      "prd": {
+        "targetUser": "First-time founders, product managers, solo hackers",
+        "coreFeatures": [
+          "Problem discovery & customer viability scoring",
+          "PRD synthesis for autonomous coding agents",
+          "Automated sandbox testing & health verification",
+          "Product Hunt launch & founder telemetry"
+        ]
+      },
+      "rubric": {
+        "problemClarity": 25,
+        "fourFileParity": 25,
+        "codeArchitecture": 25,
+        "uxCompleteness": 25
+      }
+    },
+    "modules": [
+      {
+        "id": "mod-101",
+        "title": "Module 1: Problem Discovery & Customer Viability",
+        "description": "How to score startup concepts based on problem clarity, customer focus, differentiation, and market constraints.",
+        "lessons": [
+          {
+            "id": "mod-101-les-1",
+            "title": "Lesson 1.1: Problem Discovery & Customer Viability",
+            "lessonType": "STEP_BUILDER",
+            "duration": "30 min",
+            "xpReward": 300,
+            "description": "How to score startup concepts based on problem clarity, customer focus, differentiation, and market constraints.",
+            "tools": {
+              "Antigravity": {
+                "promptToCopy": "Act as a senior startup advisor. Analyze this product concept and output a validation matrix with 3 quantifiable assumptions and a 2-week go/no-go milestone.",
+                "expectedOutput": "Validation matrix markdown table with specific metrics.",
+                "validationHint": "Verify each assumption has an explicit failure criteria."
+              },
+              "Claude Code": {
+                "promptToCopy": "claude \"Create a project constitution AGENTS.md and ROADMAP.md for an AI startup MVP.\"",
+                "expectedOutput": "AGENTS.md and ROADMAP.md created in root directory.",
+                "validationHint": "Confirm governance rules are present."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "mod-102",
+        "title": "Module 2: Writing PRDs for AI Coding Assistants",
+        "description": "Craft structured PRDs and system prompts that AI agents (Antigravity, Replit Agent, Cursor) can implement without ambiguity.",
+        "lessons": [
+          {
+            "id": "mod-102-les-1",
+            "title": "Lesson 2.1: Writing PRDs for AI Coding Assistants",
+            "lessonType": "STEP_BUILDER",
+            "duration": "45 min",
+            "xpReward": 400,
+            "description": "Craft structured PRDs and system prompts that AI agents (Antigravity, Replit Agent, Cursor) can implement without ambiguity.",
+            "tools": {
+              "Antigravity": {
+                "promptToCopy": "Act as a senior startup advisor. Analyze this product concept and output a validation matrix with 3 quantifiable assumptions and a 2-week go/no-go milestone.",
+                "expectedOutput": "Validation matrix markdown table with specific metrics.",
+                "validationHint": "Verify each assumption has an explicit failure criteria."
+              },
+              "Claude Code": {
+                "promptToCopy": "claude \"Create a project constitution AGENTS.md and ROADMAP.md for an AI startup MVP.\"",
+                "expectedOutput": "AGENTS.md and ROADMAP.md created in root directory.",
+                "validationHint": "Confirm governance rules are present."
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "mod-103",
+        "title": "Module 3: Full-Stack AI Architecture & RAG Systems",
+        "description": "Deep dive into combining LLM APIs, vector stores (Pinecone/Qdrant), embeddings, and persistent databases for production apps.",
+        "lessons": [
+          {
+            "id": "mod-103-les-1",
+            "title": "Lesson 3.1: Full-Stack AI Architecture & RAG Systems",
+            "lessonType": "STEP_BUILDER",
+            "duration": "50 min",
+            "xpReward": 500,
+            "description": "Deep dive into combining LLM APIs, vector stores (Pinecone/Qdrant), embeddings, and persistent databases for production apps.",
+            "tools": {
+              "Antigravity": {
+                "promptToCopy": "Act as a senior startup advisor. Analyze this product concept and output a validation matrix with 3 quantifiable assumptions and a 2-week go/no-go milestone.",
+                "expectedOutput": "Validation matrix markdown table with specific metrics.",
+                "validationHint": "Verify each assumption has an explicit failure criteria."
+              },
+              "Claude Code": {
+                "promptToCopy": "claude \"Create a project constitution AGENTS.md and ROADMAP.md for an AI startup MVP.\"",
+                "expectedOutput": "AGENTS.md and ROADMAP.md created in root directory.",
+                "validationHint": "Confirm governance rules are present."
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

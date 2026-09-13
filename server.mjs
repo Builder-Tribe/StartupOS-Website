@@ -14,6 +14,7 @@ const projectsFile = join(dataDirectory, "registered_projects.json");
 const cobuildersFile = join(dataDirectory, "cobuilders.json");
 const connectionsFile = join(dataDirectory, "cobuilder_connections.json");
 const feedFile = join(dataDirectory, "cobuilder_feed.json");
+const coursesFile = join(dataDirectory, "courses.json");
 
 const types = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8" };
 const json = (res, status, body) => { res.writeHead(status, { "content-type": "application/json; charset=utf-8" }); res.end(JSON.stringify(body)); };
@@ -548,10 +549,11 @@ async function writeAutoBackup() {
     const users = await readUsers().catch(() => []);
     const audits = await readAudits().catch(() => []);
     const projects = await readProjects().catch(() => []);
+    const courses = await readCourses().catch(() => []);
     const backupData = {
       lastSyncedAt: new Date().toISOString(),
-      counts: { ideas: ideas.length, launches: launches.length, users: users.length, audits: audits.length, projects: projects.length },
-      ideas, launches, users, audits, projects
+      counts: { ideas: ideas.length, launches: launches.length, users: users.length, audits: audits.length, projects: projects.length, courses: courses.length },
+      ideas, launches, users, audits, projects, courses
     };
     await writeFile(backupFile, `${JSON.stringify(backupData, null, 2)}\n`, "utf8");
   } catch (err) {
@@ -569,6 +571,7 @@ async function initializeDatabase() {
   try { await readFile(cobuildersFile, "utf8"); } catch { await writeFile(cobuildersFile, `${JSON.stringify(INITIAL_COBUILDERS, null, 2)}\n`, "utf8"); }
   try { await readFile(connectionsFile, "utf8"); } catch { await writeFile(connectionsFile, "[]\n", "utf8"); }
   try { await readFile(feedFile, "utf8"); } catch { await writeFile(feedFile, `${JSON.stringify(INITIAL_FEED_POSTS, null, 2)}\n`, "utf8"); }
+  try { await readFile(coursesFile, "utf8"); } catch { await writeFile(coursesFile, "[]\n", "utf8"); }
   await writeAutoBackup();
 }
 
@@ -617,6 +620,12 @@ async function writeFeed(feed) {
 async function readConnections() { return JSON.parse(await readFile(connectionsFile, "utf8")); }
 async function writeConnections(connections) { 
   await writeFile(connectionsFile, `${JSON.stringify(connections, null, 2)}\n`, "utf8");
+  await writeAutoBackup();
+}
+
+async function readCourses() { return JSON.parse(await readFile(coursesFile, "utf8")); }
+async function writeCourses(courses) {
+  await writeFile(coursesFile, `${JSON.stringify(courses, null, 2)}\n`, "utf8");
   await writeAutoBackup();
 }
 
@@ -881,6 +890,127 @@ async function handleRequest(req, res) {
       audit.examinerFeedback = clean(examinerFeedback || audit.examinerFeedback);
       await writeAudits(audits);
       return json(res, 200, { success: true, audit });
+    }
+
+    // ACADEMY LMS COURSES API
+    if (req.method === "GET" && (url.pathname === "/api/courses" || url.pathname === "/api/admin/courses")) {
+      const courses = await readCourses();
+      return json(res, 200, courses);
+    }
+
+    if (req.method === "POST" && url.pathname === "/api/admin/courses") {
+      const payload = await body(req);
+      const title = clean(payload.title, 200);
+      if (!title) return json(res, 400, { error: "Course title is required." });
+
+      const courses = await readCourses();
+      const newCourse = {
+        id: payload.id || `course-${Date.now()}`,
+        title,
+        slug: clean(payload.slug || title.toLowerCase().replace(/[^a-z0-9]+/g, "-"), 120),
+        subtitle: clean(payload.subtitle || "", 400),
+        creatorId: payload.creatorId || "creator-admin",
+        creatorName: clean(payload.creatorName || "StartupOS Core Team", 100),
+        creatorRole: clean(payload.creatorRole || "Academy Course Lead", 100),
+        category: payload.category || "Full-Stack AI SaaS",
+        level: payload.level || "Beginner Non-Coder",
+        duration: clean(payload.duration || "60 mins", 50),
+        status: payload.status === "DRAFT" ? "DRAFT" : "LIVE",
+        badge: clean(payload.badge || "New", 50),
+        rating: Number(payload.rating) || 5.0,
+        enrolledCount: Number(payload.enrolledCount) || 0,
+        toolsSupported: Array.isArray(payload.toolsSupported) && payload.toolsSupported.length > 0 
+          ? payload.toolsSupported 
+          : ["Antigravity", "Claude Code", "Cursor", "Replit", "Emergent"],
+        structure: payload.structure || {
+          problem: clean(payload.problem || ""),
+          useCase: clean(payload.useCase || ""),
+          prd: {
+            targetUser: clean(payload.targetUser || "Product Managers, Founders, Developers"),
+            coreFeatures: Array.isArray(payload.coreFeatures) ? payload.coreFeatures : []
+          },
+          rubric: payload.rubric || {
+            problemClarity: 25,
+            fourFileParity: 25,
+            codeArchitecture: 25,
+            uxCompleteness: 25
+          }
+        },
+        modules: Array.isArray(payload.modules) ? payload.modules : [],
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+
+      courses.push(newCourse);
+      await writeCourses(courses);
+      return json(res, 201, newCourse);
+    }
+
+    const coursePublishMatch = url.pathname.match(/^\/api\/admin\/courses\/([a-z0-9-]+)\/publish$/i);
+    if (req.method === "POST" && coursePublishMatch) {
+      const courseId = coursePublishMatch[1];
+      const courses = await readCourses();
+      const course = courses.find(c => c.id === courseId);
+      if (!course) return json(res, 404, { error: "Course not found." });
+
+      course.status = course.status === "LIVE" ? "DRAFT" : "LIVE";
+      course.updatedAt = new Date().toISOString();
+      await writeCourses(courses);
+      return json(res, 200, { success: true, course });
+    }
+
+    const courseDuplicateMatch = url.pathname.match(/^\/api\/admin\/courses\/([a-z0-9-]+)\/duplicate$/i);
+    if (req.method === "POST" && courseDuplicateMatch) {
+      const courseId = courseDuplicateMatch[1];
+      const courses = await readCourses();
+      const original = courses.find(c => c.id === courseId);
+      if (!original) return json(res, 404, { error: "Course not found." });
+
+      const duplicate = JSON.parse(JSON.stringify(original));
+      duplicate.id = `course-${Date.now()}`;
+      duplicate.title = `${original.title} (Copy)`;
+      duplicate.slug = `${original.slug}-copy-${Date.now().toString().slice(-4)}`;
+      duplicate.status = "DRAFT";
+      duplicate.enrolledCount = 0;
+      duplicate.createdAt = new Date().toISOString();
+      duplicate.updatedAt = new Date().toISOString();
+
+      courses.push(duplicate);
+      await writeCourses(courses);
+      return json(res, 201, duplicate);
+    }
+
+    const courseIdMatch = url.pathname.match(/^\/api\/admin\/courses\/([a-z0-9-]+)$/i);
+    if (courseIdMatch) {
+      const courseId = courseIdMatch[1];
+      const courses = await readCourses();
+      const courseIndex = courses.findIndex(c => c.id === courseId);
+
+      if (req.method === "GET") {
+        if (courseIndex === -1) return json(res, 404, { error: "Course not found." });
+        return json(res, 200, courses[courseIndex]);
+      }
+
+      if (req.method === "PUT") {
+        if (courseIndex === -1) return json(res, 404, { error: "Course not found." });
+        const payload = await body(req);
+        const updatedCourse = {
+          ...courses[courseIndex],
+          ...payload,
+          id: courses[courseIndex].id,
+          updatedAt: new Date().toISOString()
+        };
+        courses[courseIndex] = updatedCourse;
+        await writeCourses(courses);
+        return json(res, 200, updatedCourse);
+      }
+
+      if (req.method === "DELETE") {
+        if (courseIndex === -1) return json(res, 404, { error: "Course not found." });
+        const removed = courses.splice(courseIndex, 1);
+        await writeCourses(courses);
+        return json(res, 200, { success: true, removed: removed[0] });
+      }
     }
 
     // REGISTERED PROJECTS REST API
