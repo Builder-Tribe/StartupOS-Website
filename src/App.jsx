@@ -12,6 +12,7 @@ import CoBuilderStudio from './components/CoBuilderStudio';
 import TestStudio from './components/TestStudio';
 import Phase1Wrapper from './components/Phase1Wrapper';
 import Phase4Wrapper from './components/Phase4Wrapper';
+import Phase5Wrapper from './components/Phase5Wrapper';
 
 export default function App() {
   // Top-level View Mode: 'website' | 'portal' | 'admin'
@@ -253,9 +254,9 @@ export default function App() {
             />
           )}
 
-          {/* PHASE 5: CO-BUILDERS & SCALE (3-Column LinkedIn Match Network & Maker Profiles) */}
+          {/* PHASE 5: CO-BUILDERS & SCALE (Co-Builder Network + Demo Day Studio) */}
           {activeTab === 'cobuilders' && (
-            <CoBuilderStudio
+            <Phase5Wrapper
               currentUser={currentUser}
               onNavigateToIdeaLab={() => setActiveTab('idealab')}
               onOpenSpecStudio={(idea) => {
