@@ -515,10 +515,10 @@ export default function DemoDayStudio({ currentUser }) {
         {tabs.map(tab => (
           <button key={tab.id} onClick={() => setActiveTab(tab.id)}
             className={`flex-1 px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex flex-col items-center gap-0.5 cursor-pointer ${
-              activeTab === tab.id ? 'bg-amber-500 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+              activeTab === tab.id ? 'bg-indigo-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
             }`}>
             <span>{tab.label}</span>
-            <span className={`text-[9px] font-semibold ${activeTab === tab.id ? 'text-amber-100' : 'text-slate-400'}`}>{tab.subtitle}</span>
+            <span className={`text-[9px] font-semibold ${activeTab === tab.id ? 'text-indigo-100' : 'text-slate-400'}`}>{tab.subtitle}</span>
           </button>
         ))}
       </div>
