@@ -1,5 +1,5 @@
 import { createServer } from "node:http";
-import { mkdir, readFile, writeFile, stat } from "node:fs/promises";
+import { mkdir, readFile, writeFile, stat, readdir } from "node:fs/promises";
 import { randomUUID } from "node:crypto";
 import { extname, join, normalize } from "node:path";
 
@@ -1121,6 +1121,191 @@ async function handleRequest(req, res) {
     if (req.method === "GET" && url.pathname === "/api/cobuilders/connections") {
       const connections = await readConnections();
       return json(res, 200, connections);
+    }
+
+    // ────────────────────────────────────────────────────
+    // REAL TEST ENGINE: /api/test/run
+    // Runs 5 genuine checks against the project filesystem
+    // ────────────────────────────────────────────────────
+    if (req.method === "POST" && url.pathname === "/api/test/run") {
+      const body = await new Promise((resolve) => {
+        let data = "";
+        req.on("data", (chunk) => { data += chunk; });
+        req.on("end", () => { try { resolve(JSON.parse(data)); } catch { resolve({}); } });
+      });
+
+      const projectId = body.projectId || "StartupOS";
+      const results = [];
+      const logs = [
+        `[SANDBOX] Initializing real pre-flight engine for: ${projectId}`,
+        `[INFO] StartupOS QA Runtime v3.0 — Node.js ${process.version}`,
+        `[STEP 1/5] Checking environment & package manifests...`
+      ];
+
+      // ── SUITE 1: Environment & package.json ──────────
+      const t1start = Date.now();
+      try {
+        const pkgRaw = await readFile(join(root, "package.json"), "utf8");
+        const pkg = JSON.parse(pkgRaw);
+        const hasEnvExample = await stat(join(root, ".env.example")).then(() => true).catch(() => false);
+        const deps = Object.keys({ ...(pkg.dependencies || {}), ...(pkg.devDependencies || {}) }).length;
+        const duration = `${Date.now() - t1start}ms`;
+        results.push({ id: "env", status: "pass", duration, detail: `package.json valid (${deps} deps). .env.example: ${hasEnvExample ? "✓ present" : "⚠ missing"}` });
+        logs.push(`✓ package.json valid. ${deps} dependencies. .env.example: ${hasEnvExample ? "present" : "not found (optional)"}.`);
+        logs.push(`[STEP 2/5] Checking production build output...`);
+      } catch (e) {
+        results.push({ id: "env", status: "fail", duration: `${Date.now() - t1start}ms`, detail: e.message });
+        logs.push(`✗ FAIL: ${e.message}`);
+        logs.push(`[STEP 2/5] Checking production build output...`);
+      }
+
+      // ── SUITE 2: Production build (dist/) ───────────
+      const t2start = Date.now();
+      try {
+        const distFiles = await readdir(join(root, "dist")).catch(() => null);
+        const assetsFiles = distFiles ? await readdir(join(root, "dist", "assets")).catch(() => []) : [];
+        const jsBundle = assetsFiles.find(f => f.endsWith(".js"));
+        const cssBundle = assetsFiles.find(f => f.endsWith(".css"));
+        if (!distFiles || !jsBundle) throw new Error("dist/ not found or empty — run npm run build first.");
+        const jsStat = jsBundle ? await stat(join(root, "dist", "assets", jsBundle)) : null;
+        const kbSize = jsStat ? (jsStat.size / 1024).toFixed(1) : "?";
+        const duration = `${Date.now() - t2start}ms`;
+        results.push({ id: "build", status: "pass", duration, detail: `Bundle: ${jsBundle} (${kbSize} kB). CSS: ${cssBundle || "none"}.` });
+        logs.push(`✓ Production build verified. JS bundle: ${kbSize} kB. CSS: ${cssBundle ? "present" : "none"}.`);
+        logs.push(`[STEP 3/5] Verifying 4-File Constitution Parity...`);
+      } catch (e) {
+        results.push({ id: "build", status: "fail", duration: `${Date.now() - t2start}ms`, detail: e.message });
+        logs.push(`✗ FAIL: ${e.message}`);
+        logs.push(`[STEP 3/5] Verifying 4-File Constitution Parity...`);
+      }
+
+      // ── SUITE 3: 4-File Parity Constitution ──────────
+      const t3start = Date.now();
+      const FOUR_FILES = ["AGENTS.md", "ROADMAP.md", "CLAUDE.md", "CONTRIBUTING.md"];
+      try {
+        const checks = await Promise.all(FOUR_FILES.map(f => stat(join(root, f)).then(() => ({ f, ok: true })).catch(() => ({ f, ok: false }))));
+        const missing = checks.filter(c => !c.ok).map(c => c.f);
+        const duration = `${Date.now() - t3start}ms`;
+        if (missing.length > 0) {
+          results.push({ id: "parity", status: "warn", duration, detail: `Missing: ${missing.join(", ")}` });
+          logs.push(`⚠ Parity partial. Missing: ${missing.join(", ")}`);
+        } else {
+          results.push({ id: "parity", status: "pass", duration, detail: "All 4 constitution files present: AGENTS.md, ROADMAP.md, CLAUDE.md, CONTRIBUTING.md" });
+          logs.push(`✓ 4-File Constitution verified: AGENTS.md, ROADMAP.md, CLAUDE.md, CONTRIBUTING.md all present.`);
+        }
+        logs.push(`[STEP 4/5] Executing security & token FinOps scan...`);
+      } catch (e) {
+        results.push({ id: "parity", status: "fail", duration: `${Date.now() - t3start}ms`, detail: e.message });
+        logs.push(`✗ FAIL: ${e.message}`);
+        logs.push(`[STEP 4/5] Executing security & token FinOps scan...`);
+      }
+
+      // ── SUITE 4: Secret / hardcoded key scan ─────────
+      const t4start = Date.now();
+      try {
+        const SECRET_PATTERNS = [
+          /sk-[a-zA-Z0-9]{20,}/,
+          /AKIA[0-9A-Z]{16}/,
+          /ghp_[a-zA-Z0-9]{36}/,
+          /api[_-]?key\s*=\s*["'][^"']{10,}/i,
+          /password\s*=\s*["'][^"']{6,}/i
+        ];
+        const filesToScan = ["server.mjs", "vite.config.js", ".env"];
+        const findings = [];
+        for (const fname of filesToScan) {
+          try {
+            const content = await readFile(join(root, fname), "utf8");
+            for (const pattern of SECRET_PATTERNS) {
+              if (pattern.test(content)) findings.push(`${fname}: possible secret pattern`);
+            }
+          } catch { /* file doesn't exist — safe */ }
+        }
+        const duration = `${Date.now() - t4start}ms`;
+        if (findings.length > 0) {
+          results.push({ id: "security", status: "warn", duration, detail: `Possible secrets in: ${findings.join("; ")}` });
+          logs.push(`⚠ WARNING: Possible hardcoded secrets found — ${findings.join("; ")}`);
+        } else {
+          results.push({ id: "security", status: "pass", duration, detail: "No hardcoded API keys, passwords, or tokens detected in scanned files." });
+          logs.push(`✓ Security scan clean. No hardcoded secrets detected.`);
+        }
+        logs.push(`[STEP 5/5] Running API health contract smoke tests...`);
+      } catch (e) {
+        results.push({ id: "security", status: "fail", duration: `${Date.now() - t4start}ms`, detail: e.message });
+        logs.push(`✗ FAIL: ${e.message}`);
+        logs.push(`[STEP 5/5] Running API health contract smoke tests...`);
+      }
+
+      // ── SUITE 5: Backend API health check ────────────
+      const t5start = Date.now();
+      try {
+        const endpoints = ["/api/projects/health", "/api/ideas", "/api/launches"];
+        const healthChecks = await Promise.all(endpoints.map(async (ep) => {
+          const start = Date.now();
+          try {
+            const r = await fetch(`http://localhost:${port}${ep}`);
+            return { ep, status: r.status, latency: Date.now() - start, ok: r.ok };
+          } catch {
+            return { ep, status: 0, latency: Date.now() - start, ok: false };
+          }
+        }));
+        const failed = healthChecks.filter(c => !c.ok);
+        const maxLatency = Math.max(...healthChecks.map(c => c.latency));
+        const duration = `${Date.now() - t5start}ms`;
+        if (failed.length > 0) {
+          results.push({ id: "smoke", status: "warn", duration, detail: `${failed.length} endpoint(s) not responding: ${failed.map(c => c.ep).join(", ")}` });
+          logs.push(`⚠ ${failed.length} endpoint(s) offline: ${failed.map(c => c.ep).join(", ")}`);
+        } else {
+          const summaries = healthChecks.map(c => `${c.ep} → HTTP ${c.status} (${c.latency}ms)`).join(" | ");
+          results.push({ id: "smoke", status: "pass", duration, detail: summaries });
+          logs.push(`✓ All ${healthChecks.length} API endpoints healthy. Max latency: ${maxLatency}ms.`);
+        }
+      } catch (e) {
+        results.push({ id: "smoke", status: "fail", duration: `${Date.now() - t5start}ms`, detail: e.message });
+        logs.push(`✗ FAIL: ${e.message}`);
+      }
+
+      // ── Summary ──────────────────────────────────────
+      const passed = results.filter(r => r.status === "pass").length;
+      const warned = results.filter(r => r.status === "warn").length;
+      const failed_count = results.filter(r => r.status === "fail").length;
+      const score = Math.round(((passed + warned * 0.5) / results.length) * 100);
+      const grade = score >= 95 ? "A+" : score >= 85 ? "A" : score >= 75 ? "B" : "C";
+
+      logs.push("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+      if (failed_count === 0 && warned === 0) {
+        logs.push(`🎉 ALL ${results.length} SUITES PASSED! Readiness: ${score}%. Grade: ${grade}. Ready to Ship!`);
+      } else {
+        logs.push(`📋 Test complete. Passed: ${passed} | Warnings: ${warned} | Failed: ${failed_count}. Score: ${score}% (${grade})`);
+      }
+
+      return json(res, 200, { results, logs, summary: { passed, warned, failed: failed_count, score, grade } });
+    }
+
+    // ────────────────────────────────────────────────────
+    // REAL AUDIT SCORES: /api/test/audit
+    // Read/write persisted audit scores per project
+    // ────────────────────────────────────────────────────
+    if (req.method === "GET" && url.pathname === "/api/test/audit") {
+      try {
+        const raw = await readFile(auditsFile, "utf8");
+        return json(res, 200, JSON.parse(raw));
+      } catch {
+        return json(res, 200, {});
+      }
+    }
+
+    if (req.method === "POST" && url.pathname === "/api/test/audit") {
+      const body = await new Promise((resolve) => {
+        let data = "";
+        req.on("data", (chunk) => { data += chunk; });
+        req.on("end", () => { try { resolve(JSON.parse(data)); } catch { resolve({}); } });
+      });
+      let existing = {};
+      try { existing = JSON.parse(await readFile(auditsFile, "utf8")); } catch {}
+      const projectId = body.projectId || "default";
+      existing[projectId] = { ...body.scores, updatedAt: new Date().toISOString() };
+      await writeFile(auditsFile, JSON.stringify(existing, null, 2));
+      return json(res, 200, { success: true, audit: existing[projectId] });
     }
 
     // STATIC FILE SERVING

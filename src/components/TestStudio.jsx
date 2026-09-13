@@ -59,52 +59,51 @@ export default function TestStudio({ currentUser, ideas = [] }) {
     }
   };
 
-  const runFullTestSuite = () => {
+  const runFullTestSuite = async () => {
+    if (!selectedProjectId) return;
     setRunningTests(true);
+    setTestResults(null);
+    // Reset suites to running state
+    setTestSuites(prev => prev.map(s => ({ ...s, status: 'running', duration: '...' })));
     setTerminalLogs([
-      `[SANDBOX] Initializing isolated testing container for project: ${selectedProjectId}...`,
-      `[INFO] Target platform: Node.js 20+ / Vite SPA Sandbox`,
-      `[STEP 1/5] Checking environment & package manifests...`
+      `[SANDBOX] Connecting to real pre-flight engine...`,
+      `[INFO] Project: ${selectedProjectId}`,
     ]);
 
-    // Step-by-step simulated pipeline execution
-    setTimeout(() => {
-      setTestSuites(prev => prev.map(s => s.id === 'env' ? { ...s, status: 'pass', duration: '142ms' } : s));
-      setTerminalLogs(prev => [...prev, '✓ Environment clean. Zero deprecated dependencies detected.', '[STEP 2/5] Running production build & tree-shaking audit...']);
-    }, 600);
-
-    setTimeout(() => {
-      setTestSuites(prev => prev.map(s => s.id === 'build' ? { ...s, status: 'pass', duration: '1,240ms' } : s));
-      setTerminalLogs(prev => [...prev, '✓ Vite build successful (1,610 modules transformed). Bundle gzip: 157.7 kB.', '[STEP 3/5] Verifying 4-File Parity Constitution...']);
-    }, 1300);
-
-    setTimeout(() => {
-      setTestSuites(prev => prev.map(s => s.id === 'parity' ? { ...s, status: 'pass', duration: '88ms' } : s));
-      setTerminalLogs(prev => [...prev, '✓ Parity standard verified: AGENTS.md, ROADMAP.md, CLAUDE.md, CONTRIBUTING.md present.', '[STEP 4/5] Executing security & token FinOps guardrails...']);
-    }, 2000);
-
-    setTimeout(() => {
-      setTestSuites(prev => prev.map(s => s.id === 'security' ? { ...s, status: 'pass', duration: '210ms' } : s));
-      setTerminalLogs(prev => [...prev, '✓ No hardcoded secrets detected. Safe sandbox execution policy intact.', '[STEP 5/5] Pinging backend REST contract endpoints...']);
-    }, 2700);
-
-    setTimeout(() => {
-      setTestSuites(prev => prev.map(s => s.id === 'smoke' ? { ...s, status: 'pass', duration: '45ms' } : s));
-      setTerminalLogs(prev => [
-        ...prev, 
-        '✓ All health check endpoints returned HTTP 200 OK (<50ms latency).',
-        '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
-        '🎉 ALL 5 TEST SUITES PASSED! Readiness score: 100%. Ready for 1-Click Ship!'
-      ]);
-      setRunningTests(false);
-      setTestResults({
-        passed: 5,
-        failed: 0,
-        warnings: 0,
-        readinessScore: 100,
-        grade: 'A+'
+    try {
+      const res = await fetch('/api/test/run', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ projectId: selectedProjectId })
       });
-    }, 3400);
+      const data = await res.json();
+
+      // Map real results to suite state
+      setTestSuites(prev => prev.map(s => {
+        const result = data.results?.find(r => r.id === s.id);
+        if (!result) return s;
+        return { ...s, status: result.status === 'warn' ? 'pass' : result.status, duration: result.duration, detail: result.detail };
+      }));
+
+      // Stream logs
+      setTerminalLogs(data.logs || []);
+
+      // Set summary
+      if (data.summary) {
+        setTestResults({
+          passed: data.summary.passed,
+          failed: data.summary.failed,
+          warnings: data.summary.warned,
+          readinessScore: data.summary.score,
+          grade: data.summary.grade
+        });
+      }
+    } catch (err) {
+      setTerminalLogs(prev => [...prev, `✗ Connection error: ${err.message}`, 'Make sure the backend server is running on port 8081.']);
+      setTestSuites(prev => prev.map(s => s.status === 'running' ? { ...s, status: 'fail', duration: '—' } : s));
+    } finally {
+      setRunningTests(false);
+    }
   };
 
   const handleTestApi = async (e) => {
@@ -241,7 +240,7 @@ export default function TestStudio({ currentUser, ideas = [] }) {
                       </div>
                       <div>
                         <h4 className="text-xs font-bold text-slate-900">{suite.name}</h4>
-                        <p className="text-[11px] text-slate-500">{suite.description}</p>
+                        <p className="text-[11px] text-slate-500">{suite.detail || suite.description}</p>
                       </div>
                     </div>
 
