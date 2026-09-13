@@ -1,7 +1,7 @@
 import React from 'react';
 import { 
   Search, ShieldCheck, Crown, Plus, Sparkles, Building2, Bell, Menu, X, Command,
-  Globe, LogOut
+  LogOut
 } from 'lucide-react';
 
 export default function Navbar({ 
@@ -13,7 +13,6 @@ export default function Navbar({
   onOpenAuthModal, 
   mobileMenuOpen, 
   setMobileMenuOpen, 
-  onExitToWebsite, 
   onOpenCommandCenter,
   onLogout 
 }) {
@@ -69,16 +68,6 @@ export default function Navbar({
             className="hidden sm:flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl shadow-xs transition-all active:scale-95"
           >
             <Plus className="w-4 h-4" /> Launch Product
-          </button>
-
-          {/* Exit to Marketing Website button */}
-          <button
-            onClick={onExitToWebsite}
-            className="hidden lg:flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-indigo-600 px-3 py-2 rounded-xl border border-slate-200 hover:bg-slate-50 transition-all cursor-pointer"
-            title="View Public Marketing Website"
-          >
-            <Globe className="w-3.5 h-3.5 text-indigo-500" />
-            <span>Website</span>
           </button>
 
           {/* Explicit Logout Button in Builder Portal */}

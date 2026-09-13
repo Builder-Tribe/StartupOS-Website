@@ -202,7 +202,6 @@ export default function App() {
       <div className="min-h-screen bg-slate-900 text-slate-100 font-sans">
         <AdminConsole
           currentUser={currentUser}
-          onExitToWebsite={() => navigateTo('website')}
           onOpenAuthModal={() => setShowAuthModal(true)}
           onLogout={handleLogout}
         />
@@ -228,7 +227,6 @@ export default function App() {
         currentUser={currentUser}
         isLoggedIn={isLoggedIn}
         onOpenLaunchModal={() => setShowLaunchModal(true)}
-        onExitToWebsite={() => navigateTo('website')}
         onOpenHelpCenter={() => setShowHelpCenter(true)}
         onOpenCommandCenter={() => navigateTo('admin')}
         onLogout={handleLogout}
@@ -246,7 +244,6 @@ export default function App() {
           onOpenAuthModal={() => setShowAuthModal(true)}
           mobileMenuOpen={mobileMenuOpen}
           setMobileMenuOpen={setMobileMenuOpen}
-          onExitToWebsite={() => navigateTo('website')}
           onOpenCommandCenter={() => navigateTo('admin')}
           onLogout={handleLogout}
         />
@@ -268,10 +265,6 @@ export default function App() {
                 isLoggedIn={isLoggedIn}
                 onOpenLaunchModal={() => {
                   setShowLaunchModal(true);
-                  setMobileMenuOpen(false);
-                }}
-                onExitToWebsite={() => {
-                  navigateTo('website');
                   setMobileMenuOpen(false);
                 }}
                 onOpenHelpCenter={() => {

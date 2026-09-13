@@ -4,12 +4,11 @@ import {
   AlertTriangle, RefreshCw, Search, Filter, Activity, Zap, LayoutDashboard,
   GraduationCap, Rocket, Code2, Building2, Check, FileText, ExternalLink,
   MessageSquare, Star, Sliders, Layers, ChevronRight, LogOut, Settings,
-  Lightbulb, FolderGit2, Sparkles, Send, Presentation, TrendingUp, GitBranch,
-  Globe
+  Lightbulb, FolderGit2, Sparkles, Send, Presentation, TrendingUp, GitBranch
 } from 'lucide-react';
 import AcademyLmsStudio from './AcademyLmsStudio';
 
-export default function AdminConsole({ currentUser, onExitToWebsite, onOpenAuthModal, onLogout }) {
+export default function AdminConsole({ currentUser, onOpenAuthModal, onLogout }) {
   const [launches, setLaunches] = useState([]);
   const [usersList, setUsersList] = useState([]);
   const [auditsList, setAuditsList] = useState([]);
@@ -114,12 +113,14 @@ export default function AdminConsole({ currentUser, onExitToWebsite, onOpenAuthM
             >
               Sign In as Admin
             </button>
-            <button
-              onClick={onExitToWebsite}
-              className="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs rounded-xl transition-all cursor-pointer"
-            >
-              Exit to Website
-            </button>
+            {onLogout && (
+              <button
+                onClick={onLogout}
+                className="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs rounded-xl transition-all cursor-pointer"
+              >
+                Sign Out
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -255,15 +256,6 @@ export default function AdminConsole({ currentUser, onExitToWebsite, onOpenAuthM
                 >
                   <LogOut className="w-3.5 h-3.5" />
                   <span>Logout</span>
-                </button>
-              )}
-              {onExitToWebsite && (
-                <button
-                  onClick={onExitToWebsite}
-                  className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer border border-slate-800"
-                  title="Exit to Website"
-                >
-                  <Globe className="w-4 h-4" />
                 </button>
               )}
             </div>

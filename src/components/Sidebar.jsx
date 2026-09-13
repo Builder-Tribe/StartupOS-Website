@@ -2,7 +2,7 @@ import React from 'react';
 import { 
   Sparkles, FolderGit2, ShieldCheck, Rocket, Users, 
   HelpCircle, ArrowUpRight, CheckCircle2, Plus, Terminal, GraduationCap,
-  LogOut, Globe, User
+  LogOut, User
 } from 'lucide-react';
 
 export default function Sidebar({ 
@@ -11,7 +11,6 @@ export default function Sidebar({
   currentUser, 
   isLoggedIn, 
   onOpenLaunchModal, 
-  onExitToWebsite, 
   onOpenHelpCenter, 
   onOpenCommandCenter,
   onLogout,
@@ -202,23 +201,15 @@ export default function Sidebar({
           </p>
         </div>
 
-        {/* 4-File Parity Health Card & Exit to Website */}
-        <div className="flex items-center justify-between gap-2 text-[10px]">
-          <div className="px-2 py-1 rounded-lg bg-slate-800/60 border border-slate-700/60 flex items-center gap-1 text-slate-300">
-            <CheckCircle2 className="w-3 h-3 text-emerald-400 shrink-0" />
-            <span className="font-bold text-emerald-400">100% Parity</span>
+        {/* 4-File Parity Health Card */}
+        <div className="flex items-center justify-between text-[10px]">
+          <div className="w-full px-2.5 py-1.5 rounded-lg bg-slate-800/60 border border-slate-700/60 flex items-center justify-between text-slate-300">
+            <span className="text-slate-400 font-medium">Architecture</span>
+            <div className="flex items-center gap-1">
+              <CheckCircle2 className="w-3 h-3 text-emerald-400 shrink-0" />
+              <span className="font-bold text-emerald-400">100% Parity</span>
+            </div>
           </div>
-
-          {onExitToWebsite && (
-            <button
-              onClick={onExitToWebsite}
-              className="flex items-center gap-1 text-slate-400 hover:text-white px-2 py-1 rounded-lg hover:bg-slate-800 transition-colors cursor-pointer font-bold"
-              title="Return to Public Website"
-            >
-              <Globe className="w-3 h-3" />
-              <span>Website</span>
-            </button>
-          )}
         </div>
       </div>
     </aside>
