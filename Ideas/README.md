@@ -49,10 +49,10 @@ StartupOS acts as the **Autonomous Product Incubator & Governance Governor**:
    - *Repo*: [github.com/1997agarwal/ContextPrism](https://github.com/1997agarwal/ContextPrism)
    - *Governance*: 100% 4-File Parity Verified
 
-3. **PromptCourt** (`/Projects/Open Source/PromptCourt`)
-   - *Tagline*: Automated Multi-Model LLM Prompt Evaluation, Scoring & Elo Arena
-   - *Stack*: React 18, TypeScript, Vite, Tailwind CSS, Elo Engine
-   - *Repo*: [github.com/1997agarwal/PromptCourt](https://github.com/1997agarwal/PromptCourt)
+3. **TicTacCourt** (`/Projects/Open Source/TicTacCourt`)
+   - *Tagline*: AI-Native Tactical Strategy Arena & Autonomous Arbiter with Zero-Draw Guarantee
+   - *Stack*: React 18, TypeScript, Vite, Tailwind CSS, Gemini AI Arbiter
+   - *Repo*: [github.com/1997agarwal/TicTacCourt](https://github.com/1997agarwal/TicTacCourt)
    - *Governance*: 100% 4-File Parity Verified
 
 ---

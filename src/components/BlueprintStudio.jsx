@@ -187,12 +187,12 @@ export default function BlueprintStudio({ currentUser, userIdeas = [], onNavigat
       category: "open_source",
       surfaces: ["Token FinOps Gateway", "AST Context Compressor", "Semantic Cache", "Analytics Studio"]
     },
-    PromptCourt: {
-      tagline: "Automated Multi-Model LLM Prompt Evaluation, Scoring & Elo Arena",
-      stack: ["React 18", "TypeScript", "Vite", "Tailwind CSS", "Elo Engine"],
-      repoUrl: "https://github.com/1997agarwal/PromptCourt",
+    TicTacCourt: {
+      tagline: "AI-Native Tactical Strategy Arena & Autonomous Arbiter with Zero-Draw Guarantee",
+      stack: ["React 18", "TypeScript", "Vite", "Tailwind CSS", "Gemini AI Arbiter"],
+      repoUrl: "https://github.com/1997agarwal/TicTacCourt",
       category: "open_source",
-      surfaces: ["Prompt Arena", "Elo Leaderboard", "Test Case Matrix", "Export Studio"]
+      surfaces: ["Tactical Board Arena", "AI Courtroom Arbiter", "Sudden Death Protocol", "Verdicts Gallery"]
     }
   };
 

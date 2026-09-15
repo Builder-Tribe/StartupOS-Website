@@ -180,28 +180,28 @@
     "createdAt": "2026-09-06T00:00:00.000Z"
   },
   {
-    "id": "proj-promptcourt",
-    "name": "PromptCourt",
-    "tagline": "Automated Multi-Model LLM Prompt Evaluation, Scoring & Elo Arena",
+    "id": "proj-tictaccourt",
+    "name": "TicTacCourt",
+    "tagline": "AI-Native Tactical Strategy Arena & Autonomous Arbiter with Zero-Draw Guarantee",
     "category": "open_source",
     "badge": "Open Source Arena",
     "sourceType": "github_connected",
-    "repoUrl": "https://github.com/1997agarwal/PromptCourt",
-    "demoUrl": "https://github.com/1997agarwal/PromptCourt",
+    "repoUrl": "https://github.com/1997agarwal/TicTacCourt",
+    "demoUrl": "https://github.com/1997agarwal/TicTacCourt",
     "stack": [
       "React 18",
       "TypeScript",
       "Vite",
       "Tailwind CSS",
-      "Elo Engine"
+      "Gemini AI Arbiter"
     ],
     "surfaces": [
-      "Prompt Arena",
-      "Elo Leaderboard",
-      "Test Case Matrix",
-      "Export Studio"
+      "Tactical Board Arena",
+      "AI Courtroom Arbiter",
+      "Sudden Death Protocol",
+      "Verdicts Gallery"
     ],
-    "readinessScore": 88,
+    "readinessScore": 94,
     "hasAgents": true,
     "hasRoadmap": true,
     "hasClaude": true,
