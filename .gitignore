@@ -1,10 +1,8 @@
 node_modules/
 dist/
 .DS_Store
-.vite-temp/
-*.log
-.claude/
 *.local
-
-# In-place satellite repositories (independent git trees & remotes)
-/StartupOS-Website/
+.env
+.env.local
+.vite/
+*.log

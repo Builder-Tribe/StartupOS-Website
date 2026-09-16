@@ -2,21 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { 
   Sparkles, Trophy, Rocket, ShieldCheck, CheckCircle2, ArrowRight, 
   Terminal, Code2, Users, Flame, BookOpen, Layers, Cpu, Compass,
-  UserCheck, LogIn, LogOut, ChevronRight, ChevronDown, ChevronUp, HelpCircle,
+  UserCheck, LogIn, ChevronRight, ChevronDown, ChevronUp, HelpCircle,
   Archive, Download, Copy, Check, Sliders, ExternalLink, Zap, Clock,
   DollarSign, Award, Star, CheckCheck, PlayCircle, Folder, FileCode, CheckCircle,
-  GraduationCap, Video, FileText, CheckSquare, GitBranch, Linkedin,
-  Presentation
+  GraduationCap, Video, FileText, CheckSquare, GitBranch, Linkedin
 } from 'lucide-react';
 
-export default function MarketingLander({ 
-  onEnterPortal, 
-  onOpenAuthModal, 
-  currentUser, 
-  isLoggedIn, 
-  onLogout, 
-  onOpenCommandCenter 
-}) {
+export default function MarketingLander({ onEnterPortal, onOpenAuthModal }) {
   // Interactive Showcase State
   const [activeDeliverableTab, setActiveDeliverableTab] = useState('constitution'); // 'constitution' | 'prd' | 'scaffold' | 'pipeline'
   const [previewStack, setPreviewStack] = useState('vite-react'); // 'vite-react' | 'nextjs' | 'fastapi'
@@ -162,80 +154,27 @@ export default function MarketingLander({
 ├── 🚀 04-build-plan.md           # Phased AI coding implementation prompts
 └── 📁 src/                       # Baseline application skeleton`
     },
-    sandbox: {
-      title: 'Pre-Flight Sandbox QA & 100-Point Audit Engine',
-      desc: 'Real automated verification running environment audits, bundle size checks, secret scans, and API smoke tests.',
-      code: `[STARTUPOS PRE-FLIGHT SANDBOX v3.0]
-Target Project: MyStartup (Node 20+ / ${stackLabels[previewStack]})
-
-[SUITE 1/5] Environment & Package Manifest:
-✓ package.json valid. .env.example present. (14ms)
-
-[SUITE 2/5] Production Build Verification:
-✓ Production build verified. JS bundle: 157.7 kB. CSS: present. (1,240ms)
-
-[SUITE 3/5] 4-File Parity Constitution:
-✓ AGENTS.md, ROADMAP.md, CLAUDE.md, CONTRIBUTING.md all present. (8ms)
-
-[SUITE 4/5] Security & Token FinOps Scan:
-✓ Zero hardcoded API keys, AWS tokens, or unescaped secrets detected. (22ms)
-
-[SUITE 5/5] Backend API Health Smoke Tests:
-✓ /api/health -> HTTP 200 OK (28ms)
-✓ /api/ideas  -> HTTP 200 OK (35ms)
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🎉 ALL 5 SUITES PASSED! Readiness: 100% | Grade: A+
-Verified Ready for 1-Click Cloud Deployment.`
-    },
-    demoday: {
-      title: '12-Slide AI Pitch Deck & Investor Pipeline CRM',
-      desc: 'Comprehensive fundraising package with structured slide narratives, investor stage tracking, and pitch countdown timer.',
-      code: `# Pitch Deck — MyStartup
-**Tagline:** The AI-First Platform for High-Velocity Founders
-**Raising:** ₹1.5 Cr Seed Round | **Target:** Accelerate GTM & Enterprise Pipelines
-
-## Slide 1: The Problem
-Founders waste 60% of their early runway wrestling with broken AI-generated code, 
-unstructured prompts, and missing technical co-founders.
-
-## Slide 2: The Solution
-An end-to-end founder operating system that turns ideas into 4-file parity architectures, 
-verifies production readiness in an automated sandbox, and matches co-founders.
-
-## Slide 3: Market Opportunity & TAM
-- Total Addressable Market: $24B AI developer tooling & incubator software.
-- 10M+ non-technical founders entering the vibe-coding ecosystem by 2027.
-
-## Slide 4: Traction & Parity Moat
-- 100% 4-File Constitutional Parity verified.
-- 45+ Production features shipped with zero devops overhead.
-
-## Slide 5: The Ask & Use of Funds
-- Seeking ₹1.5 Cr for 18 months of runway.
-- 60% Engineering & Agent FinOps | 30% Growth & Co-Builder Match | 10% Ops.`
-    },
     pipeline: {
       title: 'Autonomous Vibe-Coding Prompt Runbook',
-      desc: 'Sequential, hallucination-resistant execution prompts to build your MVP step-by-step.',
-      code: `[STAGE 1: SCAFFOLDING & 4-FILE GOVERNANCE]
+      desc: '4 sequential, hallucination-resistant execution prompts to build your MVP step-by-step.',
+      code: `[PHASE 1: SCAFFOLDING & 4-FILE GOVERNANCE]
 "You are an autonomous staff engineer pairing with a founder.
 Task: Initialize repository layout for ${stackLabels[previewStack]}.
 Ensure AGENTS.md, ROADMAP.md, CLAUDE.md, and CONTRIBUTING.md exist.
 Verify dev server boots with 0 errors. Report back with dev URL."
 
-[STAGE 2: ADDITIVE DATABASE SCHEMAS & REST APIS]
+[PHASE 2: ADDITIVE DATABASE SCHEMAS & REST APIS]
 "Task: Implement non-destructive schemas and REST API endpoints.
 All table creations must use CREATE TABLE IF NOT EXISTS.
 Seed mock data representing realistic user workloads.
 Verify endpoints via automated tests. Update ROADMAP.md milestone 2."
 
-[STAGE 3: CLEAN 2026 LIGHT UI & EXPERIENCE]
+[PHASE 3: CLEAN 2026 LIGHT UI & EXPERIENCE]
 "Task: Build responsive client surface adhering to 2026 Light UI standard.
 Slate-50 canvas, #ffffff cards, high-contrast headings, and toast feedback.
 Wire frontend state to backend REST APIs. Update ROADMAP.md milestone 3."
 
-[STAGE 4: PRE-FLIGHT QA GATE & CLOUD DEPLOYMENT]
+[PHASE 4: QA GATE & 100-POINT LAUNCHPAD ENTRY]
 "Task: Run production build (0 warnings). Audit 4-file parity.
 Format payload for StartupOS Launchpad and commit with Conventional Commits."`
     }
@@ -254,38 +193,31 @@ Format payload for StartupOS Launchpad and commit with Conventional Commits."`
   const howItWorksSteps = [
     {
       step: '01',
-      title: 'Ideate & Validate in Idea Lab',
-      desc: 'Submit your 5-dimension canvas (audience, problem, advantage, constraints). Our AI engine scores market viability (0–100) and transforms your idea into a 6-part PRD and 4-file constitution.',
-      badge: 'Ideate & Validate',
+      title: 'Ideate & Score in Idea Lab',
+      desc: 'Submit your 1-sentence product thesis. Our multi-vector evaluation engine scores market viability, competitive moat, and audience traction, refining your thesis into an actionable angle.',
+      badge: 'Idea Lab AI',
       color: 'from-indigo-600 to-indigo-700'
     },
     {
       step: '02',
-      title: 'Build & Scaffold with 4-File Parity',
-      desc: 'Connect your remote GitHub repository with zero local code cloning. Enforce mandatory constitutional governance (AGENTS.md, ROADMAP.md, CLAUDE.md, CONTRIBUTING.md) to keep AI agents on rails.',
-      badge: 'Build & Scaffold',
+      title: 'Configure & Export 8-File Scaffold',
+      desc: 'Select your target AI assistant (AntiGravity, Claude Code, Cursor) and tech stack. The studio generates your complete 4-file constitution and 4-file PRD suite with 1-click ZIP download.',
+      badge: 'Spec & Constitution',
       color: 'from-violet-600 to-purple-700'
     },
     {
       step: '03',
-      title: 'Automated QA & Pre-Flight Sandbox',
-      desc: 'Run genuine pre-flight sandbox tests: package manifest audits, production bundle size measurement, 4-file parity verification, hardcoded secret scanning, and live API smoke pings.',
-      badge: 'Test & Pre-Flight QA',
-      color: 'from-blue-600 to-cyan-700'
+      title: 'Execute Autonomous Prompt Runbook',
+      desc: 'Copy sequential, hallucination-resistant prompts into your AI coding tool. Watch your agent scaffold folders, seed additive databases, and build a 2026 Light UI step-by-step.',
+      badge: 'Prompt Runbook',
+      color: 'from-purple-600 to-pink-600'
     },
     {
       step: '04',
-      title: '1-Click Cloud Ship & Public Launchpad',
-      desc: 'Follow verified deployment recipes for Vercel, Railway, Render, and Cloudflare. Launch to the StartupOS Product Hunt feed to gather upvotes, live demo feedback, and early traction.',
-      badge: 'Ship & Deploy',
+      title: '100-Point Audit & Launchpad Feed',
+      desc: 'Run the interactive launch readiness audit. Verify 4-file parity to unlock the verified 🏆 Certified Launch badge on the public exchange and attract early adopters.',
+      badge: 'Certified Launch',
       color: 'from-emerald-600 to-teal-700'
-    },
-    {
-      step: '05',
-      title: 'Co-Builder Network & Demo Day Pipeline',
-      desc: 'Match with technical or GTM co-founders through our LinkedIn-style professional network. Prepare a 12-slide AI pitch deck, manage an investor pipeline CRM, and practice with pitch timers.',
-      badge: 'Co-Builders & Demo Day',
-      color: 'from-amber-600 to-orange-700'
     }
   ];
 
@@ -401,59 +333,21 @@ Format payload for StartupOS Launchpad and commit with Conventional Commits."`
 
             {/* Right Quick Actions */}
             <div className="flex items-center gap-2.5">
-              {isLoggedIn && currentUser ? (
-                <>
-                  <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-slate-100 border border-slate-200 text-xs font-bold text-slate-800">
-                    <span>{currentUser.avatar || '👩‍💻'}</span>
-                    <span className="hidden sm:inline">{currentUser.name}</span>
-                  </div>
+              <button
+                onClick={onOpenAuthModal}
+                className="text-xs font-bold text-slate-700 hover:text-indigo-600 px-3 py-2 rounded-xl hover:bg-slate-100 transition-all flex items-center gap-1.5 cursor-pointer"
+              >
+                <LogIn className="w-3.5 h-3.5 text-slate-500" />
+                <span>Sign In</span>
+              </button>
 
-                  {currentUser.role === 'admin' && onOpenCommandCenter && (
-                    <button
-                      onClick={onOpenCommandCenter}
-                      className="text-xs font-bold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-300 px-3 py-1.5 rounded-xl transition-all cursor-pointer"
-                    >
-                      Admin
-                    </button>
-                  )}
-
-                  <button
-                    onClick={() => onEnterPortal('idealab')}
-                    className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-3.5 py-2 rounded-xl shadow-md shadow-indigo-600/25 transition-all flex items-center gap-1.5 cursor-pointer"
-                  >
-                    <Rocket className="w-3.5 h-3.5 text-amber-300" />
-                    <span>Go to Builder</span>
-                  </button>
-
-                  {onLogout && (
-                    <button
-                      onClick={onLogout}
-                      className="text-xs font-semibold text-slate-500 hover:text-red-600 p-2 rounded-xl hover:bg-red-50 transition-all cursor-pointer"
-                      title="Log Out"
-                    >
-                      <LogOut className="w-4 h-4 text-red-500" />
-                    </button>
-                  )}
-                </>
-              ) : (
-                <>
-                  <button
-                    onClick={onOpenAuthModal}
-                    className="text-xs font-bold text-slate-700 hover:text-indigo-600 px-3 py-2 rounded-xl hover:bg-slate-100 transition-all flex items-center gap-1.5 cursor-pointer"
-                  >
-                    <LogIn className="w-3.5 h-3.5 text-slate-500" />
-                    <span>Sign In</span>
-                  </button>
-
-                  <button
-                    onClick={() => onEnterPortal('launchpad')}
-                    className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-md shadow-indigo-600/25 transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer"
-                  >
-                    <Rocket className="w-3.5 h-3.5 text-amber-300" />
-                    <span>Launch Studio</span>
-                  </button>
-                </>
-              )}
+              <button
+                onClick={() => onEnterPortal('launchpad')}
+                className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-md shadow-indigo-600/25 transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer"
+              >
+                <Rocket className="w-3.5 h-3.5 text-amber-300" />
+                <span>Launch Studio</span>
+              </button>
             </div>
           </div>
         </header>
@@ -599,31 +493,7 @@ Format payload for StartupOS Launchpad and commit with Conventional Commits."`
                   }`}
                 >
                   <Terminal className="w-4 h-4" />
-                  <span>4. Autonomous Runbook</span>
-                </button>
-
-                <button
-                  onClick={() => setActiveDeliverableTab('sandbox')}
-                  className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
-                    activeDeliverableTab === 'sandbox'
-                      ? 'bg-indigo-600 text-white shadow-xs'
-                      : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'
-                  }`}
-                >
-                  <ShieldCheck className="w-4 h-4 text-emerald-500" />
-                  <span>5. Pre-Flight Sandbox QA</span>
-                </button>
-
-                <button
-                  onClick={() => setActiveDeliverableTab('demoday')}
-                  className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
-                    activeDeliverableTab === 'demoday'
-                      ? 'bg-indigo-600 text-white shadow-xs'
-                      : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'
-                  }`}
-                >
-                  <Presentation className="w-4 h-4 text-amber-500" />
-                  <span>6. Demo Day Pitch Deck</span>
+                  <span>4. Autonomous Prompt Runbook</span>
                 </button>
               </div>
 
@@ -1410,9 +1280,18 @@ Format payload for StartupOS Launchpad and commit with Conventional Commits."`
               <span>•</span>
               <span>Learn. Architect. Ship.</span>
             </div>
-            <p className="text-slate-600">
+            <p className="text-slate-500">
               The 360° AI Product Creation Platform & Ecosystem. Built for founders, developers, and students.
             </p>
+            <div className="pt-2 flex items-center justify-center gap-4 text-xs font-medium text-slate-400">
+              <span>Architected & Built by <strong className="text-slate-200">Harshit Agarwal</strong></span>
+              <span>•</span>
+              <a href="https://www.linkedin.com/in/1997agarwal" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-400 transition-colors">LinkedIn</a>
+              <span>•</span>
+              <a href="https://github.com/1997agarwal" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-400 transition-colors">GitHub</a>
+              <span>•</span>
+              <a href="mailto:agarwal.harshit97@gmail.com" className="hover:text-indigo-400 transition-colors">Email</a>
+            </div>
           </div>
         </footer>
       </div>
