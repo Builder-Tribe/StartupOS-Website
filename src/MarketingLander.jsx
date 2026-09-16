@@ -1280,18 +1280,9 @@ Format payload for StartupOS Launchpad and commit with Conventional Commits."`
               <span>•</span>
               <span>Learn. Architect. Ship.</span>
             </div>
-            <p className="text-slate-500">
+            <p className="text-slate-600">
               The 360° AI Product Creation Platform & Ecosystem. Built for founders, developers, and students.
             </p>
-            <div className="pt-2 flex items-center justify-center gap-4 text-xs font-medium text-slate-400">
-              <span>Architected & Built by <strong className="text-slate-200">Harshit Agarwal</strong></span>
-              <span>•</span>
-              <a href="https://www.linkedin.com/in/1997agarwal" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-400 transition-colors">LinkedIn</a>
-              <span>•</span>
-              <a href="https://github.com/1997agarwal" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-400 transition-colors">GitHub</a>
-              <span>•</span>
-              <a href="mailto:agarwal.harshit97@gmail.com" className="hover:text-indigo-400 transition-colors">Email</a>
-            </div>
           </div>
         </footer>
       </div>

@@ -1,32 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import MarketingLander from './MarketingLander';
-import FounderConnectModal from './FounderConnectModal';
+import { appUrl } from './config';
 
 export default function App() {
-  const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
-  const [modalIntent, setModalIntent] = useState('demo');
-
   const handleEnterPortal = (targetTab = 'launchpad') => {
-    setModalIntent(targetTab === 'academy' ? 'academy' : 'demo');
-    setIsConnectModalOpen(true);
+    // Directs out to the full StartupOS builder portal workspace
+    window.location.href = appUrl(`?view=portal&tab=${targetTab}`);
   };
 
   const handleOpenAuthModal = () => {
-    setModalIntent('contact');
-    setIsConnectModalOpen(true);
+    // Directs out to the portal auth modal
+    window.location.href = appUrl('?view=portal&auth=login');
   };
 
   return (
-    <>
-      <MarketingLander
-        onEnterPortal={handleEnterPortal}
-        onOpenAuthModal={handleOpenAuthModal}
-      />
-      <FounderConnectModal
-        isOpen={isConnectModalOpen}
-        onClose={() => setIsConnectModalOpen(false)}
-        intent={modalIntent}
-      />
-    </>
+    <MarketingLander
+      onEnterPortal={handleEnterPortal}
+      onOpenAuthModal={handleOpenAuthModal}
+    />
   );
 }
