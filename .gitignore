@@ -6,3 +6,5 @@ dist/
 .claude/
 *.local
 
+# In-place satellite repositories (independent git trees & remotes)
+/StartupOS-Website/

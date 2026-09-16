@@ -104,22 +104,14 @@ Projects/StartupOS/                        ← Git Root (https://github.com/Buil
 To preserve clean Git hygiene, ensure full codebase visibility for AI assistants, and enable isolated production deployments, all ventures adhere to the **Parent Monorepo + Satellite Repositories** model:
 
 1. **Parent Monorepo is Authoritative Single Source of Truth:**
-   - The primary venture repository (e.g., `Nomad-Tribe/Trippy`, `Business-Tribe/BusinessPay`, `Collab-Tribe/CollabKaro`, `Trend-Tribe/DupeScout`) contains 100% of the project's source code across all surfaces.
-   - Dedicated surfaces live in designated subdirectories inside the parent repository (e.g. `website/`, `mobile/`, `data/`, `server/`, `web/`).
-   - Every file must be tracked directly by the parent Git repository so cloning the monorepo provides the complete product.
+   - The primary venture repository (`Builder-Tribe/StartupOS`) contains 100% of the core product source code (REST API `server.mjs`, web app `src/`, database `data/`, multi-agent orchestrator, and LMS).
+   - Core product architecture, data schemas, and agent governance belong strictly here.
 
-2. **Satellite Repositories for Independent Deployment Boundaries:**
-   - Separate repositories (e.g., `<Project>-Website`, `<Project>-Mobile`, `<Project>-Data`) exist solely to provide dedicated deployment targets (e.g. Vercel/Cloudflare Pages for landing pages, Expo/EAS for mobile builds, isolated DB/ML runners).
-   - **Never embed a `.git` folder inside the monorepo working tree:** Never clone a satellite repo with its own `.git` directly inside the parent repo unless formally configured in `.gitmodules`. Doing so causes Git submodule confusion, ignored code, and detached pointer issues.
-   - **Subtree Push Workflow:** Sync code from the parent monorepo to the satellite repo using `git subtree push`:
-     ```bash
-     # Example: Syncing marketing website from parent monorepo to satellite
-     git subtree push --prefix website <satellite-remote-name> main
-     ```
+2. **Asymmetric One-Way Flow Rule (Monorepo ➔ Satellite Only):**
+   - **Upstream Authoritative Flow (Monorepo ➔ Satellite):** Product updates, architecture diagrams, PRD suites, and constitution standards authored in the Monorepo flow downstream to the satellite website to update public positioning.
+   - **Strict Downstream Isolation (Satellite ↛ Monorepo):** The satellite repo (`Builder-Tribe/StartupOS-Website`) is an isolated public showcase and marketing experiment surface. Experiments, copywriting tweaks, CTA modifications, recruiter links, and GitHub Pages workflows done on the website **MUST NEVER reflect back on the Monorepo Git history**. The monorepo commit log must remain 100% focused on core SaaS engineering.
 
-3. **Future Extension Rule (Mobile & Database Management):**
-   - When building mobile apps (React Native / Flutter) or dedicated database/pipeline services:
-     - Develop the surface directly within the parent monorepo under `mobile/` or `data/`.
-     - Create a satellite repo under the corresponding GitHub organization (`<Tribe>/<Project>-Mobile`).
-     - Register the remote in the parent repository and mirror commits via Git subtree sync.
-
+3. **In-Place Satellite Repository Hygiene:**
+   - Satellite surfaces (e.g., `StartupOS-Website/`) live physically inside the parent repository folder for unified developer ergonomics in IDEs.
+   - Satellite folders are ignored in the parent `.gitignore` and maintain their own dedicated `.git` tracking their respective GitHub remote (`https://github.com/Builder-Tribe/<Project>-Website.git`).
+   - Commits and pushes for website experiments occur strictly within the satellite repository directly to its remote, keeping the monorepo completely clean.
